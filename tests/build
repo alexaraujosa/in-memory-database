@@ -1,0 +1,16 @@
+#!/bin/bash
+
+SCRIPT_DIR=$(dirname $(readlink -f "$0"))
+
+dn=$(dirname -- "$1")
+fn=$(basename -- "$1")
+filename="${fn%.*}"
+
+mkdir -p $SCRIPT_DIR/out
+cd $SCRIPT_DIR/out
+mkdir -p $dn
+
+# gcc -g -Wall -Wextra -O2 -lm -o $dn/$filename ../$1 
+# TODO: Make build command.
+
+echo Compiled program to $dn/$filename
