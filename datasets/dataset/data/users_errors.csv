@@ -1,0 +1,537 @@
+id;name;email;phone_number;birth_date;sex;passport;country_code;address;account_creation;pay_method;account_status
+FredeSantos-Macedo1115;;fredesantos-macedo1115@li3.pt;(351) 964077348;1984/09/11;M;GJ773706;PT;Avenida de Sá, 4091797-847 Mealhada;2015/09/26 22:37:31;credit_card;active
+TiaSimões333;Tiago Simões;tiasimões333@li3.pt;(351) 963994705;11/12/2020;M;OM278922;PT;Avenida Denis Ferreira, 50482-728 Queluz;2010/11/12 04:40:42;cash;active
+CaOliveira;;caoliveira@li3.pt;968 981 966;1986/03/30;M;OB238691;PT;Rua de Castro, 704239-037 Amarante;2010/01/27 14:03:39;debit_card;Inactive
+LuCarneiro181;Luciana Carneiro;lucarneiro181@li3.pt;(351) 228 728 479;1975/10/05;F;RS542108;PT;;2010/06/30 03:44:47;debit_card;active
+TatiaAmorim1160;Tatiana Amorim;tatiaamorim1160@li3@pt;(351) 293907394;1981/11/30;F;YB981251;PT;R. do Anjo, 1158437-177 Santo Tirso;2010/10/21 22:36:32;cash;active
+BrPinheiro;Bruna Pinheiro;brpinheiro@li3.pt;+351933867078;1951/09/05;F;;PT;R. de Vicente, S/N7499-842 Tomar;2014/11/12 16:13:43;debit_card;active
+RicaCardoso;Ricardo Cardoso;ricacardoso@li3.pt;(351) 910 624 867;1973/03/23;M;VU971781;PT;;2011/05/29 13:09:21;debit_card;active
+MarcMonteiro628;Marco Monteiro;marcmonteiro628@li3.pt;(351) 964617295;1960/06/25;M;II275742;LHA;Av Enzo Torres, 36186-529 Mirandela;2012/02/11 02:41:24;credit_card;active
+DeAnjos;Denis Anjos;deanjos@li3.pt;(351) 203 619 375;1998/10/30;;ZT095396;PT;Largo Iara Magalhães, 111777-962 Gafanha da Nazaré;2010/03/13 23:09:43;cash;active
+;Vítor de Valente;vítovalente1004@li3.pt;+351966940683;1990/11/09;M;ZU851515;PT;Largo Alves, 4067129-875 Alcácer do Sal;2013/04/10 10:44:29;cash;active
+JaiGonçalves;Jaime Gonçalves;jaigonçalves@li3.pt;;1964/07/15;M;TH091911;PT;Av da Fonte de Cima, 20736-475 Braga;2020/10/29 13:11:55;credit_card;active
+MatiCampos;Matilde Campos;maticampos@li3.pt;;1973/03/27;F;QC268947;PT;Travessa da Pasteleira, 42426-701 Lixa;2012/04/21 22:28:00;credit_card;active
+SLourenço;Sérgio Lourenço;slourenço@li3.pt;;1987/04/19;M;UQ652404;PT;Travessa do Calvário, S/N6871-993 Matosinhos;2011/04/25 08:05:42;debit_card;active
+;Ângelo Fonseca;ângelfonseca193@li3.pt;929 049 414;1992/07/25;M;CI084276;PT;Av Paiva, S/N8474-576 Reguengos de Monsaraz;2019/01/08 06:47:54;debit_card;active
+CMachado1477;Catarina Machado;cmachado1477@li3.pt;+351917086025;1984/01/26;F;ZA292170;PT;Av Sebastião Moura, S/N5528-349 Entroncamento;2018/03/01 12:42:01;;active
+PetSantos208;Petra Santos;petsantos208@li3.pt;+351926326394;1971/05/26;F;JB977200;PT;Rua Castro, 5629558-058 Porto;2014/09/05 11:52:01;cash;JB977200
+JúBatista1064;Júlia do Batista;júbatista1064@li3.pt;933799924;1970/04/28;F;RU707967;PT;Largo Lúcia Faria, 126125-099 Estremoz;10:38:01 AM/12/03/2001;debit_card;active
+MáAmaral;Mário Amaral;máamaral@li3.pt;924040574;1990/07/13;M;MU816159;PT;R. de Costa, 114693-768 São João da Madeira;2015/04/28 11:34:54;cash;
+ToFernandes;Tomás Fernandes;tofernandes@li3.pt;+351923057709;1985/07/14;M;YQ374301;PT;Rua Nacional 209, 20864-020 Vizela;2020/10/20 04:51:15;debit_card;
+XNascimento693;Xavier Nascimento;xnascimento693@li3.pt;+351966159999;1978|04|30;M;PE863623;PT;Praça Sandro Borges, 573366-131 Ponta Delgada;2010/11/01 16:42:19;cash;active
+YOliveira-Anjos;Yara Oliveira-Anjos;yoliveira-anjos@li3.pt;(351) 233429867;1955/10/28;F;;PT;Largo de Passos Manuel, 993271-172 Póvoa de Santa Iria;2018/08/09 10:46:41;cash;active
+;Luana-Nair Morais;lmorais@li3.pt;+351924363329;1984/11/11;F;TG758878;PT;R. de Barros, 495126-989 Santa Maria da Feira;2011/03/02 23:19:32;cash;active
+MafaGonçalves1683;Mafalda Gonçalves;mafagonçalves1683atli3.pt;+351927443357;1958/03/22;F;SI093616;PT;Largo Benedita Machado, 520338-365 Paredes;2014/12/27 06:45:59;debit_card;active
+EnCorreia;Enzo Correia;encorreia@li3.pt;292 113 543;1969/12/01;M;HU098356;PT;Rua Andreia Pires, 6644815-458 Valongo;02:05:47 AM/07/03/2022;credit_card;active
+GaspBranco448;Gaspar Branco;gaspbranco448@li3.pt;(351) 936392098;2002/02/20;M;KD022426;PT;Largo Anjos, 2172226-583 Santo Tirso;2016/02/09 04:14:14;credit_card;
+NMiranda1334;Naiara Miranda;nmiranda1334@li3.pt;+351928707731;1983/11/20;F;TR751601;PT;Avenida Matias, 92350-545 Alcobaça;2010/05/23 19:56:35;credit_card;
+GabriePereira352;;gabriepereira352@li3.pt;961 626 497;1977/06/13;M;ZC221029;PT;Largo Barbosa, S/N4172-648 Matosinhos;2020/05/01 15:06:14;cash;active
+ToAzevedo;Tomás da Azevedo;toazevedo@li3.pt;(351) 960 179 429;1960/11/23;;KY051769;PT;Largo de Jesus, 2321169-486 Rio Maior;2017/01/15 09:43:35;credit_card;active
+PSilva;Pedro Silva;psilva@li3.pt;(351) 936738199;1997/09/12;M;NH280013;PT;Praça Lara Lourenço, 512771-986 Guimarães;;credit_card;active
+EmNascimento;Ema Nascimento;emnascimento@li3.pt;926 964 572;1966/07/20;F;IY203280;W;Rua Mauro Pacheco, 60234-726 Santa Comba Dão;2016/11/24 05:20:58;credit_card;active
+NelMartins-Figueiredo6;Nelson Martins-Figueiredo;nelmartins-figueiredo6@li3.pt;;1975/04/26;M;SA085971;PT;Avenida Nelson Alves, 8550501-303 Estremoz;2018/02/05 08:21:35;cash;active
+IsmAbreu1728;Ismael Abreu;ismabreu1728@li3.pt;963 611 540;1959/05/18;M;MQ834097;PT;Praça de S. Mamede, 832166-863 Valbom;2013/01/22 03:47:42;debit_card;
+PJesus1992;Paulo Jesus;pjesus1992@li3.pt;(351) 917 769 756;2004/05/14;M;BZ047532;PT;Avenida de Pio XII, 790439-975 São Salvador de Lordelo;2018/05/02 06:43:09;cash;
+AntóFernandes200;António Fernandes;antófernandes200@li3.pt;(351) 919 075 738;1975/08/03;M;;PT;Travessa da Arrábida, 8208905-349 Costa da Caparica;2013/07/14 14:27:36;credit_card;active
+VítoAlmeida;Vítor Almeida;vítoalmeida@li3.pt;(351) 933 141 266;1986/12/29;M;GE738285;PT;Largo Fabiana Pinheiro, 283238-306 Ponta Delgada;2011/12/13 18:35:14;;ACTIVE
+LisandSá138;Lisandro Sá;lisandsá138@li3.pt;(351) 963 496 783;1990/03/22;M;NS873070;PT;Av Neto, S/N8729-212 Albufeira;2010/02/13 08:25:18;;ACTIVE
+DinLima519;Dinis da Lima;dinlima519@li3.pt;928985402;1985/08/11;M;DE111850;PT;Praça Morais, S/N4001-070 Loures;2019/06/17 00:17:10;credit_card;DE111850
+JorDomingues562;Jorge Domingues;jordomingues562@li3.pt;+351968924660;1993/09/05;M;MJ174254;PT;Avenida do Mestre de Aviz, 355402-226 Setúbal;2020/10/24 01:58:34;;active
+ManuCardoso;Manuel Cardoso;manucardosoatli3.pt;+351962587281;1985/04/04;M;DF101100;PT;Rua das Escadas do Monte dos Judeus, 25572-007 Covilhã;2019/10/09 18:36:30;cash;active
+MiAmorim49;;miamorim49@li3.pt;(351) 917 948 018;1994/01/16;M;FT048231;PT;Travessa dos Mastros, 802491-605 Santa Cruz;2019/11/07 06:12:59;debit_card;active
+ValentinNunes;Valentina Nunes;valentinnunes@li3.pt;(351) 292 745 644;1981/01/30;F;;PT;Largo de Batista, 369713-557 Lagos;2018/11/17 03:57:11;credit_card;active
+EduAntunes141;Eduarda da Antunes;eduantunes141@li3.pt;+351965284775;1975/07/03;F;EU437366;PT;R. de Vasco da Gama, 3767274-080 Alcácer do Sal;2020/10/07 14:36:40;;active
+NoEsteves826;;noesteves826@li3.pt;+351916312069;1966/01/04;M;NS899286;PT;R. Mendes, 29720-445 Gandra;2015/05/07 19:44:42;debit_card;active
+EriCoelho;Erika Coelho;ericoelho@li3.pt;(351) 930 091 257;1979/05/10;F;WS578892;PT;Alameda Vera Pacheco, 594768-849 Penafiel;2010/03/13 10:10:49;debit_card;WS578892
+JéssCarneiro1420;Jéssica Carneiro;jésscarneiro1420@li3.pt;(351) 915 951 448;1995/03/22;F;;PT;Praça Érica Correia, 996232-923 Santa Maria da Feira;2010/08/12 07:11:08;cash;active
+RafaMonteiro875;Rafael Monteiro;rafamonteiro875@li3.pt;926010567;1967/10/05;M;QF540339;PT;Av Marques, 6695521-897 Estremoz;2013/04/10 00:46:06;cash;QF540339
+NBorges-Almeida1557;Noah Borges-Almeida;nborges-almeida1557@li3.pt;920226793;1958/03/20;;XC586857;PT;Travessa de Paiva, 9304443-810 Ourém;2020/01/13 20:31:00;credit_card;active
+BrDomingues466;Bryan Domingues;brdomingues466@li3.pt;;1996/06/18;M;ZI680699;PT;Rua Alícia Correia, S/N8003-198 Gondomar;2019/10/26 12:15:51;debit_card;active
+JoaquiLopes;Joaquim Lopes;joaquilopes@li3.pt;+351257501507;1974/03/23;M;YY274533;PT;Praça de Jesus, S/N3697-583 Guarda;;debit_card;active
+IaMorais1721;Iara Morais;iamorais1721@li3.pt;+351961877637;03:01:56 PM/25/12/2010;F;PP130579;PT;Praça da Boa Viagem, 71582-960 Gandra;2012/08/07 09:54:43;debit_card;active
+RRamos;;rramos@li3.pt;211056388;1981/10/12;F;GE395761;PT;R. Carminho Lima, 1708606-052 Torres Vedras;2011/06/25 15:34:54;cash;inactive
+;David Reis;dreis1848@li3.pt;917537350;1988/05/31;M;HA648814;PT;Alameda de D. João II, 2372521-756 Tondela;2013/05/21 08:37:20;cash;active
+DDomingues-Tavares;Dinis Domingues-Tavares;ddomingues-tavares@li3.pt;921 563 794;2001/07/22;M;BI877020;PT;Av das Necessidades, S/N3860-209 Covilhã;2016/02/12 01:30:19;;active
+CrisDomingues;Cristiano Domingues;crisdomingues@li3.pt;931351288;1970/02/08;M;AL467479;PT;R. de Caselas, 610306-954 Paredes;2010/10/24 12:56:11;debit_card;AL467479
+CarmiVieira584;Carminho Vieira;carmivieira584@li3.pt;(351) 228 051 319;1971/02/24;F;VD992760;PT;R. Carneiro, 9238852-666 Silves;2016/06/22 17:43:02;debit_card;VD992760
+RuBrito1923;Rui Brito;rubrito1923@li3.pt;;1961/04/05;M;UB069834;PT;R. de Vímara Peres, 9405882-805 Caldas da Rainha;2015/10/10 02:20:19;cash;active
+AAraújo981;André Araújo;aaraújo981@li3.pt;(351) 915524960;1975/01/10;;KH760492;PT;Rua Mahatma Gandhi, 375886-553 Covilhã;2013/06/17 04:50:58;credit_card;active
+;Diego do Matos;dmatos1300@li3.pt;+351923049572;1993/02/15;M;RQ623306;PT;R. da Baleia, 783709-403 Agualva-Cacém;2019/12/19 19:01:11;debit_card;active
+AnHenriques60;António Henriques;anhenriques60@li3.pt;930995658;1975/12/21;M;;PT;Rua de Francisco Borges, 168456-328 Gafanha da Nazaré;2014/04/25 06:06:17;cash;active
+VítoFerreira-Carvalho;Vítor Ferreira-Carvalho;vítoferreira-carvalho@li3.pt;962149382;1965/08/31;M;AS458693;PT;R. Almeida, 356756-847 Loures;2015/04/05 15:24:49;;active
+LeFaria1065;Leonardo Faria;lefaria1065@li3.pt;(351) 910660053;1970/02/24;M;GN764383;PT;Rua de São Vicente de Paulo, 749195-548 Covilhã;2011/05/12 05:30:41;;active
+;Ismael Moreira;ismamoreira@li3.pt;(351) 294930374;1957/04/15;M;MF157934;PT;Avenida Erica Antunes, S/N5457-556 Alcácer do Sal;2019/01/05 16:51:12;debit_card;inactive
+Caetana-MiMartins;Caetana-Mia Martins;caetana-mimartins@li3.pt;(351) 273 160 567;1981/06/22;F;UM316035;PT;R. de Soares, 498843-919 Cartaxo;2018/07/20 03:20:22;credit_card;UM316035
+MGaspar;Madalena Gaspar;mgaspar@li3.pt;;1971/03/29;F;LD905691;PT;Largo da Banda de Ramalde, 8918897-456 Oliveira do Bairro;2016/07/24 21:39:50;credit_card;active
+MarCoelho;Margarida Coelho;marcoelho@li3@pt;(351) 926 570 001;1978/06/27;F;JK155783;PT;Praça de Pinheiro, 92916-523 Fundão;2015/02/17 02:33:57;credit_card;active
+BeatriFernandes;Beatriz Fernandes;beatrifernandes@li3.pt;(351) 210 793 805;1986/08/04;F;XU735760;PT;;2014/11/08 02:57:29;credit_card;active
+Ângela-LunMoura1009;Ângela-Luna Moura;ângela-lunmoura1009@li3.pt;(351) 262780000;1985/01/20;F;SW529893;PT;Largo Guerreiro, 25551-253 Fundão;2012/01/06 03:34:20;;active
+EdMelo-Mendes;Edgar Melo-Mendes;edmelo-mendes@li3.pt;;1994/11/19;M;PP847592;PT;Praça Afonso Garcia, S/N5572-193 Faro;2015/07/29 17:24:21;debit_card;active
+ArtuFerreira111;Artur Ferreira;artuferreira111@li3.pt;(351) 961488913;1964/08/14;M;PX861622;PT;Rua do Seminário, 706711-985 Póvoa de Varzim;;cash;active
+;Júlia Brito-Cruz;júbrito-cruz1924@li3.pt;965218113;2002/03/30;F;ZN449864;PT;Alameda Marcos Almeida, 91892-206 Entroncamento;2018/04/23 08:03:36;credit_card;active
+YCoelho47;Yara Coelho;ycoelho47@li3.pt;(351) 930201147;1980/02/20;F;WA094397;PT;Travessa Patrícia Leite, 689594-319 Paredes;2012/10/11 20:17:47;cash;
+RúbDomingues;Rúben Domingues;rúbdomingues@li3.pt;+351966539576;1950/11/18;M;IM224361;PT;R. Barbosa, 408724-903 Mangualde;2020/09/14 12:29:17;credit_card;IM224361
+FabiaSousa1260;Fabiana Sousa;fabiasousa1260@li3.pt;920491692;1962/03/31;;ME356146;PT;Largo Patrícia Neves, 7730882-881 Portimão;2018/08/30 23:30:30;cash;active
+CaLima;Camila Lima;calima@li3.pt;(351) 916940208;1958/01/30;F;BX811114;PT;Av Faria, 89675-473 Porto Santo;2010/08/31 21:46:41;cash;BX811114
+ASousa572;Amélia Sousa;asousa572@li3.pt;(351) 216103824;1975/09/09;F;;PT;Rua Borges, 5919813-385 Barreiro;2013/03/29 21:01:22;cash;inactive
+PatríciRodrigues;Patrícia Rodrigues;patrícirodrigues@li3.pt;(351) 939153296;1998/12/25;;IM021217;PT;Rua Alice Cruz, 4591548-742 Vila Real;2013/03/16 10:37:10;cash;active
+BAmorim-Simões520;Bernardo Amorim-Simões;bamorim-simões520@li3.pt;217652078;1976/08/02;M;;PT;Rua Correia, 77166-256 Castelo Branco;2015/10/01 22:15:30;credit_card;active
+MatCruz;Matilde Cruz;matcruz@li3.pt;(351) 932926250;1976/04/16;F;NM213711;PT;Avenida Vicente Neto, 851487-904 Valpaços;2020/08/18 19:25:41;;active
+EdSousa;Eduardo da Sousa;edsousa@li3.pt;(351) 964627823;1994|05|04;M;YQ552009;PT;Alameda do Molhe, 5995812-722 Cartaxo;2012/04/01 23:40:33;cash;active
+WiLeite;Wilson Leite;wileite@li3.pt;+351919306182;1958/07/23;M;TT565764;PT;Rua Teixeira, 707515-620 Felgueiras;2011/07/15 01:39:22;;active
+TaMendes;;tamendes@li3.pt;(351) 924130241;1978/05/27;F;QQ225863;PT;Travessa Moura, 917709-860 Oliveira de Azeméis;2019/04/25 00:17:37;debit_card;active
+FabiaReis583;Fabiana do Reis;fabiareis583@li3.pt;283 001 899;1995/09/07;F;UB723646;PT;Avenida do Carvalhido, 541250-748 Mirandela;09:17:50 PM/20/02/2010;credit_card;inactive
+VicenSilva-Matias;Vicente Silva-Matias;vicensilva-matias@li3.pt;;1961/05/16;M;DW402176;PT;R. de Pinho, 681293-637 Lamego;2011/09/29 11:25:10;debit_card;active
+AMonteiro1;Anita Monteiro;amonteiro1@li3.pt;(351) 281 453 374;1950/07/07;F;GY934856;PT;;2018/08/07 02:49:11;debit_card;active
+MartRibeiro;Martim Ribeiro;martribeiro@li3.pt;(351) 209 433 542;1963/09/30;M;SP070858;W;Alameda Matos, 21682-374 Mirandela;2019/02/12 14:27:11;credit_card;inactive
+Raquel-BeatriMacedo817;Raquel-Beatriz Macedo;raquel-;+351927534044;1992/02/08;F;BF981153;PT;Av das Oliveiras, 205744-466 Amora;2017/03/23 22:09:39;cash;active
+;Artur Sousa;artusousa1113@li3.pt;+351922221203;1978/12/31;M;XV246559;PT;Avenida Fonseca, 266518-126 Alverca do Ribatejo;2020/10/19 20:09:17;cash;active
+JuliaLoureiro;Juliana Loureiro;julialoureiro@li3@pt;+351240754302;1996/11/10;F;KJ978733;PT;Rua de Sá, 958841-901 Horta;2014/10/30 11:58:17;credit_card;active
+SaTavares-Azevedo110;Santiago Tavares-Azevedo;satavares-azevedo110@li3.pt;(351) 962829147;1968/12/29;M;WA363651;PT;Avenida de Garcia, S/N3201-125 Alverca do Ribatejo;2016/07/27 01:39:43;credit_card;
+ITorres;Irina Torres;itorres@li3.pt;(351) 962591375;1967/02/11;F;QD245411;PT;;2010/09/26 22:00:50;cash;active
+LFigueiredo-Magalhães1895;Luís Figueiredo-Magalhães;lfigueiredo-magalhães1895@li3.pt;(351) 924 474 685;1987/07/02;M;UZ048182;PT;;2020/02/14 16:36:08;cash;inactive
+RaAmorim;Rafael Amorim;raamorim@li3.pt;915626502;;M;ZT194342;PT;Avenida dos Moinhos, 35680-687 Aveiro;2012/08/07 08:06:18;debit_card;active
+EmNeto;Ema Neto;emneto@;(351) 967796519;1993/09/06;F;IA020972;PT;R. da Ribeira, 77862-104 Loures;2014/03/26 17:39:50;credit_card;active
+MaJesus1371;Marco Jesus;majesus1371@li3.pt;(351) 204 519 228;1952/09/09;M;CL365691;PT;Praça Pilar Amaral, 82989-002 Lisboa;2012/03/04 22:44:03;debit_card;CL365691
+MáBorges;Mário Borges;máborges@li3.pt;910 844 978;1998/04/23;M;LM437148;PT;;2018/03/16 02:03:39;debit_card;active
+MFonseca;Mara Fonseca;mfonseca@li3.pt;(351) 927285348;1982/12/12;F;;PT;Avenida de Sousa, 693307-192 São Salvador de Lordelo;2017/05/07 14:03:20;credit_card;active
+DuartMartins1992;Duarte Martins;duartmartins1992@li3.pt;937861787;1975|10|12;M;US929608;PT;Alameda Rita Neves, 6617672-179 Trancoso;2013/12/16 03:57:25;cash;active
+EnzCampos;Enzo da Campos;enzcampos@li3.pt;(351) 916962753;1981/12/11;M;VQ067327;PT;Praça Ariana Tavares, 710281-251 Peso da Régua;2013/10/13 21:59:57;debit_card;
+SimRamos;Simão Ramos;simramos@li3.pt;963103407;1962/08/15;M;;PT;Praça Leite, 955371-746 Lisboa;2016/11/04 13:22:45;cash;active
+SSá;;ssá@li3.pt;(351) 923484189;1950/10/09;F;WQ368137;PT;Av Garcia, 66842-065 Viana do Castelo;2015/09/05 22:37:30;debit_card;active
+ValentPinheiro472;Valentina de Pinheiro;valentpinheiro472@li3.pt;(351) 921 069 580;2002/06/19;F;PU319719;PT;Travessa de Caselas, 4504942-053 Maia;2019/08/31 12:30:42;debit_card;
+ÉrMorais513;Érica Morais;érmorais513@li3.pt;(351) 233 449 747;1984/09/14;F;TL844660;PT;;2011/01/03 02:02:02;cash;active
+LúAmorim114;Lúcia da Amorim;lúamorim114@li3.pt;+351961427955;1954|08|22;F;JP842392;PT;R. Barros, S/N1070-557 Torres Novas;2011/08/02 02:26:28;credit_card;active
+KSantos;Kelly Santos;ksantos@li3.pt;262215214;12/09/2015;F;SZ833339;PT;Travessa Márcio Costa, 904631-687 São Salvador de Lordelo;2020/06/13 09:40:07;credit_card;active
+RafaeEsteves;Rafaela Esteves;rafaeesteves@li3.pt;(351) 919 482 091;2002/05/11;F;TG353367;PT;;2017/08/20 18:54:23;cash;active
+FloPinheiro;Flor Pinheiro;flopinheiro@li3.pt;+351920541665;1983/04/09;F;MY533357;L;Alameda do Pinheiro, 274578-400 São João da Madeira;2014/08/07 09:08:12;debit_card;active
+JulCoelho;Juliana Coelho;julcoelho@li3.pt;+351965159945;1996/04/09;F;AP105393;PT;Avenida Vicente, 95746-506 Vale de Cambra;2013/08/25 15:59:33;debit_card;AP105393
+;Benedita Abreu;beneditabreu@li3.pt;261939295;2002/06/12;F;DO923470;PT;Praça de Vímara Peres, 155019-528 Porto;2015/03/22 01:20:24;credit_card;active
+PetrCarvalho1905;Petra da Carvalho;petrcarvalho1905@li3.pt;(351) 922 535 240;1973/05/26;F;FZ901421;PT;R. Manuel Santos, 733958-056 São João da Madeira;2019/05/22 05:01:48;;active
+ClaPires;Clara Pires;clapires@li3.pt;(351) 232768067;2005/08/02;F;IQ105192;GVJ;Av de Lourenço, 271214-781 Loures;2019/07/15 19:14:57;cash;active
+LeonHenriques1837;Leonor Henriques;leonhenriques1837@li3.pt;967238965;1951/11/28;F;LX894842;PT;Alameda de Soares, 749288-204 Amadora;2017/08/11 07:42:38;debit_card;
+AlLourenço719;Alice Lourenço;allourenço719@li3.pt;;1958/12/10;F;JV138616;PT;Praça de Vímara Peres, 534125-901 Ponte de Sor;2010/11/14 08:40:53;debit_card;active
+Fabiana-Amaral;Fabiana-Erica Amaral;fabiana-amaral@li3.pt;(351) 967 507 643;1970/01/30;F;GF058678;PT;R. de Nogueira, 2764422-517 Pinhel;03/12/2021;credit_card;active
+CristianPereira36;Cristiano Pereira;cristianpereira36@li3.pt;(351) 936221922;1990/01/30;M;JB235269;PT;Largo de Macedo, 668698-324 Castelo Branco;2015/07/03 09:27:17;cash;
+VaCoelho1853;;vacoelho1853@li3.pt;936 472 191;2004/07/07;M;JB075752;PT;R. de Matias, 16313-264 Felgueiras;2015/11/08 13:18:34;credit_card;active
+AlMatos1136;Alice Matos;almatos1136@li3.pt;+351250563314;02/02/2001;F;KE445000;PT;Alameda Ribeirinhos, S/N1030-999 Sabugal;2012/07/21 01:07:15;debit_card;Active
+CamilEsteves;Camila de Esteves;camilesteves@li3.pt;(351) 939659984;1990/09/30;F;ZM920042;PT;Av Pinho, S/N2203-219 Amarante;2018/09/20 16:27:57;debit_card;
+PMonteiro590;Pilar Monteiro;pmonteiro590@li3.pt;+351939836540;1988/04/15;;WI455627;PT;Praça da Vila Expo, 598301-152 Braga;2010/12/09 15:11:47;debit_card;active
+KéVieira1306;Kévim Vieira;kévieira1306atli3.pt;(351) 936057067;1985/04/29;M;JQ683806;PT;Alameda dos Anjos, 792820-305 Vila Nova de Santo André;2013/03/19 01:17:30;debit_card;active
+IsaaGaspar;Isaac Gaspar;isaagaspar.li3.pt;(351) 923329878;1987/01/28;M;IG095889;PT;Rua de Batista, S/N0370-151 Fafe;2011/07/09 02:01:14;debit_card;active
+CaetCoelho1339;Caetana Coelho;caetcoelho1339@li3.pt;(351) 929569240;1951/09/12;F;NS947130;AZI;R. de Lima, 6583123-967 Santiago do Cacém;2016/12/14 17:11:31;credit_card;active
+FranLeite-Tavares1049;Francisca Leite-Tavares;franleite-tavares1049@li3.pt;(351) 938 849 184;1970/08/19;;JL399064;PT;Av Clara Azevedo, 847322-439 Vila Nova de Foz Côa;2011/11/18 06:04:12;debit_card;inactive
+;Santiago do Neto;sanneto@li3.pt;933 973 756;1986/10/04;M;BW877450;PT;Av Salvador Pires, 508672-610 Vendas Novas;2014/12/22 19:02:20;credit_card;active
+FrDomingues981;Frederico Domingues;frdomingues981@li3@pt;215326250;1971/11/16;M;DF517094;PT;Avenida Kevin Anjos, 30911-668 Pinhel;2017/07/18 18:22:52;debit_card;Active
+FábiVicente758;;fábivicente758@li3.pt;(351) 277528905;2000/04/19;M;RD294934;PT;Av Lourenço, 931814-945 Ribeira Grande;2018/08/28 01:42:02;cash;active
+JAraújo870;Jaime Araújo;jaraújo870@li3.pt;964049700;1999/04/08;M;RF299787;H;Travessa Francisca Amorim, 855483-130 Espinho;2019/01/01 11:57:03;cash;inactive
+;Lara Castro;larcastro@li3.pt;(351) 926 109 191;1983/08/22;F;ID583466;PT;Rua Miranda, S/N7424-882 Trofa;2012/03/31 15:27:15;cash;inactive
+YasmiCastro1813;Yasmin Castro;yasmicastro1813@li3.pt;(351) 912089533;1982/09/28;F;QU154423;PT;Praça de Oliveira, 616052-567 Aveiro;2012/10/08 21:33:10;cash;
+FrancFerreira;Francisca Ferreira;francferreira@li3.pt;(351) 933126298;2002/12/23;F;HY509789;PT;R. da Cidade da Praia, 7977368-737 Montemor-o-Novo;2010/12/16 14:01:08;credit_card;HY509789
+BenjamRamos;Benjamim Ramos;benjamramos@li3.pt;;1961/01/10;M;SR490939;PT;Av de Vicente, 164582-618 São Mamede de Infesta;2018/12/07 05:54:52;debit_card;active
+LaPires1506;Laura Pires;lapires1506@li3.pt;(351) 922763035;1997/06/20;F;ZD349585;PT;Travessa Oliveira, S/N3926-037 Figueira da Foz;2014/12/16 15:52:23;;active
+;Wilson Baptista;wbaptista1600@li3.pt;278696380;1970/07/12;M;KK554254;PT;Alameda de Guerreiro, 152144-204 Setúbal;2013/06/22 14:14:56;credit_card;active
+AlexandrAnjos-Abreu;Alexandre Anjos-Abreu;alexandranjos-abreu@li3.pt;(351) 276 371 519;1973/05/17;M;UW354085;PT;;2012/01/05 11:22:11;credit_card;active
+NAzevedo;Naiara Azevedo;nazevedo@li3.pt;(351) 254 280 788;1975/12/09;F;QZ981616;PT;Avenida de Esteves, S/N0902-409 Esposende;2016/07/25 05:58:30;;inactive
+MargarBatista399;Margarida Batista;margarbatista399@li3.pt;(351) 244 673 533;1954/06/05;;NH297103;PT;Av Silva, 900768-244 Portalegre;2019/11/16 13:57:06;credit_card;active
+RicaBrito;Ricardo Brito;ricabrito@li3.pt;928195991;1965/12/03;M;;PT;Praça de Gustavo Eiffel, 2647013-691 Caldas da Rainha;2012/11/28 01:19:15;cash;active
+MaMacedo;Mafalda Macedo;mamacedo@li3.pt;(351) 927872092;1952/03/30;F;;PT;Travessa de Azevedo, 2204287-424 Leiria;2016/03/31 16:40:36;debit_card;active
+SoraiPereira;Soraia Pereira;soraipereira@li3.pt;(351) 926230415;1992/10/28;F;GR915711;PT;;2010/04/04 06:33:06;cash;active
+GabrBarbosa569;Gabriel Barbosa;gabrbarbosa569@li3.pt;(351) 912045045;1953/10/23;M;KK687623;PT;Travessa Alexandre Fonseca, 3336889-141 Fafe;2019/09/22 08:54:08;;active
+GDomingues;Gil de Domingues;gdomingues@li3.pt;+351917104844;1975/08/22;M;;PT;Travessa Anjos, 691863-374 Lourosa;2011/01/28 05:29:13;credit_card;active
+MaPinheiro;Marcos Pinheiro;mapinheiro@li3.pt;+351275497182;2005/06/09;;HU303644;PT;R. de Teixeira, S/N6629-546 Ílhavo;2019/04/11 17:53:26;debit_card;active
+JoaTorres1401;Joana Torres;joatorres1401atli3.pt;(351) 919638002;1971/10/23;F;RN594377;PT;Largo Nunes, 924171-561 Braga;2014/01/15 05:34:49;debit_card;active
+RuTorres-Jesus355;Rui Torres-Jesus;rutorres-jesus355@li3.pt;+351967578850;1995/02/10;M;FD947177;PT;Rua Clara Vieira, 7539520-012 Vila Real de Santo António;2018/09/23 20:54:27;debit_card;FD947177
+RitLourenço939;Rita da Lourenço;ritlourenço939@li3.pt;(351) 923 546 495;1998/04/23;;BN296613;PT;Largo do Monte, S/N2723-937 Marinha Grande;2010/09/08 21:20:15;credit_card;active
+LeanMiranda;Leandro Miranda;leanmiranda@li3.pt;+351263211112;1996|12|31;M;XY311799;PT;Rua Machado, 93555-078 Santa Maria da Feira;2010/09/18 21:23:33;credit_card;active
+AliMartins;Alice Martins;alimartins@li3.pt;929771146;1969/03/30;F;BO135064;PT;Alameda Henriques, 902004-623 Oliveira do Hospital;2011/01/16 14:37:41;debit_card;
+FranciscaMaia;Francisca-Débora Maia;franciscamaia@li3.pt;(351) 938 966 550;1992/07/21;F;UR721297;PT;Avenida Branco, 755667-174 Santo Tirso;2017/12/20 00:31:59;;inactive
+RicLeal1348;;ricleal1348@li3.pt;(351) 933 268 770;1955/12/09;M;RO704560;PT;Av Diogo Pinheiro, S/N4642-221 São João da Madeira;2015/10/17 18:10:30;credit_card;active
+;Lucas Azevedo;lucaazevedo@li3.pt;(351) 969088849;1971/02/15;M;UN828255;PT;Avenida Alice Amorim, 232707-171 Ílhavo;2018/08/07 23:34:32;credit_card;active
+DiogCastro;Diogo Castro;diogcastro@li3.pt;;1981/07/24;M;LX109345;PT;Rua Carlota Neto, 181297-846 Mêda;2010/10/30 19:13:56;credit_card;active
+MaTorres;Marco Torres;matorres@li3.pt;+351289846755;1962/11/08;M;;PT;Av Mia Leite, 348961-972 Mirandela;2015/04/14 11:55:53;debit_card;active
+;Gaspar Santos;gasantos@li3.pt;(351) 923 903 035;1982/11/02;M;HS555142;PT;Avenida Kévim Vieira, S/N5711-163 Sintra;2013/03/09 09:18:11;debit_card;active
+BrJesus1585;Brian Jesus;brjesus1585@li3.pt;(351) 237722592;1998/05/22;M;;PT;Praça de D. Carlos I, S/N2911-757 Sabugal;2010/07/31 21:24:26;credit_card;inactive
+BrLourenço1173;Brian Lourenço;brlourenço1173@li3.pt;(351) 916412287;1991/10/05;M;BB295395;PT;Rua Brito, S/N8674-042 Vale de Cambra;2012/09/05 08:24:11;;active
+ÂngCruz;Ângelo Cruz;ângcruz@li3.pt;(351) 923775218;1978/12/23;M;NP683400;PT;Alameda Sandro Jesus, 510458-598 Santarém;2014/05/27 11:48:54;;active
+MiGaspar916;Miguel do Gaspar;migaspar916@li3.pt;(351) 927 758 261;1967/06/11;M;YL349140;PT;Travessa Artur Cupertino de Miranda, 117926-934 Barcelos;;credit_card;ACTIVE
+BeSimões863;Beatriz de Simões;besimões863@li3.pt;(351) 269 072 697;1995/02/19;F;OI767634;PSG;Praça dos Heróis do Mar, 7012499-920 Ourém;2016/05/07 19:00:07;credit_card;active
+FilLeite;Filipe Leite;filleite@li3.pt;(351) 243937938;1975/09/30;M;TU664181;PT;R. Kyara Matias, 952072-216 Ourém;2011/08/22 13:31:43;credit_card;TU664181
+;Juliana Simões;jsimões589@li3.pt;(351) 915 401 107;1975/03/23;F;KE263687;PT;Av de José Régio, 489135-012 Lagoa;2018/08/06 07:22:39;credit_card;active
+MateuLopes568;Mateus Lopes;mateulopes568@li3.pt;935 088 681;1958/06/15;;JT839062;PT;Avenida Valentim Garcia, 6196996-885 Guarda;2013/07/29 02:26:42;debit_card;active
+TatianaHenriques;Tatiana-Isabel Henriques;tatianahenriques.li3.pt;(351) 968110103;1970/05/24;F;DD764785;PT;Avenida Daniela Amorim, 645540-044 Cantanhede;2017/08/30 02:16:33;credit_card;active
+JoAraújo;Joana Araújo;joaraújo@li3.pt;;1968/03/15;F;JI582733;PT;Alameda Lúcia Amaral, 470751-742 Paços de Ferreira;2010/05/31 05:02:40;credit_card;active
+SimBarros;Simão de Barros;simbarros@li3.pt;920334869;1974/01/09;M;YD963523;PT;Av de Ferreira, 233485-648 Rio Maior;2015/01/12 00:18:07;credit_card;
+MirPinho;Miriam Pinho;mirpinho@li3.pt;;1989/02/02;F;IE995671;PT;Rua Lopes, 626324-992 Cartaxo;2010/03/02 19:32:58;cash;active
+AMarques-Brito650;Alice Marques-Brito;amarques-brito650@li3.pt;934 482 594;1969/07/24;F;;PT;Travessa de Gaspar, S/N9770-907 Ponta Delgada;2017/07/04 11:29:30;cash;active
+PiMiranda;Pilar Miranda;pimiranda@li3.pt;(351) 969 424 772;2005/12/17;F;EU329768;PT;Praça Professor José Conde, 133451-116 Queluz;2019/12/18 09:43:37;;active
+AmélNeto;Amélia Neto;amélneto@li3.pt;(351) 910 115 003;1994/12/01;F;PC810481;PT;Avenida de Mota, S/N6245-325 Lagos;2012/02/28 00:23:32;;active
+AnDomingues1527;Ana Domingues;andomingues1527@li3.pt;(351) 255914223;1955/09/19;F;ZQ759250;PT;Praça de Henriques, 6562767-483 Valongo;2011/07/16 01:00:42;cash;
+BriaMoreira1616;;briamoreira1616@li3.pt;921 210 141;1954/08/25;M;EP809474;PT;Av de Anjos, 236519-530 Seixal;2015/01/16 05:22:22;debit_card;Active
+;Paulo da Vicente;pvicente352@li3.pt;(351) 259063256;1955/08/28;M;YK076361;PT;Largo da Ponte da Lama, 861242-709 Paços de Ferreira;2016/09/08 18:03:43;debit_card;active
+VitóVaz795;Vitória Vaz;vitóvaz795@li3.pt;915642211;1966/10/28;F;UT097833;PT;Travessa Matias, S/N9897-542 Seia;2017|09|21 12:08:34;credit_card;ACTIVE
+HPinto;Hugo Pinto;hpinto@li3.pt;+351967284829;1979/11/03;;GT744823;PT;Travessa de Silva, 685199-352 Maia;2020/04/15 23:09:13;debit_card;active
+PaAndrade460;Patrícia Andrade;paandrade460@li3.pt;(351) 969409606;1974/02/14;F;YJ482573;PT;Travessa de Oliveira, 649672-527 Felgueiras;2011/02/10 13:05:44;debit_card;YJ482573
+JFernandes;Joana Fernandes;jfernandes@li3.pt;912060614;1990/10/08;F;;PT;Praça Beatriz Soares, S/N3560-543 Peso da Régua;2010/07/03 17:42:39;credit_card;active
+;Alexandre Andrade-Lourenço;aandrade-lourenço488@li3.pt;(351) 234740824;1977/07/12;M;OG170162;PT;Travessa do Calvário, 942527-872 Alcobaça;2019/03/17 01:12:50;debit_card;active
+LeonoBorges2020;Leonor Borges;leonoborges2020@li3.pt;(351) 278897472;1950/02/12;F;CL326458;Y;Rua Santiago Azevedo, 90614-473 Beja;2019/10/30 13:56:46;cash;active
+SandCorreia;Sandro Correia;sandcorreia@li3.pt;(351) 285 710 567;2005/11/20;M;QH012165;PT;Praça Oliveira, S/N3888-985 Amora;2013|03|16 18:26:54;debit_card;active
+XCardoso820;Xavier Cardoso;xcardoso820@li3.pt;(351) 962 681 125;1969/08/27;M;;PT;Rua Gonçalves, 348086-417 Ribeira Grande;2016/03/19 15:49:24;cash;inactive
+JoPacheco;Joaquim Pacheco;jopacheco@li3.pt;281172142;1966/09/19;M;;PT;Alameda Álvaro Henriques, 71426-334 Santa Cruz;2016/11/26 00:43:15;cash;active
+NádBrito;Nádia Brito;nádbrito@li3.pt;(351) 966 351 187;1996/09/26;F;;PT;Largo das Nações, 244645-070 Estarreja;2015/07/04 05:12:27;cash;active
+;Bryan Azevedo;bryazevedo127@li3.pt;216 417 420;1951/02/19;M;YO781641;PT;Travessa de Marques, S/N3032-416 Fiães;2013/04/04 16:07:57;credit_card;active
+DMachado1458;Diana Machado;dmachado1458@li3.pt;(351) 925 240 238;1987/06/04;F;XI092660;PT;R. Vicente, 295532-241 São Salvador de Lordelo;2019/11/30 22:45:20;cash;
+AdriaBranco1042;;adriabranco1042@li3.pt;(351) 917249850;1951/06/18;F;EP248792;PT;Travessa Lisandro Magalhães, 414247-579 Queluz;2016/10/13 15:06:38;cash;active
+FiBarros196;Filipe Barros;fibarros196@li3.pt;(351) 222 666 121;1957/03/28;M;VS371098;PT;Avenida Anjos, 96524-903 Ílhavo;2012/02/25 22:37:12;credit_card;VS371098
+RMoreira1677;Rúben Moreira;rmoreira1677@li3.pt;+351964424048;1969/06/03;M;XE349359;USD;Avenida João Jesus, 926391-540 São Salvador de Lordelo;2019/01/28 00:38:18;credit_card;active
+NAntunes667;Noa da Antunes;nantunes667@li3.pt;+351969247856;1985/04/03;M;HK742397;PT;;2018/01/15 11:12:04;debit_card;active
+MaPaiva1169;Manuel Paiva;mapaiva1169@li3.pt;;1993/07/22;M;WA221723;PT;Alameda Andrade, 54815-469 Vila Real de Santo António;2016/03/09 07:42:00;debit_card;active
+MargMoura1155;Margarida Moura;margmoura1155@li3.pt;265535738;1977/06/05;F;HI613558;CIO;Rua Ferreira, 30136-431 Mangualde;2012/08/15 18:33:56;credit_card;active
+;Ismael Nogueira;inogueira@li3.pt;(351) 935780860;1996/11/16;M;PC164526;PT;Av de Leal, 540370-146 Covilhã;2011/08/18 17:44:04;debit_card;active
+EriRamos918;Erica Ramos;eriramos918@li3.pt;(351) 938065075;1954/06/29;;BO026280;PT;Alameda Ângela Cruz, 766485-321 Moura;2012/09/02 12:56:04;credit_card;active
+ErAzevedo286;;erazevedo286@li3.pt;(351) 914 371 467;1992/07/11;F;UQ839792;PT;R. Victória Borges, 3508483-007 Santiago do Cacém;2011/09/26 09:22:25;credit_card;active
+MicBatista;Micael Batista;micbatista@li3.pt;(351) 968 254 566;1977/01/27;M;RU726478;PT;Largo Benedita Cardoso, 100549-322 Matosinhos;2012/01/31 19:34:23;;ACTIVE
+AdrianLeal-Barros902;Adriana Leal-Barros;adrianleal-barros902@li3.pt;921767174;2005/06/14;F;UB966358;PT;Rua de Castro, 80949-570 Macedo de Cavaleiros;;debit_card;active
+LiBorges;Lisandro Borges;liborges@li3.pt;964944176;1988/05/29;M;ZV146953;PT;Avenida da Foz, 806296-519 Vale de Cambra;2020/02/11 09:52:24;;active
+SanMonteiro1813;Sandro Monteiro;sanmont;(351) 925 607 588;1974/03/16;M;OY490959;PT;Alameda Vaz, S/N1303-987 Valpaços;2015/11/19 11:03:44;credit_card;active
+GabTavares-Valente751;Gabriel Tavares-Valente;gabtavares-valente751@li3.pt;(351) 937 173 470;1971/03/19;M;KD726187;PT;Praça de Fonseca, 93813-932 Amarante;2013/07/22~02:00:39;cash;active
+;Matilde Fernandes-Monteiro;matfernandes-monteiro@li3.pt;964 382 940;1966/12/14;F;JM783673;PT;Alameda de Baptista, 789608-408 Paredes;2018/10/02 07:20:16;credit_card;active
+FCosta;Filipa Costa;fcostaatli3.pt;(351) 919768516;1992/11/14;F;YI892603;PT;Travessa das Mimosas, 5747529-485 Ponta Delgada;2010/02/15 07:23:16;debit_card;active
+;Laura-Catarina Andrade;laurandrade77@li3.pt;+351915592196;1976/11/25;F;CF553771;PT;Largo Dinis Leite, 583804-037 Valongo;2013/05/14 00:16:06;debit_card;ACTIVE
+GabrieVicente;Gabriel Vicente;gabrievicente@li3.pt;(351) 967491802;1977/12/30;M;;PT;R. de Leal, 8049106-316 Viseu;2010/10/29 19:40:27;credit_card;active
+LuciPinho;Luciana Pinho;lucipinho@li3.pt;(351) 220 101 684;1951/11/10;F;DF087242;PT;Travessa de Valente, 92757-221 Pombal;2011/07/15 04:03:01;cash;DF087242
+MaNascimento651;Mariana Nascimento;manascimento651@li3.pt;(351) 224 829 776;1974/05/30;F;JW000732;PT;Travessa de Campolide, 800597-107 Rebordosa;28/05/2001;cash;active
+CristiOliveira;Cristiano Oliveira;cristioliveira@li3.pt;(351) 926214976;1993/07/21;;DV580129;PT;Alameda das Pirogas, S/N6928-368 Vila Nova de Santo André;2018/10/04 07:11:08;cash;active
+JoãCampos193;João do Campos;joãcampos193@li3.pt;918 210 029;1969/08/26;M;XX233943;PT;Rua República Argentina, S/N4840-832 Funchal;2016/06/10~06:46:20;debit_card;active
+DeLima;Denis Lima;delima@li3.pt;938088012;1989/12/12;M;HI444006;LUD;Rua de Coelho, S/N8862-572 Elvas;2020/09/01 20:32:57;debit_card;active
+JaiOliveira1000;Jaime de Oliveira;jaioliveira1000@li3.pt;;1976/09/27;M;XH783926;PT;Praça Bernardo Batista, 29868-163 Mealhada;2019/08/09 13:00:07;cash;active
+GuiNeto1432;Guilherme Neto;guineto1432@li3.pt;(351) 928816573;1987/03/03;M;EC474761;PT;Travessa Barbosa, S/N2265-406 Aveiro;2018/11/14 07:09:15;;inactive
+PatNogueira;Patrícia Nogueira;patnogueira@li3.pt;(351) 964829196;1950/08/09;F;TS221190;PT;Largo Panorâmica Edgar Cardoso, 1916799-031 Santa Maria da Feira;2017/03/26 17:36:22;cash;TS221190
+ConstançPinho950;;constançpinho950@li3.pt;928837425;1952/05/16;F;ID322520;PT;Largo de Paiva, 655189-162 Trancoso;2011/04/03 06:07:13;debit_card;active
+ValentinaAmaral720;Valentina-Camila Amaral;valentinaamaral720@li3.pt;298 913 389;1962/04/08;F;;PT;R. de Reis, 9075295-731 Amadora;2019/08/05 05:22:38;cash;active
+AndCardoso1305;André Cardoso;andcardoso1305@li3.pt;938 664 819;1991/06/29;M;BH903656;PT;;2013/01/31 06:41:49;cash;active
+AméliAnjos;Amélia Anjos;amélianjos@li3.pt;(351) 267307935;1959/02/13;F;GV321115;QSY;Travessa de Macedo, 305809-491 Chaves;2016/09/14 01:18:50;cash;active
+ARibeiro-Faria644;André Ribeiro-Faria;aribeiro-faria644@li3.pt;208 657 494;1971/01/29;M;YI991904;PT;;2019/11/10 06:31:28;cash;active
+XavCarvalho1268;;xavcarvalho1268@li3.pt;917 109 172;1972/09/12;M;HL180619;PT;Largo Santiago Matias, S/N5303-745 Braga;2020/12/27 20:52:35;debit_card;active
+CarAssunção255;Carolina Assunção;carassunção255@li3.pt;(351) 915188017;1968/01/23;F;IK506013;PT;Travessa de Campos, 964505-221 Sines;2013/10/04 06:59:11;cash;IK506013
+Daniela-BiancTavares;Daniela-Bianca Tavares;daniela-bianctavares@li3@pt;(351) 910459933;1991/01/10;F;TK704338;PT;Rua do Tronco, 770831-664 Quarteira;2010/05/20 05:28:25;debit_card;inactive
+;Jorge Vicente;jorvicente@li3.pt;933 107 583;1998/05/28;M;YE912158;PT;R. de D. Afonso Henriques, 586249-879 Trancoso;2019/02/18 22:23:47;credit_card;active
+MaCarvalho1128;Marco de Carvalho;macarvalho1128.li3.pt;928529040;1993/03/05;M;ZM503306;PT;Praça Batista, 837467-306 Horta;2011/08/06 14:50:41;cash;active
+AlíciPacheco1408;Alícia Pacheco;alícipa;(351) 928 483 558;1969/02/26;F;BV191561;PT;Avenida Anjos, S/N8484-857 Santana;2011/05/12 12:44:02;cash;active
+DaviSousa1074;David da Sousa;davisousa1074@li3.pt;+351231841648;1997/09/19;M;EL350297;PT;Av Lourenço, S/N9119-731 Póvoa de Varzim;2012/04/17 06:26:55;debit_card;EL350297
+IsaBarbosa1366;Isabel Barbosa;isabarbosa1366@li3.pt;(351) 919016732;1951/10/06;;CT947798;PT;Avenida da Quinta de Santo António, 289506-264 Gafanha da Nazaré;2015/03/03 14:07:44;debit_card;active
+ÂngelMatias;Ângela Matias;ângelmatias@li3.pt;+351920873541;1979/03/01;F;CA703154;PT;;2013/04/26 20:22:58;cash;active
+NunNogueira1678;Nuno Nogueira;nunnogueira1678@li3.pt;(351) 220246888;1972/12/09;M;JM933178;PT;;2012/02/27 02:14:17;debit_card;active
+Ana-BGonçalves1116;Ana-Beatriz Gonçalves;ana-bgonçalves1116@li3.pt;(351) 918 202 936;1953/05/17;F;GF651059;PT;Avenida Joaquim Gaspar, 4924276-527 Mealhada;2012|06|02 18:44:11;cash;active
+ÍAmorim;Íris Amorim;íamorim@li3.pt;(351) 933 607 768;1976/01/14;F;RR217190;PT;Rua Carneiro, S/N9380-546 Póvoa de Santa Iria;2018/01/31 08:30:05;credit_card;RR217190
+RenatPires;Renato Pires;renatpires@li3.pt;(351) 914537930;1968/11/08;M;DJ485334;PT;R. Pacheco, 862619-158 Barcelos;2017/05/05~00:45:07;credit_card;active
+SaAnjos-Cruz;Salvador Anjos-Cruz;saanjos-cruz@li3.pt;;1993/08/21;M;CP929096;PT;R. de Borges, 1745927-243 Trancoso;2020/04/12 12:03:41;debit_card;active
+IrFonseca-Lourenço;Irina Fonseca-Lourenço;irfonseca-lourenço@li3.pt;+351297945014;1993/02/14;F;;PT;Rua da Baleia, 286764-007 Lagos;2017/03/09 04:58:00;credit_card;active
+JoeLeite;Joel do Leite;joeleiteatli3.pt;+351964021823;1969/04/12;M;HW263902;PT;Largo Luna Ribeiro, 378048-699 Ponte de Sor;2016/06/20 03:55:42;cash;active
+ÁMorais87;Álvaro Morais;ámorais87@li3.pt;+351912373630;1996/10/23;M;PE389036;PT;;2017/10/15 15:24:16;debit_card;active
+MicOliveira;Micael Oliveira;micoliveira@li3.pt;(351) 921 419 299;1977/12/10;;VT456365;PT;Praça Tiago Vaz, S/N4046-073 Gouveia;2011/05/11 16:36:33;debit_card;active
+LiSoares;Lia Soares;lisoares@li3.pt;;1988/11/22;F;CL929768;PT;Av de Jesus, 6210610-205 Lagoa;2011/03/16 17:24:55;debit_card;active
+VítMiranda328;Vítor do Miranda;vítmiranda328@li3.pt;(351) 910 432 069;1977/11/10;M;YT359999;PT;Praça de Marques, S/N0238-411 Trancoso;2013/12/20 23:43:27;;ACTIVE
+DaCorreia112;David Correia;dacorreia112@li3.pt;;1976/07/28;M;JV694128;PT;Praça Torres, 855875-442 Trofa;2015/07/19 18:50:14;debit_card;active
+RúbeSoares1676;Rúben Soares;rúbesoares1676@li3.pt;(351) 928892732;1953/04/30;M;;PT;Praça das Necessidades, 44723-026 Vila Nova de Famalicão;2012/11/06 17:38:51;debit_card;active
+LePacheco;Leonardo Pacheco;lepacheco@li3.pt;(351) 923836049;1957/05/19;M;XV786178;PT;Av da Agra do Amial, S/N6349-378 Lisboa;2015/10/21 05:40:48;credit_card;
+HeleMatos;Helena Matos;helematos@li3.pt;+351221313244;1955/05/30;F;;PT;Rua do Rego Lameiro, 577863-568 Fátima;2014/06/24 20:38:30;cash;active
+KévVicente;Kévim Vicente;kévvicente@li3.pt;+351966164727;1976/02/12;M;WO370614;PT;Rua de Maia, 810497-670 Ribeira Grande;2019/11/01 16:53:08;credit_card;WO370614
+BenediFigueiredo739;Benedita Figueiredo;benedifigueiredo739@li3@pt;928 879 059;2003/12/12;F;JT583006;PT;Travessa Afonso Freitas, 6266666-566 Lourosa;2018/09/26 13:01:17;cash;inactive
+TeCarneiro-Matos;Teresa Carneiro-Matos;tecarneiro-matos@li3.pt;(351) 926 409 123;1962/07/30;;AB696089;PT;R. Paiva, 262083-351 Serpa;2010/10/23 06:25:26;credit_card;active
+HelenGarcia;Helena Garcia;helengarcia@li3@pt;246 471 788;1961/05/14;F;JI620483;PT;Travessa Oliveira, 556335-640 Cantanhede;2013/10/07 10:53:55;credit_card;active
+ToAlves461;;toalves461@li3.pt;(351) 920128211;1996/04/29;M;JM081322;PT;Largo de Antunes, 72680-169 Torres Novas;2013/02/26 22:22:22;credit_card;active
+HuSantos1576;Hugo Santos;husantos1576@li3@pt;(351) 965815711;1979/01/08;M;MT803898;PT;Rua Loureiro, 112531-610 Ponta Delgada;2017/05/29 21:59:21;cash;active
+DeAzevedo;Denis Azevedo;deazevedo@li3.pt;917696933;1960/02/21;M;JH417094;HIW;Av da Ribeira, 1882623-090 Vendas Novas;2020/01/10 19:02:10;cash;inactive
+MNogueira1328;Mara Nogueira;mnogueira1328@li3.pt;+351284843756;12:09:48 AM/23/04/2003;F;HA830065;PT;Av Salomé Nunes, 985031-935 Vizela;2012/11/14 14:05:03;cash;active
+GonJesus;Gonçalo Jesus;gonjesus@li3.pt;(351) 915 795 859;1996/09/20;M;ZI564783;UDM;Praça de Antunes, S/N3855-616 Ponte de Sor;2017/09/09 11:37:19;debit_card;active
+MatildTeixeira;Matilde Teixeira;matildteixeira@li3.pt;283 229 207;1954/07/22;F;VZ115009;PT;;2013/04/22 01:15:19;debit_card;active
+AliPacheco-Barbosa268;Alice Pacheco-Barbosa;alipacheco-barbosa268@li3.pt;966 044 854;1984/01/30;F;XM439567;PT;;2018/05/05 02:50:25;cash;active
+ErLourenço542;Erica Lourenço;erlourenço542@li3.pt;+351937831268;;F;RN351907;PT;Praça Cardoso, 398226-321 Vila do Conde;2015/04/25 07:40:07;debit_card;active
+LVaz1432;Lia Vaz;lvaz1432@li3.pt;(351) 915634321;1966/12/31;F;LF399637;PT;;2012/06/18 14:52:30;credit_card;active
+RodrigRodrigues655;Rodrigo Rodrigues;rodrigrodrigues655@li3.pt;(351) 968974721;1986/01/14;M;NA794872;PT;;2011/05/05 05:52:58;debit_card;active
+;Isabel-Flor Domingues;isadomingues823@li3.pt;(351) 913659846;1981/12/16;F;SZ087258;PT;R. Rui Fernandes, 589070-242 Penafiel;2010/06/20 20:07:13;cash;active
+IsaMelo85;;isamelo85@li3.pt;(351) 937 888 776;1999/06/19;F;DZ631419;PT;Av Carvalho, 504744-117 Gondomar;2018/09/27 04:30:24;credit_card;inactive
+JulianPinto;Juliana do Pinto;julianpinto@li3.pt;;1991/03/27;F;TU777728;PT;R. da Ponte da Lama, 170736-311 Fundão;2013/08/15 22:20:38;cash;active
+GabrLeite1137;Gabriela Leite;gabrleite1137@li3.pt;(351) 967 792 779;29/08/2012;F;UV417116;PT;Avenida Amaral, 668946-158 Olhão;2014/07/10 01:04:59;cash;active
+CamilMiranda-Matos;;camilmiranda-matos@li3.pt;(351) 965111774;1993/03/06;F;AK529112;PT;Rua Cardoso, 282278-938 Bragança;2014/12/07 05:01:27;cash;active
+IsAntunes;Isabel Antunes;isantunes@li3.pt;;1953/06/17;F;DQ258984;PT;Largo de Leal, 90605-858 Barcelos;2018/07/30 23:26:53;cash;active
+RafCarneiro1746;Rafaela Carneiro;rafcarneiro1746@li3.pt;(351) 966801060;1976/05/21;F;EE635785;PT;Largo Alice Rocha, 178942-497 Lixa;2017/12/16 04:46:32;;active
+DavLeal1726;David Leal;davleal1726@li3.pt;+351969099283;1983/03/19;M;NP064711;PT;;2016/05/30 21:26:54;credit_card;active
+MCruz466;Manuel Cruz;mcruz466@li3.pt;(351) 929 107 311;1997/06/28;M;RZ963098;PT;Praça de Carvalho, 8764452-423 Caldas da Rainha;2016/10/27 15:55:37;credit_card;
+DGuerreiro;Diego Guerreiro;dguerreiro@li3.pt;918 237 922;1966/01/16;M;;PT;Rua Figueiredo, 734814-903 Paços de Ferreira;2018/05/25 08:32:12;cash;active
+;Helena Silva;hesilva161@li3.pt;291 620 005;1992/12/05;F;YX650667;PT;Travessa de São Vicente de Paulo, 432817-605 Queluz;2015/11/24 18:53:48;debit_card;active
+;Valentim Neto-Guerreiro;valenneto-guerreiro379@li3.pt;(351) 916838791;1955/09/27;M;DI566646;PT;Praça Bruno Maia, 333215-247 Silves;2016/02/19 19:10:38;credit_card;active
+SeAmorim;Sebastião Amorim;seamorim@li3.pt;+351917299900;1979/05/03;M;HQ603094;O;Praça Nascimento, S/N6892-086 Póvoa de Santa Iria;2016/03/13 12:51:04;debit_card;active
+BMarques442;;bmarques442@li3.pt;+351969745574;1952/05/17;F;KW911697;PT;Av Laura Maia, 9067615-013 Póvoa de Varzim;2010/04/28 06:50:44;debit_card;active
+;Vítor Melo;vímelo72@li3.pt;(351) 961983423;1957/12/11;M;QY885446;PT;Alameda Sophia de Mello Breyner Andresen, 584733-252 Trancoso;2011/04/12 15:45:06;cash;active
+DAlves;;dalves@li3.pt;921 908 266;1968/03/18;M;VY024788;PT;Av de Palma, 8548186-527 Beja;2015/11/27 06:43:26;debit_card;active
+SPinho687;Simão Pinho;spinho687atli3.pt;(351) 920 285 084;1971/08/14;M;KM090325;PT;Praça Isabel Machado, 419465-794 Viseu;2019/05/24 19:00:24;credit_card;active
+SérCoelho;Sérgio do Coelho;sércoelho@li3.pt;914295387;1995/12/09;M;FB429051;PT;Alameda Vieira, 221560-500 Alverca do Ribatejo;2016/05/30 08:22:48;credit_card;FB429051
+SaAssunção;Sara Assunção;saassunção@li3.pt;(351) 264907309;1959/03/25;F;HD628894;PT;;2017/03/28 03:07:00;cash;active
+RiAlmeida552;;rialmeida552@li3.pt;(351) 287 711 697;1979/10/19;M;JE117528;PT;Av de Araújo, 3865084-215 Gouveia;2018/05/08 14:06:53;credit_card;active
+AmélCosta;Amélia Costa;amélcosta@li3.pt;+351202079081;30/06/2011;F;HD038048;PT;Alameda Carvalho, 160894-907 Chaves;2020/08/28 11:56:00;cash;active
+AlexandrPacheco;Alexandre Pacheco;alexandrpacheco@li3.pt;246 310 969;1996/07/28;M;QU704470;PT;;2019/01/31 17:03:12;debit_card;active
+BrunReis584;Bruna Reis;brunreis584@li3.pt;;2005/12/09;F;AT408970;PT;Largo Martim Baptista, 269176-119 Amora;2013/04/15 16:02:19;debit_card;active
+TCarvalho;Tomás Carvalho;tcarvalho@li3.pt;;1991/07/11;M;XG487059;PT;Largo de Neves, 819537-799 Rio Tinto;2017/09/28 04:49:29;cash;active
+SPinho;Sofia Pinho;spinho@li3.pt;(351) 227624799;1977/05/20;F;QS154226;PT;R. de Loureiro, 384213-926 Pinhel;2012/03/06 16:04:13;;active
+JoãGaspar1321;João Gaspar;joãgaspar1321@li3.pt;(351) 911794658;1960/04/13;M;DQ560039;B;Rua de Godim, 569521-331 Leiria;2016/07/17 11:12:03;credit_card;active
+;João Cunha;jcunha@li3.pt;(351) 240 857 013;2003/12/21;M;QI822233;PT;Praça Mélanie Pereira, S/N1147-779 Funchal;2015/02/28 22:09:43;debit_card;active
+RaqSilva-Matias;Raquel Silva-Matias;raqsilva-matias@li3.pt;(351) 967431160;1957/06/17;;WZ601317;PT;Rua Associação Empresarial de Portugal, 464304-540 Mirandela;2019/05/31 14:51:30;credit_card;active
+ArtPaiva-Gonçalves;;artpaiva-gonçalves@li3.pt;916 483 530;1951/10/01;M;WE864150;PT;Avenida Matias, 5961299-601 Pinhel;2019/12/04 01:14:16;cash;active
+NunPereira;Nuno Pereira;nunpereira@li3.pt;(351) 961670773;1966/09/12;M;AI855840;PT;Travessa Esteves, 3828859-498 Marinha Grande;2019/04/06 09:20:08;credit_card;AI855840
+BNeto1180;Brian Neto;bneto1180.li3.pt;276 577 566;1954/08/08;M;TX965154;PT;Travessa Matilde Pinto, 7518011-771 Castelo Branco;2010/12/26 21:26:24;credit_card;active
+LeonardMagalhães1472;Leonardo Magalhães;leonardmagalhães1472atli3.pt;966640463;1962/02/15;M;ZF699757;PT;Avenida Mário Soares, 3590536-163 Costa da Caparica;2017/01/22 04:36:11;cash;active
+SiAzevedo520;Simão Azevedo;siazevedo520atli3.pt;(351) 963258167;1953/10/22;M;OQ440615;PT;Rua Manuel Correia, 77697-502 Vila Nova de Foz Côa;2010/02/26 03:28:26;cash;active
+AlBarros1313;Alícia Barros;albarros1313.li3.pt;(351) 934551361;1950/11/16;F;GW091937;PT;R. da Estiva, 135032-713 Vila Nova de Famalicão;2016/03/01 02:14:29;cash;active
+AndreiaCosta;Andreia-Erica Costa;andreiacosta@li3.pt;934382161;1958/05/27;;DR329550;PT;Rua Alice Azevedo, 7123529-572 São João da Madeira;2013/08/06 11:50:38;credit_card;active
+MaRodrigues;Matias Rodrigues;marodrigues@li3.pt;(351) 928 619 710;1990/04/27;M;HJ610439;PT;Rua de Martins, 752311-679 Leiria;2018/03/12~21:14:55;debit_card;inactive
+IvaPaiva;Ivan Paiva;ivapaiva@li3.pt;(351) 252318053;1958/12/08;M;;PT;Alameda do Tejo, 3832780-997 Oliveira de Azeméis;2020/04/16 03:47:34;cash;active
+;Diogo Machado;diogmachado@li3.pt;(351) 228970797;1996/12/14;M;GD437952;PT;Praça Márcio Pinheiro, 560656-328 Almeirim;2020/03/17 13:44:46;debit_card;active
+JuliVicente;Juliana Vicente;julivicente@li3.pt;(351) 910 318 320;1977/12/24;F;FE518982;PT;Rua Torres, 1378403-366 Marinha Grande;23/07/2014;debit_card;active
+PTavares-Gomes1631;Patrícia Tavares-Gomes;ptavares-gomes1631@li3.pt;;1966/06/25;F;MB262838;PT;Praça Garcia, 296923-242 Olhão;2014/12/06 22:55:16;cash;active
+AndrVieira;Andreia do Vieira;andrvieira@li3.pt;(351) 930347670;;F;KH750803;PT;Av Daniel Borges, 6655588-680 Peniche;2014/11/19 18:20:50;debit_card;active
+RuFreitas56;Rui Freitas;rufreitas56@li3.pt;+351964838441;1979/11/19;M;JZ757611;PT;Praça da Rainha D. Leonor, 40484-814 Reguengos de Monsaraz;2014/03/31 22:47:53;credit_card;
+BeatrCruz-Fernandes;Beatriz Cruz-Fernandes;beatrcruz-fernandes@li3.pt;;1971/04/04;F;GS573264;PT;Travessa Amália Rodrigues, 595700-623 Loures;2012/09/29 08:09:12;credit_card;active
+SBarros69;;sbarros69@li3.pt;924096897;1972/03/13;M;MN069950;PT;Rua Cláudio Nunes, 69880-313 Valpaços;2011/11/19 10:01:04;credit_card;active
+ÍrValente;Íris Valente;írvalente@li3.pt;(351) 968541548;1986/02/16;F;AX397789;PT;Av Manuel Borges, 830735-467 Oliveira do Bairro;2014/11/22 09:52:21;debit_card;AX397789
+FraTavares;Francisco Tavares;fratavares@li3.pt;;1994/05/13;M;FH412208;PT;Alameda Lourenço Borges, 682525-681 Trancoso;2017/01/16 14:00:16;cash;active
+MiGonçalves;Mia Gonçalves;migonçalves@li3.pt;931038329;1993/12/26;F;WU994037;PT;Travessa da Aldeia, 326897-970 Valongo;2011/03/28 23:15:40;credit_card;
+JoMorais318;Jorge Morais;jomorais318@li3.pt;(351) 932 195 294;1968/03/14;M;RK434835;PT;Alameda de Faria, 309165-359 Trancoso;2017/02/07 19:07:45;;active
+XavLoureiro;Xavier Loureiro;xavloureiro@li3.pt;931677050;1976/02/24;M;YO307079;PT;Alameda da Sé, 747065-769 Valbom;2016|10|20 15:31:32;debit_card;active
+BernarLeite251;Bernardo Leite;bernarleite251.li3.pt;(351) 917062766;1978/11/22;M;WV967182;PT;Travessa do Forno Velho, 910092-543 Espinho;2010/12/08 17:49:42;cash;active
+ErikReis;Erika Reis;erikreis@li3.pt;(351) 913 065 740;1984/06/22;F;CS163363;I;Av Maia, 4055271-388 Lixa;2017/05/17 13:11:25;credit_card;active
+HMatias1250;Hugo Matias;hmatias1250@li3.pt;(351) 962256647;1976/09/27;M;AR175322;PT;Rua Catarina Moreira, 8537963-832 Tondela;2018/05/04 15:34:21;cash;AR175322
+MarcoMatias882;Marcos da Matias;marcomatias882@li3.pt;;2000/10/27;M;ZS648612;PT;Av Vicente, 901726-132 Montijo;2010/10/16 02:57:57;cash;active
+RiOliveira466;Rita Oliveira;rioliveira466@li3.pt;(351) 937834607;1978/09/30;;VR092222;PT;R. Nicole Baptista, 123647-922 Lourosa;2010/05/11 16:38:40;cash;active
+JNunes552;Joel Nunes;jnunes552@li3.pt;(351) 920 626 515;2004/05/06;M;;PT;Praça Antunes, 8893135-019 Vila do Conde;2016/02/26 00:50:00;cash;active
+AndreAlves573;Andreia Alves;andrealves573@li3.pt;(351) 929 378 616;1977/08/24;;MZ890451;PT;Avenida dos Vice-reis, 166785-817 Freamunde;2019/03/03 16:31:41;debit_card;active
+NunAraújo1539;Nuno Araújo;nunaraújo1539@li3@pt;(351) 921 858 606;1963/03/22;M;CT230614;PT;Av de Santos, 725529-869 Beja;2013/01/12 04:53:22;credit_card;active
+IrMatos;;irmatos@li3.pt;+351932425116;1966/06/02;F;RG998507;PT;Av Bryan Moura, 730396-529 Santana;2019/09/21 15:32:26;credit_card;active
+;Kévim Rocha;kévrocha@li3.pt;+351239717255;1975/07/30;M;VU477266;PT;Rua Gonçalo Loureiro, 677560-869 Oliveira do Hospital;2020/12/24 07:39:11;debit_card;active
+WilsLeite17;Wilson Leite;wilsleite17@li3.pt;(351) 910 419 303;2002/06/08;M;FI566446;PT;;2016/03/12 10:13:44;credit_card;active
+TRamos842;Tatiana Ramos;tramos842@li3.pt;933 438 285;1970/08/20;F;JJ241391;PT;Alameda de Batista, 2369478-814 Figueira da Foz;2012/08/27 10:27:32;credit_card;JJ241391
+GustCoelho186;Gustavo Coelho;gustcoelho186@li3.pt;+351939117581;1969/04/02;M;HV228173;PT;Travessa de Ramos, 126688-708 Elvas;2010/03/19 03:06:21;;active
+InêHenriques;Inês Henriques;inêhenriques@li3.pt;+351917626957;1989/07/19;F;BF524956;PT;Av Noah Loureiro, 51376-984 Anadia;2011/11/09 09:08:38;cash;BF524956
+MaNogueira;Mariana Nogueira;manogueira@li3.pt;968618290;1974/01/06;F;NC983492;C;Largo de Pina Manique, 678859-952 Mêda;2018/12/13 04:35:11;debit_card;active
+NádSimões-Soares480;Nádia Simões-Soares;nádsimões-soares480@li3.pt;(351) 914 678 291;2004/12/30;F;JC414014;PT;R. Nogueira, 61585-421 Fátima;2017/03/31 22:14:11;cash;JC414014
+VitóVicente;Vitória Vicente;vitóvicente@li3.pt;(351) 936016858;2000/12/27;F;NK875421;PT;Travessa Nuno Magalhães, S/N5082-011 Marinha Grande;2016/07/20 00:33:10;;active
+DiogJesus;Diogo Jesus;diogjesus@li3.pt;;1973/11/22;M;AT581247;PT;Praça Micael Vaz, 771631-759 São Salvador de Lordelo;2016/02/21 00:16:46;credit_card;active
+MadaNunes;Madalena Nunes;madanunes@li3.pt;241247397;1969/01/25;F;VJ747661;PT;Avenida Fernandes, 994861-800 Cantanhede;2011/06/14 09:38:59;credit_card;
+BMachado;Bryan Machado;bmachado@li3@pt;(351) 933086755;1994/02/03;M;FC272699;PT;R. de Camilo, 7248308-510 Gandra;2019/09/07 02:57:23;cash;active
+;Mariana Amorim;mamorim@li3.pt;(351) 288179563;1994/10/03;F;EX691030;PT;Alameda Monteiro, 435526-190 Vila Nova de Famalicão;2010/12/24 07:30:28;cash;active
+LariMartins1204;Larissa do Martins;larimartins1204@li3.pt;967634841;1968/08/20;F;GV582176;PT;Rua da Igreja, 478075-405 Vale de Cambra;2017/10/11 02:35:34;credit_card;
+LuíBranco;Luísa Branco;luíbranco@li3.pt;925 353 062;1957/04/19;F;EU384192;PT;;2016/08/13 01:32:11;cash;active
+SamuLeite;;samuleite@li3.pt;(351) 967825637;1958/06/16;M;CM651609;PT;Praça Isaac Esteves, 75292-559 Olhão;2014/06/03 15:39:29;cash;active
+PetrCruz1478;Petra Cruz;petrcruz1478@li3@pt;+351964248599;1961/12/14;F;XQ991986;PT;Travessa Monteiro, 674282-236 Oliveira de Azeméis;2014/11/27 23:04:59;debit_card;active
+WilliaGomes;William Gomes;williagomes@li3.pt;(351) 223530813;1985/06/22;M;RU140206;PT;Alameda Macedo, 947498-262 Portalegre;2013/01/31 01:15:41;debit_card;RU140206
+FiliVieira;Filipa Vieira;filivieira@li3.pt;964 474 442;1958/04/23;F;AU337464;PT;;2020/01/10 05:23:54;cash;active
+MargFaria1736;Margarida Faria;margfaria1736@li3.pt;+351966836550;1976/10/29;F;;PT;Av Brian Marques, 73314-683 Figueira da Foz;2018/05/29 11:19:10;credit_card;active
+GonçalCarneiro1601;Gonçalo Carneiro;gonçalcarneiro1601@li3.pt;918922250;1977/04/29;M;MK632890;PT;;2016/10/18 20:57:01;debit_card;active
+SebastiAlves1861;Sebastião da Alves;sebastialves1861@li3.pt;961 243 876;1993/12/22;M;BK454874;PT;;2013/02/20 02:18:46;debit_card;active
+JCardoso1920;Júlia Cardoso;jcardoso1920@li3.pt;911508630;2000/06/19;F;AX200761;PT;Alameda de Gomes, S/N6654-572 Elvas;12:04:09 AM/20/06/2021;cash;active
+MiMelo809;Miguel Melo;mimelo809@li3.pt;+351964361180;1998/05/28;;UK516207;PT;Travessa Miranda, 333285-929 Marco de Canaveses;2011/11/11 07:01:28;credit_card;active
+GRamos1856;Gaspar Ramos;gramos1856@li3.pt;(351) 937 998 982;1962/02/21;M;;PT;Largo de Neto, 13639-875 Póvoa de Santa Iria;2018/10/07 14:38:30;credit_card;active
+SimMagalhães1729;;simmagalhães1729@li3.pt;(351) 966 177 959;1989/04/16;M;HJ942544;PT;Praça dos Moinhos, 9801039-125 Paços de Ferreira;2018/03/17 15:16:27;cash;active
+EduaMarques;Eduardo Marques;eduamarques@li3.pt;+351237292114;1989/11/17;M;JP037215;PT;Rua Gonçalo Nunes, 65917-306 Serpa;2016/06/16 12:27:30;;active
+LeSousa;Letícia Sousa;lesousa@li3.pt;(351) 911321877;1974/07/16;F;IL190565;PT;;2014/07/14 12:09:30;credit_card;active
+EAlves15;;ealves15@li3.pt;(351) 968 207 070;1958/03/27;F;QR645748;PT;R. Pinto, 208148-707 Vila Nova de Santo André;2017/07/06 17:48:52;cash;active
+IsEsteves;Isaac Esteves;isesteves@li3.pt;921422455;1950/04/13;M;WY894922;S;Rua Bruna Assunção, 881374-959 Alverca do Ribatejo;2014/06/22 02:41:36;debit_card;active
+JosMendes;;josmendes@li3.pt;237305491;2004/08/03;M;AD555677;PT;Alameda das Conchas, 928778-842 Angra do Heroísmo;2010/04/07 04:40:22;credit_card;active
+;Mara Azevedo;maazevedo@li3.pt;928 607 035;1994/02/27;F;GO212035;PT;Av da Aldeia, 191238-102 Évora;2019/01/02 13:52:11;credit_card;active
+InMonteiro1057;Inês Monteiro;inmonteiro1057@li3.pt;(351) 271017959;1974/02/13;;LJ728773;PT;Travessa de S. Marçal, 2636794-750 Matosinhos;2010/04/27 22:29:09;credit_card;active
+VeFaria1792;;vefaria1792@li3.pt;964450614;1959/04/16;F;SL650580;PT;Praça do Campo, 75818-307 Valpaços;2014/02/28 01:22:14;cash;active
+BruLopes-Torres;Bruno Lopes-Torres;brulopes-torres@li3.pt;(351) 969 302 769;1974/02/12;M;DM886494;PT;Avenida de Carvalho, S/N2348-336 Lisboa;2012/12/30 04:34:35;;active
+LeAraújo1442;Leonor do Araújo;learaújo1442atli3.pt;(351) 921116001;1981/10/23;F;QU488624;PT;Rua Lopes, 41084-515 Porto;2013/06/08 23:41:14;credit_card;active
+CarlVicente424;Carlota Vicente;carlvicente424@li3.pt;(351) 919 634 306;1970/06/17;F;WV534583;CDE;Rua de Anjos, S/N2923-625 Setúbal;2015/10/24 14:18:19;cash;active
+MafaMelo1175;Mafalda Melo;mafamelo1175.li3.pt;931 916 539;1950/03/23;F;CK449311;PT;Avenida Alfredo Keil, 82237-497 Barcelos;2010/12/04 18:53:02;credit_card;active
+EmSoares;Ema Soares;emsoares@li3.pt;(351) 937 547 832;2005/08/17;F;TB493223;PT;R. de Vicente, S/N0785-958 Peniche;2013/06/03 14:31:22;debit_card;TB493223
+CarlNunes;Carlos Nunes;carlnunes@li3.pt;+351938076709;1995/12/09;;CF010519;PT;Av de Ribeiro Sanches, 224958-785 Mirandela;2012/10/25 07:31:39;debit_card;active
+ErikFerreira926;Erika Ferreira;erikferreira926@li3.pt;(351) 916 240 700;2002/10/08;;CF281913;PT;Travessa Santiago Cunha, 892269-984 Funchal;2018/08/26 06:00:19;cash;ACTIVE
+TeSilva1408;Teresa Silva;tesilva1408@li3.pt;(351) 239 938 900;1980/04/26;F;QH257715;PT;Largo de Silva, 1836786-029 Caldas da Rainha;02/11/2021;debit_card;active
+LetíciOliveira668;;letícioliveira668@li3.pt;(351) 939 627 336;1993/02/09;F;YX361646;PT;R. de Magalhães, S/N5339-137 Entroncamento;2018/03/25 13:34:39;credit_card;active
+LNascimento20;Lia-Bárbara Nascimento;lnascimento20@li3.pt;921 618 037;1954/09/26;F;XD113473;PT;;2016/03/27 21:55:53;credit_card;active
+;Lucas Lima;lucalima@li3.pt;(351) 245 246 230;1982/05/04;M;DL251850;PT;Av de Oliveira, 673939-376 Vale de Cambra;2015/09/04 01:33:15;debit_card;active
+LuMorais119;Luna Morais;lumorais119@li3.pt;(351) 924587242;1965/05/19;F;;PT;Alameda Diego Cruz, 12754-054 Vila do Conde;2017/09/10 04:21:52;debit_card;active
+CarolRamos100;Carolina Ramos;carolramos100@li3.pt;(351) 922469760;1991/05/26;F;;PT;Praça de Ferreira, 594446-758 Ribeira Grande;2015/11/22 10:38:34;debit_card;active
+MatiMaia;Matias Maia;matimaia@li3.pt;(351) 961297871;1981/01/06;M;AP370930;PT;;2014/08/12 16:35:48;debit_card;active
+CésaMagalhães;César Magalhães;césamagalhães@li3.pt;(351) 923783242;1971/05/27;M;HX746415;PT;Av Egito Gonçalves, 3652438-256 Santarém;2019/09/30 13:27:15;cash;
+HugPinto-Rodrigues1412;Hugo Pinto-Rodrigues;hugpinto-rodrigues1412@li3.pt;(351) 911735250;1996/09/04;M;;PT;Largo de Azevedo, 360174-784 Oliveira do Bairro;2011/10/19 08:57:55;debit_card;active
+RodriAzevedo728;Rodrigo Azevedo;rodriazevedo728@li3.pt;(351) 917308189;1953/04/28;M;WB324928;PT;Alameda Lourenço, S/N2829-959 Santana;2016/11/23 13:35:43;credit_card;WB324928
+Erika-ÉLourenço;Erika-Érica Lourenço;erika-élourenço@li3.pt;(351) 924260302;;F;ZT517993;PT;Rua de Cunha, S/N5382-114 Gafanha da Nazaré;2010/07/16 06:28:48;debit_card;active
+GaNunes-Maia;Gabriel Nunes-Maia;ganunes-maia@li3.pt;965 115 726;1980/11/26;M;;PT;Praça de Nogueira, 7085410-773 Vizela;2018/05/12 17:57:45;cash;active
+SaValente;Sara Valente;savalente@li3.pt;;1954/01/30;F;GU276830;PT;Largo Brito, S/N5984-181 Sines;2015/02/06 05:44:43;debit_card;active
+NDomingues;Noah Domingues;ndomingues@li3.pt;919 288 617;1989/07/30;M;;PT;Alameda Abreu, 33729-064 Amadora;2012/11/29 13:24:22;debit_card;Active
+GabriCarvalho1676;Gabriela Carvalho;gabricarvalho1676@li3.pt;+351927856677;1957/08/31;F;NU839044;PT;Avenida Gonçalves, 677695-047 Barreiro;2016/03/24 05:56:48;debit_card;NU839044
+Emma-Leal552;Emma-Emma Leal;emma-leal552@li3.pt;(351) 962033427;1972/04/30;F;PN826272;PT;;2012/03/29 15:27:34;cash;Active
+MicGarcia-Pereira;Micael Garcia-Pereira;micgarcia-pereira@li3.pt;(351) 274 479 975;1952/08/22;;BE736428;PT;Praça Batista, 76174-832 Gondomar;2010/01/31 18:15:32;credit_card;active
+MatilVieira;Matilde Vieira;matilvieira@li3.pt;925 750 405;1959/12/25;F;OW612028;PT;;2017/01/06 23:52:37;credit_card;active
+FranAraújo1620;Francisca Araújo;franaraújo1620@li3.pt;935793281;07:40:02 PM/09/08/2007;F;HX404935;PT;Rua Domingues, 823697-289 Esmoriz;2011/07/10 10:03:28;credit_card;Active
+AntóBorges1867;António Borges;antóborges1867@li3.pt;(351) 967 029 522;22/07/2008;M;XE035920;PT;Largo de Paiva, 508893-116 Caldas da Rainha;2014/12/10 19:02:47;cash;ACTIVE
+IaraBatista;Iara-Alícia Batista;iarabatista@li3.pt;;2004/03/31;F;TY299948;PT;Praça Jesus, 610473-487 Silves;2012/07/31 08:35:17;cash;active
+NaiBatista;Nair Batista;naibatista@li3.pt;912705780;1976/08/20;F;TC515261;PT;Travessa Gabriel Carvalho, 729337-205 Castelo Branco;2010/08/12 23:38:22;;active
+NuMelo1394;Nuno de Melo;numelo1394@li3.pt;(351) 926515938;1955/03/18;;IT104071;PT;Av Ernesto Veiga de Oliveira, 874889-068 Peso da Régua;2011/04/22 11:12:06;cash;ACTIVE
+JoanMiranda;Joana Miranda;joanmiranda@li3.pt;(351) 931 301 337;1995/08/09;F;CI973860;PT;R. do Preto, S/N0190-601 Loulé;2017/11/23 13:57:02;debit_card;CI973860
+ValentiEsteves1885;Valentim Esteves;valentiesteves1885@li3.pt;(351) 934 406 505;1963/07/31;M;XS473478;PT;Avenida Filipa Carneiro, 342050-330 Paços de Ferreira;2013/11/03 16:03:15;;active
+RaqueMoreira;Raquel Moreira;raquemoreira@li3.pt;(351) 936661405;1978/02/21;;LF800167;PT;Travessa da Ponte da Lama, 834412-730 Póvoa de Santa Iria;2011/01/19 02:19:31;cash;active
+WilsSilva;Wilson Silva;wilssilva@li3.pt;;1994/06/12;M;PV359413;PT;Av de Costa, 265856-333 Vila Nova de Santo André;2016/08/15 01:16:37;cash;active
+EduCarvalho1041;Eduarda Carvalho;educarvalho1041@li3.pt;(351) 239 313 214;1991/09/27;F;RW868687;PT;Rua Amaral, 482075-435 Póvoa de Varzim;2011/02/16 19:24:44;;active
+JulianRocha1557;Juliana Rocha;julianrocha1557@li3.pt;(351) 919 031 554;1961/06/30;F;;PT;Alameda Monteiro, S/N1657-843 Abrantes;2010/09/30 01:03:02;credit_card;active
+FrRamos212;Francisco Ramos;frramos212@li3.pt;(351) 914 445 926;1955/06/24;M;TM851405;TWN;R. de Santa Clara, 33623-416 Cartaxo;2015/12/08 01:21:54;credit_card;active
+DJesus;Daniel Jesus;djesus@li3.pt;915 457 096;1976/10/08;M;CY731198;PT;Alameda dos Rouxinóis, S/N4868-350 Mealhada;09:24:30 PM/11/12/2005;cash;active
+AValente;André Valente;avalente@li3.pt;964882073;1976/01/28;M;;PT;Praça de Monchique, 90272-047 Porto;2016/08/13 01:47:46;credit_card;active
+RiRamos;Rita Ramos;riramos@li3.pt;(351) 923884744;1985|03|24;F;XE510684;PT;R. Andrade, 464627-160 Sacavém;2014/11/09 11:27:22;credit_card;active
+CaroPaiva;Carolina Paiva;caropaiva@li3.pt;(351) 939504859;1991/01/05;;UX348622;PT;Alameda de Basílio Teles, S/N5419-329 Almeirim;2014/11/03 16:17:20;credit_card;active
+PiMaia;Pilar Maia;pimaia@li3.pt;(351) 209408099;2004/07/20;F;JY734785;X;Praça de Pacheco, S/N4812-573 Paredes;2015/08/10 02:28:14;credit_card;active
+VictóCosta;;victócosta@li3.pt;230740832;1964/12/10;F;OX823624;PT;Rua da Cova da Moura, S/N8647-241 Gandra;2015/07/11 05:37:08;debit_card;Active
+DeFernandes1382;Denis Fernandes;defernandes1382@li3.pt;(351) 914 412 251;1956/08/21;M;SW378066;PT;Praça Ângela Moura, 898877-344 Montijo;2017/08/19~15:56:59;credit_card;active
+XRibeiro1515;Xavier Ribeiro;xribeiro1515@li3.pt;(351) 927 612 720;1972/05/16;M;AC998804;PT;Travessa Mendes, 503698-243 Reguengos de Monsaraz;2017/12/14 08:05:26;credit_card;AC998804
+DébCruz;Débora Cruz;débcruz@li3.pt;(351) 964 643 951;1973/05/05;F;ED704202;BEA;Av Cristiano Carneiro, 112223-400 Faro;2018/07/15 13:17:01;credit_card;inactive
+ClGomes;Cláudio Gomes;clgomes@li3.pt;(351) 928 579 909;2003/08/28;M;TW604445;PT;;2010/05/10 14:11:54;debit_card;active
+SGomes1705;Simão Gomes;sgomes1705.li3.pt;(351) 917428047;1951/08/29;M;SP802641;PT;Alameda Sara Machado, S/N5352-060 Mealhada;2010/09/05 00:35:09;credit_card;active
+ClTeixeira;Cláudio Teixeira;clteixeira@li3.pt;(351) 938670287;2004/06/24;M;EN096515;PT;Travessa Ivan Domingues, 11938-962 Penafiel;2013/03/20 10:40:24;;active
+;Rafael Mendes;rafaemendes@li3.pt;+351936895304;1970/04/08;M;EQ773556;PT;Alameda de S. Francisco de Borja, 669238-899 Praia da Vitória;2013/07/19 09:20:06;debit_card;active
+EmTorres;Emma Torres;emtorres@li3.pt;(351) 922 357 706;1958/12/04;F;;PT;Rua de Cunha, 7086896-138 Paredes;2011/08/17 09:53:33;credit_card;active
+ViceNunes;Vicente Nunes;vicenunes@li3.pt;(351) 931 343 015;1962/04/21;M;II247245;PT;Largo do Molhe, 722523-173 Aveiro;08/10/2012;cash;active
+TomGuerreiro1353;Tomás Guerreiro;tomguerreiro1353@li3.pt;(351) 929 247 123;1985/01/16;M;GT937216;PT;Travessa do Roleto, 167857-440 Fundão;;debit_card;active
+AnPereira1874;André Pereira;anpereira1874@li3.pt;(351) 933 806 179;2003/01/07;M;XB634033;PT;;2016/12/30 01:13:20;debit_card;active
+DéboCampos;Débora Campos;débocampos@li3.pt;+351923974473;1996/12/12;F;ND342358;PT;Alameda de Gomes, 2905269-262 Ponte de Sor;2011/06/06 20:51:55;debit_card;ND342358
+BeaAssunção72;Beatriz Assunção;beaassunção72@li3.pt;(351) 910 042 666;1956/12/08;F;SZ257100;PT;Avenida Abreu, 838824-925 Figueira da Foz;2018/06/24 15:49:51;credit_card;SZ257100
+;Irina-Patrícia Torres;irina-torres@li3.pt;216662828;1991/03/12;F;QB740703;PT;Avenida Dom Afonso Henriques, 11217-934 Coimbra;2014/05/18 13:06:08;credit_card;active
+LisanRamos1893;Lisandro Ramos;lisanramos1893@li3.pt;(351) 962 804 706;1985/07/12;M;RG575092;PT;Avenida de S. Salvador, S/N7922-014 Elvas;2019/04/03 06:46:17;cash;RG575092
+Pilar-Pacheco;Pilar-Juliana Pacheco;pilar-pacheco.li3.pt;934 188 550;1955/06/10;F;GM938599;PT;Av de Neves, 509845-957 Gondomar;2017/10/14 23:13:59;cash;active
+EmaPereira;Emanuel Pereira;emapereira@li3.pt;922 611 560;1972/07/14;M;DV607040;PT;;2015/11/06 14:32:22;debit_card;active
+BrRocha-Oliveira;Bruno Rocha-Oliveira;brrocha-oliveira@li3.pt;(351) 216494094;1999/04/04;M;ZL977103;O;Travessa Costa, 390367-176 Figueira da Foz;2012/07/16 05:10:39;cash;active
+ÂSá593;Ângela Sá;âsá593@li3.pt;(351) 922 080 636;1951/03/15;F;AC493519;PT;Avenida de Figueiredo, S/N3394-867 Coimbra;2010/10/28 22:20:55;debit_card;
+MéLopes578;Mélanie Lopes;mélopes578@li3.pt;937 032 693;1963/06/10;F;YI141063;PT;Praça Lisandro Amaral, 4128822-619 Esmoriz;2013|09|04 19:58:30;cash;active
+;Mafalda Teixeira;mafaldteixeira@li3.pt;937398521;1954/11/07;F;FV395921;PT;Largo Neves, 832823-227 Oliveira do Hospital;2015/12/06 07:38:51;debit_card;active
+SamNunes;Samuel Nunes;samnunes@li3.pt;(351) 938041792;1984/07/29;M;;PT;Rua Areeiro, S/N5022-376 Marinha Grande;2018/06/10 10:12:29;cash;active
+GuilFaria15;Guilherme Faria;guilfaria15@li3.pt;(351) 961 672 106;1992/05/23;M;;PT;Alameda Freitas, 8815425-597 Cantanhede;2013/01/02 15:14:17;cash;active
+FiMatias;Filipa Matias;fimatias@li3.pt;(351) 920 199 019;1973/04/01;;GL035671;PT;Av Leonardo Pinheiro, 1588957-565 Vila Nova de Santo André;2019/10/22 20:56:49;credit_card;active
+AnitCampos1825;Anita Campos;anitcampos1825@li3.pt;934 496 399;1953/10/04;F;LN297506;PT;Largo Joana Azevedo, 16790-073 Mangualde;2018/07/06~13:49:58;cash;active
+AfoMatos;Afonso Matos;afomatos@li3.pt;239 084 847;1966/06/18;M;VI494938;PT;R. Almeida, 230295-203 Sacavém;2012|08|10 18:20:00;debit_card;active
+MatAmaral;Mateus da Amaral;matamaral@li3.pt;(351) 286 122 822;14/05/2018;M;YL230492;PT;Rua de Castro, 37702-755 Vila Real;2014/01/11 03:18:14;cash;active
+AfoLourenço-Amorim;Afonso Lourenço-Amorim;afolourenço-amorim@li3.pt;(351) 966611700;1951/05/12;M;KM766297;PT;Praça Nair Barbosa, S/N3712-593 Câmara de Lobos;2020/11/16 21:21:07;debit_card;
+IvAlmeida310;Ivo Almeida;ivalmeida310@li3.pt;(351) 921 366 954;10:42:53 PM/20/03/2016;M;EJ888273;PT;Av de João Augusto Ribeiro, S/N1219-057 Tarouca;2014/02/07 08:31:17;debit_card;active
+EAndrade;Emma Andrade;eandrade@li3.pt;(351) 934148043;1984/05/19;F;FS816556;PT;;2010/07/09 22:14:11;credit_card;active
+IvAndrade;Ivo Andrade;ivandradeatli3.pt;(351) 916342797;1981/02/11;M;BR158365;PT;R. Sara Reis, 475313-505 Faro;2018/10/06 19:44:16;cash;active
+CaAlmeida1457;Carlos Almeida;caalmeida1457@li3.pt;;1974/11/26;M;DL298993;PT;Alameda do Preto, 311269-854 Viseu;2019/11/29 13:18:52;credit_card;active
+DanPereira;Daniela Pereira;danpereira@li3.pt;915 169 349;2001/02/01;F;;PT;Alameda Márcio Gonçalves, 49414-181 Figueira da Foz;2019/05/16 09:56:04;credit_card;active
+LarCarneiro;Lara Carneiro;larcarneiro@li3.pt;231 091 561;1969/12/28;F;LE856767;PT;Avenida do Castelo do Queijo, 5608857-564 Quarteira;2018/10/09 10:03:44;debit_card;
+LuaPinheiro;Luana Pinheiro;luapinheiro@li3.pt;(351) 928 247 253;1965/07/06;F;RL053813;PT;Alameda Vaz, 806504-779 Cantanhede;2014/07/25 05:44:19;debit_card;
+SaPereira;Samuel do Pereira;sapereira@li3.pt;(351) 960 386 263;1998/01/23;M;CY258936;X;Praça Santos, S/N8836-930 Fundão;2019/03/13 22:18:08;debit_card;active
+MélaniSimões1629;Mélanie Simões;mélanisimões1629@li3.pt;(351) 967 256 890;1966/08/08;F;NR050089;PT;R. Kévim Batista, S/N6012-286 Amora;01/02/2015;debit_card;active
+LetíFerreira;Letícia Ferreira;letíferreira@li3.pt;+351938939507;1976/11/21;F;EU525762;PT;Rua Luísa Gomes, 250747-949 Gandra;2014/09/07 13:54:39;cash;
+SarMatias1646;Sara Matias;sarmatias1646@li3.pt;(351) 968121287;1978/03/13;F;NS451349;PT;Largo das Ondas, 290177-719 Barcelos;02:28:36 PM/05/02/2008;credit_card;active
+MárMachado;Mário Machado;mármachado@li3.pt;+351280469084;1956/02/05;M;JT553932;PT;Rua Manuel Carneiro, S/N5136-469 Porto Santo;2016/09/11 02:49:48;debit_card;JT553932
+Bárbara-EduaFerreira;Bárbara-Eduarda Ferreira;bárbara-eduaferreira@li3.pt;(351) 935 141 542;1977/05/11;F;EG898588;PT;Travessa Tomás Amaral, S/N8835-452 Gouveia;2012/11/16 04:22:54;;active
+DenLeite;Denis Leite;denleite@li3.pt;(351) 923 425 628;1990/01/29;;SM313886;PT;Praça Leite, S/N4881-351 São Mamede de Infesta;2018/06/01 18:34:10;debit_card;active
+IriPinto;Irina-Helena Pinto;iripinto@li3.pt;+351282114969;1998/01/23;F;;PT;R. Miranda, 69385-494 Montijo;2020/03/14 22:36:53;credit_card;active
+CrisPinho;Cristiano Pinho;crispinho@li3.pt;(351) 287 236 240;06/03/2009;M;DW108468;PT;Travessa Fernandes, 16566-721 Espinho;2010/12/02 11:22:27;cash;active
+MBorges-Pires;Miguel Borges-Pires;mborges-pires@li3.pt;913678989;1976/12/06;M;MX447955;PT;Av das Naus, S/N6407-413 Loures;2015/08/11 23:44:23;credit_card;
+;Martim Almeida;maralmeida1903@li3.pt;(351) 201 642 545;1993/01/15;M;HG577654;PT;Av Matos, 4961201-084 Viseu;2017/09/19 01:04:11;debit_card;active
+CamSimões;Camila Simões;camsimões@li3.pt;(351) 920260046;1972/02/13;;RO820079;PT;Av Fernandes, 678213-330 Horta;2017/12/27 18:24:21;debit_card;active
+DiniCorreia404;Dinis Correia;dinicorreia404@li3.pt;+351928609923;1986/05/13;;AB913033;PT;Alameda de Valente, 5573637-707 Viana do Castelo;2012/07/03 06:43:47;debit_card;active
+LeGonçalves1674;Letícia Gonçalves;legonçalves1674@li3.pt;(351) 911 236 484;1984/12/16;F;ZC591088;PT;Praça de Azevedo, 6917259-441 Mirandela;2013/02/12 08:07:08;credit_card;
+MarAmaral1974;Mara de Amaral;maramaral1974@li3.pt;;1981/08/16;F;IH099707;PT;Avenida Macedo, 50607-861 Vila do Conde;2013/06/22 01:14:57;debit_card;active
+MaMagalhães;;mamagalhães@li3.pt;920732674;1955/12/08;F;ZW223939;PT;Alameda de João do Carmo, 508727-888 Espinho;2020/03/28 17:21:12;credit_card;active
+FBaptista825;Fábio Baptista;fbaptista825@li3.pt;930 298 271;1985/09/21;;SG740237;PT;Rua de Guerreiro, 856195-951 Braga;2015/07/29 18:44:07;credit_card;active
+ConstançGonçalves1706;;constançgonçalves1706@li3.pt;+351930291565;2003/01/09;F;US674318;PT;Travessa de Nunes, 52776-772 Marco de Canaveses;2010/04/10 15:58:25;debit_card;active
+ÉriNogueira488;Érica Nogueira;érinogueira488@li3.pt;(351) 265 492 344;1953/09/03;F;DF256165;PT;Travessa de Garcia, 69553-226 Marco de Canaveses;2011/01/02 06:14:23;debit_card;
+SofLourenço-Lopes;Sofia Lourenço-Lopes;soflourenço-lopes@li3.pt;(351) 939 633 540;1985/11/11;F;RC276840;PT;Rua Catarina Tavares, 4508069-731 Seixal;2015/10/22 12:53:39;debit_card;RC276840
+AlexanFonseca1348;Alexandra Fonseca;alexanfonseca1348@li3.pt;938 276 890;1962/11/12;F;LW420123;PT;;2012/11/25 20:15:34;cash;inactive
+HuNeto;Hugo Neto;huneto@li3.pt;(351) 961557451;1969/11/02;;QH279369;PT;Avenida Emanuel Cardoso, 80773-758 Vila Nova de Foz Côa;2017/12/13 16:43:14;cash;active
+JoHenriques;José Henriques;johenri;(351) 935 028 036;1996/08/28;M;LE379187;PT;Travessa Vaz, 819073-545 Vila Franca de Xira;2012/07/28 18:14:51;cash;active
+BáBarbosa;Bárbara Barbosa;bábarbosa.li3.pt;915 162 171;1954/09/23;F;OA403943;PT;Rua dos Vice-reis, 809642-423 Portimão;2016/12/29 13:12:51;credit_card;active
+HenRodrigues592;Henrique Rodrigues;henrodrigues592@li3.pt;(351) 248 673 989;1967/09/27;M;BI099373;PT;Travessa de Sousa, 63954-306 Esposende;2015/10/25 22:07:44;;active
+DaviMiranda-Soares1993;;davimiranda-soares1993@li3.pt;(351) 963405455;1992/04/28;M;FY532555;PT;Travessa de Macedo, 85202-605 Seia;2011/04/26 17:25:33;credit_card;active
+YaPires-Rocha1375;Yara Pires-Rocha;yapires-rocha1375@li3.pt;(351) 929483078;1975|07|02;F;EK144350;PT;Travessa Rocha, 7090186-054 Chaves;2015/01/15 14:41:41;cash;active
+NSousa-Branco;Naiara Sousa-Branco;nsousa-branco@li3.pt;(351) 967 809 262;1953/06/01;F;HB510448;PT;Av da Companhia, S/N8411-041 Esposende;2016/02/02 09:06:55;credit_card;
+LisanAndrade;Lisandro Andrade;lisanandrade@li3.pt;(351) 931 119 398;1990/09/25;M;;PT;Travessa de Amorim, 882998-569 Leiria;2016/10/18 02:22:48;debit_card;active
+Larissa-HelSoares;Larissa-Helena Soares;larissa-helsoares@li3.pt;925 065 307;1963/10/17;F;LX721553;PT;;2010/04/12 15:38:32;credit_card;active
+YarVicente997;Yara Vicente;yarvicente997@li3.pt;(351) 212955067;1991/04/13;F;HH900572;PT;;2017/12/08 20:58:45;cash;active
+LMoreira1508;Lúcia Moreira;lmoreira1508@li3.pt;(351) 266867610;1979/08/05;F;EZ148197;PT;;2015/12/27 16:20:15;credit_card;active
+MiguReis1839;Miguel Reis;migureis1839@li3.pt;+351928506583;1961/05/02;M;;PT;R. Valentina Martins, 728330-437 Tarouca;2010/05/16 22:24:45;cash;active
+NaiaPaiva;Naiara Paiva;naiapaiva@li3.pt;(351) 931 522 788;1970/12/12;F;RA967243;PT;Praça Sérgio Paiva, 30287-967 Sintra;2011/04/28 21:49:14;credit_card;RA967243
+ISoares1857;Ivo Soares;isoares1857@li3.pt;963 409 930;1986/01/29;;JK049323;PT;Rua Yara Paiva, 3399775-430 Paços de Ferreira;2012/11/17 18:06:03;debit_card;active
+MaTeixeira1593;Matilde Teixeira;mateixeira1593@li3.pt;923564765;2002/06/08;F;;PT;R. de Loureiro, 7648457-226 Fiães;2020/10/18 11:06:29;cash;active
+JLourenço1891;João Lourenço;jlourenço1891@li3.pt;;1955/04/14;M;RD636325;PT;Largo de Assunção, 85728-091 Figueira da Foz;2012/09/04 03:33:48;debit_card;active
+RafaeBarros388;Rafaela da Barros;rafaebarros388@li3.pt;(351) 924 387 140;1967/01/01;F;FA039045;PT;Praça de Branco, 705780-680 Angra do Heroísmo;2014/02/23 16:56:34;;Active
+IsmaeSantos;Ismael Santos;ismaesantos@li3.pt;(351) 912 479 390;11:51:20 AM/01/10/2010;M;LM002123;PT;Largo das Garças, S/N3307-752 Funchal;2014/05/27 13:30:47;debit_card;active
+MirBaptista376;Miriam da Baptista;mirbaptista376@li3.pt;(351) 260056148;1996/05/24;F;XL031436;L;Praça de Amaral, 7444658-169 Leiria;2015/12/28 23:27:55;debit_card;active
+PedrVicente1823;Pedro Vicente;pedrvicente1823@li3.pt;+351925674080;1993/09/22;M;YZ354628;PT;Praça das Verdades, 3505677-594 Vizela;2010/04/26 01:02:39;cash;YZ354628
+RicardSousa1707;Ricardo Sousa;ricardsousa1707@li3.pt;(351) 935273809;1956/05/23;M;UJ734748;PT;Avenida Pereira, 60362-550 Bragança;2011/12/20 20:40:35;;active
+BrunMarques-Vaz95;Bruna Marques-Vaz;brunmarques-vaz95@li3.pt;938 381 058;1962/04/19;F;ZA268804;PT;Largo Freitas, 938746-641 Coimbra;2012/12/16 06:47:26;credit_card;ZA268804
+DiNascimento676;Diego Nascimento;dinascimento676@li3.pt;(351) 931 811 827;1970/01/05;M;OY189492;PT;Largo Martim Barros, S/N2418-080 Praia da Vitória;2015/02/11 20:42:21;credit_card;OY189492
+;Soraia Ramos;soramos@li3.pt;928 535 812;1994/02/15;F;IZ934202;PT;Praça de Freitas, S/N7967-170 Fiães;2010/01/25 08:53:19;debit_card;active
+CaeCorreia1064;Caetana Correia;caecorreia1064@li3.pt;938 595 170;1982/12/12;F;DM228407;PT;Largo de Paiva, 653755-930 Montemor-o-Novo;2014/05/07 16:29:56;;active
+AndrValente;;andrvalente@li3.pt;917247715;1969/11/28;M;HK289001;PT;Largo de Loureiro, 741629-335 Póvoa de Varzim;2014/02/11 12:30:29;credit_card;active
+TLourenço1144;Tatiana Lourenço;tlourenço1144@li3.pt;(351) 910 631 676;1953/06/07;F;;PT;Largo Azevedo, 88990-984 Horta;2014/02/12 16:00:10;credit_card;active
+GMendes-Borges1845;Gonçalo Mendes-Borges;gmendes-borges1845@li3.pt;+351238219874;1988/02/27;M;OV054996;PT;Travessa Henriques, 470219-336 Ourém;13/11/2007;credit_card;active
+RodriMarques1195;Rodrigo do Marques;rodrimarques1195@li3.pt;+351962891372;1964/03/13;;XD173560;PT;Rua de Azevedo, 425066-784 Almeirim;2019/09/24 13:45:07;credit_card;active
+RenaMorais;Renata Morais;renamorais@li3.pt;(351) 920656693;;F;TY021472;PT;Av da Companhia, 122489-675 Alcobaça;2011/05/12 06:14:39;cash;active
+RNogueira;Raquel Nogueira;rnogueira@li3.pt;+351911198500;;F;UL014499;PT;R. de Fonseca, 619737-779 Entroncamento;2017/07/07 23:20:14;credit_card;active
+AlicMoreira;Alice Moreira;alicmoreira@li3.pt;(351) 918 830 650;1962|01|31;F;GO901702;PT;Rua Pinheiro, 949993-539 Vendas Novas;2016/03/25 17:36:41;cash;active
+YaCarvalho26;Yara de Carvalho;yacarvalho26@li3.pt;968 911 161;1962/02/26;F;IV547500;PT;Av das Sereias, 454196-659 Vila Nova de Gaia;2016/05/31 08:04:26;;active
+RicarPinho;Ricardo Pinho;ricarpinho@li3.pt;(351) 226552844;1958/10/17;;DV541645;PT;Rua Melo, 4281887-313 Angra do Heroísmo;2012/05/13 08:11:41;credit_card;active
+FPires;Filipa Pires;fpires@li3.pt;285643658;2001/11/08;F;KH800833;PT;Alameda dos Moinhos, 76471-260 Mêda;2019/02/03 05:04:47;debit_card;
+JoMota-Mendes;João Mota-Mendes;jomota-mendes@li3.pt;(351) 910 104 626;1988/11/23;M;QD153281;PT;R. dos Heróis do Mar, 150871-547 Valpaços;2019/07/26 03:23:34;credit_card;QD153281
+RMiranda;Rui Miranda;rmiranda@li3.pt;(351) 929489781;1991/03/25;M;;PT;Praça Cruz, S/N1313-351 Elvas;2018/08/06 23:28:04;debit_card;active
+FilMarques1802;Filipa Marques;filmarq;925173615;1981/11/30;F;TN736297;PT;Av Fonseca, 681820-850 Lisboa;2011/03/08 09:04:34;cash;inactive
+LeAssunção;;leassunção@li3.pt;(351) 912417955;1971/08/23;M;SO682134;PT;Travessa de Henriques, 1267690-716 Fiães;2010/03/27 01:29:02;debit_card;active
+EdgMacedo;Edgar Macedo;edgmacedo@li3.pt;(351) 928005587;1971/09/20;;EC609126;PT;Travessa Irmã Lúcia, S/N4771-015 Tomar;2020/11/18 14:57:50;debit_card;active
+;Luana Oliveira;luoliveira1578@li3.pt;(351) 920 537 853;1986/07/03;F;SB292819;PT;Alameda de Augusto Gomes, S/N6545-175 Marco de Canaveses;2010/08/14 07:12:42;debit_card;active
+CarlMaia-Torres;Carlos Maia-Torres;carlmaia-torres@li3.pt;+351916281774;1991/07/20;M;FN373317;PT;Travessa Jorge Luis Borges, 5822008-456 Bragança;2014/04/19 22:26:35;debit_card;
+ITeixeira;Isaac Teixeira;iteixeira@li3.pt;(351) 938197432;1997/06/20;M;MF615708;GNO;Travessa de Valente, 418692-919 Figueira da Foz;2015/04/07 07:25:48;debit_card;active
+SaJesus-Pereira1450;Salomé Jesus-Pereira;sajesus-pereira1450@li3.pt;(351) 933 260 128;1994/05/10;F;AH291132;JZC;Praça de Vicente, 379443-701 Lamego;2014/04/14 19:33:28;cash;active
+LucFreitas136;Lucas Freitas;lucfreitas136@li3.pt;(351) 924186086;1957/03/09;M;PB736296;B;Alameda de Melo, 587967-056 Matosinhos;2014/07/02 00:16:58;cash;active
+MiriaGarcia329;Miriam Garcia;miriagarcia329@li3.pt;219 591 383;1964/01/26;F;AV783810;PT;Rua de Santa Clara, 5679141-313 Covilhã;2017/12/04 10:56:42;cash;AV783810
+Bianca-PilPinho952;Bianca-Pilar Pinho;bianca-pilpinho952@li3.pt;(351) 212 634 631;1977/12/01;F;MV813349;PT;Avenida Letícia Cunha, 868625-464 Santo Tirso;2019/10/03 22:10:17;credit_card;
+RaqHenriques540;Raquel Henriques;raqhenriques540@li3.pt;(351) 964637220;1960/01/22;;NR188648;PT;Avenida de Vicente, 73751-347 São Mamede de Infesta;2015/02/12 09:20:27;debit_card;active
+IMatias755;Isaac Matias;imatias755@li3.pt;925271843;1975/10/08;M;UU181316;PT;Rua do Bom Sucesso, 1978087-995 Moura;2020/07/17 23:40:06;debit_card;
+;Caetana Jesus;caetjesus@li3.pt;935871950;1965/10/19;F;FW282205;PT;Avenida Luciana Fernandes, 74619-148 Faro;2010/05/03 08:10:55;cash;active
+FiMiranda;Filipa Miranda;fimiranda@li3.pt;963 110 644;1962/01/22;;KL118885;PT;Travessa Nunes, 981624-672 Póvoa de Varzim;2010/11/30 06:21:29;credit_card;active
+SFonseca1515;Santiago Fonseca;sfonseca1515@li3.pt;(351) 937 750 298;1990/03/01;;EO909995;PT;Av de Fernão de Magalhães, 578097-575 Almada;2019/12/26 17:45:35;debit_card;active
+;Isaac Castro;iscastro751@li3.pt;923537187;1996/02/03;M;OG778733;PT;Travessa Filipe Gomes, 641777-091 Vendas Novas;2010/07/23 08:16:21;cash;active
+FranciscNunes;Francisco Nunes;franciscnunes@li3.pt;(351) 923 979 229;1979/07/11;M;WY676285;PT;Travessa Vitória Ribeiro, 93895-746 Peniche;2014/01/14~00:45:05;cash;active
+BernarCardoso1338;Bernardo Cardoso;bernarcardoso1338@li3.pt;961 696 764;1959/12/03;M;LG765173;PT;Av Tomás Anjos, 411136-307 Setúbal;2010/04/11 19:18:59;debit_card;
+BenBrito1722;Benedita Brito;benbrito1722@li3.pt;938218330;1957/04/20;F;IV492071;PT;Praça de S. Brás, 82688-877 São Mamede de Infesta;2018/06/04 13:42:37;cash;
+BárBarros1218;Bárbara Barros;bárbarros1218@li3.pt;(351) 237 010 314;1968/02/29;F;XL551203;PT;R. Violeta Tavares, 824058-241 Espinho;2017/04/18 13:49:29;;active
+HelenSantos1400;Helena de Santos;helensantos1400@li3.pt;(351) 274696806;;F;ZW202655;PT;R. de Campos, 743726-877 Seixal;2017/01/29 06:03:16;cash;active
+GTavares444;Gil Tavares;gtavares444@li3.pt;(351) 922 265 912;1974/05/06;M;YO208152;PT;Travessa Júlia Cardoso, 46178-418 Portimão;2020/03/22 14:28:24;cash;
+;Ema Leal-Sousa;emleal-sousa@li3.pt;(351) 248 710 397;1998/06/02;F;RN036834;PT;R. Martim Loureiro, S/N3226-256 Montemor-o-Novo;2013/11/26 05:29:23;cash;active
+JosMelo-Leal;José Melo-Leal;josmelo-leal@li3@pt;919 395 272;1953/10/02;M;EX907050;PT;Alameda da Alfândega, 970368-177 Tomar;2013/03/08 10:10:11;debit_card;active
+;Érica-Mafalda Ferreira;érica-mafalferreira@li3.pt;918 089 239;1953/11/22;F;IA804717;PT;Travessa Baptista, 4455410-175 Mêda;2015/02/25 18:44:31;credit_card;active
+DanMaia-Ribeiro565;Daniela Maia-Ribeiro;danmaia-ribeiro565@li3.pt;964813593;1956/08/03;F;;PT;R. de São Lourenço, 885212-405 Ermesinde;2017/10/11 01:50:40;cash;active
+LNogueira649;Lucas Nogueira;lnogueira649@li3.pt;(351) 923698917;1959/11/23;M;UM435440;PT;Av do Cantábrico, 479780-366 Valpaços;2011/02/09 00:37:19;;active
+BSoares;Brian Soares;bsoares@li3.pt;(351) 930 886 984;1985/07/26;M;AL154492;PT;Avenida Moura, 429616-861 Santa Comba Dão;2014/09/17 05:38:04;;active
+FiliLourenço;;fililourenço@li3.pt;+351919339376;1975/12/20;M;GG598972;PT;Rua Beatriz Soares, 729818-762 Freamunde;2011/03/25 12:16:37;debit_card;active
+MPires1088;;mpires1088@li3.pt;(351) 922 225 015;2001/02/14;F;LJ775043;PT;R. de Macedo, 618454-965 Reguengos de Monsaraz;2012/03/17 13:15:56;cash;active
+PPacheco945;Pedro do Pacheco;ppacheco945@li3.pt;917 666 444;1968/07/20;M;;PT;R. Mauro Matias, 507146-232 São Salvador de Lordelo;2015/01/25 19:01:54;debit_card;active
+MartBranco1557;Martim Branco;martbranco1557@li3.pt;(351) 282 409 268;1979/09/25;M;KY152396;J;R. Vítor Moura, 2274938-730 Vila Real de Santo António;2012/07/06 02:32:16;credit_card;active
+AnFerreira;André Ferreira;anferreira@li3.pt;(351) 930 008 166;1964/02/29;M;VG213157;PT;Largo de Santo Estêvão, 992204-241 Miranda do Douro;2019/05/31 01:01:16;cash;
+ICoelho576;Iara Coelho;icoelho576@li3.pt;;1988/01/26;F;NW866515;PT;R. Augusto Monjardino, 205964-139 Ourém;2014/09/30 20:04:25;credit_card;Active
+LisandMelo;Lisandro Melo;lisandmelo.li3.pt;(351) 273256532;1953/06/12;M;CV887874;PT;Av das Rolas, 70637-679 Santana;2018/06/29 10:01:22;debit_card;active
+BriaMaia1500;Brian Maia;briamaia1500@li3.pt;(351) 920 617 019;2001/10/31;M;GH695946;PT;Avenida Campos, S/N3385-108 Lagos;2017/02/26 21:22:41;debit_card;
+NunRocha;Nuno da Rocha;nunrocha@li3.pt;(351) 919442416;2002/02/01;;VS957859;PT;Av Luís Moreira, 191899-545 Vendas Novas;2011/07/08 11:34:27;credit_card;active
+SoBarros1885;;sobarros1885@li3.pt;(351) 913 291 154;1992/03/30;F;QL148881;PT;R. de Alves, 641437-002 Odivelas;2018/05/01 18:02:00;debit_card;active
+BryGaspar;Bryan Gaspar;brygaspar@li3.pt;+351913950199;1978/07/03;M;MZ786214;PT;Alameda de José Régio, 692727-986 Portimão;2012/02/16 02:06:43;debit_card;
+MaSilva50;Marco Silva;masilva50@li3.pt;(351) 231 732 846;2005/01/18;M;UR572916;PT;Praça de Figueiredo, 29251-017 Mealhada;2015/10/20 12:20:43;debit_card;
+NaiaAbreu;Naiara Abreu;naiaabreu@li3.pt;+351917281569;26/07/2016;F;WU773590;PT;R. de Domingues, 318563-692 Santo Tirso;2019/12/19 10:36:31;cash;active
+;Brian Gonçalves;briagonçalves735@li3.pt;270645796;1977/02/23;M;VX278793;PT;Alameda de Correia, S/N8977-093 Entroncamento;2016/03/20 00:45:45;debit_card;active
+AdrPinheiro-Vieira;Adriana Pinheiro-Vieira;adrpinheiro-vieira@li3.pt;935613940;1974/02/03;F;NO855577;M;Praça Diana Gonçalves, 602650-344 Ribeira Grande;2016/03/24 21:22:55;cash;active
+AlexAlves;;alexalves@li3.pt;915 424 346;1983/04/13;F;CU554541;PT;Rua Valente, 87125-183 Moura;2020/01/16 23:23:20;credit_card;active
+LorTavares;Lorena da Tavares;lortavares@li3.pt;(351) 938429618;1960/12/29;;OQ298121;PT;Largo Azevedo, 731247-214 Sintra;2013/06/12 06:47:16;credit_card;active
+TCampos;Tomás Campos;tcampos@li3.pt;920360422;1970/10/26;;YG174368;PT;Avenida de Moreira, 840908-771 Pombal;2019/11/03 06:04:36;credit_card;active
+RúSantos;Rúben Santos;rúsantos@li3.pt;(351) 934 183 189;2002/11/07;M;LR854569;PT;;2016/04/23 08:30:16;cash;ACTIVE
+BTavares;Bárbara-Clara Tavares;btavares@li3.pt;930565537;1983/11/06;;DR450270;PT;Largo Domingues, 2804611-133 Sabugal;2013/08/15 10:12:02;credit_card;active
+PMarques1369;Paulo de Marques;pmarques1369@li3.pt;(351) 933640835;04:09:42 AM/16/02/2013;M;VU599837;PT;Avenida Lopes, 705467-771 Aveiro;2020/05/02 12:56:04;credit_card;inactive
+JoeMelo;;joemelo@li3.pt;+351920458799;1954/02/05;M;SA943212;PT;Praça de Rodrigues de Freitas, 417464-175 Macedo de Cavaleiros;2020/04/22 22:10:25;cash;active
+RafAraújo727;;rafaraújo727@li3.pt;+351277990181;1991/03/12;M;RJ734246;PT;Av Fonseca, 882347-472 Rio Maior;2017/10/06 06:51:36;cash;active
+BenjMiranda-Fonseca1832;Benjamim Miranda-Fonseca;benjmiranda-fonseca1832@li3.pt;;1991/10/25;M;LQ871871;PT;Alameda do Trancão, 950524-240 Macedo de Cavaleiros;2012/05/24 03:41:27;debit_card;active
+;Hugo Fonseca;hfonseca1389@li3.pt;(351) 910 057 143;1955/01/14;M;DB885319;PT;Av de Santo António dos Capuchos, S/N7969-874 Vila Real;2016/07/07 16:54:44;cash;active
+Alícia-LúRamos;Alícia-Lúcia Ramos;alícia-lúramos@li3.pt;(351) 299504846;1967/08/21;F;;PT;Rua Simões, 695190-049 Odivelas;2012/06/21 03:18:48;credit_card;active
+HenrLeite265;Henrique Leite;henrleite265@li3.pt;935190367;1995/09/14;M;;PT;Travessa Almeida, S/N5422-563 Santana;2017/03/31 23:11:47;cash;active
+;Constança do Mendes;constanmendes724@li3.pt;(351) 912586558;1955/10/22;F;DW319975;PT;Rua Loureiro, 811777-781 Penafiel;2018/08/08 00:53:18;credit_card;active
+BrMagalhães1059;Bruno Magalhães;brmagalhães1059@li3.pt;(351) 962 757 554;2005/06/28;M;SQ863335;PT;;2018/05/09 14:43:04;credit_card;active
+SalCorreia992;Salvador Correia;salcorreia992@li3.pt;(351) 962396307;1979/04/30;M;KH547635;PT;Av do Dr. Antunes Guimarães, 613462-748 Vila Nova de Santo André;2019/05/21 01:48:38;debit_card;KH547635

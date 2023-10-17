@@ -1,0 +1,613 @@
+id;user_id;hotel_id;hotel_name;hotel_stars;city_tax;address;begin_date;end_date;price_per_night;includes_breakfast;room_details;rating;comment
+Book0000000101;JorFaria;HTL101;Eiffel Tower View Hotel;4;2;101 Rue de la Tour Eiffel, Paris;2022/07/20;2022/07/19;220;true;Amenities: Air Conditioning;1;Easy access to tourist attractions.
+Book0000000197;MCastro31;HTL505;;5;2;505 Carrer d'Enric Granados, Barcelona;2021/02/12;2021/02/16;300;true;Occupancy: 1 Guest;1;Highly recommended!
+Book0000000299;AValente1155;;Colosseum View Hotel;4;3;301 Via di San Gregorio, Rome;2022/02/14;2022/02/16;200;true;Bathroom: Bathtub;2;An enjoyable stay overall.
+;SofiAmaral-Teixeira;HTL802;Fashion District Suites;5;2;802 Via Montenapoleone, Milan;2023/05/20;2023/05/22;350;true;View: Garden View;2;
+Book0000000398;GabriJesus;;Spree Riverfront Hotel;4;3;1404 Schiffbauerdamm, Berlin;2022/04/03;2022/04/06;200;true;Number of Beds: 1;2;Highly recommended!
+Book0000000432;MadaleRamos185;HTL1404;;4;3;1404 Schiffbauerdamm, Berlin;2022/04/03;2022/04/04;200;true;Bathroom: Private;2;The check-in process was quick and easy.
+Book0000000443;MarcoMatias882;HTL1202;Esplanadi Park Inn;3;3;1202 Pohjoisesplanadi, Helsinki;2022/07/13;2022/07/09;180;false;Bathroom: Private;2;
+;JReis;HTL205;Plaza Mayor Hotel;4;2;205 Plaza Mayor, Madrid;2022/05/13;2022/05/17;190;true;Amenities: Coffee Maker;4;The check-in process was quick and easy.
+Book0000000675;LucBatista1373;HTL204;Retiro Park Inn;3;2;;2022/12/03;2022/12/04;150;false;Room Type: Standard;4;
+Book0000000719;SalTavares159;HTL1105;Josefov District Hotel;4;1;;2023/03/22;2023/03/25;240;true;Number of Beds: 1;1;
+Book0000000762;ConsMartins1043;HTL1405;Kurfürstendamm Plaza Hotel;4;3;1405 Kurfürstendamm, Berlin;2022/04/15;2022/04/18;230;-25;Number of Beds: 2 Queen Beds;2;Family-friendly accommodations.
+Book0000000777;DanieBatista;HTL1402;;3;3;1402 Alexanderplatz, Berlin;2022/04/15;2022/04/19;160;false;Room Size: 700 sq ft;4;Quiet and peaceful ambiance.
+Book0000000930;SamLima1284;HTL1404;Spree Riverfront Hotel;4;3;;2021/04/13;2021/04/14;200;true;Room Type: Suite;2;We had a memorable experience at this hotel.
+Book0000000946;Diana-ÉriRodrigues1395;HTL1002;Plaka Historic Inn;3;2;1002 Adrianou, Athens;2023/05/12;2023/05/10;160;false;Room Type: Suite;1;
+Book0000000971;FranVaz4;HTL1003;Omonia Square Suites;2;-10;1003 Omonoia Square, Athens;2023/05/10;2023/05/14;120;false;Room Type: Standard;2;Easy access to tourist attractions.
+;BCunha;HTL1004;Syntagma Plaza Hotel;4;2;1004 Syntagma Square, Athens;2023/05/10;2023/05/12;200;true;Room Size: 400 sq ft;4;
+Book0000001034;PatríciLopes-Macedo1192;HTL1603;;3;4;303 Centrum, Warsaw;2022/05/12;2022/05/14;160;false;Amenities: TV;1;
+Book0000001142;IvBranco;HTL903;Belém Riverside Hotel;4;2;;2022/12/09;2022/12/12;220;true;Room Type: Deluxe;3;
+;MaFaria788;HTL705;Aker Brygge Waterfront Hotel;4;4;705 Stranden, Oslo;2021/11/11;2021/11/14;260;true;Bathroom: Shower;1;
+Book0000001288;HPires801;HTL1502;;4;3;202 Bergweg, Munich;2023/06/17;2023/06/18;280;true;Room Size: 400 sq ft;4;
+Book0000001293;LBaptista86;;Munich Lakeside Resort;4;3;204 Am Seeufer, Munich;2023/06/17;2023/06/21;320;true;Room Size: 700 sq ft;3;
+Book0000001389;SebaCampos;HTL1401;Brandenburg Gate Hotel;4;3;1401 Pariser Platz, Berlin;2022|02|07;2022/02/09;220;TRUE;Bathroom: Ensuite;3;The hotel offered a complimentary shuttle service.
+Book0000001504;SimGonçalves;HTL304;Copenhagen Harbor View Inn;-1;3;304 Havnegade, Copenhagen;2021/04/08;2021/04/12;320;true;Number of Beds: 1 King Bed;4;Our room had a fantastic view of the river.
+;NelRamos;HTL903;Belém Riverside Hotel;4;2;903 Avenida de Brasília, Lisbon;2021/02/13;2021/02/15;220;true;Number of Beds: 1 King Bed;3;
+Book0000001800;MelisGomes481;HTL1303;Port de Nice Suites;4;3;;2023/05/15;2023/05/17;220;true;Room Type: Executive Suite;3;The staff went above and beyond to make us feel welcome.
+Book0000001817;GustBarbosa1653;HTL1302;Old Town District Inn;3;3;1302 Rue de la Préfecture, Nice;09:01:32 PM/15/02/2009;2023/05/16;180;false;View: Garden View;3;
+Book0000001885;AMatias-Nogueira469;HTL1403;Prenzlauer Berg Inn;2;3;1403 Kastanienallee, Berlin;2023/03/09;2023/03/11;;false;Bathroom: Ensuite;4;We received a warm welcome upon arrival.
+Book0000001895;IsaPires;HTL1402;Alexanderplatz Suites;3;3;1402 Alexanderplatz, Berlin;07:59:34 PM/02/05/2001;2023/03/12;160;F;Number of Beds: 1 King Bed;4;
+Book0000002102;DuaSantos;HTL304;Roman Forum Inn;4;3;304 Via dei Fori Imperiali, Rome;2023/04/04;2023/04/08;;true;Bathroom: Ensuite;4;We will definitely return to this hotel.
+Book0000002130;GiGomes26;;Vatican City Suites;5;3;302 Via della Conciliazione, Rome;2023/04/04;2023/04/07;320;true;Room Type: Executive Suite;4;
+Book0000002149;RaquPinho;HTL202;;5;2;202 Plaza de Oriente, Madrid;2021/10/20;2021/10/24;280;true;Amenities: Air Conditioning;3;
+;LucMacedo1638;HTL305;Vesterbro Comfort Suites;4;3;305 Vesterbrogade, Copenhagen;2022/08/17;2022/08/18;290;true;Occupancy: 4 Guests;2;
+Book0000002266;EnTavares;HTL1205;Sörnäinen Waterfront Inn;3;-23;1205 Sörnäisten rantatie, Helsinki;2022/08/14;2022/08/15;160;true;Room Size: 300 sq ft;4;An enjoyable stay overall.
+Book0000002292;BrRocha-Oliveira;HTL1204;Töölö Riverside Hotel;4;3;1204 Helsinginkatu, Helsinki;2022/08/14;2022/08/16;200;-23;Room Type: Deluxe;3;The hotel exceeded our expectations.
+Book0000002314;AlexFreitas56;HTL303;Nørrebro Boutique Hotel;3;3;303 Nørrebrogade, Copenhagen;2021/01/16;2021/01/15;160;false;Room Type: Executive Suite;3;
+Book0000002399;ÂngeLeal1617;;Schönbrunn Palace Hotel;4;4;605 Schönbrunner Schloßstraße, Vienna;2022/04/02;2022/04/05;210;true;View: Garden View;1;Well-appointed rooms with nice decor.
+Book0000002491;MicOliveira;HTL1605;Warsaw Park View Hotel;4;4;305 Parkowa Aleja, Warsaw;2021/10/03;2021/10/01;310;true;Bathroom: Bathtub;1;The bar had a wide selection of drinks.
+Book0000002558;LarisBorges;;Gran Vía View Hotel;4;2;203 Gran Vía, Madrid;2022/03/08;2022/03/10;210;true;Number of Beds: 2 Queen Beds;4;
+Book0000002570;Erika-ÉLourenço;HTL203;;4;2;203 Gran Vía, Madrid;2022/03/08;2022/03/11;210;true;Occupancy: 2 Guests;4;
+Book0000002588;JorgAntunes1903;HTL203;Gran Vía View Hotel;4;2;;2022/03/08;2022/03/12;210;true;View: City View;3;Spa facilities were top-notch.
+Book0000002646;JTavares-Cunha;HTL1204;Töölö Riverside Hotel;4;-23;1204 Helsinginkatu, Helsinki;2021/08/10;2021/08/14;200;true;Amenities: Coffee Maker;2;The check-in process was quick and easy.
+Book0000002699;AlGomes1147;HTL204;Retiro Park Inn;3;2;;2023/03/18;2023/03/22;150;false;Amenities: Coffee Maker;1;
+Book0000002714;PatrNunes;;Retiro Park Inn;3;2;204 Calle de Alfonso XII, Madrid;2023/03/18;2023/03/19;150;false;Room Type: Standard;3;Quiet and peaceful ambiance.
+Book0000002743;MicRamos599;HTL201;Puerta del Sol Hotel;4;2;;2022/09/11;2022/09/15;180;true;Occupancy: 3 Guests;3;The hotel restaurant had a diverse menu.
+Book0000002746;NúrCampos1050;HTL205;Plaza Mayor Hotel;4;2;205 Plaza Mayor, Madrid;2022/09/11;2022/09/12;190;-4;Room Type: Executive Suite;2;The in-room amenities were a nice touch.
+;KevNeves-Fonseca;HTL903;Belém Riverside Hotel;4;2;903 Avenida de Brasília, Lisbon;2022/02/06;2022/02/10;220;true;Number of Beds: 1 King Bed;1;Well-appointed rooms with nice decor.
+Book0000002921;CaetanMaia;HTL905;Rossio Square Inn;4;2;905 Praça do Rossio, Lisbon;2022|12|17;2022/12/21;200;true;Occupancy: 1 Guest;1;
+Book0000002940;CamilaMoura593;HTL905;Rossio Square Inn;4;2;905 Praça do Rossio, Lisbon;2022/12/20;2022/12/17;200;true;Room Size: 300 sq ft;1;The hotel restaurant had a diverse menu.
+Book0000003029;JVaz-Carneiro867;HTL1302;Old Town District Inn;3;3;1302 Rue de la Préfecture, Nice;2022/04/15;2022/04/16;180;-1.1;Room Type: Executive Suite;1;The breakfast buffet was delicious.
+Book0000003060;Alícia-LúRamos;HTL605;;4;4;605 Schönbrunner Schloßstraße, Vienna;2022/04/18;2022/04/19;210;true;Bathroom: Ensuite;2;
+Book0000003133;LuOliveira103;HTL1402;Alexanderplatz Suites;-23;3;1402 Alexanderplatz, Berlin;2021/01/10;2021/01/13;160;false;Room Size: 500 sq ft;3;The check-in process was quick and easy.
+Book0000003146;JAntunes1428;HTL1402;Alexanderplatz Suites;3;3;1402 Alexanderplatz, Berlin;2021/01/10;2021/01/13;;false;View: Mountain View;2;We had a lovely time at this hotel.
+;EmíCarneiro1690;HTL302;Copenhagen Grand Palace;5;3;302 Kongens Nytorv, Copenhagen;2023/01/03;2023/01/07;380;true;Room Type: Standard;4;
+Book0000003264;VítoRibeiro264;;Spanish Steps Plaza Hotel;4;3;305 Piazza di Spagna, Rome;2023/03/04;2023/03/05;210;true;Number of Beds: 2 Queen Beds;2;The in-room amenities were a nice touch.
+Book0000003303;MarMonteiro1545;HTL304;Roman Forum Inn;4;3;304 Via dei Fori Imperiali, Rome;2022/07/08;2022/07/11;220;-25;Number of Beds: 1 King Bed;4;
+Book0000003371;LaBarros-Reis1890;HTL605;Schönbrunn Palace Hotel;4;5.5;605 Schönbrunner Schloßstraße, Vienna;2021/09/22;2021/09/24;210;true;Room Size: 700 sq ft;2;
+;CaroAlmeida916;HTL1503;Munich Central Inn;3;3;203 Innenstadtstraße, Munich;2022/04/12;2022/04/16;150;false;Amenities: Air Conditioning;1;
+;NoPinto;HTL1102;Charles Bridge Suites;5;1;1102 Karlův most, Prague;2021/07/16;2021/07/20;350;true;Occupancy: 1 Guest;2;Staff was friendly and accommodating.
+Book0000003631;LuSimões;HTL303;Nørrebro Boutique Hotel;3;3;303 Nørrebrogade, Copenhagen;2022/12/07;2022/12/11;160;-23;Number of Beds: 1 King Bed;3;Impressive lobby and amenities.
+Book0000003702;MargariMatos1208;HTL301;Colosseum View Hotel;4;3;301 Via di San Gregorio, Rome;2021/12/09;2021/12/12;200;-25;Occupancy: 1 Guest;2;
+Book0000003738;Helena-BFreitas;HTL303;Trevi Fountain Hotel;3;3;303 Piazza di Trevi, Rome;2021/12/09;2021/12/10;160;-23;Bathroom: Bathtub;2;Easy access to tourist attractions.
+Book0000003766;FraAbreu;HTL801;Milan Cathedral Hotel;4;2;801 Piazza del Duomo, Milan;2022/10/09;2022/10/08;230;true;Room Type: Deluxe;3;Beautiful views from our room.
+Book0000003780;FilipaDomingues;HTL803;Navigli Canal Inn;3;2;803 Ripa di Porta Ticinese, Milan;2022/10/11;2022/10/08;160;false;Occupancy: 2 Guests;4;Great hotel, excellent service!
+Book0000003895;BrMachado1935;;Chiado Plaza Hotel;3;2;904 Rua Garrett, Lisbon;2022/06/15;2022/06/18;150;false;Amenities: Air Conditioning;2;
+Book0000003935;Caetana-MarMartins1026;HTL1603;Warsaw Central Suites;3;4;303 Centrum, Warsaw;2023/06/13;2023/06/15;160;-1.1;Amenities: TV;2;
+Book0000004023;DiCorreia;HTL903;Belém Riverside Hotel;4;2;903 Avenida de Brasília, Lisbon;2022/07/06;2022/07/05;220;true;Amenities: TV;4;
+Book0000004052;DiPacheco934;HTL304;;4;3;304 Via dei Fori Imperiali, Rome;2023/01/14;2023/01/17;220;1;Bathroom: Ensuite;2;A fantastic place for a romantic getaway.
+Book0000004151;GabLourenço-Almeida213;HTL101;Eiffel Tower View Hotel;4;2;101 Rue de la Tour Eiffel, Paris;2023/06/15;2023/06/18;220;-25;Occupancy: 3 Guests;3;Well-appointed rooms with nice decor.
+Book0000004199;CFerreira;HTL1605;Warsaw Park View Hotel;4;4;305 Parkowa Aleja, Warsaw;2021/02/13;2021/02/10;310;true;Room Type: Deluxe;4;
+Book0000004345;DiaAlves943;HTL903;Belém Riverside Hotel;4;2;903 Avenida de Brasília, Lisbon;09:42:35 PM/27/01/2011;2022/07/22;220;true;Room Size: 700 sq ft;4;
+Book0000004398;InêHenriques;HTL901;Alfama District Hotel;3;2;901 Rua dos Bacalhoeiros, Lisbon;;2022/07/21;120;true;Room Size: 300 sq ft;1;We had a lovely time at this hotel.
+Book0000004410;DiaBatista1597;HTL1303;Port de Nice Suites;4;3;1303 Quai des Docks, Nice;2023/04/20;2023/04/24;220;-1.1;Number of Beds: 2 Double Beds;3;
+Book0000004477;LucaAntunes;HTL103;Montmartre Suites;3;-1;103 Rue de Montmartre, Paris;2022/05/07;2022/05/09;150;false;Bathroom: Bathtub;2;
+Book0000004580;VíPinho;HTL902;;4;2;902 Rua da Rosa, Lisbon;2021/09/05;2021/09/06;190;true;Bathroom: Shower;3;The staff went above and beyond to make us feel welcome.
+Book0000004617;CláudMaia;HTL1604;Warsaw Riverside Inn;4;4;304 Nad Wisłą, Warsaw;2022/06/14;2022/06/11;320;true;View: City View;4;Great hotel, excellent service!
+Book0000004636;DéNascimento;HTL1403;Prenzlauer Berg Inn;2;3;1403 Kastanienallee, Berlin;19/07/2004;2022/06/13;120;false;Amenities: Free Wi-Fi;2;Great place to stay for business travelers.
+Book0000004688;FCarneiro;HTL1603;Warsaw Central Suites;3;4;303 Centrum, Warsaw;03/09/2009;2022/07/08;160;false;Amenities: Air Conditioning;1;
+Book0000004703;Rafaela-CamilCruz571;HTL1603;Warsaw Central Suites;3;4;;2022/07/07;2022/07/09;160;false;Occupancy: 1 Guest;1;
+Book0000004737;JoeMaia1821;HTL901;Alfama District Hotel;3;2;901 Rua dos Bacalhoeiros, Lisbon;2023/01/13;2023/01/17;;true;Room Type: Suite;1;
+;TPires1223;HTL204;Retiro Park Inn;3;2;204 Calle de Alfonso XII, Madrid;2023/02/02;2023/02/04;150;false;Room Type: Executive Suite;2;
+Book0000004829;JoMendes;HTL502;Gothic Quarter Inn;3;2;502 Carrer de la Ciutat, Barcelona;2022|04|21;2022/04/24;150;false;Number of Beds: 1 King Bed;1;
+Book0000004950;IvHenriques1639;;Louvre Palace Hotel;5;2;102 Rue du Louvre, Paris;2021/01/06;2021/01/09;300;true;Occupancy: 2 Guests;4;Beautiful views from our room.
+Book0000004985;MelissBaptista904;HTL1102;Charles Bridge Suites;3.2;1;1102 Karlův most, Prague;2023/01/08;2023/01/10;350;true;Amenities: TV;2;A fantastic place for a romantic getaway.
+;LaFaria;HTL202;Royal Palace Suites;5;2;202 Plaza de Oriente, Madrid;2021/09/17;2021/09/18;280;true;Number of Beds: 2 Queen Beds;2;
+Book0000005178;ILeite;HTL1204;Töölö Riverside Hotel;4;3;1204 Helsinginkatu, Helsinki;2023/06/17;2023/06/20;;true;Occupancy: 4 Guests;2;The in-room amenities were a nice touch.
+Book0000005207;PMagalhães1702;HTL1204;Töölö Riverside Hotel;4;3;1204 Helsinginkatu, Helsinki;2023/06/17;2023/06/18;;true;View: City View;1;
+Book0000005379;CamilGarcia1727;HTL905;Rossio Square Inn;4;2;905 Praça do Rossio, Lisbon;2023/06/17;2023/06/18;;true;Bathroom: Private;1;The in-room amenities were a nice touch.
+Book0000005519;MiriaMaia-Cruz1229;;Copenhagen Harbor View Inn;4;3;304 Havnegade, Copenhagen;2021/05/09;2021/05/10;320;true;Occupancy: 4 Guests;4;
+Book0000005567;JMagalhães;HTL404;Museum Quarter Hotel;4;-1.1;404 Hobbemastraat, Amsterdam;2021/02/22;2021/02/26;180;true;Number of Beds: 1 King Bed;4;Close to shopping and dining options.
+Book0000005636;LiFreitas3;HTL1604;;4;4;304 Nad Wisłą, Warsaw;2023/03/07;2023/03/09;320;true;Amenities: Coffee Maker;4;
+Book0000005673;MiMoreira557;HTL401;;3;2;401 Prinsengracht, Amsterdam;2023/07/21;2023/07/23;150;true;View: City View;1;
+Book0000005678;IvLeal1527;HTL405;Jordaan Riverside Hotel;3;2;405 Brouwersgracht, Amsterdam;2023/07/21;2023/07/24;170;-10;Amenities: Free Wi-Fi;4;
+Book0000005764;IsAssunção1781;HTL1301;;4;3;1301 Promenade des Anglais, Nice;2023/01/12;2023/01/16;250;true;Bathroom: Bathtub;3;The hotel exceeded our expectations.
+Book0000005785;NoCarneiro1857;HTL1403;;2;3;1403 Kastanienallee, Berlin;2022/07/17;2022/07/20;120;false;Room Size: 700 sq ft;1;
+Book0000005799;MiBarbosa;HTL1405;Kurfürstendamm Plaza Hotel;4;3;;2022/07/17;2022/07/19;230;true;Room Size: 400 sq ft;4;
+Book0000005820;ViMendes1499;HTL803;Navigli Canal Inn;3;2;;2021/12/15;2021/12/16;160;false;Number of Beds: 2;2;Great hotel, excellent service!
+Book0000005830;MadaleAmaral29;HTL803;Navigli Canal Inn;3;2;;2021/12/15;2021/12/16;160;false;Bathroom: Bathtub;3;
+Book0000005940;NúrFernandes;HTL1202;Esplanadi Park Inn;3;3;1202 Pohjoisesplanadi, Helsinki;2023/03/10;2023/03/12;;false;Amenities: Free Wi-Fi;1;Perfect location for exploring the city.
+Book0000005958;MatVaz1137;HTL1204;Töölö Riverside Hotel;4;3;1204 Helsinginkatu, Helsinki;2023/03/12;2023/03/10;200;true;Room Size: 700 sq ft;3;Highly recommended!
+;FPinho-Teixeira;HTL1201;Helsinki Harbor Hotel;4;3;1201 Katajanokanlaituri, Helsinki;2023/03/10;2023/03/12;240;true;Bathroom: Ensuite;4;
+Book0000006052;JoCruz1539;HTL903;;4;2;903 Avenida de Brasília, Lisbon;2022/05/04;2022/05/08;220;true;Bathroom: Shower;1;
+Book0000006104;YaNeto;HTL903;Belém Riverside Hotel;4;2;903 Avenida de Brasília, Lisbon;2021/07/19;2021/07/15;220;true;Bathroom: Shower;2;
+Book0000006161;DaAbreu1507;HTL1005;Monastiraki Market Hotel;3;2;1005 Athinas, Athens;2022/05/09;2022/05/05;180;true;Number of Beds: 2 Double Beds;3;
+Book0000006257;DaviTeixeira;;Esplanadi Park Inn;3;3;1202 Pohjoisesplanadi, Helsinki;2021/11/04;2021/11/05;180;false;Number of Beds: 1;1;
+Book0000006339;DiaReis;HTL201;Puerta del Sol Hotel;5.5;2;201 Calle de Alcalá, Madrid;2022/07/06;2022/07/08;180;true;Room Type: Executive Suite;1;Good room service options.
+Book0000006433;LúNascimento-Silva;HTL304;Roman Forum Inn;4;3;;2023/02/10;2023/02/13;220;true;Number of Beds: 2 Queen Beds;3;Good room service options.
+Book0000006495;BFerreira;;Place Masséna Plaza Hotel;4;3;1305 Place Masséna, Nice;2023/05/06;2023/05/07;230;true;Number of Beds: 1;3;Great place to unwind after a busy day.
+Book0000006623;ILeal;HTL702;Viking Heritage Inn;3;4;702 Karl Johans gate, Oslo;2022/02/21;2022/02/25;150;-1;Occupancy: 1 Guest;1;The rooftop bar has amazing cocktails.
+Book0000006642;LuCorreia758;HTL703;Holmenkollen Lodge;3.2;4;703 Kongeveien, Oslo;2022/02/21;2022/02/23;350;true;Number of Beds: 2 Queen Beds;4;
+Book0000006653;BenjJesus;;Fjord View Hotel;4;4;701 Akershusstranda, Oslo;2022/02/21;2022/02/22;220;true;Room Type: Deluxe;2;
+Book0000006665;DNeto;HTL202;Royal Palace Suites;5;2;202 Plaza de Oriente, Madrid;2022/11/07;2022/11/11;;true;Bathroom: Shower;2;
+Book0000006745;AlLima;HTL909;Danube River Hotel;4;2;909 Dunakorzó, Budapest;2021/04/03;2021/04/07;160;-25;Occupancy: 3 Guests;2;
+Book0000006798;ÂBrito;HTL204;Retiro Park Inn;3;2;204 Calle de Alfonso XII, Madrid;2023/05/10;2023/05/11;150;-23;Bathroom: Shower;1;The hotel exceeded our expectations.
+Book0000006812;KNeto;HTL202;Royal Palace Suites;5;2;202 Plaza de Oriente, Madrid;2023|05|10;2023/05/14;280;true;Bathroom: Bathtub;1;The fitness center had modern equipment.
+;PDomingues1923;HTL605;Schönbrunn Palace Hotel;4;4;605 Schönbrunner Schloßstraße, Vienna;2023/07/11;2023/07/15;210;true;Occupancy: 3 Guests;4;
+Book0000006891;AleMonteiro189;HTL605;Schönbrunn Palace Hotel;4;4;605 Schönbrunner Schloßstraße, Vienna;2023|07|11;2023/07/12;210;true;Room Size: 300 sq ft;4;
+Book0000006951;GCarvalho;HTL1103;Wenceslas Square Inn;3;4.4;1103 Václavské náměstí, Prague;2021/01/11;2021/01/12;160;false;Amenities: Free Wi-Fi;3;
+Book0000007007;CamiCastro;HTL501;Sagrada Familia Hotel;4;-23;501 Carrer de Mallorca, Barcelona;2023/07/13;2023/07/17;180;true;Room Type: Family Suite;1;
+Book0000007008;NáOliveira497;HTL503;Barceloneta Beachfront Hotel;4;2;503 Passeig de Joan de Borbó, Barcelona;24/09/2010;2023/07/14;220;true;Room Type: Deluxe;1;
+Book0000007010;EAmaral;HTL504;;4;2;504 Carrer d'Olot, Barcelona;2023/07/13;2023/07/14;200;true;Bathroom: Bathtub;2;
+;AnCardoso1820;HTL701;Fjord View Hotel;4;4;701 Akershusstranda, Oslo;2021/09/21;2021/09/25;220;true;View: Garden View;3;
+Book0000007230;JéssiAssunção-Lima65;;Port de Nice Suites;4;3;1303 Quai des Docks, Nice;2021/05/01;2021/05/05;220;true;View: City View;2;
+Book0000007400;SaMorais1082;HTL203;Gran Vía View Hotel;4;2;203 Gran Vía, Madrid;2021/10/07;2021/10/03;210;true;Amenities: Coffee Maker;4;The bar had a wide selection of drinks.
+Book0000007407;RRocha;HTL202;;5;2;202 Plaza de Oriente, Madrid;2021/10/03;2021/10/06;280;true;Room Type: Deluxe;3;
+Book0000007473;PeVaz;HTL601;;4;4;601 Opernring, Vienna;2022/07/07;2022/07/11;190;true;Amenities: Mini Fridge;4;
+Book0000007480;RVieira1107;;Bavarian Grand Hotel;5;3;201 Hauptstraße, Munich;2022/07/03;2022/07/06;350;true;Room Size: 500 sq ft;2;The breakfast buffet was delicious.
+;XaMelo1695;HTL701;Fjord View Hotel;4;4;701 Akershusstranda, Oslo;2021/06/04;2021/06/08;220;true;Room Size: 400 sq ft;4;Comfy beds and pillows.
+;EmaCarneiro-Henriques1853;HTL901;Alfama District Hotel;3;2;901 Rua dos Bacalhoeiros, Lisbon;2023/03/15;2023/03/17;120;true;Bathroom: Private;2;Impressive lobby and amenities.
+Book0000007716;DaCoelho1325;HTL902;Bairro Alto Suites;4;2;902 Rua da Rosa, Lisbon;2023/03/15;2023/03/19;190;-4;Bathroom: Shower;1;Great place to stay for business travelers.
+Book0000007772;MadaNunes;HTL401;Canal View Hotel;5.5;2;401 Prinsengracht, Amsterdam;2021/02/09;2021/02/11;150;true;Occupancy: 4 Guests;3;We will definitely return to this hotel.
+Book0000007799;KAntunes;HTL301;Nyhavn Waterfront Hotel;-23;3;301 Nyhavn, Copenhagen;2023/08/05;2023/08/07;280;true;Amenities: Air Conditioning;1;
+Book0000007853;AfoMatos;HTL605;Schönbrunn Palace Hotel;-1;4;605 Schönbrunner Schloßstraße, Vienna;2023/04/12;2023/04/14;210;true;Occupancy: 4 Guests;3;Quiet and peaceful ambiance.
+;IBarbosa959;HTL202;Royal Palace Suites;5;2;202 Plaza de Oriente, Madrid;2022/09/08;2022/09/09;280;true;Room Size: 300 sq ft;1;The spa treatments were rejuvenating.
+Book0000008179;PPacheco945;HTL305;Spanish Steps Plaza Hotel;4;5.5;305 Piazza di Spagna, Rome;2022/03/11;2022/03/13;210;true;Room Type: Executive Suite;4;We had a lovely time at this hotel.
+Book0000008180;CarlRodrigues1441;HTL303;Trevi Fountain Hotel;3;3;303 Piazza di Trevi, Rome;2022/03/11;2022/03/15;160;-4;View: Garden View;4;
+Book0000008186;FernaCorreia123;HTL305;Spanish Steps Plaza Hotel;-25;3;305 Piazza di Spagna, Rome;2022/03/11;2022/03/14;210;true;Amenities: Free Wi-Fi;4;Highly recommended!
+Book0000008336;MartTavares1562;HTL601;Vienna Opera Hotel;4;4;601 Opernring, Vienna;2023/08/06;2023/08/04;190;true;View: Mountain View;3;
+Book0000008348;JLourenço1891;;Spree Riverfront Hotel;4;3;1404 Schiffbauerdamm, Berlin;2022/02/06;2022/02/10;200;true;Room Size: 500 sq ft;2;Clean and well-maintained rooms.
+Book0000008371;DébCastro;HTL1404;Spree Riverfront Hotel;4;3;1404 Schiffbauerdamm, Berlin;2022/02/06;2022/02/08;200;-4;Number of Beds: 1 King Bed;4;The hotel offered a complimentary shuttle service.
+Book0000008499;SimãBranco;HTL1501;;5;3;201 Hauptstraße, Munich;2022/03/18;2022/03/21;350;true;Number of Beds: 2 Queen Beds;2;Good value for the price.
+Book0000008526;EmanuFernandes1133;HTL1504;Munich Lakeside Resort;4;3;204 Am Seeufer, Munich;2022/03/18;2022/03/19;;true;Room Size: 300 sq ft;3;
+Book0000008532;LiBorges;HTL1501;;5;3;201 Hauptstraße, Munich;2022/03/18;2022/03/19;350;true;Room Type: Suite;4;The spa treatments were rejuvenating.
+Book0000008562;FernAlves;HTL1104;Prague Castle View Hotel;4;1;1104 Hradčanské náměstí, Prague;2021/09/15;2021/09/14;210;true;Bathroom: Bathtub;4;The concierge provided helpful recommendations.
+Book0000008640;Andreia-YaFigueiredo;HTL1301;;4;3;1301 Promenade des Anglais, Nice;2021/10/05;2021/10/09;250;true;Room Size: 300 sq ft;1;Staff was friendly and accommodating.
+Book0000008737;BáLoureiro;HTL1303;Port de Nice Suites;4;3;1303 Quai des Docks, Nice;2022/04/10;2022/04/12;220;5.5;Room Type: Deluxe;2;
+Book0000009107;JéssiBatista;HTL301;Nyhavn Waterfront Hotel;4;3;301 Nyhavn, Copenhagen;2021/05/20;2021/05/17;280;true;Bathroom: Private;4;The hotel offered a complimentary shuttle service.
+Book0000009117;DiFernandes;HTL302;Copenhagen Grand Palace;5;3;302 Kongens Nytorv, Copenhagen;2021/05/20;2021/05/17;380;true;Room Type: Family Suite;3;
+Book0000009122;JFernandes;;Bairro Alto Suites;4;2;902 Rua da Rosa, Lisbon;2021/07/22;2021/07/24;190;true;Bathroom: Shower;2;The in-room amenities were a nice touch.
+Book0000009130;DMonteiro908;HTL903;Belém Riverside Hotel;4;2;903 Avenida de Brasília, Lisbon;2021/07/22;2021/07/25;220;-1.1;Bathroom: Shower;3;The in-room amenities were a nice touch.
+Book0000009134;BruAraújo;HTL904;Chiado Plaza Hotel;3;5.5;904 Rua Garrett, Lisbon;2021/07/22;2021/07/25;150;FALSE;Number of Beds: 1;4;
+Book0000009415;CláudPaiva;HTL1303;Port de Nice Suites;4;3;1303 Quai des Docks, Nice;2022/11/04;2022/11/08;220;-5;Number of Beds: 2;2;
+Book0000009427;LMelo959;HTL910;Budapest View Hotel;3;-1;910 Riverside Avenue, Budapest;2023/01/02;2023/01/04;120;true;Amenities: TV;4;
+Book0000009507;IsGonçalves-Loureiro;;Retiro Park Inn;3;2;204 Calle de Alfonso XII, Madrid;2021/10/16;2021/10/19;150;false;Room Size: 700 sq ft;3;The spa treatments were rejuvenating.
+Book0000009616;CristianBatista-Nogueira626;HTL205;Plaza Mayor Hotel;4;2;;2021/04/07;2021/04/09;190;true;View: City View;1;We had a lovely time at this hotel.
+Book0000009649;JoHenriques;HTL1101;Old Town Square Hotel;4;-4;1101 Staroměstské náměstí, Prague;2021/02/17;2021/02/18;230;true;Occupancy: 1 Guest;2;The pool area was relaxing and clean.
+Book0000009734;RafaeLoureiro323;;Cimiez Hill View Hotel;3;3;1304 Avenue des Arènes de Cimiez, Nice;2021/09/20;2021/09/24;190;true;Amenities: Mini Fridge;4;
+Book0000009765;TatFonseca1642;HTL902;;4;2;902 Rua da Rosa, Lisbon;2022/08/02;2022/08/05;190;true;View: City View;2;Conveniently located near public transportation.
+Book0000009843;LFonseca1806;HTL1203;Kallio District Suites;2;3;;2021/05/21;2021/05/23;120;false;View: City View;1;Good room service options.
+Book0000009928;MarCorreia1634;HTL1101;Old Town Square Hotel;4;-23;1101 Staroměstské náměstí, Prague;2021/04/19;2021/04/22;230;true;Room Type: Deluxe;4;The breakfast buffet was delicious.
+Book0000009985;LoreFernandes352;HTL303;Nørrebro Boutique Hotel;3;3;303 Nørrebrogade, Copenhagen;01/05/2015;2022/04/23;160;false;Number of Beds: 2;1;The room was spacious and clean.
+Book0000010144;IsCoelho;HTL305;Spanish Steps Plaza Hotel;5.5;3;305 Piazza di Spagna, Rome;2021/07/05;2021/07/08;210;true;View: Mountain View;2;We will definitely return to this hotel.
+Book0000010193;CláuOliveira748;HTL1204;Töölö Riverside Hotel;4;3;1204 Helsinginkatu, Helsinki;2022/11/11;2022/11/09;200;true;Number of Beds: 1 King Bed;3;
+Book0000010195;MiSá;HTL1003;;2;2;1003 Omonoia Square, Athens;2021/04/08;2021/04/10;120;false;Amenities: Air Conditioning;2;
+Book0000010196;EMoura1195;HTL1004;Syntagma Plaza Hotel;4;2;1004 Syntagma Square, Athens;;2021/04/12;200;true;Occupancy: 4 Guests;1;
+Book0000010281;PilMiranda;HTL302;Copenhagen Grand Palace;5;3;302 Kongens Nytorv, Copenhagen;2021/06/23;2021/06/19;380;true;Bathroom: Ensuite;1;The hotel's location was convenient for sightseeing.
+Book0000010325;DiCardoso;HTL401;Canal View Hotel;-5;2;401 Prinsengracht, Amsterdam;2021/01/22;2021/01/26;150;true;Amenities: Air Conditioning;1;
+Book0000010333;NaiarFigueiredo1533;HTL405;Jordaan Riverside Hotel;3;2;405 Brouwersgracht, Amsterdam;2021/01/26;2021/01/22;170;true;Number of Beds: 1;2;The check-in process was quick and easy.
+Book0000010395;RodrigCosta;HTL304;Copenhagen Harbor View Inn;-23;3;304 Havnegade, Copenhagen;2022/08/17;2022/08/21;320;true;Amenities: Mini Fridge;2;
+Book0000010419;ViEsteves;HTL304;Copenhagen Harbor View Inn;4;3;304 Havnegade, Copenhagen;2022/08/17;2022/08/19;;true;Room Type: Deluxe;2;The room was spacious and clean.
+Book0000010548;BruLopes;HTL1505;Munich Downtown Suites;4;3;205 Zentrumstraße, Munich;2022/07/15;2022/07/16;;true;Room Type: Executive Suite;3;We had a fantastic stay at this hotel.
+Book0000010589;EvPinho;HTL303;;3;3;303 Piazza di Trevi, Rome;2022/10/14;2022/10/16;160;false;View: Mountain View;2;Highly recommended!
+Book0000010598;GRamos1856;;Munich Downtown Suites;4;3;205 Zentrumstraße, Munich;2022/02/17;2022/02/20;290;true;Room Type: Suite;2;
+Book0000010717;Diana-ÉriRodrigues1395;HTL805;Brera Art District Hotel;4;2;805 Via Brera, Milan;2022|12|03;2022/12/05;240;true;Room Type: Standard;2;
+Book0000010803;MadalenPaiva;HTL902;Bairro Alto Suites;4;2;;2022/11/12;2022/11/16;190;true;Occupancy: 1 Guest;1;The hotel's location was convenient for sightseeing.
+Book0000010811;JaiOliveira1000;HTL904;;3;2;904 Rua Garrett, Lisbon;2022/11/12;2022/11/15;150;false;View: City View;4;Great place to unwind after a busy day.
+Book0000010827;ÉrPires;HTL1305;Place Masséna Plaza Hotel;4;3;1305 Place Masséna, Nice;2021/01/08;2021/01/09;230;-4;Amenities: Air Conditioning;4;The pool area was relaxing and clean.
+Book0000010971;KyaFernandes;HTL905;Rossio Square Inn;4;2;905 Praça do Rossio, Lisbon;17/05/2001;2023/08/10;200;true;Room Type: Suite;3;The staff went above and beyond to make us feel welcome.
+Book0000011006;MRamos242;HTL903;Belém Riverside Hotel;4;2;903 Avenida de Brasília, Lisbon;2023/08/08;2023/08/11;220;3.2;Number of Beds: 2 Double Beds;2;
+Book0000011057;NicRamos1169;HTL303;Trevi Fountain Hotel;3;3;;2022/01/20;2022/01/23;160;false;Occupancy: 1 Guest;3;The staff went above and beyond to make us feel welcome.
+Book0000011164;AmélPereira;HTL505;Eixample View Hotel;5;2;505 Carrer d'Enric Granados, Barcelona;2021/01/05;2021/01/03;300;true;Amenities: Coffee Maker;1;
+Book0000011178;TatiaAmorim1160;HTL105;Champs-Élysées Plaza Hotel;5;5.5;105 Avenue des Champs-Élysées, Paris;2021/04/15;2021/04/17;350;true;Room Size: 500 sq ft;4;
+Book0000011209;InêAntunes;HTL202;Royal Palace Suites;5;-10;202 Plaza de Oriente, Madrid;2023/01/14;2023/01/18;280;TRUE;Occupancy: 2 Guests;4;Conveniently located near public transportation.
+Book0000011237;BárFreitas;HTL203;;4;2;203 Gran Vía, Madrid;2023/01/14;2023/01/18;210;true;Number of Beds: 2;3;The hotel has a modern and stylish design.
+Book0000011285;NiSilva1136;HTL204;Retiro Park Inn;3;2;204 Calle de Alfonso XII, Madrid;05/03/2020;2023/07/21;150;false;Amenities: Free Wi-Fi;2;A fantastic place for a romantic getaway.
+Book0000011402;EmmBarbosa746;;Red Light District Inn;2;2;403 Oudezijds Voorburgwal, Amsterdam;2021/03/22;2021/03/24;120;false;Room Size: 700 sq ft;2;
+Book0000011447;WilMagalhães;HTL101;Eiffel Tower View Hotel;4.4;2;101 Rue de la Tour Eiffel, Paris;2022/04/11;2022/04/12;220;true;Occupancy: 3 Guests;3;
+Book0000011644;Eva-MarLopes;HTL605;Schönbrunn Palace Hotel;4;4;605 Schönbrunner Schloßstraße, Vienna;31/10/2012;2022/09/22;210;true;Room Size: 500 sq ft;3;
+Book0000011646;FiSimões;HTL602;Belvedere Palace Suites;5;4;602 Prinz Eugen-Straße, Vienna;2022/09/18;2022/09/21;280;-5;Room Type: Executive Suite;4;
+Book0000011692;JRodrigues;;Spree Riverfront Hotel;4;3;1404 Schiffbauerdamm, Berlin;2021/07/13;2021/07/14;200;true;Bathroom: Bathtub;1;
+Book0000011859;CaeCorreia1064;HTL103;Montmartre Suites;3;2;;2021/09/08;2021/09/10;150;F;Bathroom: Shower;4;
+;RoPires;HTL101;Eiffel Tower View Hotel;4;2;101 Rue de la Tour Eiffel, Paris;2021/03/06;2021/03/08;220;true;Bathroom: Shower;4;We had a fantastic stay at this hotel.
+;ASantos;HTL102;Louvre Palace Hotel;5;2;102 Rue du Louvre, Paris;2021/03/06;2021/03/09;300;true;Room Size: 300 sq ft;1;
+Book0000011992;JéssicPereira857;HTL802;Fashion District Suites;5;2;802 Via Montenapoleone, Milan;2023/06/18;2023/06/20;;true;Amenities: TV;3;
+Book0000012037;BernardDomingues349;;Budapest View Hotel;3;2;910 Riverside Avenue, Budapest;2022/11/17;2022/11/20;120;true;Occupancy: 1 Guest;3;
+Book0000012096;LucGomes-Alves;HTL401;Canal View Hotel;3;-10;401 Prinsengracht, Amsterdam;2021/05/18;2021/05/22;150;true;Bathroom: Private;1;We had a fantastic stay at this hotel.
+Book0000012159;RSoares;HTL1501;Bavarian Grand Hotel;5;-1.1;201 Hauptstraße, Munich;2021/08/14;2021/08/18;350;true;Number of Beds: 2;2;We had a lovely time at this hotel.
+Book0000012241;VaFigueiredo;HTL904;Chiado Plaza Hotel;3;2;904 Rua Garrett, Lisbon;2021/05/17;2021/05/20;150;-23;View: Mountain View;2;
+Book0000012315;BenRamos1338;HTL201;Puerta del Sol Hotel;4;2;201 Calle de Alcalá, Madrid;2023/08/16;2023/08/20;180;-1.1;Amenities: Coffee Maker;2;
+Book0000012361;ASantos1261;HTL201;Puerta del Sol Hotel;-25;2;201 Calle de Alcalá, Madrid;2023/08/16;2023/08/17;180;true;Bathroom: Bathtub;3;
+Book0000012444;GonçAntunes;HTL1302;Old Town District Inn;3;5.5;1302 Rue de la Préfecture, Nice;2021/09/10;2021/09/14;180;false;Room Size: 700 sq ft;3;
+Book0000012478;EriReis;HTL1103;;3;1;1103 Václavské náměstí, Prague;2021/10/09;2021/10/10;160;false;Room Type: Standard;3;
+Book0000012534;FabiaBorges;HTL602;Belvedere Palace Suites;5;4;602 Prinz Eugen-Straße, Vienna;2022/12/07;2022/12/10;;true;Room Size: 300 sq ft;4;The hotel exceeded our expectations.
+Book0000012688;MaAmaral1072;;Retiro Park Inn;3;2;204 Calle de Alfonso XII, Madrid;2021/10/22;2021/10/24;150;false;Amenities: Mini Fridge;1;
+Book0000012769;DiegAndrade-Nascimento;HTL301;Nyhavn Waterfront Hotel;4;3.2;301 Nyhavn, Copenhagen;2021/08/10;2021/08/13;280;true;Amenities: TV;4;
+Book0000012842;LiTeixeira865;HTL902;Bairro Alto Suites;4;2;902 Rua da Rosa, Lisbon;2022/10/13;2022/10/17;;true;View: Garden View;1;
+Book0000012845;LBatista727;HTL901;Alfama District Hotel;3;2;;2022/10/13;2022/10/17;120;true;Number of Beds: 2 Queen Beds;2;A cozy and charming hotel.
+Book0000012917;ValentPinheiro472;HTL802;;5;2;802 Via Montenapoleone, Milan;2023/02/08;2023/02/09;350;true;Occupancy: 3 Guests;3;
+;LisanGuerreiro-Antunes;HTL902;Bairro Alto Suites;4;2;902 Rua da Rosa, Lisbon;2022/09/22;2022/09/26;190;true;Occupancy: 1 Guest;2;We will definitely return to this hotel.
+Book0000013188;CarolinLopes1273;HTL903;Belém Riverside Hotel;4;2;903 Avenida de Brasília, Lisbon;2022/10/01;2022/10/04;;true;Room Type: Executive Suite;1;
+;SamRodrigues;HTL901;Alfama District Hotel;3;2;901 Rua dos Bacalhoeiros, Lisbon;2023/01/10;2023/01/13;120;true;View: Garden View;4;The in-room amenities were a nice touch.
+Book0000013434;BrGomes;HTL904;Chiado Plaza Hotel;-5;2;904 Rua Garrett, Lisbon;2022/12/07;2022/12/08;150;false;Room Type: Family Suite;1;Great place to unwind after a busy day.
+Book0000013494;LuaSantos;HTL1005;Monastiraki Market Hotel;3;-1.1;1005 Athinas, Athens;2021/07/18;2021/07/21;180;true;Occupancy: 2 Guests;1;The breakfast buffet was delicious.
+Book0000013564;VicBranco1501;HTL102;Louvre Palace Hotel;5;-1;102 Rue du Louvre, Paris;2021/05/02;2021/05/04;300;true;Number of Beds: 2 Queen Beds;2;The staff was attentive to our needs.
+Book0000013641;FilipMiranda1407;;Vatican City Suites;5;3;302 Via della Conciliazione, Rome;2021/05/22;2021/05/26;320;true;Room Size: 500 sq ft;2;Clean and well-maintained rooms.
+;MélaMatias487;HTL204;Retiro Park Inn;3;2;204 Calle de Alfonso XII, Madrid;2021/03/03;2021/03/05;150;false;Bathroom: Private;2;Highly recommended!
+Book0000013728;MafaldVaz;HTL205;Plaza Mayor Hotel;4;-5;205 Plaza Mayor, Madrid;2021/03/03;2021/03/07;190;true;View: Mountain View;3;
+Book0000013745;NicoMagalhães;HTL902;Bairro Alto Suites;4;2;902 Rua da Rosa, Lisbon;2022/02/19;2022/02/22;190;-4;Amenities: Coffee Maker;3;Close to shopping and dining options.
+Book0000013846;MafalFigueiredo;HTL1304;Cimiez Hill View Hotel;3.2;3;1304 Avenue des Arènes de Cimiez, Nice;2022/09/04;2022/09/08;190;true;Number of Beds: 1;2;An enjoyable stay overall.
+;SérgiRocha1703;HTL1302;Old Town District Inn;3;3;1302 Rue de la Préfecture, Nice;2022/09/04;2022/09/05;180;false;Bathroom: Ensuite;4;The room was spacious and clean.
+Book0000013861;GabriCarvalho1676;HTL1305;Place Masséna Plaza Hotel;4;3;1305 Place Masséna, Nice;2022/09/04;2022/09/06;230;5.5;Amenities: TV;1;
+Book0000013869;Bianca-PilPinho952;HTL1304;Cimiez Hill View Hotel;3;3;1304 Avenue des Arènes de Cimiez, Nice;2022/09/04;2022/09/07;;true;View: Garden View;4;We had a memorable experience at this hotel.
+Book0000013910;RenaEsteves;;Prenzlauer Berg Inn;2;3;1403 Kastanienallee, Berlin;2023/03/18;2023/03/19;120;false;Room Size: 400 sq ft;1;
+Book0000014066;SimãAntunes;HTL104;Seine Riverfront Hotel;4;-5;104 Quai de la Seine, Paris;2021/03/15;2021/03/19;200;true;Number of Beds: 1;3;Great place to stay for business travelers.
+Book0000014100;DEsteves603;HTL602;Belvedere Palace Suites;5;4;;2023/01/07;2023/01/08;280;true;Room Size: 500 sq ft;3;A fantastic place for a romantic getaway.
+Book0000014158;SantiagAzevedo;HTL302;Vatican City Suites;5;3;302 Via della Conciliazione, Rome;2023/07/22;2023/07/26;320;-10;Room Type: Deluxe;4;
+Book0000014188;LunAndrade-Lopes;HTL901;Alfama District Hotel;3;2;901 Rua dos Bacalhoeiros, Lisbon;2021/09/22;2021/09/20;120;true;Room Size: 700 sq ft;4;
+Book0000014237;Nicole-ALeal1058;HTL404;Museum Quarter Hotel;-25;2;404 Hobbemastraat, Amsterdam;2023/05/19;2023/05/20;180;true;Room Type: Standard;2;
+Book0000014258;ValTavares;;Prenzlauer Berg Inn;2;3;1403 Kastanienallee, Berlin;2022/09/05;2022/09/07;120;false;Occupancy: 1 Guest;1;
+Book0000014275;SandrTeixeira1464;HTL1403;Prenzlauer Berg Inn;2;3;;2022/09/05;2022/09/08;120;false;Room Size: 400 sq ft;1;The spa treatments were rejuvenating.
+Book0000014341;FabMoura1163;HTL601;Vienna Opera Hotel;4;4;601 Opernring, Vienna;2021/07/15;2021/07/19;190;-4;View: Mountain View;3;
+Book0000014376;Filipa-CataLoureiro964;HTL1303;Port de Nice Suites;4;3;1303 Quai des Docks, Nice;2021/12/12;2021/12/13;;true;Room Size: 400 sq ft;4;
+Book0000014523;ÂngCarvalho;HTL102;Louvre Palace Hotel;5;2;;2023/01/05;2023/01/06;300;true;Room Type: Standard;3;
+Book0000014527;MicaFreitas1454;HTL102;Louvre Palace Hotel;5;2;;2023/01/05;2023/01/06;300;true;Bathroom: Bathtub;3;The hotel offered a complimentary shuttle service.
+Book0000014588;BerDomingues;HTL905;Rossio Square Inn;-23;2;905 Praça do Rossio, Lisbon;2022/11/06;2022/11/10;200;true;Bathroom: Bathtub;2;The hotel had a welcoming atmosphere.
+Book0000014629;MarcFreitas-Figueiredo1305;;Rossio Square Inn;4;2;905 Praça do Rossio, Lisbon;2021/05/10;2021/05/14;200;true;Bathroom: Ensuite;2;A fantastic place for a romantic getaway.
+Book0000014675;FPereira1275;HTL1505;Munich Downtown Suites;4;3;205 Zentrumstraße, Munich;;2022/01/13;290;true;Bathroom: Shower;1;Great hotel, excellent service!
+Book0000014840;MaCruz1743;HTL1005;Monastiraki Market Hotel;3;2;;2021/07/01;2021/07/02;180;true;View: Mountain View;4;
+;SoFerreira1786;HTL1003;Omonia Square Suites;2;2;1003 Omonoia Square, Athens;2021/07/01;2021/07/02;120;false;Room Type: Suite;4;The spa treatments were rejuvenating.
+Book0000014863;MTavares1922;HTL1004;Syntagma Plaza Hotel;4;2;1004 Syntagma Square, Athens;05:50:05 PM/25/04/2007;2021/07/04;200;true;View: Mountain View;2;The pool area was relaxing and clean.
+;AlTorres1884;HTL1503;Munich Central Inn;3;3;203 Innenstadtstraße, Munich;2022/03/22;2022/03/23;150;false;Number of Beds: 1;3;
+Book0000014922;BMatos833;HTL1502;Alpine View Lodge;4;-25;202 Bergweg, Munich;2022/03/22;2022/03/23;280;true;View: City View;3;
+Book0000015032;ToMelo1767;;Retiro Park Inn;3;2;204 Calle de Alfonso XII, Madrid;2021/04/02;2021/04/03;150;false;Room Size: 700 sq ft;3;
+Book0000015123;EriMatias;HTL303;Nørrebro Boutique Hotel;3;3;303 Nørrebrogade, Copenhagen;2023/08/19;2023/08/23;160;-10;Occupancy: 1 Guest;3;
+Book0000015225;RafaMachado-Batista834;HTL1402;Alexanderplatz Suites;-4;3;1402 Alexanderplatz, Berlin;2022/01/05;2022/01/06;160;false;Room Type: Standard;2;Staff was friendly and accommodating.
+Book0000015296;RafaTeixeira1785;HTL902;Bairro Alto Suites;4;2;902 Rua da Rosa, Lisbon;2022/12/19;2022/12/16;190;true;Room Size: 700 sq ft;2;
+Book0000015347;MiguePaiva208;HTL202;Royal Palace Suites;5;2;;2023/07/05;2023/07/06;280;true;Occupancy: 3 Guests;2;
+Book0000015401;CaetCoelho1339;;Wenceslas Square Inn;3;1;1103 Václavské náměstí, Prague;2021/01/06;2021/01/09;160;false;Occupancy: 3 Guests;1;
+Book0000015402;MartiDomingues570;HTL1103;Wenceslas Square Inn;3;-5;1103 Václavské náměstí, Prague;2021/01/06;2021/01/10;160;false;Amenities: Mini Fridge;4;
+Book0000015530;PeNeves993;HTL1105;Josefov District Hotel;4;1;1105 Josefov, Prague;2022/10/20;2022/10/23;;true;Number of Beds: 2 Double Beds;2;We will definitely return to this hotel.
+;RitVicente1649;HTL301;Colosseum View Hotel;4;3;301 Via di San Gregorio, Rome;2022/05/07;2022/05/11;200;true;Room Type: Standard;2;Great hotel, excellent service!
+Book0000015780;DeMendes1388;HTL403;Red Light District Inn;2;2;403 Oudezijds Voorburgwal, Amsterdam;01/11/2016;2023/01/17;120;false;Room Type: Standard;1;Family-friendly accommodations.
+Book0000015859;MargarLima1945;HTL1102;;5;1;1102 Karlův most, Prague;2021/10/20;2021/10/24;350;true;Amenities: Air Conditioning;1;
+Book0000016110;CristLopes;;Museum Quarter Hotel;4;2;404 Hobbemastraat, Amsterdam;2023/05/13;2023/05/14;180;true;Occupancy: 2 Guests;3;
+;CrisFigueiredo-Gaspar1861;HTL905;Rossio Square Inn;4;2;905 Praça do Rossio, Lisbon;2021/08/15;2021/08/16;200;true;Occupancy: 1 Guest;2;
+Book0000016273;AntónMorais;HTL202;Royal Palace Suites;5;3.2;202 Plaza de Oriente, Madrid;2021/05/21;2021/05/23;280;true;Number of Beds: 2 Double Beds;3;A fantastic place for a romantic getaway.
+Book0000016378;Mariana-Cardoso1313;HTL1305;Place Masséna Plaza Hotel;4;3;;2021/10/08;2021/10/11;230;true;Occupancy: 4 Guests;3;The hotel has a modern and stylish design.
+;ETavares-Pacheco;HTL601;Vienna Opera Hotel;4;4;601 Opernring, Vienna;2021/06/02;2021/06/03;190;true;Room Type: Executive Suite;1;The room was spacious and clean.
+Book0000016491;ASilva1823;HTL304;Roman Forum Inn;4;3;304 Via dei Fori Imperiali, Rome;2022/06/20;2022/06/23;;true;Number of Beds: 2 Queen Beds;3;Beautiful views from our room.
+Book0000016503;WiMarques349;HTL305;Spanish Steps Plaza Hotel;4.4;3;305 Piazza di Spagna, Rome;2022/06/20;2022/06/24;210;true;Room Type: Suite;3;The spa treatments were rejuvenating.
+Book0000016528;CataCosta1566;HTL301;Colosseum View Hotel;4;3;301 Via di San Gregorio, Rome;2022/06/20;2022/06/24;;true;Room Type: Deluxe;1;
+Book0000016622;NáNeves;HTL305;Spanish Steps Plaza Hotel;4;3;305 Piazza di Spagna, Rome;2022/01/21;2022/01/25;210;-10;Room Size: 500 sq ft;2;
+Book0000016642;ValenFonseca308;;Retiro Park Inn;3;2;204 Calle de Alfonso XII, Madrid;2021/03/19;2021/03/22;150;false;Bathroom: Shower;2;The room was spacious and clean.
+;PCardoso-Macedo435;HTL201;Puerta del Sol Hotel;4;2;201 Calle de Alcalá, Madrid;2021/03/19;2021/03/23;180;T;Number of Beds: 2 Queen Beds;1;
+Book0000016694;SaEsteves35;HTL403;Red Light District Inn;2;2;403 Oudezijds Voorburgwal, Amsterdam;01/11/2010;2021/04/06;120;false;Number of Beds: 2 Double Beds;1;
+Book0000016751;BMendes;HTL902;Bairro Alto Suites;4;2;902 Rua da Rosa, Lisbon;2022/08/21;2022/08/23;190;-5;Room Size: 300 sq ft;3;
+Book0000016810;SebastJesus;HTL1403;Prenzlauer Berg Inn;2;3;1403 Kastanienallee, Berlin;2021/09/01;2021/09/02;;0;Occupancy: 4 Guests;2;
+Book0000016813;SamuBrito728;;Alexanderplatz Suites;3;3;1402 Alexanderplatz, Berlin;2021/09/01;2021/09/03;160;false;Room Type: Deluxe;3;Staff was friendly and accommodating.
+;Madalena-JúlRibeiro1487;HTL1104;Prague Castle View Hotel;4;1;1104 Hradčanské náměstí, Prague;2022/07/20;2022/07/24;210;true;Room Size: 700 sq ft;1;Highly recommended!
+Book0000016967;IvaValente;HTL802;Fashion District Suites;5;2;802 Via Montenapoleone, Milan;2023/06/01;2023/06/04;350;-4;Room Type: Deluxe;2;
+Book0000016983;SBarros69;HTL802;Fashion District Suites;5;4.4;802 Via Montenapoleone, Milan;2023/06/01;2023/06/04;350;true;Bathroom: Shower;3;
+Book0000016990;NaiNogueira315;HTL203;Gran Vía View Hotel;4;2;203 Gran Vía, Madrid;03:26:49 PM/20/09/2008;2022/12/17;210;true;Room Size: 400 sq ft;1;Conveniently located near public transportation.
+Book0000017059;MRodrigues942;HTL1504;Munich Lakeside Resort;4;3;204 Am Seeufer, Munich;2022/07/02;2022/07/05;320;3.2;Occupancy: 4 Guests;1;Good value for the price.
+;KévSá192;HTL912;Riverside Suites;4;2;12 Riverside Road, Budapest;2022/04/14;2022/04/16;180;true;View: Mountain View;3;Our room had a fantastic view of the river.
+Book0000017125;BrGonçalves;HTL104;Seine Riverfront Hotel;-5;2;104 Quai de la Seine, Paris;2023/06/07;2023/06/11;200;T;Amenities: Mini Fridge;3;Quiet and peaceful ambiance.
+;FilRamos;HTL1503;Munich Central Inn;3;3;203 Innenstadtstraße, Munich;2021/09/05;2021/09/06;150;false;Amenities: Coffee Maker;4;
+Book0000017201;RiCarneiro;HTL1103;Wenceslas Square Inn;4.4;1;1103 Václavské náměstí, Prague;2023/03/06;2023/03/10;160;false;View: City View;4;
+Book0000017244;CarAnjos567;;Prague Castle View Hotel;4;1;1104 Hradčanské náměstí, Prague;2023/03/06;2023/03/10;210;true;Number of Beds: 1 King Bed;2;We received a warm welcome upon arrival.
+Book0000017262;EnzBranco;HTL202;Royal Palace Suites;5;2;202 Plaza de Oriente, Madrid;2023/03/14;2023/03/18;280;-1;Bathroom: Ensuite;1;
+Book0000017296;AdGonçalves;HTL204;Retiro Park Inn;3;2;204 Calle de Alfonso XII, Madrid;2023/03/14;2023/03/16;;false;Room Size: 300 sq ft;1;
+Book0000017433;DeLourenço;HTL1403;Prenzlauer Berg Inn;2;3;1403 Kastanienallee, Berlin;05:04:55 PM/16/04/2011;2022/05/17;120;false;Occupancy: 1 Guest;3;Beautiful views from our room.
+Book0000017483;KéFonseca;HTL502;Gothic Quarter Inn;3;2;;2022/09/18;2022/09/19;150;false;Occupancy: 1 Guest;2;Conveniently located near public transportation.
+Book0000017488;LetícVicente;HTL505;;5;2;505 Carrer d'Enric Granados, Barcelona;2022/09/18;2022/09/19;300;true;Number of Beds: 2 Double Beds;1;
+Book0000017556;DuFigueiredo60;HTL802;;5;2;802 Via Montenapoleone, Milan;2023/03/13;2023/03/15;350;TRUE;Amenities: Free Wi-Fi;4;The hotel had a welcoming atmosphere.
+Book0000017758;CarSimões;HTL1101;Old Town Square Hotel;4;1;1101 Staroměstské náměstí, Prague;2022/08/09;2022/08/11;;true;Room Type: Executive Suite;4;The room was spacious and clean.
+Book0000017889;SandNascimento1195;HTL305;Vesterbro Comfort Suites;4;3;305 Vesterbrogade, Copenhagen;2021|12|03;2021/12/06;290;1;Room Type: Suite;4;A fantastic place for a romantic getaway.
+Book0000017934;SamPinheiro;HTL302;Vatican City Suites;5;3;302 Via della Conciliazione, Rome;2022/09/05;2022/09/08;320;-4;Amenities: Mini Fridge;2;The room was spacious and clean.
+Book0000018039;Sofia-JésRodrigues1257;HTL703;Holmenkollen Lodge;-1;4;703 Kongeveien, Oslo;2022/11/06;2022/11/07;350;true;Room Size: 400 sq ft;1;
+Book0000018058;VeTavares-Magalhães;HTL704;Opera House Suites;4;4;704 Kirsten Flagstads plass, Oslo;2022|11|06;2022/11/10;240;true;Occupancy: 3 Guests;4;We enjoyed our stay here.
+Book0000018170;JoGarcia;HTL1205;Sörnäinen Waterfront Inn;3;3;1205 Sörnäisten rantatie, Helsinki;11:38:56 AM/30/05/2017;2023/05/06;160;true;Number of Beds: 2 Double Beds;1;
+Book0000018367;DaniPinto;HTL1203;Kallio District Suites;2;4.4;1203 Hämeentie, Helsinki;2021/12/11;2021/12/12;120;false;View: City View;1;
+Book0000018401;RCampos773;HTL402;Dam Square Suites;4;2;402 Damstraat, Amsterdam;06:02:29 PM/21/06/2001;2022/07/20;220;true;Number of Beds: 2 Queen Beds;1;
+Book0000018529;RHenriques1210;HTL603;Stephansplatz Inn;3;4;603 Stephansplatz, Vienna;2023/01/08;2023/01/10;;false;Room Type: Suite;2;
+Book0000018570;JoeMacedo;HTL1001;Acropolis View Hotel;4;-10;1001 Dionysiou Areopagitou, Athens;2023/06/09;2023/06/11;220;true;Room Type: Executive Suite;4;
+Book0000018628;BeatRibeiro;HTL1105;;4;1;1105 Josefov, Prague;2022/04/15;2022/04/19;240;true;Number of Beds: 1;1;Well-appointed rooms with nice decor.
+Book0000018729;AdrCastro1103;HTL305;Spanish Steps Plaza Hotel;4;3;305 Piazza di Spagna, Rome;2023/06/07;2023/06/08;210;-1;Number of Beds: 2 Double Beds;2;
+Book0000018733;FEsteves113;HTL301;Colosseum View Hotel;-10;3;301 Via di San Gregorio, Rome;2023/06/07;2023/06/08;200;true;Amenities: TV;3;Comfy beds and pillows.
+Book0000018764;LunMorais;HTL301;Colosseum View Hotel;4;3;301 Via di San Gregorio, Rome;2022/09/17;2022/09/19;200;-1;Occupancy: 4 Guests;4;Staff was friendly and accommodating.
+Book0000018835;LeanAzevedo1129;HTL903;Belém Riverside Hotel;4;2;903 Avenida de Brasília, Lisbon;2021/08/18;2021/08/21;;true;Number of Beds: 1;2;Good value for the price.
+Book0000018900;JésGomes;HTL1101;Old Town Square Hotel;4;1;1101 Staroměstské náměstí, Prague;2021/12/19;2021/12/16;230;true;Occupancy: 1 Guest;4;We had a memorable experience at this hotel.
+Book0000018972;CoCastro-Pires;HTL1202;Esplanadi Park Inn;3;3;;2023/01/15;2023/01/17;180;false;Number of Beds: 2 Queen Beds;1;
+Book0000018974;GabOliveira;HTL1202;Esplanadi Park Inn;3;3;;2023/01/15;2023/01/16;180;false;Number of Beds: 1;3;
+;TatiaTorres;HTL1504;Munich Lakeside Resort;4;3;204 Am Seeufer, Munich;2021/08/02;2021/08/04;320;true;Occupancy: 3 Guests;4;
+Book0000019212;LauCosta785;HTL705;Aker Brygge Waterfront Hotel;4;4;705 Stranden, Oslo;2022/09/24;2022/09/21;260;true;Amenities: Mini Fridge;3;
+Book0000019218;KyaPires;HTL302;Vatican City Suites;5;3;302 Via della Conciliazione, Rome;2023/06/07;2023/06/08;320;-4;Amenities: Coffee Maker;4;
+Book0000019269;KévMoreira1161;HTL904;Chiado Plaza Hotel;5.5;2;904 Rua Garrett, Lisbon;2022/12/12;2022/12/16;150;false;View: Mountain View;1;
+Book0000019319;YarFonseca-Macedo;HTL1505;Munich Downtown Suites;4;3;205 Zentrumstraße, Munich;2021/11/01;2021/11/04;;true;Room Type: Standard;2;
+Book0000019332;BReis;HTL1504;Munich Lakeside Resort;4;3;204 Am Seeufer, Munich;2021/11/01;2021/11/03;;true;Room Size: 300 sq ft;2;
+Book0000019423;GabPereira;HTL1105;Josefov District Hotel;4;1;;2023/08/07;2023/08/09;240;true;Number of Beds: 2;3;
+Book0000019444;WilliEsteves-Marques141;HTL1103;Wenceslas Square Inn;3;1;1103 Václavské náměstí, Prague;2023/08/07;2023/08/10;160;-10;View: Mountain View;1;Great hotel, excellent service!
+Book0000019546;SarMoreira;HTL105;;5;2;105 Avenue des Champs-Élysées, Paris;2022/06/11;2022/06/15;350;true;View: Mountain View;1;The breakfast buffet was delicious.
+Book0000019623;SorAzevedo669;HTL1102;Charles Bridge Suites;5;-5;1102 Karlův most, Prague;2023/04/12;2023/04/14;350;true;Bathroom: Shower;4;
+Book0000019624;LeGarcia;HTL1102;Charles Bridge Suites;5;1;1102 Karlův most, Prague;2023/04/13;2023/04/12;350;true;Room Type: Standard;2;
+;IRodrigues;HTL1401;Brandenburg Gate Hotel;4;3;1401 Pariser Platz, Berlin;2022/08/02;2022/08/05;220;true;Amenities: TV;2;
+Book0000019738;AMaia;HTL1401;Brandenburg Gate Hotel;4;3;1401 Pariser Platz, Berlin;2022/08/02;2022/08/05;;true;Amenities: Air Conditioning;1;We had a memorable experience at this hotel.
+Book0000019743;LoureLopes1486;HTL1402;Alexanderplatz Suites;3;-4;1402 Alexanderplatz, Berlin;2022/08/02;2022/08/06;160;false;Occupancy: 4 Guests;4;
+Book0000019762;NeHenriques426;HTL1405;Kurfürstendamm Plaza Hotel;4;3;;2022/08/02;2022/08/05;230;true;Number of Beds: 2;4;
+Book0000019883;JorgMagalhães;HTL1103;Wenceslas Square Inn;3;3.2;1103 Václavské náměstí, Prague;2022/07/03;2022/07/07;160;false;Number of Beds: 2 Double Beds;1;Great place to stay for business travelers.
+Book0000019914;MRocha;HTL1403;Prenzlauer Berg Inn;2;3;1403 Kastanienallee, Berlin;2023/06/07;2023/06/10;120;5.5;Bathroom: Bathtub;1;
+Book0000019961;LBatista1585;HTL304;Roman Forum Inn;4;3;304 Via dei Fori Imperiali, Rome;2021/04/09;2021/04/13;220;-10;Amenities: TV;3;
+;JMartins;HTL202;Royal Palace Suites;5;2;202 Plaza de Oriente, Madrid;2023/02/20;2023/02/22;280;true;Amenities: Coffee Maker;4;An enjoyable stay overall.
+Book0000020021;DéboNascimento;HTL204;Retiro Park Inn;3;2;;2023/02/20;2023/02/22;150;false;Amenities: Free Wi-Fi;4;
+Book0000020201;CarTavares;HTL1205;Sörnäinen Waterfront Inn;3;-10;1205 Sörnäisten rantatie, Helsinki;2021/06/13;2021/06/17;160;true;Number of Beds: 1 King Bed;2;Easy access to tourist attractions.
+Book0000020210;GabrieMachado;HTL1602;Old Town Boutique Hotel;4;3.2;302 Stare Miasto, Warsaw;2021/12/08;2021/12/12;290;true;Room Type: Standard;4;We enjoyed our stay here.
+Book0000020213;EmíliFernandes;HTL1604;Warsaw Riverside Inn;4;4;;2021/12/08;2021/12/12;320;true;View: City View;3;
+Book0000020216;PPinto192;HTL1605;Warsaw Park View Hotel;-1.1;4;305 Parkowa Aleja, Warsaw;2021/12/08;2021/12/12;310;true;Occupancy: 2 Guests;3;The in-room amenities were a nice touch.
+;CéValente;HTL1402;Alexanderplatz Suites;3;3;1402 Alexanderplatz, Berlin;2021/12/02;2021/12/03;160;false;Amenities: Air Conditioning;2;We had a fantastic stay at this hotel.
+Book0000020266;LuValente;HTL1404;Spree Riverfront Hotel;4;3;;2021/12/02;2021/12/06;200;true;View: Mountain View;4;Great place to unwind after a busy day.
+Book0000020271;AlBorges;HTL1402;Alexanderplatz Suites;3;-23;1402 Alexanderplatz, Berlin;2021/12/02;2021/12/03;160;false;Number of Beds: 1 King Bed;3;Delicious room service meals.
+Book0000020276;LauMendes1796;HTL1402;Alexanderplatz Suites;3;3;;2021/12/02;2021/12/03;160;false;Occupancy: 1 Guest;2;
+Book0000020344;EmPereira1135;HTL1602;Old Town Boutique Hotel;4;4;;2023/04/19;2023/04/20;290;true;Amenities: Mini Fridge;2;
+Book0000020437;FrederMachado;HTL201;Puerta del Sol Hotel;3.2;2;201 Calle de Alcalá, Madrid;2023/01/02;2023/01/04;180;TRUE;Room Size: 700 sq ft;2;Excellent housekeeping service.
+Book0000020628;LucianPires1230;HTL1201;Helsinki Harbor Hotel;4;3;;2023/01/19;2023/01/21;240;true;Bathroom: Shower;1;Comfy beds and pillows.
+Book0000020765;LSantos-Neto;;Monastiraki Market Hotel;3;2;1005 Athinas, Athens;2022/04/17;2022/04/19;180;true;Room Size: 700 sq ft;1;
+Book0000020784;MCruz466;HTL1304;Cimiez Hill View Hotel;3;3;1304 Avenue des Arènes de Cimiez, Nice;29/10/2007;2021/03/13;190;true;Bathroom: Shower;1;Excellent housekeeping service.
+Book0000020795;SebasFreitas;HTL1303;Port de Nice Suites;4;3;1303 Quai des Docks, Nice;2021/03/14;2021/03/12;220;true;Number of Beds: 1;4;
+Book0000020828;LuíCunha;;Holmenkollen Lodge;5;4;703 Kongeveien, Oslo;2023/02/03;2023/02/05;350;true;Room Size: 500 sq ft;3;
+Book0000020882;EmMelo1284;;Place Masséna Plaza Hotel;4;3;1305 Place Masséna, Nice;2021/03/22;2021/03/24;230;true;Occupancy: 3 Guests;3;
+Book0000020929;VSousa-Lima1558;HTL202;Royal Palace Suites;5;2;202 Plaza de Oriente, Madrid;2022/07/05;2022/07/06;280;-10;Occupancy: 4 Guests;2;Beautiful views from our room.
+Book0000020933;FNeto;HTL202;Royal Palace Suites;5;2;202 Plaza de Oriente, Madrid;2022/07/05;2022/07/07;280;-23;Number of Beds: 1 King Bed;4;The check-in process was quick and easy.
+Book0000020951;Erica-Nunes;HTL203;;4;2;203 Gran Vía, Madrid;2022/07/05;2022/07/09;210;true;Room Type: Standard;4;
+Book0000021100;VaBorges;HTL1401;Brandenburg Gate Hotel;4;-10;1401 Pariser Platz, Berlin;2023/01/20;2023/01/23;220;true;Occupancy: 4 Guests;4;
+;NaiaValente601;HTL801;Milan Cathedral Hotel;4;2;801 Piazza del Duomo, Milan;2021/06/07;2021/06/11;230;true;Bathroom: Shower;4;
+;PAssunção-Simões;HTL701;Fjord View Hotel;4;4;701 Akershusstranda, Oslo;2021/02/19;2021/02/23;220;true;Occupancy: 2 Guests;4;
+Book0000021320;BRodrigues-Teixeira353;HTL1403;Prenzlauer Berg Inn;2;-23;1403 Kastanienallee, Berlin;2021/12/04;2021/12/08;120;false;Amenities: Mini Fridge;4;
+Book0000021323;YaLima;HTL1401;Brandenburg Gate Hotel;4;3;1401 Pariser Platz, Berlin;2021/12/04;2021/12/06;220;-1.1;Amenities: Air Conditioning;2;Delicious room service meals.
+Book0000021394;LeoMaia1897;HTL1101;Old Town Square Hotel;4;1;;2021/01/12;2021/01/15;230;TRUE;Room Type: Standard;3;
+Book0000021441;EduMachado;HTL1005;Monastiraki Market Hotel;3;2;1005 Athinas, Athens;;2022/11/20;180;true;Room Type: Family Suite;3;
+Book0000021514;MMoura-Barros265;HTL902;Bairro Alto Suites;4;2;;2022/05/19;2022/05/22;190;true;View: Mountain View;4;Good value for the price.
+Book0000021555;JuliaBatista;HTL1205;Sörnäinen Waterfront Inn;3;3;;2023/05/13;2023/05/17;160;true;Number of Beds: 2 Double Beds;2;Delicious room service meals.
+Book0000021579;AlicBranco1146;HTL1204;Töölö Riverside Hotel;4;3;1204 Helsinginkatu, Helsinki;2023/05/15;2023/05/13;200;true;View: City View;1;
+Book0000021587;Carlota-MarianBorges;HTL1204;;4;3;1204 Helsinginkatu, Helsinki;2023/05/13;2023/05/17;200;true;Occupancy: 2 Guests;1;
+Book0000022052;RenJesus;HTL902;Bairro Alto Suites;4;2;902 Rua da Rosa, Lisbon;2021/08/16;2021/08/13;190;true;Room Type: Executive Suite;3;
+Book0000022097;AlicSá877;HTL1501;Bavarian Grand Hotel;5;3;201 Hauptstraße, Munich;11:41:01 AM/08/12/2009;2022/02/10;350;true;Occupancy: 3 Guests;4;
+Book0000022294;MartNeves1085;HTL1401;Brandenburg Gate Hotel;4;3;1401 Pariser Platz, Berlin;2022/08/08;2022/08/06;220;true;Room Type: Executive Suite;1;The hotel has a modern and stylish design.
+Book0000022298;LiFernandes193;HTL1405;Kurfürstendamm Plaza Hotel;4;3;1405 Kurfürstendamm, Berlin;2022/08/06;2022/08/09;;true;Bathroom: Ensuite;4;
+Book0000022305;SoraiMoreira837;HTL1403;Prenzlauer Berg Inn;2;3;1403 Kastanienallee, Berlin;2022/08/06;2022/08/07;120;5.5;Room Size: 700 sq ft;1;
+Book0000022399;MarGarcia1493;HTL204;Retiro Park Inn;3;-1;204 Calle de Alfonso XII, Madrid;2021/06/06;2021/06/08;150;false;Room Type: Executive Suite;4;
+Book0000022423;BruBarbosa;HTL601;Vienna Opera Hotel;4;4;;2022/09/13;2022/09/16;190;true;View: Mountain View;1;
+;LuOliveira103;HTL603;Stephansplatz Inn;3;4;603 Stephansplatz, Vienna;2022/09/13;2022/09/14;150;false;Room Type: Standard;4;The staff was attentive to our needs.
+Book0000022432;TeSilva1408;HTL602;Belvedere Palace Suites;5;4;602 Prinz Eugen-Straße, Vienna;2022/09/13;2022/09/16;;true;Bathroom: Bathtub;3;The spa treatments were rejuvenating.
+Book0000022520;MaFreitas1526;HTL302;Vatican City Suites;5;3;302 Via della Conciliazione, Rome;2022/08/12;2022/08/14;;true;Bathroom: Private;4;
+Book0000022548;FiRibeiro;HTL1105;Josefov District Hotel;4;5.5;1105 Josefov, Prague;2022/11/07;2022/11/11;240;true;Room Size: 400 sq ft;4;Good value for the price.
+Book0000022629;JorgPires1430;HTL202;;5;2;202 Plaza de Oriente, Madrid;2023/08/11;2023/08/13;280;true;Number of Beds: 1;3;Easy access to tourist attractions.
+Book0000022815;InêBarbosa;HTL1602;Old Town Boutique Hotel;5.5;4;302 Stare Miasto, Warsaw;2021/11/14;2021/11/17;290;true;View: Garden View;1;The spa treatments were rejuvenating.
+Book0000023002;FJesus;HTL803;Navigli Canal Inn;3;5.5;803 Ripa di Porta Ticinese, Milan;2023/01/18;2023/01/22;160;false;Bathroom: Ensuite;3;
+Book0000023042;JúlGarcia1777;;Töölö Riverside Hotel;4;3;1204 Helsinginkatu, Helsinki;2022/03/06;2022/03/07;200;true;Room Size: 500 sq ft;1;A cozy and charming hotel.
+Book0000023070;ÉriHenriques1667;HTL203;Gran Vía View Hotel;4;2;203 Gran Vía, Madrid;2022/06/10;2022/06/13;210;-4;Bathroom: Private;3;The fitness center had modern equipment.
+Book0000023216;RafaeGarcia-Leal;;Omonia Square Suites;2;2;1003 Omonoia Square, Athens;2022/04/04;2022/04/08;120;false;Amenities: Coffee Maker;1;Comfy beds and pillows.
+Book0000023224;DiCorreia450;HTL1005;Monastiraki Market Hotel;3;-4;1005 Athinas, Athens;2022/04/04;2022/04/08;180;true;Amenities: TV;3;Quiet and peaceful ambiance.
+Book0000023298;JaiValente1852;HTL1504;Munich Lakeside Resort;4;3;204 Am Seeufer, Munich;11:11:38 PM/21/06/2010;2023/01/18;320;true;Occupancy: 1 Guest;1;
+Book0000023440;MartPinho;HTL1101;Old Town Square Hotel;-10;1;1101 Staroměstské náměstí, Prague;2021/12/11;2021/12/13;230;true;Room Size: 300 sq ft;3;The breakfast buffet was delicious.
+Book0000023489;LauCosta785;HTL401;Canal View Hotel;-5;2;401 Prinsengracht, Amsterdam;2021/04/22;2021/04/25;150;true;Room Type: Deluxe;2;
+Book0000023605;CCorreia;HTL902;;4;2;902 Rua da Rosa, Lisbon;2021/05/14;2021/05/16;190;true;Room Type: Family Suite;4;The spa treatments were rejuvenating.
+Book0000023699;PilMarques;HTL202;;5;2;202 Plaza de Oriente, Madrid;2022/11/04;2022/11/06;280;true;Number of Beds: 2 Queen Beds;3;
+Book0000023710;SPinto531;HTL203;Gran Vía View Hotel;4;2;203 Gran Vía, Madrid;2022/11/04;2022/11/05;210;4.4;Bathroom: Ensuite;1;Staff was friendly and accommodating.
+Book0000023722;VRibeiro;HTL203;Gran Vía View Hotel;4;2;203 Gran Vía, Madrid;2022/11/04;2022/11/06;;true;Room Size: 500 sq ft;2;The hotel offered a complimentary shuttle service.
+Book0000023762;LeonAraújo;;Old Town Square Hotel;4;1;1101 Staroměstské náměstí, Prague;2022/10/01;2022/10/05;230;true;Number of Beds: 1;1;
+;SorSousa1868;HTL1505;Munich Downtown Suites;4;3;205 Zentrumstraße, Munich;2021/02/16;2021/02/18;290;true;Bathroom: Private;4;The rooftop bar has amazing cocktails.
+Book0000023918;MAmaral;HTL203;Gran Vía View Hotel;-25;2;203 Gran Vía, Madrid;2021/05/02;2021/05/03;210;true;Bathroom: Bathtub;4;The staff went above and beyond to make us feel welcome.
+Book0000023933;CBranco1620;HTL201;Puerta del Sol Hotel;4;2;201 Calle de Alcalá, Madrid;2021/05/03;2021/05/02;180;true;Amenities: TV;1;We had a fantastic stay at this hotel.
+Book0000024255;AfoCosta;HTL305;Spanish Steps Plaza Hotel;4;3;;2021/03/22;2021/03/25;210;true;Amenities: Free Wi-Fi;1;
+Book0000024259;AlíciRodrigues1752;HTL303;Trevi Fountain Hotel;3;3;;2021/03/22;2021/03/23;160;false;Amenities: Air Conditioning;3;
+Book0000024324;WilliEsteves-Marques141;;Gran Vía View Hotel;4;2;203 Gran Vía, Madrid;2022/09/14;2022/09/18;210;true;Bathroom: Bathtub;1;We will definitely return to this hotel.
+Book0000024352;FaMiranda1758;HTL204;Retiro Park Inn;3;3.2;204 Calle de Alfonso XII, Madrid;2022/09/14;2022/09/16;150;false;Number of Beds: 1 King Bed;1;A cozy and charming hotel.
+Book0000024355;HenriqSousa;HTL203;Gran Vía View Hotel;4;2;203 Gran Vía, Madrid;05:18:49 AM/16/02/2001;2022/09/17;210;true;Room Size: 300 sq ft;4;Comfy beds and pillows.
+;NCorreia875;HTL1604;Warsaw Riverside Inn;4;4;304 Nad Wisłą, Warsaw;2022/01/09;2022/01/13;320;true;Occupancy: 3 Guests;4;Great place to unwind after a busy day.
+Book0000024507;JúlGarcia1777;HTL105;Champs-Élysées Plaza Hotel;5;-4;105 Avenue des Champs-Élysées, Paris;2022/09/04;2022/09/08;350;true;Amenities: Coffee Maker;3;
+Book0000024566;FePacheco;HTL201;Puerta del Sol Hotel;4;2;201 Calle de Alcalá, Madrid;2021/06/09;2021/06/07;180;true;Amenities: TV;1;Beautiful views from our room.
+Book0000024578;MatCorreia;HTL203;Gran Vía View Hotel;4;2;;2021/06/07;2021/06/09;210;true;Amenities: Air Conditioning;4;The staff went above and beyond to make us feel welcome.
+;AntBatista277;HTL303;Trevi Fountain Hotel;3;3;303 Piazza di Trevi, Rome;2022/04/20;2022/04/23;160;false;Occupancy: 2 Guests;1;
+Book0000024657;GBaptista;HTL303;Trevi Fountain Hotel;3;-25;303 Piazza di Trevi, Rome;2022/04/20;2022/04/23;160;false;Amenities: TV;2;The room was spacious and clean.
+;FSimões;HTL305;Spanish Steps Plaza Hotel;4;3;305 Piazza di Spagna, Rome;2023/02/17;2023/02/19;210;true;Amenities: Free Wi-Fi;1;
+;ViceCruz-Andrade1988;HTL1404;Spree Riverfront Hotel;4;3;1404 Schiffbauerdamm, Berlin;2022/03/18;2022/03/22;200;true;Room Size: 500 sq ft;3;The hotel restaurant had a diverse menu.
+Book0000024857;PilaCruz1158;HTL1005;Monastiraki Market Hotel;3;2;;2021/01/05;2021/01/08;180;TRUE;Room Size: 700 sq ft;3;Comfy beds and pillows.
+;EduaSilva;HTL1001;Acropolis View Hotel;4;2;1001 Dionysiou Areopagitou, Athens;2021/01/05;2021/01/08;220;true;Amenities: Coffee Maker;1;Great place to stay for business travelers.
+Book0000024955;MicaePinho596;HTL1405;Kurfürstendamm Plaza Hotel;3.2;3;1405 Kurfürstendamm, Berlin;2023/03/19;2023/03/22;230;true;Room Type: Executive Suite;4;
+Book0000024964;PMelo90;HTL1402;Alexanderplatz Suites;3;3;1402 Alexanderplatz, Berlin;10/03/2009;2022/07/10;160;false;Amenities: TV;3;
+Book0000025061;NádCunha;HTL1205;Sörnäinen Waterfront Inn;3;5.5;1205 Sörnäisten rantatie, Helsinki;2021/04/18;2021/04/21;160;true;Room Size: 400 sq ft;4;Impressive lobby and amenities.
+Book0000025145;ICastro;HTL204;Retiro Park Inn;3;2;;2022/05/02;2022/05/05;150;false;Number of Beds: 2 Queen Beds;1;
+Book0000025155;CarlotPires895;HTL201;Puerta del Sol Hotel;4;2;201 Calle de Alcalá, Madrid;2022/05/03;2022/05/02;180;true;Room Size: 700 sq ft;3;Excellent housekeeping service.
+Book0000025287;EduardSá1145;HTL502;Gothic Quarter Inn;3;2;502 Carrer de la Ciutat, Barcelona;2022/11/14;2022/11/10;150;false;View: Garden View;2;Delicious room service meals.
+Book0000025398;JoFernandes1667;;Nørrebro Boutique Hotel;3;3;303 Nørrebrogade, Copenhagen;2023/04/20;2023/04/23;160;false;Room Size: 500 sq ft;1;
+Book0000025417;EriAraújo;HTL201;Puerta del Sol Hotel;4;2;201 Calle de Alcalá, Madrid;2022|10|12;2022/10/14;180;true;Number of Beds: 2;3;
+Book0000025435;CésBorges;HTL201;;4;2;201 Calle de Alcalá, Madrid;2022/10/12;2022/10/15;180;true;Amenities: Coffee Maker;4;
+Book0000025461;TaGarcia1707;;Puerta del Sol Hotel;4;2;201 Calle de Alcalá, Madrid;2022/10/12;2022/10/16;180;true;Amenities: Mini Fridge;2;We had a memorable experience at this hotel.
+Book0000025465;AnDomingues;;Royal Palace Suites;5;2;202 Plaza de Oriente, Madrid;2022/10/12;2022/10/16;280;true;Room Type: Deluxe;2;Great hotel, excellent service!
+Book0000025478;AleBatista1683;HTL603;Stephansplatz Inn;3.2;4;603 Stephansplatz, Vienna;2022/09/17;2022/09/19;150;false;Number of Beds: 2 Queen Beds;2;Great place to stay for business travelers.
+Book0000025587;SMorais;HTL901;Alfama District Hotel;3;2;901 Rua dos Bacalhoeiros, Lisbon;2022/11/15;2022/11/16;120;-10;Number of Beds: 2 Double Beds;4;Easy access to tourist attractions.
+Book0000025614;BTeixeira;HTL902;Bairro Alto Suites;4;-25;902 Rua da Rosa, Lisbon;2022/11/15;2022/11/19;190;true;Room Size: 400 sq ft;1;Good value for the price.
+Book0000025702;LarMaia;;Belvedere Palace Suites;5;4;602 Prinz Eugen-Straße, Vienna;2022/06/16;2022/06/20;280;true;Occupancy: 3 Guests;1;The concierge provided helpful recommendations.
+Book0000025829;NelAmaral1696;;Spanish Steps Plaza Hotel;4;3;305 Piazza di Spagna, Rome;2021/06/02;2021/06/05;210;true;View: City View;1;
+Book0000025885;IsaRamos1491;HTL304;Copenhagen Harbor View Inn;4;3;;2022/07/06;2022/07/10;320;true;Room Size: 500 sq ft;1;
+Book0000025901;PetraMoura;HTL305;Vesterbro Comfort Suites;4;4.4;305 Vesterbrogade, Copenhagen;2022/07/06;2022/07/08;290;true;Number of Beds: 2 Queen Beds;3;Excellent housekeeping service.
+Book0000025915;DBrito;HTL201;Puerta del Sol Hotel;4;-4;201 Calle de Alcalá, Madrid;2022/10/09;2022/10/11;180;true;Room Type: Executive Suite;1;The room was spacious and clean.
+;AndrAntunes-Matias1077;HTL1104;Prague Castle View Hotel;4;1;1104 Hradčanské náměstí, Prague;2023/06/06;2023/06/07;210;true;Amenities: Air Conditioning;3;
+Book0000026156;PedBarros209;HTL1303;Port de Nice Suites;4;-25;1303 Quai des Docks, Nice;2023/04/09;2023/04/10;220;true;View: Garden View;4;
+Book0000026440;AndrSimões763;HTL1401;Brandenburg Gate Hotel;4;3;1401 Pariser Platz, Berlin;2022/04/04;2022/04/06;220;-25;Amenities: Mini Fridge;1;
+Book0000026552;MaGomes467;HTL404;Museum Quarter Hotel;4;3.2;404 Hobbemastraat, Amsterdam;2023/06/13;2023/06/17;180;true;View: Garden View;4;
+Book0000026561;PeFaria;HTL401;Canal View Hotel;-1.1;2;401 Prinsengracht, Amsterdam;2023/06/13;2023/06/17;150;true;Room Type: Deluxe;3;The pool area was relaxing and clean.
+Book0000026701;DuSantos1917;HTL1502;Alpine View Lodge;5.5;3;202 Bergweg, Munich;2021/01/09;2021/01/13;280;true;Room Type: Suite;3;
+Book0000026774;MatiLeal;HTL303;Trevi Fountain Hotel;3;3;;2023/01/09;2023/01/12;160;false;Occupancy: 2 Guests;4;
+Book0000026793;MauCampos355;HTL405;Jordaan Riverside Hotel;3;2;405 Brouwersgracht, Amsterdam;2023/01/16;2023/01/12;170;true;Room Size: 500 sq ft;4;
+Book0000026808;RúMiranda;HTL404;Museum Quarter Hotel;5.5;2;404 Hobbemastraat, Amsterdam;2023/01/12;2023/01/13;180;true;Room Type: Executive Suite;1;
+Book0000026871;EmíPereira;HTL1001;Acropolis View Hotel;4;2;1001 Dionysiou Areopagitou, Athens;2021/04/08;2021/04/10;220;-4;Number of Beds: 2 Double Beds;2;
+;RenatBranco1658;HTL1002;Plaka Historic Inn;3;2;1002 Adrianou, Athens;2021/04/08;2021/04/09;160;false;Room Size: 700 sq ft;4;
+Book0000026958;InHenriques;HTL802;Fashion District Suites;-23;2;802 Via Montenapoleone, Milan;2023/01/22;2023/01/25;350;true;View: City View;4;An enjoyable stay overall.
+Book0000026985;AndreiBarbosa-Alves637;HTL805;Brera Art District Hotel;4;2;;2023/01/22;2023/01/25;240;true;Amenities: Air Conditioning;4;The in-room amenities were a nice touch.
+Book0000027125;Catarina-AlicGuerreiro;HTL602;Belvedere Palace Suites;-10;4;602 Prinz Eugen-Straße, Vienna;2022/09/12;2022/09/14;280;true;Amenities: Free Wi-Fi;3;A fantastic place for a romantic getaway.
+Book0000027281;KévBatista-Pires1251;HTL1501;Bavarian Grand Hotel;5;3;;2023/07/17;2023/07/20;350;true;Number of Beds: 1;3;An enjoyable stay overall.
+Book0000027334;LoreCardoso1524;;Omonia Square Suites;2;2;1003 Omonoia Square, Athens;2023/03/12;2023/03/16;120;false;Room Type: Family Suite;1;Our room had a fantastic view of the river.
+;MarTavares1489;HTL705;Aker Brygge Waterfront Hotel;4;4;705 Stranden, Oslo;2021/04/20;2021/04/21;260;true;View: Mountain View;4;
+Book0000027579;BNascimento2007;HTL303;Nørrebro Boutique Hotel;3;3.2;303 Nørrebrogade, Copenhagen;2021/02/21;2021/02/24;160;false;Room Type: Family Suite;3;
+Book0000027709;LorenPacheco;HTL605;Schönbrunn Palace Hotel;-5;4;605 Schönbrunner Schloßstraße, Vienna;2022/05/11;2022/05/14;210;true;Room Type: Standard;2;Highly recommended!
+Book0000027742;XMaia251;HTL705;Aker Brygge Waterfront Hotel;4;4;705 Stranden, Oslo;2021/05/12;2021/05/09;260;true;Room Size: 400 sq ft;1;
+Book0000027752;MartTavares334;HTL704;Opera House Suites;-5;4;704 Kirsten Flagstads plass, Oslo;2021/05/09;2021/05/12;240;true;Number of Beds: 2 Double Beds;4;
+Book0000027765;EdCardoso;HTL305;Spanish Steps Plaza Hotel;4;3;305 Piazza di Spagna, Rome;2022/08/04;2022/08/01;210;true;Number of Beds: 1;4;Conveniently located near public transportation.
+Book0000027822;CláuReis595;HTL1502;Alpine View Lodge;-23;3;202 Bergweg, Munich;2023/02/20;2023/02/21;280;true;Room Size: 300 sq ft;2;
+Book0000027872;RodFonseca;HTL905;Rossio Square Inn;4;2;;2023/05/14;2023/05/18;200;true;View: Garden View;1;Delicious room service meals.
+Book0000027905;IsmaCorreia578;HTL502;Gothic Quarter Inn;3;5.5;502 Carrer de la Ciutat, Barcelona;2022/09/08;2022/09/10;150;false;Room Type: Family Suite;1;
+;SoraAssunção861;HTL502;Gothic Quarter Inn;3;2;502 Carrer de la Ciutat, Barcelona;2022/01/21;2022/01/24;150;false;Amenities: TV;3;
+;CésBranco;HTL505;Eixample View Hotel;5;2;505 Carrer d'Enric Granados, Barcelona;2022/01/21;2022/01/24;300;true;Occupancy: 1 Guest;1;
+Book0000028146;BMiranda;HTL301;Nyhavn Waterfront Hotel;4;3;301 Nyhavn, Copenhagen;2021/02/16;2021/02/19;;true;Room Type: Deluxe;2;Our room had a fantastic view of the river.
+Book0000028195;JoRamos818;HTL704;Opera House Suites;4;4;;2022/12/22;2022/12/26;240;true;Amenities: TV;2;
+Book0000028250;MartRibeiro;;Eixample View Hotel;5;2;505 Carrer d'Enric Granados, Barcelona;2022/10/07;2022/10/08;300;true;Number of Beds: 2 Double Beds;3;
+Book0000028262;KMelo-Morais742;HTL504;Park Güell Suites;3.2;2;504 Carrer d'Olot, Barcelona;2022/10/07;2022/10/09;200;true;Amenities: TV;3;The hotel restaurant had a diverse menu.
+;SimRamos;HTL302;Vatican City Suites;5;3;302 Via della Conciliazione, Rome;2022/02/06;2022/02/07;320;true;Bathroom: Shower;1;Highly recommended!
+Book0000028287;ASá;HTL301;Colosseum View Hotel;4;3;301 Via di San Gregorio, Rome;2022/02/06;2022/02/07;200;4.4;Bathroom: Bathtub;4;
+Book0000028500;SantiagFerreira;HTL702;Viking Heritage Inn;3;4;702 Karl Johans gate, Oslo;04/08/2015;2021/04/15;150;false;Amenities: TV;3;
+;PFigueiredo;HTL1404;Spree Riverfront Hotel;4;3;1404 Schiffbauerdamm, Berlin;2021/09/15;2021/09/19;200;true;Amenities: Free Wi-Fi;2;The breakfast buffet was delicious.
+;MarAzevedo;HTL1502;Alpine View Lodge;4;3;202 Bergweg, Munich;2021/03/21;2021/03/25;280;true;Number of Beds: 2 Double Beds;1;
+Book0000028784;LeanHenriques859;HTL305;Spanish Steps Plaza Hotel;4;3;305 Piazza di Spagna, Rome;2021/10/20;2021/10/17;210;true;Room Type: Deluxe;1;
+Book0000028848;LuísCorreia-Guerreiro527;HTL205;;4;2;205 Plaza Mayor, Madrid;2023/07/01;2023/07/03;190;true;Amenities: Air Conditioning;3;The spa treatments were rejuvenating.
+Book0000028914;GiSantos;HTL603;Stephansplatz Inn;-4;4;603 Stephansplatz, Vienna;2022/07/01;2022/07/03;150;false;Room Size: 400 sq ft;2;Great place to stay for business travelers.
+Book0000028974;GusSantos907;HTL902;Bairro Alto Suites;4;-1.1;902 Rua da Rosa, Lisbon;2022/08/22;2022/08/25;190;true;Amenities: Mini Fridge;4;
+Book0000029135;BruTavares;HTL1205;Sörnäinen Waterfront Inn;3;3;1205 Sörnäisten rantatie, Helsinki;2023/02/08;2023/02/06;160;true;View: Garden View;2;The hotel has a modern and stylish design.
+Book0000029137;IVieira;HTL1202;Esplanadi Park Inn;3;3;;2023/02/06;2023/02/09;180;false;Number of Beds: 1 King Bed;4;Staff was friendly and accommodating.
+Book0000029140;SimLeal;HTL903;Belém Riverside Hotel;4;2;903 Avenida de Brasília, Lisbon;2023/03/21;2023/03/20;220;true;Number of Beds: 2 Double Beds;3;Staff was friendly and accommodating.
+Book0000029241;GiCoelho1404;HTL1005;Monastiraki Market Hotel;3;2;1005 Athinas, Athens;2023/06/17;2023/06/19;;true;Room Size: 300 sq ft;2;Spa facilities were top-notch.
+Book0000029269;AMachado;HTL901;;3;2;901 Rua dos Bacalhoeiros, Lisbon;2021/08/21;2021/08/23;120;true;View: Garden View;2;The fitness center had modern equipment.
+Book0000029343;SPereira296;HTL502;Gothic Quarter Inn;3;2;502 Carrer de la Ciutat, Barcelona;2021/06/22;2021/06/20;150;false;Number of Beds: 1;3;The staff went above and beyond to make us feel welcome.
+Book0000029372;SofiAndrade-Ribeiro;HTL501;Sagrada Familia Hotel;4;2;501 Carrer de Mallorca, Barcelona;2021/06/21;2021/06/20;180;true;Number of Beds: 1;3;
+Book0000029375;LourençBatista361;HTL1604;Warsaw Riverside Inn;4;-25;304 Nad Wisłą, Warsaw;2023/08/09;2023/08/12;320;true;Room Type: Executive Suite;4;
+Book0000029446;VítBrito114;;Syntagma Plaza Hotel;4;2;1004 Syntagma Square, Athens;2021/10/19;2021/10/20;200;true;Bathroom: Bathtub;2;
+Book0000029463;EnzMartins;HTL1002;Plaka Historic Inn;3;2;1002 Adrianou, Athens;2021|10|19;2021/10/21;160;false;Bathroom: Private;4;Family-friendly accommodations.
+Book0000029504;CatarinMachado;HTL405;Jordaan Riverside Hotel;3;2;405 Brouwersgracht, Amsterdam;2023/08/21;2023/08/20;170;true;Amenities: Mini Fridge;4;Great hotel, excellent service!
+Book0000029586;XaCastro360;HTL205;Plaza Mayor Hotel;4;2;205 Plaza Mayor, Madrid;2022/03/08;2022/03/05;190;true;Room Size: 700 sq ft;3;
+Book0000029982;TomMatias1736;HTL202;Royal Palace Suites;5;2;202 Plaza de Oriente, Madrid;07:47:34 PM/17/07/2006;2021/11/05;280;true;Bathroom: Shower;1;
+Book0000030026;MatSoares339;HTL1401;Brandenburg Gate Hotel;4;-10;1401 Pariser Platz, Berlin;2021/07/13;2021/07/16;220;true;View: City View;1;
+;LarLeal1396;HTL205;Plaza Mayor Hotel;4;2;205 Plaza Mayor, Madrid;2023/01/07;2023/01/11;190;true;Amenities: Coffee Maker;3;
+Book0000030096;Ângela-JúliRamos210;HTL205;Plaza Mayor Hotel;4;2;205 Plaza Mayor, Madrid;;2023/01/10;190;true;Room Type: Executive Suite;1;
+Book0000030184;EduarPacheco;HTL1002;Plaka Historic Inn;3;-1.1;1002 Adrianou, Athens;2023/07/21;2023/07/24;160;false;Amenities: Air Conditioning;3;The rooftop bar has amazing cocktails.
+Book0000030187;RuMelo;HTL1002;;3;2;1002 Adrianou, Athens;2023/07/21;2023/07/22;160;false;Number of Beds: 1;3;Highly recommended!
+Book0000030275;CristMelo;HTL504;;4;2;504 Carrer d'Olot, Barcelona;2023/06/01;2023/06/04;200;true;Amenities: Mini Fridge;4;
+Book0000030315;DiaReis;HTL1404;Spree Riverfront Hotel;4;3;1404 Schiffbauerdamm, Berlin;2023/06/19;2023/06/22;;true;Bathroom: Bathtub;4;Comfy beds and pillows.
+Book0000030361;AndrRocha214;HTL1102;;5;1;1102 Karlův most, Prague;2021/12/08;2021/12/11;350;true;Occupancy: 2 Guests;2;
+Book0000030365;SalvaMarques;HTL1105;Josefov District Hotel;4;1;1105 Josefov, Prague;05:49:35 PM/22/08/2007;2021/12/12;240;true;Occupancy: 1 Guest;4;
+Book0000030487;JuliJesus-Carvalho1274;HTL402;Dam Square Suites;3.2;2;402 Damstraat, Amsterdam;2021/02/13;2021/02/14;220;true;Occupancy: 2 Guests;2;The hotel has a modern and stylish design.
+Book0000030576;NicoRodrigues;;Cimiez Hill View Hotel;3;3;1304 Avenue des Arènes de Cimiez, Nice;2022/07/05;2022/07/06;190;true;Amenities: TV;4;We had a lovely time at this hotel.
+Book0000030644;DaviGaspar1351;;Barceloneta Beachfront Hotel;4;2;503 Passeig de Joan de Borbó, Barcelona;2021/12/14;2021/12/16;220;true;View: Garden View;3;
+Book0000030683;DMagalhães69;HTL903;Belém Riverside Hotel;4;2;903 Avenida de Brasília, Lisbon;2022/03/20;2022/03/21;;TRUE;Room Type: Standard;4;Great place to unwind after a busy day.
+Book0000030760;BSoares;HTL1402;Alexanderplatz Suites;3;3;1402 Alexanderplatz, Berlin;2022/11/08;2022/11/12;160;-4;Occupancy: 4 Guests;2;The staff was attentive to our needs.
+;VitNunes1727;HTL1104;Prague Castle View Hotel;4;1;1104 Hradčanské náměstí, Prague;2021/10/19;2021/10/20;210;true;Amenities: Mini Fridge;1;Clean and well-maintained rooms.
+Book0000030919;InSilva108;HTL1502;Alpine View Lodge;4;-10;202 Bergweg, Munich;2022/06/05;2022/06/09;280;true;Number of Beds: 1;3;
+Book0000030968;AfonsAbreu;HTL1302;Old Town District Inn;3;3;1302 Rue de la Préfecture, Nice;2022/09/07;2022/09/08;;false;Occupancy: 2 Guests;4;The hotel restaurant had a diverse menu.
+Book0000031054;LucianNascimento;HTL205;Plaza Mayor Hotel;4;2;205 Plaza Mayor, Madrid;2023/02/13;2023/02/16;;true;Amenities: Coffee Maker;4;The in-room amenities were a nice touch.
+Book0000031071;CaLeal188;HTL203;;4;2;203 Gran Vía, Madrid;2023/02/13;2023/02/17;210;true;Room Type: Family Suite;2;The staff was attentive to our needs.
+Book0000031101;AAbreu-Torres;HTL202;Royal Palace Suites;-25;2;202 Plaza de Oriente, Madrid;2023/02/13;2023/02/17;280;true;Bathroom: Shower;2;
+Book0000031128;SoHenriques640;HTL301;;4;3;301 Nyhavn, Copenhagen;2022/03/01;2022/03/02;280;true;Room Type: Standard;4;
+Book0000031195;MárcAnjos649;HTL703;Holmenkollen Lodge;4.4;4;703 Kongeveien, Oslo;2021/06/13;2021/06/14;350;true;Occupancy: 4 Guests;1;
+;VítoNascimento1015;HTL302;Copenhagen Grand Palace;5;3;302 Kongens Nytorv, Copenhagen;2023/02/07;2023/02/08;380;true;View: City View;3;
+;SaValente;HTL1105;Josefov District Hotel;4;1;1105 Josefov, Prague;2023/06/06;2023/06/10;240;true;Room Size: 400 sq ft;2;Well-appointed rooms with nice decor.
+Book0000031355;ManueCosta;HTL1101;Old Town Square Hotel;4;1;1101 Staroměstské náměstí, Prague;2023/06/07;2023/06/06;230;true;View: Mountain View;4;The concierge provided helpful recommendations.
+;NRodrigues80;HTL910;Budapest View Hotel;3;2;910 Riverside Avenue, Budapest;2021/07/13;2021/07/17;120;true;Bathroom: Shower;1;
+Book0000031446;Filipa-EmíliPires;HTL912;Riverside Suites;4;2;12 Riverside Road, Budapest;2021/03/18;2021/03/19;;true;Bathroom: Private;4;The breakfast buffet was delicious.
+Book0000031545;AriaPinheiro-Santos;HTL904;Chiado Plaza Hotel;3;2;;2021/12/11;2021/12/14;150;false;Amenities: Free Wi-Fi;3;
+Book0000031723;JoeAnjos;HTL603;Stephansplatz Inn;3;4;603 Stephansplatz, Vienna;2022/01/14;2022/01/18;150;-23;Number of Beds: 2 Queen Beds;1;Great hotel, excellent service!
+Book0000031827;MaBorges-Mota;HTL704;Opera House Suites;4;4;704 Kirsten Flagstads plass, Oslo;09:43:29 AM/13/07/2019;2022/10/14;240;true;Room Size: 700 sq ft;4;Spa facilities were top-notch.
+Book0000032097;MaBranco-Leal664;;Gran Vía View Hotel;4;2;203 Gran Vía, Madrid;2021/07/10;2021/07/12;210;true;Amenities: Air Conditioning;2;
+Book0000032162;BeSoares;HTL1405;Kurfürstendamm Plaza Hotel;4;3;1405 Kurfürstendamm, Berlin;2022/09/08;2022/09/09;230;-1;Number of Beds: 2 Double Beds;2;An enjoyable stay overall.
+Book0000032192;NúrFernandes;;Vatican City Suites;5;3;302 Via della Conciliazione, Rome;2023/08/03;2023/08/04;320;TRUE;View: City View;4;Great hotel, excellent service!
+Book0000032196;WilsRibeiro1334;HTL301;Colosseum View Hotel;4;3;301 Via di San Gregorio, Rome;2023|08|03;2023/08/06;200;true;View: City View;4;Beautiful views from our room.
+Book0000032224;CrisFigueiredo-Gaspar1861;;Plaza Mayor Hotel;4;2;205 Plaza Mayor, Madrid;2022/04/22;2022/04/26;190;true;Number of Beds: 2 Double Beds;1;
+Book0000032266;AniFaria;HTL201;Puerta del Sol Hotel;4;2;;2022/04/22;2022/04/25;180;true;View: Mountain View;3;
+;MeliBranco;HTL904;Chiado Plaza Hotel;3;2;904 Rua Garrett, Lisbon;2023/05/03;2023/05/07;150;false;Room Type: Family Suite;2;Good room service options.
+Book0000032487;IsCruz;HTL905;Rossio Square Inn;4;2;;2023/05/03;2023/05/05;200;true;Room Type: Executive Suite;2;Great place to unwind after a busy day.
+Book0000032554;RafFreitas1082;HTL1605;;4;4;305 Parkowa Aleja, Warsaw;2022/10/06;2022/10/09;310;true;Occupancy: 4 Guests;1;
+Book0000032590;Júlia-SarMelo;HTL102;;5;2;102 Rue du Louvre, Paris;2021/11/01;2021/11/03;300;true;Room Type: Family Suite;1;Great place to unwind after a busy day.
+Book0000032633;NoValente616;HTL903;Belém Riverside Hotel;4;2;903 Avenida de Brasília, Lisbon;25/09/2021;2021/03/07;220;true;View: Garden View;3;Conveniently located near public transportation.
+Book0000032652;IsaBorges1492;HTL902;Bairro Alto Suites;-25;2;902 Rua da Rosa, Lisbon;2021/03/04;2021/03/07;190;TRUE;Bathroom: Ensuite;3;
+Book0000032808;JoMota;;Retiro Park Inn;3;2;204 Calle de Alfonso XII, Madrid;2022/04/08;2022/04/09;150;false;Room Size: 700 sq ft;1;The in-room amenities were a nice touch.
+Book0000032878;LauCosta-Leal;HTL1105;Josefov District Hotel;4;-4;1105 Josefov, Prague;2023/06/11;2023/06/13;240;true;Room Size: 400 sq ft;4;
+Book0000032888;HuNunes1881;HTL1105;Josefov District Hotel;4;-25;1105 Josefov, Prague;2023/06/11;2023/06/15;240;true;View: Garden View;3;
+Book0000032931;ErikPaiva-Ferreira238;;Colosseum View Hotel;4;3;301 Via di San Gregorio, Rome;2021/06/17;2021/06/18;200;true;Room Type: Suite;3;The pool area was relaxing and clean.
+Book0000032994;ErikPaiva-Ferreira238;HTL204;Retiro Park Inn;3;2;204 Calle de Alfonso XII, Madrid;2022/11/13;2022/11/15;150;-1.1;Occupancy: 4 Guests;3;
+Book0000033004;AfonsAssunção;;Retiro Park Inn;3;2;204 Calle de Alfonso XII, Madrid;2022/11/13;2022/11/16;150;false;View: City View;4;
+Book0000033045;RuCoelho;;Trevi Fountain Hotel;3;3;303 Piazza di Trevi, Rome;2023/04/11;2023/04/12;160;false;View: Garden View;2;The fitness center had modern equipment.
+Book0000033111;FPinho-Teixeira;HTL404;Museum Quarter Hotel;4;2;404 Hobbemastraat, Amsterdam;2021/11/16;2021/11/13;180;true;Number of Beds: 1 King Bed;1;The pool area was relaxing and clean.
+Book0000033162;BriaAntunes1953;HTL605;Schönbrunn Palace Hotel;-1;4;605 Schönbrunner Schloßstraße, Vienna;2023/01/17;2023/01/18;210;true;Room Size: 500 sq ft;3;
+Book0000033228;VicentEsteves607;;Wenceslas Square Inn;3;1;1103 Václavské náměstí, Prague;2023/01/06;2023/01/10;160;false;Room Size: 700 sq ft;2;Conveniently located near public transportation.
+Book0000033233;SoCunha682;HTL1102;Charles Bridge Suites;5;1;1102 Karlův most, Prague;2023/01/06;2023/01/09;350;-1.1;Amenities: Air Conditioning;4;
+Book0000033239;AfonsRamos;HTL1101;Old Town Square Hotel;4;3.2;1101 Staroměstské náměstí, Prague;2023/01/06;2023/01/07;230;true;Number of Beds: 1 King Bed;2;
+Book0000033245;VerMelo;HTL1103;Wenceslas Square Inn;3;1;1103 Václavské náměstí, Prague;2023/01/07;2023/01/06;160;false;Room Size: 500 sq ft;1;Easy access to tourist attractions.
+Book0000033286;RúbVaz990;HTL903;;4;2;903 Avenida de Brasília, Lisbon;2023/07/06;2023/07/07;220;true;Bathroom: Ensuite;3;Close to shopping and dining options.
+Book0000033406;PatrícMarques35;HTL1504;Munich Lakeside Resort;-5;3;204 Am Seeufer, Munich;2022/09/04;2022/09/08;320;true;Number of Beds: 2;1;The staff went above and beyond to make us feel welcome.
+Book0000033586;VictóAbreu;HTL704;;4;4;704 Kirsten Flagstads plass, Oslo;2021/10/16;2021/10/19;240;true;Number of Beds: 1;3;Comfy beds and pillows.
+;ATavares;HTL1204;Töölö Riverside Hotel;4;3;1204 Helsinginkatu, Helsinki;2023/07/14;2023/07/15;200;true;Number of Beds: 1;1;The bar had a wide selection of drinks.
+Book0000033787;XaReis886;;Sforza Castle View Hotel;4;2;804 Piazza Castello, Milan;2021/11/07;2021/11/08;210;true;View: Mountain View;4;
+Book0000033859;MadalCampos;HTL1403;Prenzlauer Berg Inn;2;3;1403 Kastanienallee, Berlin;;2021/09/02;120;false;Bathroom: Ensuite;4;
+Book0000033976;HenriNogueira;HTL1403;Prenzlauer Berg Inn;2;3;1403 Kastanienallee, Berlin;2022/09/03;2022/09/07;120;-5;Bathroom: Ensuite;3;
+Book0000033986;DaMarques109;HTL1404;Spree Riverfront Hotel;4;3;;2022/09/03;2022/09/06;200;true;Occupancy: 3 Guests;3;
+Book0000034030;IrinAntunes;HTL305;Vesterbro Comfort Suites;4;-4;305 Vesterbrogade, Copenhagen;2021/06/04;2021/06/05;290;true;Room Size: 400 sq ft;2;Clean and well-maintained rooms.
+Book0000034031;DCorreia1376;HTL302;Copenhagen Grand Palace;5;-4;302 Kongens Nytorv, Copenhagen;2021/06/04;2021/06/06;380;true;Amenities: Mini Fridge;1;Impressive lobby and amenities.
+Book0000034040;FernanLourenço;HTL305;;4;3;305 Vesterbrogade, Copenhagen;2021/06/04;2021/06/07;290;true;Occupancy: 4 Guests;4;
+Book0000034063;CaeFigueiredo1936;HTL203;Gran Vía View Hotel;4;2;203 Gran Vía, Madrid;2022/08/19;2022/08/21;;true;View: Mountain View;2;
+Book0000034178;VítGonçalves86;HTL1601;;5;4;301 Aleje Ujazdowskie, Warsaw;2022/10/09;2022/10/11;380;true;Room Type: Family Suite;3;Perfect location for exploring the city.
+Book0000034237;MaFreitas;HTL1201;Helsinki Harbor Hotel;4;3;1201 Katajanokanlaituri, Helsinki;2021/11/18;2021/11/21;240;-10;Number of Beds: 2 Double Beds;2;
+Book0000034299;ÍrMendes475;HTL911;;5;2;1 Castle Hill, Budapest;2021/07/22;2021/07/23;220;true;Number of Beds: 1;1;Close to shopping and dining options.
+Book0000034328;SaHenriques;HTL901;Alfama District Hotel;-1.1;2;901 Rua dos Bacalhoeiros, Lisbon;2021/12/12;2021/12/13;120;true;Bathroom: Ensuite;3;The bar had a wide selection of drinks.
+Book0000034556;JCastro148;HTL601;Vienna Opera Hotel;4;-10;601 Opernring, Vienna;2023/03/21;2023/03/24;190;1;Occupancy: 1 Guest;3;
+Book0000034576;IsabeGaspar-Pinho;HTL601;Vienna Opera Hotel;4;4;;2023/03/21;2023/03/24;190;true;Occupancy: 3 Guests;1;
+Book0000034623;Carminho-FlReis153;HTL1501;Bavarian Grand Hotel;5;3;201 Hauptstraße, Munich;2022/04/24;2022/04/21;350;true;Amenities: Air Conditioning;2;
+Book0000034636;EdgReis1174;HTL1501;Bavarian Grand Hotel;5;3;;2022/04/21;2022/04/24;350;true;Room Type: Suite;3;
+;LuSilva-Neves;HTL202;Royal Palace Suites;5;2;202 Plaza de Oriente, Madrid;2022/03/21;2022/03/24;280;true;Room Size: 500 sq ft;3;
+Book0000034778;RSá-Magalhães1412;HTL103;Montmartre Suites;3;2;103 Rue de Montmartre, Paris;;2023/05/21;150;false;View: Mountain View;2;
+Book0000034781;BMoreira;HTL105;Champs-Élysées Plaza Hotel;5;2;;2023/05/18;2023/05/20;350;true;View: City View;2;
+Book0000034856;RAmorim;HTL605;Schönbrunn Palace Hotel;4;4;605 Schönbrunner Schloßstraße, Vienna;2022/10/16;2022/10/20;;true;Amenities: Coffee Maker;2;The hotel had a welcoming atmosphere.
+;MáTeixeira;HTL1003;Omonia Square Suites;2;2;1003 Omonoia Square, Athens;2021/04/15;2021/04/18;120;false;Bathroom: Shower;3;Perfect location for exploring the city.
+Book0000034952;FredeCosta1959;HTL1202;Esplanadi Park Inn;-1;3;1202 Pohjoisesplanadi, Helsinki;2022/10/14;2022/10/18;180;F;Occupancy: 3 Guests;1;
+Book0000034991;RNeto-Macedo;HTL1404;;4;3;1404 Schiffbauerdamm, Berlin;2022/01/12;2022/01/16;200;true;View: Garden View;2;Spa facilities were top-notch.
+Book0000035002;Caetana-MiMartins;HTL1402;Alexanderplatz Suites;3;-1.1;1402 Alexanderplatz, Berlin;2022/01/12;2022/01/16;160;false;Amenities: Coffee Maker;3;
+Book0000035083;EmGomes;HTL603;Stephansplatz Inn;3;4;603 Stephansplatz, Vienna;2022/02/08;2022/02/11;150;3.2;Occupancy: 3 Guests;2;
+;MigMacedo1056;HTL605;Schönbrunn Palace Hotel;4;4;605 Schönbrunner Schloßstraße, Vienna;2023/04/02;2023/04/05;210;true;Occupancy: 4 Guests;4;Spa facilities were top-notch.
+Book0000035303;Isabel-RaVaz;;Vesterbro Comfort Suites;4;3;305 Vesterbrogade, Copenhagen;2021/12/10;2021/12/14;290;true;Occupancy: 2 Guests;4;
+Book0000035330;SandrCampos248;HTL302;Copenhagen Grand Palace;5;-1.1;302 Kongens Nytorv, Copenhagen;2021/12/10;2021/12/13;380;true;Room Type: Suite;3;
+Book0000035369;RicardPacheco;;Syntagma Plaza Hotel;4;2;1004 Syntagma Square, Athens;2022/01/17;2022/01/19;200;true;Room Type: Executive Suite;2;Excellent housekeeping service.
+Book0000035409;DaniSilva;HTL902;Bairro Alto Suites;4;2;902 Rua da Rosa, Lisbon;2021/04/05;2021/04/09;190;-5;View: City View;4;
+;JorgCarvalho1725;HTL902;Bairro Alto Suites;4;2;902 Rua da Rosa, Lisbon;2021/04/05;2021/04/06;190;true;Occupancy: 4 Guests;3;
+Book0000035577;VictórPaiva757;HTL301;;4;3;301 Nyhavn, Copenhagen;2022/05/16;2022/05/19;280;true;Number of Beds: 1 King Bed;1;Staff was friendly and accommodating.
+Book0000035597;ConstVieira1703;;Alexanderplatz Suites;3;3;1402 Alexanderplatz, Berlin;2021/03/08;2021/03/10;160;false;Amenities: Mini Fridge;1;Conveniently located near public transportation.
+Book0000035646;MLeal1100;HTL902;Bairro Alto Suites;4;2;902 Rua da Rosa, Lisbon;2021/04/11;2021/04/14;190;-23;Amenities: Mini Fridge;4;
+Book0000035743;ToGarcia;HTL103;Montmartre Suites;3;-10;103 Rue de Montmartre, Paris;2021/03/01;2021/03/04;150;false;Room Type: Family Suite;3;
+Book0000035826;BeJesus;HTL1103;Wenceslas Square Inn;3;1;1103 Václavské náměstí, Prague;2021/04/20;2021/04/22;160;3.2;Amenities: TV;3;The rooftop bar has amazing cocktails.
+Book0000035948;AlexanCarvalho112;HTL1404;Spree Riverfront Hotel;4;3;;2023/01/05;2023/01/06;200;true;Number of Beds: 2;2;
+Book0000036078;BruAntunes;HTL1405;Kurfürstendamm Plaza Hotel;-5;3;1405 Kurfürstendamm, Berlin;2021/09/15;2021/09/19;230;true;Bathroom: Bathtub;1;
+Book0000036118;ITorres1944;HTL1401;Brandenburg Gate Hotel;4;-25;1401 Pariser Platz, Berlin;2021/09/15;2021/09/16;220;true;Room Size: 300 sq ft;4;Perfect location for exploring the city.
+Book0000036130;IaCarneiro642;HTL805;;4;2;805 Via Brera, Milan;2023/03/08;2023/03/09;240;true;Bathroom: Private;1;
+Book0000036131;ViceCruz-Andrade1988;HTL804;Sforza Castle View Hotel;4;2;804 Piazza Castello, Milan;2023/03/08;2023/03/10;;true;Number of Beds: 2 Queen Beds;1;Close to shopping and dining options.
+Book0000036158;NoAndrade;HTL1503;Munich Central Inn;3;3;203 Innenstadtstraße, Munich;2021/05/07;2021/05/06;150;false;Amenities: Free Wi-Fi;2;We received a warm welcome upon arrival.
+Book0000036270;WilsoCoelho;HTL904;Chiado Plaza Hotel;3;2;904 Rua Garrett, Lisbon;02/06/2010;2021/03/23;150;false;Room Size: 700 sq ft;3;Conveniently located near public transportation.
+Book0000036339;SérBrito-Ramos;HTL303;Trevi Fountain Hotel;3;-10;303 Piazza di Trevi, Rome;2021/05/22;2021/05/25;160;false;Room Type: Executive Suite;4;
+Book0000036476;MarcoMatias882;HTL1405;;4;3;1405 Kurfürstendamm, Berlin;2022/06/20;2022/06/23;230;true;Amenities: Air Conditioning;1;
+Book0000036553;RicardPacheco;HTL1001;Acropolis View Hotel;4;2;;2021/07/20;2021/07/24;220;true;Number of Beds: 2 Queen Beds;1;The pool area was relaxing and clean.
+;EmmOliveira;HTL1101;Old Town Square Hotel;4;1;1101 Staroměstské náměstí, Prague;2022/11/09;2022/11/12;230;true;Bathroom: Shower;1;Delicious room service meals.
+Book0000036739;DinMatias845;HTL305;;4;3;305 Vesterbrogade, Copenhagen;2022/02/08;2022/02/09;290;true;Amenities: Air Conditioning;2;
+Book0000036742;JoaAlves298;HTL304;Copenhagen Harbor View Inn;4;3;;2022/02/08;2022/02/10;320;true;View: Mountain View;2;The hotel's location was convenient for sightseeing.
+Book0000036754;GonSoares-Matias1259;HTL305;;4;3;305 Vesterbrogade, Copenhagen;2022/02/08;2022/02/09;290;true;Occupancy: 2 Guests;1;
+Book0000036889;CláuMartins399;HTL903;Belém Riverside Hotel;4;2;;2022/12/15;2022/12/18;220;true;Occupancy: 1 Guest;3;The concierge provided helpful recommendations.
+Book0000036991;LúRodrigues;HTL1403;Prenzlauer Berg Inn;2;3;1403 Kastanienallee, Berlin;2021/11/05;2021/11/03;120;false;Room Size: 400 sq ft;3;
+Book0000036997;SeBarbosa1183;HTL1401;Brandenburg Gate Hotel;4;3;1401 Pariser Platz, Berlin;2021/11/03;2021/11/07;220;-1;Room Size: 400 sq ft;2;
+Book0000037008;VeFernandes;HTL1405;Kurfürstendamm Plaza Hotel;4;3;1405 Kurfürstendamm, Berlin;2021|11|03;2021/11/05;230;true;Number of Beds: 2 Queen Beds;2;
+Book0000037023;KévVicente;HTL804;Sforza Castle View Hotel;4;2;804 Piazza Castello, Milan;2021/04/18;2021/04/15;210;true;Room Type: Executive Suite;3;
+Book0000037045;SNeto-Silva;HTL804;Sforza Castle View Hotel;4;2;804 Piazza Castello, Milan;2021/04/15;2021/04/18;210;-1;Room Type: Executive Suite;2;The breakfast buffet was delicious.
+Book0000037279;DéborSousa1263;HTL1103;Wenceslas Square Inn;3;1;1103 Václavské náměstí, Prague;2021/04/24;2021/04/22;160;false;Number of Beds: 2 Double Beds;1;The hotel offered a complimentary shuttle service.
+;JésBorges298;HTL301;Colosseum View Hotel;4;3;301 Via di San Gregorio, Rome;2021/01/08;2021/01/11;200;true;View: Garden View;2;
+Book0000037728;DébLeite98;HTL1103;Wenceslas Square Inn;3;-1;1103 Václavské náměstí, Prague;2021/10/15;2021/10/19;160;false;Bathroom: Shower;1;
+Book0000037760;MáAmorim822;HTL1404;Spree Riverfront Hotel;4;3;1404 Schiffbauerdamm, Berlin;2021/11/10;2021/11/13;200;-10;Number of Beds: 1 King Bed;4;
+Book0000037780;SofLeite;HTL1104;Prague Castle View Hotel;4;1;1104 Hradčanské náměstí, Prague;2022/08/13;2022/08/11;210;true;Room Size: 300 sq ft;3;We received a warm welcome upon arrival.
+Book0000037803;SamuTavares296;HTL1104;Prague Castle View Hotel;-4;1;1104 Hradčanské náměstí, Prague;2022/08/11;2022/08/15;210;true;Occupancy: 4 Guests;3;
+Book0000037870;SoraiMiranda1851;HTL905;Rossio Square Inn;4;4.4;905 Praça do Rossio, Lisbon;2022/03/21;2022/03/24;200;true;View: Garden View;4;We enjoyed our stay here.
+Book0000037955;GaRibeiro828;HTL1403;Prenzlauer Berg Inn;-25;3;1403 Kastanienallee, Berlin;2023/07/19;2023/07/22;120;false;Occupancy: 4 Guests;4;
+Book0000037980;MicaFaria5;HTL1402;Alexanderplatz Suites;3;3;1402 Alexanderplatz, Berlin;2023/07/19;2023/07/20;160;-25;Room Size: 700 sq ft;3;The hotel offered a complimentary shuttle service.
+Book0000038078;ÂngeCastro;HTL602;Belvedere Palace Suites;5;4;;2021/04/20;2021/04/23;280;true;Number of Beds: 2 Double Beds;1;
+;ViceCruz-Andrade1988;HTL1401;Brandenburg Gate Hotel;4;3;1401 Pariser Platz, Berlin;2022/11/16;2022/11/20;220;true;Occupancy: 4 Guests;2;
+Book0000038145;JorgCorreia;HTL1402;Alexanderplatz Suites;3;3;1402 Alexanderplatz, Berlin;2022/11/19;2022/11/16;160;false;Amenities: TV;2;
+Book0000038315;MélanRodrigues;HTL1403;Prenzlauer Berg Inn;2;3;1403 Kastanienallee, Berlin;2023/05/20;2023/05/16;120;false;Amenities: Coffee Maker;4;
+Book0000038392;ConstRibeiro;;Prenzlauer Berg Inn;2;3;1403 Kastanienallee, Berlin;2021/02/04;2021/02/07;120;false;Bathroom: Ensuite;1;
+Book0000038459;PatríciRodrigues;HTL1003;Omonia Square Suites;2;2;1003 Omonoia Square, Athens;2021/08/17;2021/08/18;120;-4;Amenities: Air Conditioning;3;
+Book0000038499;SiAzevedo520;HTL201;Puerta del Sol Hotel;4;-25;201 Calle de Alcalá, Madrid;2023/06/21;2023/06/22;180;true;Occupancy: 2 Guests;3;
+Book0000038538;LOliveira-Garcia256;;Retiro Park Inn;3;2;204 Calle de Alfonso XII, Madrid;2023/06/21;2023/06/23;150;false;Room Type: Deluxe;2;We had a lovely time at this hotel.
+Book0000038680;EmCampos-Vieira586;HTL201;Puerta del Sol Hotel;4;2;201 Calle de Alcalá, Madrid;2023|04|22;2023/04/23;180;true;Room Size: 700 sq ft;2;Good value for the price.
+Book0000038683;LeMagalhães;;Plaza Mayor Hotel;4;2;205 Plaza Mayor, Madrid;2023/04/22;2023/04/24;190;true;Occupancy: 3 Guests;1;Highly recommended!
+Book0000038869;EriReis;HTL803;;3;2;803 Ripa di Porta Ticinese, Milan;2021/08/09;2021/08/13;160;false;Occupancy: 2 Guests;4;Great place to stay for business travelers.
+Book0000038886;LMaia458;HTL801;Milan Cathedral Hotel;4;4.4;801 Piazza del Duomo, Milan;2021/08/09;2021/08/10;230;true;Bathroom: Private;1;The hotel offered a complimentary shuttle service.
+Book0000039004;AnitCampos1825;HTL1302;Old Town District Inn;3;-25;1302 Rue de la Préfecture, Nice;2023/05/06;2023/05/10;180;false;Amenities: Mini Fridge;2;The staff went above and beyond to make us feel welcome.
+Book0000039028;DMachado1458;HTL1304;Cimiez Hill View Hotel;3;3;1304 Avenue des Arènes de Cimiez, Nice;2023/05/06;2023/05/09;;true;View: Mountain View;1;
+Book0000039109;JéCardoso1272;HTL504;;4;2;504 Carrer d'Olot, Barcelona;2022/04/14;2022/04/18;200;true;Room Size: 300 sq ft;4;The in-room amenities were a nice touch.
+Book0000039204;GuilherMonteiro;HTL204;Retiro Park Inn;3;2;204 Calle de Alfonso XII, Madrid;2022/09/08;2022/09/07;150;false;Room Type: Suite;2;The breakfast buffet was delicious.
+Book0000039356;FredericFerreira-Nunes;HTL904;;3;2;904 Rua Garrett, Lisbon;2023/07/21;2023/07/25;150;false;View: Mountain View;4;
+;FiliLeal;HTL902;Bairro Alto Suites;4;2;902 Rua da Rosa, Lisbon;2023/07/21;2023/07/24;190;true;Bathroom: Private;3;The in-room amenities were a nice touch.
+Book0000039530;NeLopes748;HTL102;Louvre Palace Hotel;5;2;102 Rue du Louvre, Paris;2023/06/13;2023/06/16;;true;Amenities: Mini Fridge;1;Great hotel, excellent service!
+Book0000039660;GoBorges;;Bairro Alto Suites;4;2;902 Rua da Rosa, Lisbon;2022/03/10;2022/03/14;190;true;Room Type: Standard;4;Comfy beds and pillows.
+Book0000039878;AfonAndrade;HTL304;;4;3;304 Via dei Fori Imperiali, Rome;2023/03/21;2023/03/22;220;1;Number of Beds: 1;4;We enjoyed our stay here.
