@@ -1,20 +1,34 @@
+// #define _POSIX_C_SOURCE 199309L
+#define _POSIX_C_SOURCE 200809L
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <time.h>
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <limits.h>
 #include <printf.h>
+#include <unistd.h>
+
+#define BILLION  1000000000L
+#include <time.h>
 
 // Lenght of the largest portuguese proper noun: 
 // "Manuel Maria Filipe Carlos Amélio Luís Miguel Rafael Gabriel Gonzaga Xavier "
 // "Francisco de Assis Eugénio de Bragança Orleães Sabóia e Saxe-Coburgo-Gotha"
 #define MAX_NAME_LEN 157
+
 #define MAX_HOTEL_NAME 128
-// Length of the largest city in the world:
-// "Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitar"
-#define MAX_ORIGIN_SIZE 81
+
+// // Length of the largest city in the world:
+// // "Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitar"
+// #define MAX_ORIGIN_SIZE 81
+#define MAX_ORIGIN_SIZE 3
+
+// Lenght of largest on dataset: "Ukraine International Airlines"
+#define MAX_AIRLINE_SIZE 31
+
 #define ID_OFFSET 32
 
 #pragma region ======= UTILS =======
@@ -64,12 +78,29 @@ static int setup_specifiers() {
 #pragma endregion
 
 #pragma region ======= ID =======
-#define RawId uint64_t
 
 typedef struct id {
     char header;     // 8 bits
     unsigned int id; // 9 digits - 27 bits
 } ID, *Id;
+
+// #define RawId Id
+
+// volatile RawId makeId(char header, unsigned int data) {
+//     if (numPlaces(data) != 9) return NULL;
+
+//     Id id = (Id)malloc(sizeof(ID));
+//     id->header = header;
+//     id->id = data;
+
+//     return id;
+// }
+
+// ID parseId(RawId id) {
+//     return *id;
+// }
+
+#define RawId uint64_t
 
 volatile uint64_t makeId(char header, unsigned int data) {
     if (numPlaces(data) != 9) return -1;
@@ -89,7 +120,7 @@ typedef struct user {
     RawId id;
     char name[MAX_NAME_LEN];
     int phone_number;
-    uint8_t age;
+    uint8_t age; // Precalculated
     bool sex;
     uint16_t country_code;
     int account_creation; // Offset from Base Date
@@ -101,8 +132,8 @@ typedef struct reservation {
     RawId user_id; // Relates to User
     RawId hotel_id; // No relation, symbolic
     char hotel_name[MAX_HOTEL_NAME];
-    unsigned int hotel_stars:5; //:5
-    unsigned int city_tax:7; //:7
+    unsigned int hotel_stars:5;
+    unsigned int city_tax:7;
     int begin_date; // Offset from Base Date
     int end_date; // Offset from Base Date
     int price_per_night;
@@ -112,8 +143,8 @@ typedef struct reservation {
 
 typedef struct flights {
     RawId id;
-    void* airline; // Tf is this?
-    void* plane_model; // Tf is this?
+    char* airline; // Maybe GLib String
+    char* plane_model; // Maybe GLib String
     char origin[MAX_ORIGIN_SIZE];
     char destination[MAX_ORIGIN_SIZE];
     int schedule_departure_date; // Offset from Base Date
@@ -126,42 +157,67 @@ typedef struct passenger {
     RawId user_id; // Relates to User
 } PASSENGER, *Passenger;
 
+enum { NS_PER_SECOND = 1000000000 };
+
+void sub_timespec(struct timespec t1, struct timespec t2, struct timespec *td) {
+    td->tv_nsec = t2.tv_nsec - t1.tv_nsec;
+    td->tv_sec  = t2.tv_sec - t1.tv_sec;
+
+    if (td->tv_sec > 0 && td->tv_nsec < 0) {
+        td->tv_nsec += NS_PER_SECOND;
+        td->tv_sec--;
+    } else if (td->tv_sec < 0 && td->tv_nsec > 0) {
+        td->tv_nsec -= NS_PER_SECOND;
+        td->tv_sec++;
+    }
+}
+
 #pragma region ======= USER TESTING =======
-// int main() {
-//     RawId id = ((uint64_t)'U' << ID_OFFSET) | 123456789;
-//     char wtf[MAX_NAME_LEN] = "Manuel Maria Filipe Carlos Amélio Luís Miguel Rafael Gabriel Gonzaga "
-//     "Xavier Francisco de Assis Eugénio de Bragança Orleães Sabóia e Saxe-Coburgo-Gotha";
-//     int wtf_len = strlen(wtf) * sizeof(char) * 8;
+int main() {
+    struct timespec start, finish, delta;
+    clock_gettime(CLOCK_REALTIME, &start);
 
-//     printf("WTF size: %d | %d\n", wtf_len, (int)floor(log2(wtf_len) + 1));
+    /* ==================================================================0 */
+    // RawId id = ((uint64_t)'U' << ID_OFFSET) | 123456789;
+    char wtf[MAX_NAME_LEN] = "Manuel Maria Filipe Carlos Amélio Luís Miguel Rafael Gabriel Gonzaga "
+    "Xavier Francisco de Assis Eugénio de Bragança Orleães Sabóia e Saxe-Coburgo-Gotha";
+    int wtf_len = strlen(wtf) * sizeof(char) * 8;
 
-//     char name[9] = "John Doe";
-//     USER u = {
-//         makeId('U', 123456789),
-//         "Manuel Maria Filipe Carlos Amélio Luís Miguel Rafael Gabriel Gonzaga "
-//         "Xavier Francisco de Assis Eugénio de Bragança Orleães Sabóia e Saxe-Coburgo-Gotha",
-//         123456789,
-//         255,
-//         1,
-//         351,
-//         123456,
-//         1
-//     };
+    printf("WTF size: %d | %d\n", wtf_len, (int)floor(log2(wtf_len) + 1));
+
+    char name[9] = "John Doe";
+    USER u = {
+        makeId('U', 123456789),
+        "Manuel Maria Filipe Carlos Amélio Luís Miguel Rafael Gabriel Gonzaga "
+        "Xavier Francisco de Assis Eugénio de Bragança Orleães Sabóia e Saxe-Coburgo-Gotha",
+        123456789,
+        255,
+        1,
+        351,
+        123456,
+        1
+    };
     
-//     printf("U ADDR: %p\n", &u);
-//     fflush(stdout);
+    printf("U ADDR: %p\n", &u);
+    fflush(stdout);
 
-//     ID pid = parseID(u.id);
-//     printf("PARSED ID: '%c' %d\n", pid.header, pid.id);
-//     // printf("ID: '%c' %d\n", (char)(u.id >> ID_OFFSET), (int)(u.id & (1 << ID_OFFSET) - 1));
+    ID pid = parseId(u.id);
+    printf("PARSED ID: '%c' %d\n", pid.header, pid.id);
+    // printf("ID: '%c' %d\n", (char)(u.id >> ID_OFFSET), (int)(u.id & (1 << ID_OFFSET) - 1));
     
-//     printf("The user has the data %ld | %s | %d | %d | %d | %d | %d | %d\n", 
-//         u.id, u.name, u.phone_number, u.age, u.sex, u.country_code, u.account_creation, u.account_status
-//     );
-//     printf("The size of user is %ld bytes.\n", sizeof(USER));
-//     fflush(NULL);
-//     return 0; 
-// }
+    printf("The user has the data %p | %s | %d | %d | %d | %d | %d | %d\n", 
+        u.id, u.name, u.phone_number, u.age, u.sex, u.country_code, u.account_creation, u.account_status
+    );
+    printf("The size of user is %ld bytes.\n", sizeof(USER));
+    fflush(NULL);
+    // return 0; 
+    /* ==================================================================0 */
+
+    clock_gettime(CLOCK_REALTIME, &finish);
+    sub_timespec(start, finish, &delta);
+    printf("%d.%.9ld\n", (int)delta.tv_sec, delta.tv_nsec);
+    return 0;
+}
 #pragma endregion
 
 #pragma region ======= RESERVATION TESTING =======
@@ -200,29 +256,29 @@ typedef struct passenger {
 #pragma endregion
 
 #pragma region ======= FLIGHT TESTING =======
-int main() {
-    int registered = setup_specifiers();
-    if (registered) return 1;
+// int main() {
+//     int registered = setup_specifiers();
+//     if (registered) return 1;
 
-    FLIGHT f = {
-        makeId('F', 123456789),
-        (void*)0x7fffffff,
-        (void*)0x7fffffff,
-        "My house",
-        "Your mother's house",
-        123456,
-        654321,
-        632541
-    };
+//     FLIGHT f = {
+//         makeId('F', 123456789),
+//         (void*)0x7fffffff,
+//         (void*)0x7fffffff,
+//         "My house",
+//         "Your mother's house",
+//         123456,
+//         654321,
+//         632541
+//     };
 
-    ID pfid = parseId(f.id);
-    printf("PARSED FLIGHT ID: '%c' %d\n", pfid.header, pfid.id);
+//     ID pfid = parseId(f.id);
+//     printf("PARSED FLIGHT ID: '%c' %d\n", pfid.header, pfid.id);
     
-    printf("The flight has the data %ld | %p | %p | %s | %s | %d | %d | %d\n", 
-        f.id, f.airline, f.plane_model, f.origin, f.destination, f.schedule_departure_date, f.schedule_arrival_date, f.real_arrival_date
-    );
-    printf("The size of flight is %ld bytes.\n", sizeof(FLIGHT));
-    fflush(NULL);
-    return 0; 
-}
+//     printf("The flight has the data %ld | %p | %p | %s | %s | %d | %d | %d\n", 
+//         f.id, f.airline, f.plane_model, f.origin, f.destination, f.schedule_departure_date, f.schedule_arrival_date, f.real_arrival_date
+//     );
+//     printf("The size of flight is %ld bytes.\n", sizeof(FLIGHT));
+//     fflush(NULL);
+//     return 0; 
+// }
 #pragma endregion

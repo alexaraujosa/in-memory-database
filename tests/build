@@ -12,5 +12,7 @@ mkdir -p $dn
 
 # gcc -g -Wall -Wextra -O2 -lm -o $dn/$filename ../$1 
 # TODO: Make build command.
+# gcc -g -O2 -lm ./src/structs.c -o ./out/structs
+gcc -g -O2 -lm -o $dn/$filename ../$1 
 
 echo Compiled program to $dn/$filename
