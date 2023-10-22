@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
+#include <string.h>
+#include <glib-2.0/glib.h>
 
 #endif
