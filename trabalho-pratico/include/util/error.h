@@ -2,11 +2,10 @@
 #define TP_UTIL_ERROR_H
 
 #include "common.h"
+#include <assert.h>
+#include <errno.h>
 
-enum Errors {
-    MAXIMUM_VALUE_EXCEEDED
-};
-
+// Define only if assert is also defined.
 #ifndef NDEBUG
     #define m_assert(expr, msg) assert(( (void)(msg), (expr) ))
 #else
