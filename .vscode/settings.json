@@ -1,6 +1,30 @@
 {
     "files.associations": {
         "*.ejs": "html",
-        "vcruntime.h": "c"
-    }
+        "vcruntime.h": "c",
+        "unistd.h": "c",
+        "printf.h": "c",
+        "limits.h": "c",
+        "math.h": "c",
+        "string.h": "c",
+        "time.h": "c",
+        "structs2.h": "c",
+        "stdbool.h": "c",
+        "reservation.h": "c",
+        "common.h": "c",
+        "error.h": "c",
+        "debug.h": "c",
+        "flight.h": "c",
+        "parser.h": "c",
+        "glib.h": "c",
+        "stdlib.h": "c",
+        "galloca.h": "c",
+        "gtypes.h": "c",
+        "gmacros.h": "c",
+        "globals.h": "c",
+        "syslimits.h": "c",
+        "errno.h": "c",
+        "io.h": "c"
+    },
+    "cmake.configureOnOpen": false
 }
