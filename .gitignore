@@ -1,0 +1,9 @@
+# Ignore Node.js dependencies globaly. Used for scripts.
+**/node_modules
+**/package-lock.json
+
+# Ignore build artifacts
+**/*.d
+**/*.o
+# WARN: Modify on Makefile whenever modified.
+**/out
