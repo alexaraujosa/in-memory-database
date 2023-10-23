@@ -26,5 +26,40 @@
         "errno.h": "c",
         "io.h": "c"
     },
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "todo-tree.highlights.useColourScheme": true,
+    "todo-tree.general.tagGroups": {},
+    "todo-tree.general.tags": [
+        "BUG",
+        "HACK",
+        "FIXME",
+        "TODO",
+        "XXX",
+        "[ ]",
+        "[x]",
+        "WARN",
+        "SEE"
+    ],
+    "todo-tree.highlights.backgroundColourScheme": [
+        "red",
+        "orange",
+        "yellow",
+        "green",
+        "blue",
+        "indigo",
+        "violet",
+        "orange",
+        "cyan"
+    ],
+    "todo-tree.highlights.foregroundColourScheme": [
+        "white",
+        "black",
+        "black",
+        "white",
+        "white",
+        "white",
+        "black",
+        "black",
+        "black"
+    ],
 }
