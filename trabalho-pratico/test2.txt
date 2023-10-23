@@ -1,0 +1,5 @@
+id;airline;plane_model;total_seats;origin;destination;schedule_departure_date;schedule_arrival_date;real_departure_date;real_arrival_date;pilot;copilot;notes
+0000000001;Jet2.com;Airbus A321;220;MAN;PRG;2021/07/01 05:56:50;2021/07/01 08:26:50;2021/07/01 05:56:50;2021/07/01 10:56:50;Robert Williams;Michael Miller;
+0000000002;Ryanair;Boeing 737;189;DUB;TXL;2021/07/20 09:17:18;2021/07/20 11:17:18;2021/07/20 09:47:18;2021/07/20 14:02:18;Jane Davis;Emily Davis;The airport is busy, but we'll find a gate shortly.
+0000000003;EasyJet;Airbus A320;180;LHR;CDG;2022/07/19 13:26:30;2022/07/19 14:41:30;2022/07/19 14:11:30;2022/07/19 16:41:30;Sarah Jones;Jane Smith;
+0000000004;Iberia;Airbus A321;220;MAD;LIS;2023/09/01 16:10:01;2023/09/01 17:25:01;2023/09/01 16:25:01;2023/09/01 19:15:01;Robert Johnson;John Moore;

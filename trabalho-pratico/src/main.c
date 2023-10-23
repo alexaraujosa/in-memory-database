@@ -3,6 +3,30 @@
 #include "./collections/user.h"
 #include "./collections/reservation.h"
 #include "./collections/flight.h"
+#include "util/io.h"
+#include "./parser/parser.h"
+
+typedef struct test {
+    char* id;
+} TEST, *Test;
+
+int testVerifier(Tokens tokens) {
+    for (int i = 0; i < tokens->len; i++) printf("VERIFIER TOKENS %d: '%s'\n", i, tokens->data[i]);
+    return 1;
+}
+
+void* testParser(Tokens tokens) {
+    Test test = (Test)malloc(sizeof(TEST));
+    test->id = strdup(tokens->data[0]);
+
+    return test;
+}
+
+void testWriter(void* raw_data) {
+    Test data = (Test)raw_data;
+    printf("WRITE: %s\n", data->id);
+    fflush(stdout);
+}
 
 int main(int argc, char const *argv[]) {
     printf("Hello World!\n");
@@ -42,5 +66,18 @@ int main(int argc, char const *argv[]) {
         34567
     );
 
+    GString* bin = get_cwd();
+    printf("BIN: %s\n", bin->str);
+
+    GString* bin2 = get_cwd();
+    printf("BIN2: %s\n", bin2->str);
+
+    // char* paths[3] = { "aaa", "bbb", "ccc" };
+
+    // char* path = joinPaths(paths, 3);
+    // printf("PATH: %s\n", path);
+
+    parse("../test2.txt", &testVerifier, &testParser, &testWriter);
+    
     return 0;
 }
