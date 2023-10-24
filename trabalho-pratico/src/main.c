@@ -10,8 +10,11 @@ typedef struct test {
     char* id;
 } TEST, *Test;
 
+int ind = 0;
+
 int testVerifier(Tokens tokens) {
     for (int i = 0; i < tokens->len; i++) printf("VERIFIER TOKENS %d: '%s'\n", i, tokens->data[i]);
+    if (++ind == 3) return 0; // FYIP
     return 1;
 }
 
@@ -26,6 +29,27 @@ void testWriter(void* raw_data) {
     Test data = (Test)raw_data;
     printf("WRITE: %s\n", data->id);
     fflush(stdout);
+}
+
+void testDiscarder(Tokens tokens) {
+    int totalLen = tokens->len - 1;
+    for (int i = 0; i < tokens->len; i++) totalLen += strlen(tokens->data[i]);
+
+    char* joint = (char*)malloc(totalLen * sizeof(char));
+    memset(joint, 0, (totalLen) * sizeof(char));
+
+    for (int i = 0; i < tokens->len; i++) {
+        strcat(joint, tokens->data[i]);
+        if (i != tokens->len - 1) strcat(joint, ";");
+        free(tokens->data[i]);
+    }
+
+    free(tokens);
+
+    printf("DISCARD: '%s'\n", joint);
+    fflush(stdout);
+
+    free(joint);
 }
 
 int main(int argc, char const *argv[]) {
@@ -67,17 +91,12 @@ int main(int argc, char const *argv[]) {
     );
 
     GString* bin = get_cwd();
-    printf("BIN: %s\n", bin->str);
+    printf("BIN1: %s\n", bin->str);
 
     GString* bin2 = get_cwd();
     printf("BIN2: %s\n", bin2->str);
 
-    // char* paths[3] = { "aaa", "bbb", "ccc" };
-
-    // char* path = joinPaths(paths, 3);
-    // printf("PATH: %s\n", path);
-
-    parse("../test2.txt", &testVerifier, &testParser, &testWriter);
+    parse("../test2.txt", &testVerifier, &testParser, &testWriter, &testDiscarder);
     
     return 0;
 }
