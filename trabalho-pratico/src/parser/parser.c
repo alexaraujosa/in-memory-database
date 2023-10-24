@@ -34,7 +34,13 @@ Tokens tokenize(char* line, ssize_t len) {
     return ret;
 }
 
-void parse(char* filename, VerifyFunction(verifier), ParseFunction(parser), WriteFunction(writer)) {
+void parse(
+    char* filename,
+    VerifyFunction(verifier), 
+    ParseFunction(parser), 
+    WriteFunction(writer), 
+    WriteFunction(discarder)
+) {
     char* paths[2] = { get_cwd()->str, filename };
     char* path = join_paths(paths, 2);
 
@@ -54,13 +60,14 @@ void parse(char* filename, VerifyFunction(verifier), ParseFunction(parser), Writ
 
         int valid = verifier(tokens);
         if (!valid) {
-            printf("INVALID LINE.");
+            printf("INVALID LINE.\n");
+            discarder(tokens);
             continue;
         }
 
         void* data = parser(tokens);
         if (data == NULL) {
-            printf("Error while parsing: Unable to transform tokens.");
+            printf("Error while parsing: Unable to transform tokens.\n");
             continue;
         }
 

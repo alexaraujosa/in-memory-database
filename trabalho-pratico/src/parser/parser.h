@@ -14,6 +14,12 @@ typedef struct tokens {
 #define ParseFunction(name) void*(*name)(Tokens)
 #define WriteFunction(name) void(*name)(void*)
 
-void parse(char* filename, VerifyFunction(verifier), ParseFunction(parser), WriteFunction(writer));
+void parse(
+    char* filename,
+    VerifyFunction(verifier), 
+    ParseFunction(parser), 
+    WriteFunction(writer), 
+    WriteFunction(discarder)
+);
 
 #endif
