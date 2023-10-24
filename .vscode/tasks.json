@@ -56,7 +56,7 @@
         {
             "label": "make-prepare-debug",
             "dependsOn": [
-                "make-clean",
+                // "make-clean",
                 "make-debug"
             ]
         }
