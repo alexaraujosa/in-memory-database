@@ -1,9 +1,9 @@
-#include "parser.h"
+#include "parser/parser.h"
 
 #define DELIMITER ';'
 #define DELIMITER_S LITERALIZE(DELIMITER)
 
-Tokens tokenize(char* line, ssize_t len) {
+Tokens tokenize_csv(char* line, ssize_t len) {
     char* ptr = strndup(line, len + 1);
     if (ptr == NULL) exit(EXIT_FAILURE);
 
@@ -36,11 +36,33 @@ Tokens tokenize(char* line, ssize_t len) {
 
 void parse(
     char* filename,
+    Tokenizer(tokenizer),
     VerifyFunction(verifier), 
     ParseFunction(parser), 
     WriteFunction(writer), 
     WriteFunction(discarder)
 ) {
+    rt_assert(
+        tokenizer != NULL, 
+        "Expected tokenizer function, but got NULL."
+    );
+    rt_assert(
+        verifier != NULL, 
+        "Expected verifier function, but got NULL."
+    );
+    rt_assert(
+        parser != NULL, 
+        "Expected parser function, but got NULL."
+    );
+    rt_assert(
+        writer != NULL, 
+        "Expected writer function, but got NULL."
+    );
+    rt_assert(
+        discarder != NULL, 
+        "Expected discarder function, but got NULL."
+    );
+
     char* paths[2] = { get_cwd()->str, filename };
     char* path = join_paths(paths, 2);
 
@@ -55,8 +77,8 @@ void parse(
     ssize_t read;
     
     while ((read = getline(&line, &len, stream)) != -1) {
-        // SEE Todo in tokenize
-        volatile Tokens tokens = tokenize(line, read);
+        // SEE Todo in tokenize_csv
+        volatile Tokens tokens = tokenize_csv(line, read);
 
         int valid = verifier(tokens);
         if (!valid) {

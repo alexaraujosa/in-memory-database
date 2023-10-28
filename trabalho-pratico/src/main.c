@@ -1,10 +1,10 @@
 #include <stdio.h>
 
-#include "./collections/user.h"
-#include "./collections/reservation.h"
-#include "./collections/flight.h"
+#include "collections/user.h"
+#include "collections/reservation.h"
+#include "collections/flight.h"
 #include "util/io.h"
-#include "./parser/parser.h"
+#include "parser/parser.h"
 
 typedef struct test {
     char* id;
@@ -96,7 +96,7 @@ int main(int argc, char const *argv[]) {
     GString* bin2 = get_cwd();
     printf("BIN2: %s\n", bin2->str);
 
-    parse("../test2.txt", &testVerifier, &testParser, &testWriter, &testDiscarder);
+    parse("../test2.txt", &tokenize_csv, &testVerifier, &testParser, &testWriter, &testDiscarder);
     
     return 0;
 }
