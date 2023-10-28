@@ -1,4 +1,4 @@
-#include "passenger.h"
+#include "collections/passenger.h"
 
 PASSENGER makePassenger(
     int flight_id,

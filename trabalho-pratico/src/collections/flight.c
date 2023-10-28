@@ -1,4 +1,4 @@
-#include "flight.h"
+#include "collections/flight.h"
 
 FLIGHT makeFlight(
     int id,
