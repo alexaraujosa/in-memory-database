@@ -7,4 +7,6 @@
 #define LITERALIZE_HELPER(token) #token
 #define LITERALIZE(token) LITERALIZE_HELPER(token)
 
+#define MAKE_CHAR_ARRAY(elem) ((char []){ elem, '\0' })
+
 #endif

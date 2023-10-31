@@ -14,6 +14,8 @@ char* join_paths(char** paths, int len) {
         if (i < len - 1) fullPath[offset - 1] = FS_PATH_SEPARATOR;
     }
 
+    if (fullPath[totalLen - 1] != '\0') fullPath[totalLen - 1] = '\0';
+
     return fullPath;
 }
 
