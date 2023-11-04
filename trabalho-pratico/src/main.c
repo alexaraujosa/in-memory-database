@@ -5,6 +5,7 @@
 #include "collections/flight.h"
 #include "util/io.h"
 #include "parser/parser.h"
+#include "queries/queries.h"
 
 typedef struct test {
     char* id;
@@ -96,7 +97,11 @@ int main(int argc, char const *argv[]) {
     GString* bin2 = get_cwd();
     printf("BIN2: %s\n", bin2->str);
 
-    parse("../test2.txt", &tokenize_csv, &testVerifier, &testParser, &testWriter, &testDiscarder);
+    // parse("../test2.txt", &tokenize_csv, &testVerifier, &testParser, &testWriter, &testDiscarder);
+    parse_file("../test2.txt", &tokenize_csv, &testVerifier, &testParser, &testWriter, &testDiscarder);
+
+    // query_run_single("2 U000000001", 12);
+    query_run_bulk("../testq.txt", "ignore");
     
     return 0;
 }
