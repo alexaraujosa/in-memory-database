@@ -22,9 +22,22 @@ typedef struct tokens {
 Tokens tokenize_csv(char* line, ssize_t len);
 
 /*
- * Parses a file line by line, passing control to each module in sequence.
+ * Parses a string.
  */
 void parse(
+    char* input,
+    ssize_t input_len,
+    Tokenizer(tokenizer),
+    VerifyFunction(verifier), 
+    ParseFunction(parser), 
+    WriteFunction(writer), 
+    WriteFunction(discarder)
+);
+
+/*
+ * Parses a file line by line, passing control to each module in sequence.
+ */
+void parse_file(
     char* filename,
     Tokenizer(tokenizer),
     VerifyFunction(verifier), 
