@@ -24,7 +24,8 @@
         "globals.h": "c",
         "syslimits.h": "c",
         "errno.h": "c",
-        "io.h": "c"
+        "queries.h": "c",
+        "passenger.h": "c"
     },
     "cmake.configureOnOpen": false,
     "todo-tree.highlights.useColourScheme": true,

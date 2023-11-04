@@ -1,5 +1,9 @@
 # li3-grupo-19
-EA
+a104257,Alex Araújo de Sá,alexaraujosa 
+
+a96268,Paulo Alexandre Rodrigues Ferreira,Pauloarf 
+
+a104271,Rafael Santos Fernandes,DarkenLM 
 
 ## VSCode Integration
 The workspace has settings already defined for ease of development.

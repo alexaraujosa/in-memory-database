@@ -11,27 +11,30 @@ OBJ     := obj
 SRC		:= src
 INCLUDE	:= include
 LIB		:= lib
+EXECUTABLE	:= programa-principal
 
 LIBRARIES	:=`pkg-config --libs glib-2.0` -lm 
-EXECUTABLE	:= main
+EXEC_PATH := $(BIN)/$(EXECUTABLE)
+# EXEC_PATH := $(EXECUTABLE)
 
 SRC_FILES := $(wildcard $(SRC)/**/*.c $(wildcard $(SRC)/*.c))
 OBJ_FILES := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRC_FILES))
 SRC_DIRS  := $(wildcard $(SRC)/**/)
 OBJ_DIRS  := $(patsubst $(SRC)/%,$(OBJ)/%,$(SRC_DIRS))
 
-all: $(BIN)/$(EXECUTABLE)
+all: $(EXEC_PATH)
 
 # build: clean all
 # build: clear
 # build: $(BIN)/$(EXECUTABLE)
 
 debug: C_FLAGS = $(_C_FLAGS) $(C_DEBUG_FLAGS) $(GLIB_FLAGS)
-debug: $(BIN)/$(EXECUTABLE)
+debug: $(EXEC_PATH)
 
-$(BIN)/$(EXECUTABLE): $(OBJ_DIRS) $(OBJ_FILES)
+$(EXEC_PATH): $(OBJ_DIRS) $(OBJ_FILES)
 	mkdir -p $(BIN)
-	$(CC) $(C_FLAGS) -I$(INCLUDE) -L$(LIB) $(filter-out $(OBJ_DIRS), $^) -o $@ $(LIBRARIES)
+#	$(CC) $(C_FLAGS) -I$(INCLUDE) -L$(LIB) $(filter-out $(OBJ_DIRS), $^) -o $@ $(LIBRARIES)
+	$(CC) $(C_FLAGS) -I$(INCLUDE) -L$(LIB) $(filter-out $(OBJ_DIRS), $^) -o $(EXEC_PATH) $(LIBRARIES)
 
 $(OBJ_DIRS): $(SRC_DIRS)
 	mkdir -p $@
@@ -43,16 +46,16 @@ $(OBJ)/%.o: $(SRC)/%.c
 # run: clean all
 # 	clear
 # 	./$(BIN)/$(EXECUTABLE)
-run: $(BIN)/$(EXECUTABLE)
-	./$(BIN)/$(EXECUTABLE)
+run: $(EXEC_PATH)
+	./$(EXEC_PATH)
 
 .PHONY: run-debug
 run-debug: debug
-	./$(BIN)/$(EXECUTABLE)
+	./$(EXEC_PATH)
 
 .PHONY: locate
 locate:
-	@echo $(BIN)/$(EXECUTABLE)
+	@echo $(EXEC_PATH)
 
 clean:
 	-rm $(BIN)/*
