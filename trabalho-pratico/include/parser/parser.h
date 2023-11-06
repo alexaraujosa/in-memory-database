@@ -14,7 +14,7 @@ typedef struct tokens {
 #define Tokenizer(name) Tokens(*name)(char* line, ssize_t len)
 #define VerifyFunction(name) int(*name)(Tokens)
 #define ParseFunction(name) void*(*name)(Tokens)
-#define WriteFunction(name) void(*name)(void*)
+#define WriteFunction(name) void(*name)(void*, FILE**)
 
 /*
  * Tokenizes a CSV line.

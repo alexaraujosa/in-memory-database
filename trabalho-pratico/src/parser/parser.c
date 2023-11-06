@@ -88,11 +88,12 @@ void parse(
     volatile Tokens tokens = tokenizer(input, input_len);
 
     Tokens vertoks = duplicate_tokens(tokens);
+    FILE* discarderStore = NULL;
 
     int valid = verifier(vertoks);
     if (!valid) {
         printf("INVALID LINE.\n");
-        discarder(tokens);
+        discarder(tokens, &discarderStore);
 
         free(vertoks);
         // free(tokens);
@@ -107,7 +108,7 @@ void parse(
         return;
     }
 
-    writer(data);
+    writer(data, NULL);
 
     free(vertoks);
     free(partoks);

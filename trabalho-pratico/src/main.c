@@ -32,7 +32,14 @@ void testWriter(void* raw_data) {
     fflush(stdout);
 }
 
-void testDiscarder(Tokens tokens) {
+void testDiscarder(Tokens tokens, FILE** store) {
+    if (*store == NULL) {
+        printf("DISTORE SET\n");
+        *store = 0x1;
+    }
+
+    printf("DISTORE: '%p'\n", *store);
+
     int totalLen = tokens->len - 1;
     for (int i = 0; i < tokens->len; i++) totalLen += strlen(tokens->data[i]);
 
@@ -45,12 +52,11 @@ void testDiscarder(Tokens tokens) {
         free(tokens->data[i]);
     }
 
-    free(tokens);
-
     printf("DISCARD: '%s'\n", joint);
     fflush(stdout);
 
     free(joint);
+    free(tokens);
 }
 
 int main(int argc, char const *argv[]) {
@@ -96,6 +102,31 @@ int main(int argc, char const *argv[]) {
 
     GString* bin2 = get_cwd();
     printf("BIN2: %s\n", bin2->str);
+
+    char* parts1[2] = {bin->str, "../obj"};
+    char* full_path1 = join_paths(parts1, 2);
+    GArray* files = get_files(full_path1, 1);
+    if (files == NULL || files->len == 0) {
+        printf("ALLAHU AKBAR: No files.\n");
+        exit(EXIT_FAILURE);
+    }
+    for (int i = 0; i < files->len; i++) {
+        char *dirp = g_array_index(files, char*, i);
+        g_print("FILE: '%s'\n", dirp);
+    }
+
+    char* parts2[2] = {bin->str, "../obj"};
+    char* full_path2 = join_paths(parts2, 2);
+    GArray* subdirs = get_subdirs(full_path2, 1);
+    if (subdirs == NULL || subdirs->len == 0) {
+        printf("ALLAHU AKBAR: No subdirs.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 0; i < subdirs->len; i++) {
+        char *dirp = g_array_index(subdirs, char*, i);
+        g_print("SUBDIR: '%s'\n", dirp);
+    }
 
     // parse("../test2.txt", &tokenize_csv, &testVerifier, &testParser, &testWriter, &testDiscarder);
     parse_file("../test2.txt", &tokenize_csv, &testVerifier, &testParser, &testWriter, &testDiscarder);
