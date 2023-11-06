@@ -15,10 +15,10 @@
 
 typedef struct flights {
     int id;
-    char airline[MAX_AIRLINE_NAME_LEN]; // Maybe GLib String
-    char plane_model[MAX_PLANE_NAME_LEN]; // Maybe GLib String
-    char origin[LOCATION_LEN];
-    char destination[LOCATION_LEN];
+    char airline[MAX_AIRLINE_NAME_LEN + 1]; // Maybe GLib String
+    char plane_model[MAX_PLANE_NAME_LEN + 1]; // Maybe GLib String
+    char origin[LOCATION_LEN + 1];
+    char destination[LOCATION_LEN + 1];
     int schedule_departure_date; // Offset from Base Date
     int schedule_arrival_date; // Offset from Base Date
     int real_departure_date; // Offset from Base Date

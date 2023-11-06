@@ -13,7 +13,7 @@
 #define FS_PATH_SEPARATOR '/'
 
 #define OPEN_FILE(filename, mode) ({\
-    FILE* stream = fopen(path, mode);\
+    FILE* stream = fopen(filename, mode);\
     if (stream == NULL) {\
         fprintf(stderr, "Error opening file '%s'.\n- %s\n", filename, strerror(errno));\
         exit(EXIT_FAILURE);\
@@ -36,12 +36,12 @@ char* join_paths(char** paths, int len);
 /*
  * Returns a GArray containing the full path of all files within a directory.
  */
-GArray* get_files(char* path, int len);
+GArray* get_files(char* path);
 
 /*
  * Returns a GArray containing the full path of all subdirectories within a directory.
  */
-GArray* get_subdirs(char* path, int len);
+GArray* get_subdirs(char* path);
 
 /*
  * Returns the Current Working Directory of this program (CWD).

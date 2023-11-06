@@ -16,12 +16,12 @@
 #define MAX_NAME_LEN 156
 
 // #define UserId(_id) char _id[MAX_USER_ID_LEN]
-#define UserId(name) TypedArrayVariable(char, name, MAX_USER_ID_LEN)
+#define UserId(name) TypedArrayVariable(char, name, MAX_USER_ID_LEN + 1)
 #define CountryCode(name) TypedArrayVariable(char, name, 2)
 
 typedef struct user {
     UserId(id);
-    char name[MAX_NAME_LEN];
+    char name[MAX_NAME_LEN + 1];
     bool sex;
     // char country_code[2];
     CountryCode(country_code);

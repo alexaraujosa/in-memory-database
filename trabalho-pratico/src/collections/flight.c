@@ -34,10 +34,10 @@ FLIGHT makeFlight(
         .real_departure_date = real_departure_date
     };
 
-    strncpy(flight.airline, airline, MAX_AIRLINE_NAME_LEN);
-    strncpy(flight.plane_model, plane_model, MAX_PLANE_NAME_LEN);
-    strncpy(flight.origin, origin, LOCATION_LEN);
-    strncpy(flight.destination, destination, LOCATION_LEN);
+    strncpy(flight.airline, airline, (size_t)MAX_AIRLINE_NAME_LEN);
+    strncpy(flight.plane_model, plane_model, (size_t)MAX_PLANE_NAME_LEN);
+    strncpy(flight.origin, origin, (size_t)LOCATION_LEN);
+    strncpy(flight.destination, destination, (size_t)LOCATION_LEN);
 
     return flight;
 }

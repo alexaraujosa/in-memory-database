@@ -34,8 +34,8 @@ USER makeUser(
         .account_status = account_status
     };
 
-    strncpy(user.id, id, MAX_USER_ID_LEN);
-    strncpy(user.name, name, MAX_NAME_LEN);
+    strncpy(user.id, id, (size_t)MAX_USER_ID_LEN);
+    strncpy(user.name, name, (size_t)MAX_NAME_LEN);
     strncpy(user.country_code, country_code, 2);
 
     // TODO: Calculate age

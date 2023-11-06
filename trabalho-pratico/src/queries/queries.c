@@ -129,7 +129,9 @@ void* query_parser(Tokens tokens) {
     return query;
 }
 
-void query_writer(void* raw_data) {
+void query_writer(void* raw_data, FILE** store) {
+    IGNORE_ARG(store);
+
     volatile Query data = (Query)raw_data;
 
     printf("QUERY WRITE >>> ID: '%s' | FLAG: '%c' | ARGS:", data->id, data->flag);
@@ -140,7 +142,10 @@ void query_writer(void* raw_data) {
     return;
 }
 
-void query_discarder(Tokens tokens) {
+void query_discarder(void* raw_data, FILE** store) {
+    IGNORE_ARG(store);
+
+    Tokens tokens = (Tokens)raw_data;
     for (int i = 0; i < tokens->len; i++) free(tokens->data[i]);
     free(tokens);
 }
@@ -154,6 +159,7 @@ void* query_execute(Query query, char* args) {
     return NULL;
 };
 void query_run_bulk(char* input_file, char* output_file) {
+    IGNORE_ARG(output_file);
     parse_file(input_file, &tokenize_query, &query_verifier, &query_parser, &query_writer, &query_discarder);
     return;
 };

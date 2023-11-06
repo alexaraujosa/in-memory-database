@@ -1,15 +1,20 @@
 #include "util/io.h"
+#include "stdint.h"
 
 char* join_paths(char** paths, int len) {
     int totalLen = len;
     for (int i = 0; i < len; i++) totalLen += strlen(paths[i]);
 
-    char* fullPath = (char*)malloc(totalLen * sizeof(char));
+    // Some fuckery to shut GCC (https://gcc.gnu.org/bugzilla//show_bug.cgi?id=85783)
+    size_t totalLenBits = totalLen * sizeof(char); 
+    if (totalLenBits >= PTRDIFF_MAX) return NULL;
+
+    char* fullPath = (char*)malloc(totalLenBits);
     int offset = 0;
     for (int i = 0; i < len; i++) {
         int partLen = strlen(paths[i]);
 
-        strncpy(fullPath + offset, paths[i], partLen);
+        memcpy(fullPath + offset, paths[i], partLen);
         offset += partLen + 1;
         if (i < len - 1) fullPath[offset - 1] = FS_PATH_SEPARATOR;
     }
@@ -19,7 +24,7 @@ char* join_paths(char** paths, int len) {
     return fullPath;
 }
 
-GArray* get_files(char* path, int len) {
+GArray* get_files(char* path) {
     struct stat path_stat;
     if (stat(path, &path_stat) != 0) return NULL;
 
@@ -32,7 +37,6 @@ GArray* get_files(char* path, int len) {
     struct dirent* dp;
 
     while ((dp = readdir(dirptr)) != NULL) {
-        struct stat st;
         if(strcmp(dp->d_name, ".") == 0 || strcmp(dp->d_name, "..") == 0) continue;
         if (dp->d_type != DT_REG) continue;
 
@@ -45,7 +49,7 @@ GArray* get_files(char* path, int len) {
     return paths;
 }
 
-GArray* get_subdirs(char* path, int len) {
+GArray* get_subdirs(char* path) {
     struct stat path_stat;
     if (stat(path, &path_stat) != 0) return NULL;
 
