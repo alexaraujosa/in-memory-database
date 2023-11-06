@@ -19,6 +19,65 @@ char* join_paths(char** paths, int len) {
     return fullPath;
 }
 
+GArray* get_files(char* path, int len) {
+    struct stat path_stat;
+    if (stat(path, &path_stat) != 0) return NULL;
+
+    int is_dir = S_ISDIR(path_stat.st_mode);
+    if (!is_dir) return NULL;
+
+    GArray* paths = g_array_new(FALSE, FALSE, sizeof(char*));
+
+    DIR* dirptr = opendir(path);
+    struct dirent* dp;
+
+    while ((dp = readdir(dirptr)) != NULL) {
+        struct stat st;
+        if(strcmp(dp->d_name, ".") == 0 || strcmp(dp->d_name, "..") == 0) continue;
+        if (dp->d_type != DT_REG) continue;
+
+        char* parts[2] = {get_cwd()->str, dp->d_name};
+        char* full_path = join_paths(parts, 2);
+        g_array_append_vals(paths, &full_path, 1);
+    }
+    closedir(dirptr);
+
+    return paths;
+}
+
+GArray* get_subdirs(char* path, int len) {
+    struct stat path_stat;
+    if (stat(path, &path_stat) != 0) return NULL;
+
+    int is_dir = S_ISDIR(path_stat.st_mode);
+    if (!is_dir) return NULL;
+
+    GArray* paths = g_array_new(FALSE, FALSE, sizeof(char*));
+
+    DIR* dirptr = opendir(path);
+    struct dirent* dp;
+
+    while ((dp = readdir(dirptr)) != NULL) {
+        struct stat st;
+        if(strcmp(dp->d_name, ".") == 0 || strcmp(dp->d_name, "..") == 0) continue;
+        if (dp->d_type == DT_REG) continue;
+
+        if (fstatat(dirfd(dirptr), dp->d_name, &st, 0) < 0) {
+            perror(dp->d_name);
+            continue;
+        }
+
+        if (S_ISDIR(st.st_mode)) {
+            char* parts[2] = {get_cwd()->str, dp->d_name};
+            char* full_path = join_paths(parts, 2);
+            g_array_append_vals(paths, &full_path, 1);
+        }
+    }
+    closedir(dirptr);
+
+    return paths;
+}
+
 // Memoized, CWD will not change during program execution, no need to recalculate it.
 GString* get_cwd() {
     static GString* BIN_PATH;

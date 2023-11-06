@@ -5,6 +5,8 @@
 #include <limits.h>
 #include <unistd.h>
 #include <libgen.h>
+#include <sys/stat.h>
+#include <dirent.h>
 #include "util/error.h"
 #include "debug.h"
 
@@ -30,6 +32,16 @@
  * Concatenates an array of strings into a single filesystem path.
  */
 char* join_paths(char** paths, int len);
+
+/*
+ * Returns a GArray containing the full path of all files within a directory.
+ */
+GArray* get_files(char* path, int len);
+
+/*
+ * Returns a GArray containing the full path of all subdirectories within a directory.
+ */
+GArray* get_subdirs(char* path, int len);
 
 /*
  * Returns the Current Working Directory of this program (CWD).
