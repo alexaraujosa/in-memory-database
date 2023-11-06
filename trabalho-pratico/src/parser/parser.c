@@ -38,6 +38,15 @@ Tokens tokenize_csv(char* line, ssize_t len) {
     return ret;
 }
 
+Tokens duplicate_tokens(Tokens orig) {
+    Tokens dup = (Tokens)malloc(sizeof(TOKENS));
+    dup->data = (char**)malloc(orig->len * sizeof(char*));
+    dup->len = orig->len;
+
+    for (int i = 0; i < orig->len; i++) dup->data[i] = strdup(orig->data[i]);
+    return dup;
+}
+
 void parse(
     char* input,
     ssize_t input_len,
@@ -78,20 +87,31 @@ void parse(
 
     volatile Tokens tokens = tokenizer(input, input_len);
 
-    int valid = verifier(tokens);
+    Tokens vertoks = duplicate_tokens(tokens);
+
+    int valid = verifier(vertoks);
     if (!valid) {
         printf("INVALID LINE.\n");
         discarder(tokens);
+
+        free(vertoks);
+        // free(tokens);
         return;
     }
 
-    void* data = parser(tokens);
+    Tokens partoks = duplicate_tokens(tokens);
+
+    void* data = parser(partoks);
     if (data == NULL) {
         printf("Error while parsing: Unable to transform tokens.\n");
         return;
     }
 
     writer(data);
+
+    free(vertoks);
+    free(partoks);
+    free(tokens);
 }
 
 void parse_file(
