@@ -1,7 +1,7 @@
 #include "queries/queries.h"
 
 Tokens tokenize_query(char* line, ssize_t len) {
-    char* ptr = strndup(line, len + 1);
+    char* ptr = strdup(line);
     if (ptr == NULL) exit(EXIT_FAILURE);
 
     if (ptr[len - 1] == '\n') {
@@ -12,16 +12,15 @@ Tokens tokenize_query(char* line, ssize_t len) {
     for (int i = 0; line[i]; i++) seps += (line[i] == ' ');
 
     char** arr = (char**)malloc(seps * sizeof(char*));
+    memset(arr, 0, seps * sizeof(char*));
 
     char* token;
     int i = 0;
     while ((token = strsep(&ptr, " ")) != NULL) {
-        int tokenLen = strlen(token);
-        char* tokenData = strndup(token, tokenLen + 1);
+        char* tokenData = strdup(token);
+
         arr[i++] = tokenData;
     }
-
-    // TODO: Separate possible flag on query. Concatenate string literals.
 
     Tokens ret = (Tokens)malloc(sizeof(TOKENS));
     ret->data = arr;
@@ -62,28 +61,6 @@ void* query_parser(Tokens tokens) {
 
     char* args[QUERIES_MAX_ARGS] = { 0 };
 
-    // TODO: Concatenate strings on the args
-    // j = 0;
-    // for (int i = 1; i < tokens->len; i++) {
-    //     if (tokens->data[i][0] == '\"') {
-    //         strcpy(args[j], tokens->data[i]);
-
-    //         i++;
-
-    //         int len = strlen(tokens->data[i]);
-    //         while(tokens->data[i][len - 1] != '\"') {
-    //             strcat(args[j], tokens->data[i]);
-    //             i++;
-    //         }
-
-    //         strcat(args[j], tokens->data[i]);
-    //     } else {
-    //         args[j] = tokens->data[i];
-    //     }
-        
-    //     j++;
-    // }
-
     j = 0;
     for (int i = 1; i < tokens->len; i++, j++) {
         if (tokens->data[i][0] == '\"') {
@@ -95,7 +72,6 @@ void* query_parser(Tokens tokens) {
             while(temp[tempsize - 1] != '\"') {
                 totalLen += tempsize + 1;
                 end++;
-                // i++;
 
                 temp = tokens->data[i + (end - start)];
                 tempsize = strlen(temp);
@@ -103,16 +79,12 @@ void* query_parser(Tokens tokens) {
             totalLen += tempsize;
 
             args[j] = (char*)malloc(totalLen * sizeof(char*));
-            // while(temp[tempsize - 1] != '\"') {
-            //     strcat(args[j], tokens->data[i++]);
-            // }
 
             strcpy(args[j], tokens->data[i]);
             for (int k = start + 1; k <= end; k++) {
                 strcat(args[j], " ");
                 strcat(args[j], tokens->data[k]);
             }
-            // strcat(args[j], tokens->data[i]);
 
             i += end - start;
         } else {
@@ -120,10 +92,8 @@ void* query_parser(Tokens tokens) {
         }
     }
     
-    // query->id = id;
     strcpy(query->id, id);
     query->flag = flag;
-    // query->args = args;
     memcpy(query->args, args, QUERIES_MAX_ARGS * sizeof(char*));
 
     return query;
@@ -164,6 +134,6 @@ void query_run_bulk(char* input_file, char* output_file) {
     return;
 };
 void query_run_single(char* query, ssize_t len) {
-    parse(query, len, &tokenize_query, &query_verifier, &query_parser, &query_writer, &query_discarder);
+    parse(query, len, &tokenize_query, &query_verifier, &query_parser, &query_writer, &query_discarder, makeStore());
     return;
 };
