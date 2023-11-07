@@ -1,13 +1,19 @@
-// The functions defined on this file refuse to follow any kind of law except those of chaos.
+/* 
+ * The functions defined on this file refuse to follow any kind of law except those of chaos.
+ * By proceeding further, you forfeit your soul.
+ * 
+ * If you change anything, I will hunt you down and kill you in your sleep. 
+ */
 
 #include "parser/parser.h"
 
 #define CSV_DELIMITER ';'
-#define CSV_DELIMITER_S LITERALIZE(CSV_DELIMITER) // BUG: This thing is "';'", yet somehow still works, wtf?
-// #define CSV_DELIMITER_S MAKE_CHAR_ARRAY(CSV_DELIMITER) // This one makes sense.
+// #define CSV_DELIMITER_S LITERALIZE(CSV_DELIMITER)   // BUG: This thing is "';'", yet somehow still works, wtf?
+#define CSV_DELIMITER_S MAKE_CHAR_ARRAY(CSV_DELIMITER) // This one makes sense.
+// Post-mortem: Turns out, IT'S BECAUSE IT FUCKING WRECKS HAVOC ON THIS SHIT.
 
 Tokens tokenize_csv(char* line, ssize_t len) {
-    char* ptr = strndup(line, len + 1);
+    char* ptr = strdup(line);
     if (ptr == NULL) exit(EXIT_FAILURE);
 
     if (ptr[len - 1] == '\n') {
@@ -18,14 +24,12 @@ Tokens tokenize_csv(char* line, ssize_t len) {
     for (int i = 0; line[i]; i++) seps += (line[i] == CSV_DELIMITER);
 
     char** arr = (char**)malloc(seps * sizeof(char*));
-
-    volatile char* delim = CSV_DELIMITER_S;
+    memset(arr, 0, seps * sizeof(char*));
 
     char* token;
     int i = 0;
     while ((token = strsep(&ptr, CSV_DELIMITER_S)) != NULL) {
-        int tokenLen = strlen(token);
-        char* tokenData = strndup(token, tokenLen + 1);
+        char* tokenData = strdup(token);
 
         arr[i++] = tokenData;
     }
@@ -40,11 +44,25 @@ Tokens tokenize_csv(char* line, ssize_t len) {
 
 Tokens duplicate_tokens(Tokens orig) {
     Tokens dup = (Tokens)malloc(sizeof(TOKENS));
+
     dup->data = (char**)malloc(orig->len * sizeof(char*));
     dup->len = orig->len;
 
     for (int i = 0; i < orig->len; i++) dup->data[i] = strdup(orig->data[i]);
     return dup;
+}
+
+void destroy_tokens(Tokens tokens) {
+    for (int i = 0; i < tokens->len; i++) free(tokens->data[i]);
+    free(tokens->data);
+    free(tokens);
+}
+
+ParserStore makeStore() {
+    ParserStore store = (ParserStore)malloc(sizeof(PARSER_STORE));
+    store->discard_file = NULL;
+
+    return store;
 }
 
 void parse(
@@ -54,7 +72,8 @@ void parse(
     VerifyFunction(verifier), 
     ParseFunction(parser), 
     WriteFunction(writer), 
-    WriteFunction(discarder)
+    WriteFunction(discarder),
+    ParserStore store
 ) {
     rt_assert(
         input != NULL, 
@@ -88,15 +107,16 @@ void parse(
     volatile Tokens tokens = tokenizer(input, input_len);
 
     Tokens vertoks = duplicate_tokens(tokens);
-    FILE* discarderStore = NULL;
 
     int valid = verifier(vertoks);
     if (!valid) {
         printf("INVALID LINE.\n");
-        discarder(tokens, &discarderStore);
+        discarder(tokens, &store->discard_file);
 
-        free(vertoks);
-        // free(tokens);
+        // TODO: Pass cleanup control to discarder?
+        // Answer: FUCK NO
+        destroy_tokens(vertoks);
+        destroy_tokens(tokens);
         return;
     }
 
@@ -110,9 +130,9 @@ void parse(
 
     writer(data, NULL);
 
-    free(vertoks);
-    free(partoks);
-    free(tokens);
+    destroy_tokens(vertoks);
+    destroy_tokens(partoks);
+    destroy_tokens(tokens);
 }
 
 void parse_file(
@@ -154,12 +174,14 @@ void parse_file(
         exit(EXIT_FAILURE);
     }
 
+    ParserStore store = makeStore();
+
     char* line = NULL;
     size_t len = 0;
     ssize_t read;
     
     while ((read = getline(&line, &len, stream)) != -1) {
-        parse(line, read, tokenizer, verifier, parser, writer, discarder);
+        parse(line, read, tokenizer, verifier, parser, writer, discarder, store);
     }
 
     CLOSE_FILE(stream);
