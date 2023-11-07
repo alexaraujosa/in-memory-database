@@ -92,7 +92,7 @@ void catalog_print_tree(Catalog *catalog)
 
 void catalog_rebalance_tree(Catalog *catalog)
 {
-    g_tree_balance(catalog->tree);
+    // g_tree_balance(catalog->tree);
 }
 
 void catalog_clear_all_items(Catalog *catalog)
