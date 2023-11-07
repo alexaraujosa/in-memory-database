@@ -3,9 +3,9 @@
 
 #include "util/string.h"
 
-int verify_user_tokens(char* parameter[]);
-int verify_reservation_tokens(char** parameter);
-int verify_flight_tokens(char** parameter);
-int verify_passenger_tokens(char** parameter);
+int verify_user_tokens(const char** parameter);
+int verify_reservation_tokens(const char** parameter);
+int verify_flight_tokens(const char** parameter);
+int verify_passenger_tokens(const char** parameter);
 
 #endif
