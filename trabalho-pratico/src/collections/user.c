@@ -1,29 +1,28 @@
 #include "collections/user.h"
 
+#include "catalog/catalogManager.h"
+
 // USER makeUser(
-//     UserId(id), 
-//     char name[MAX_NAME_LEN + 1], 
-//     bool sex, 
-//     CountryCode(country_code), 
-//     int account_creation, 
+//     UserId(id),
+//     char name[MAX_NAME_LEN + 1],
+//     bool sex,
+//     CountryCode(country_code),
+//     int account_creation,
 //     bool account_status
 // ) {
 USER makeUser(
     char* id,
     char* name,
-    bool sex, 
-    CountryCode(country_code), 
-    int account_creation, 
-    bool account_status
-) {
+    bool sex,
+    CountryCode(country_code),
+    int account_creation,
+    bool account_status) {
     rt_assert(
-        strlen(id) == MAX_USER_ID_LEN, 
-        isnprintf("User Id must be a string with length %d (got %d)", MAX_USER_ID_LEN, strlen(id))
-    );
+        strlen(id) == MAX_USER_ID_LEN,
+        isnprintf("User Id must be a string with length %d (got %d)", MAX_USER_ID_LEN, strlen(id)));
     rt_assert(
-        strlen(name) == MAX_NAME_LEN, 
-        isnprintf("User Name must be a string with length %d (got %d)", MAX_NAME_LEN, strlen(name))
-    );
+        strlen(name) == MAX_NAME_LEN,
+        isnprintf("User Name must be a string with length %d (got %d)", MAX_NAME_LEN, strlen(name)));
 
     USER user = {
         // .id = id,
@@ -31,8 +30,7 @@ USER makeUser(
         .sex = sex,
         // .country_code = country_code,
         .account_creation = account_creation,
-        .account_status = account_status
-    };
+        .account_status = account_status};
 
     strncpy(user.id, id, (size_t)MAX_USER_ID_LEN);
     strncpy(user.name, name, (size_t)MAX_NAME_LEN);
@@ -48,4 +46,37 @@ USER parseUserFromLine(char* line, int len) {
     IGNORE_ARG(line);
     IGNORE_ARG(len);
     // TODO: Parse User from CSV line
+}
+
+gint userTreeCompareFunc(gconstpointer a, gconstpointer b, gpointer user_data) {
+    const USER* user1 = (const USER*)a;
+    const USER* user2 = (const USER*)b;
+
+    if (user1->account_creation < user2->account_creation) return -1;
+    if (user1->account_creation > user2->account_creation) return 1;
+    // No caso de ser igual, avaliamos como??
+    return 0;
+}
+
+void writeUser(USER* user, Catalog* userCatalog) {
+    catalog_add_to_catalog(userCatalog, user->name, user, user);
+}
+
+void printUser(void* pt) {
+    USER* user = (USER*)pt;
+    char sex = 'F';
+    char status[10] = "Inactive";
+
+    if (user->sex) sex = 'M';
+    if (user->account_status) strcpy(status, "Active");
+
+    printf(
+        "{Id:%s; "
+        "Nome:%s; "
+        "Sex:%c; "
+        "CountryCode:%s; "
+        "Account_Creation:%d; "
+        "Account_status:%s; "
+        "Idade:%d}\n",
+        user->id, user->name, sex, user->country_code, user->account_creation, status, user->age);
 }

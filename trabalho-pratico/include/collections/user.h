@@ -1,16 +1,18 @@
 #ifndef TP_COLLECTIONS_USER_H
 #define TP_COLLECTIONS_USER_H
 
-#include "debug.h"
-#include "util/collection.h"
-#include "util/error.h"
-#include "util/string.h"
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "debug.h"
+#include "catalog/catalogManager.h"
+#include "util/collection.h"
+#include "util/error.h"
+#include "util/string.h"
+
 #define MAX_USER_ID_LEN 60
 
-// Lenght of the largest portuguese proper noun: 
+// Lenght of the largest portuguese proper noun:
 // "Manuel Maria Filipe Carlos Amélio Luís Miguel Rafael Gabriel Gonzaga Xavier "
 // "Francisco de Assis Eugénio de Bragança Orleães Sabóia e Saxe-Coburgo-Gotha"
 #define MAX_NAME_LEN 156
@@ -25,7 +27,7 @@ typedef struct user {
     bool sex;
     // char country_code[2];
     CountryCode(country_code);
-    int account_creation; // Offset from Base Date
+    int account_creation;  // Offset from Base Date
     bool account_status;
 
     // Statistics
@@ -38,13 +40,16 @@ USER makeUser(
     char* id,
     char* name,
 
-
-
-    bool sex, 
-    CountryCode(country_code), 
-    int account_creation, 
-    bool account_status
-);
+    bool sex,
+    CountryCode(country_code),
+    int account_creation,
+    bool account_status);
 
 USER parseUserFromLine(char* line, int len);
+
+
+gint userTreeCompareFunc(gconstpointer a, gconstpointer b, gpointer user_data);
+void writeUser(USER* user, Catalog* userCatalog);
+void printUser(void* user);
+
 #endif
