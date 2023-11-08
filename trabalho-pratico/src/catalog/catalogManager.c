@@ -31,8 +31,7 @@ static void _remove_from_tree(GTree *tree, char *key) {
     g_tree_remove(tree, key);
 }
 
-
-void catalog_add_to_catalog(Catalog *catalog, void *hashKey, void* treeKey, void *value) {
+void catalog_add_to_catalog(Catalog *catalog, void *hashKey, void *treeKey, void *value) {
     _add_to_hashtable(catalog->hashTable, hashKey, value);
     _add_to_tree(catalog->tree, treeKey, value);
     catalog->itemCount++;
@@ -65,7 +64,6 @@ void catalog_print_hash_table(Catalog *catalog, void (*printFunction)(void *)) {
     }
 }
 
-/*
 // TODO Maneira mais simples de imprimir a arvore (esquerda para a diretira)
 gboolean printTree(gpointer key, gpointer value) {
     printf("Key: %s, Value: %p\n", (char *)key, value);
