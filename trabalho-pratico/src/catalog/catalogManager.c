@@ -76,7 +76,6 @@ void catalog_print_tree(Catalog *catalog, void (*printFunction)(void *)) {
     GTraverseFunc printTreeFunc = (GTraverseFunc)printFunction;
     g_tree_foreach(catalog->tree, printTreeFunc, NULL);
 }
-*/
 
 void catalog_clear_all_items(Catalog *catalog, GCompareDataFunc treeCompareFunc) {
     g_hash_table_remove_all(catalog->hashTable);

@@ -11,6 +11,10 @@ typedef struct tokens {
     int len;
 } TOKENS, *Tokens;
 
+typedef struct parser_store {
+    FILE* discard_file;
+} PARSER_STORE, *ParserStore;
+
 #define Tokenizer(name) Tokens(*name)(char* line, ssize_t len)
 #define VerifyFunction(name) int(*name)(Tokens)
 #define ParseFunction(name) void*(*name)(Tokens)
@@ -22,6 +26,11 @@ typedef struct tokens {
 Tokens tokenize_csv(char* line, ssize_t len);
 
 /*
+ * Generates a store for a parser.
+ */
+ParserStore makeStore();
+
+/*
  * Parses a string.
  */
 void parse(
@@ -31,7 +40,8 @@ void parse(
     VerifyFunction(verifier), 
     ParseFunction(parser), 
     WriteFunction(writer), 
-    WriteFunction(discarder)
+    WriteFunction(discarder),
+    ParserStore store
 );
 
 /*

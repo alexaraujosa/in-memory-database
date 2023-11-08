@@ -50,7 +50,7 @@ int is_digit_positive(char c) {
     return (c > '0' && c <= '9');
 }
 
-int is_integer_positive_or_zero(char* number) {
+int is_integer_positive_or_zero(const char* number) {
     for(int i = 0 ; number[i] ; i++) {
         if(is_digit(number[i]) == 0)  return 0;
     }
@@ -58,7 +58,7 @@ int is_integer_positive_or_zero(char* number) {
     return 1;
 }
 
-int is_integer_positive(char* number) {
+int is_integer_positive(const char* number) {
 
     if(!is_digit_positive(number[0])) {
         return 0;
@@ -71,18 +71,18 @@ int is_integer_positive(char* number) {
     return 1;
 }
 
-int is_integer_between_one_and_five(char* number) {
+int is_integer_between_one_and_five(const char* number) {
     return (number[0] >= '1' && number[0] <= '5' && number[1] == '\0');
 }
 
-int have_whitespace(char* parameter[], int num_parameters) {
+int have_whitespace(const char* parameter[], int num_parameters) {
     for(int i = 0 ; i < num_parameters ; i++)
         if(IS_STRING_NULL(parameter[i]))  return 0;
     
     return 1;
 }
 
-int is_email(char* parameter, int length) {
+int is_email(const char* parameter, int length) {
     int i = length - 2;
     int tld = 1, domain = 0, username = 0;
 
@@ -118,7 +118,7 @@ int is_email(char* parameter, int length) {
     return 1;
 }
 
-int is_boolean(char* value) {
+int is_boolean(const char* value) {
     int length = strlen(value);
 
     if(length == 1) {
@@ -131,7 +131,7 @@ int is_boolean(char* value) {
     return 0;
 }
 
-int is_length(char* string, int length) {
+int is_length(const char* string, int length) {
     int i;
     for(i = 0 ; i < length ; i++) {
         if(string[i] == '\0')
@@ -141,7 +141,7 @@ int is_length(char* string, int length) {
     return (string[i] == '\0');
 }
 
-int is_date(char *string) {
+int is_date(const char* string) {
     if(
         !is_digit_positive(string[0])
         || string[4] != '/'
@@ -153,32 +153,32 @@ int is_date(char *string) {
         || !isdigit(string[3])
     ) return 0;
     if( // Month verifier
-        (string[5] != '0' && string[5] != '1') ||
+        (string[5] >= '2') ||
         (string[5] == '0' && !is_digit_positive(string[6])) ||
-        (string[5] == '1' && (string[6] != '0' && string[6] != '1' && string[6] != '2'))
+        (string[5] == '1' && string[6] >= '3')
     ) return 0;
     if( // Day verifier
-        (string[8] != '0' && string[8] != '1' && string[8] != '2' && string[8] != '3') ||
+        (string[8] >= '4') ||
         (string[8] == '0' && !is_digit_positive(string[9])) ||
         (string[8] == '1' && !isdigit(string[9])) ||
         (string[8] == '2' && !isdigit(string[9])) ||
-        (string[8] == '3' && (string[9] != '0' && string[9] != '1'))
+        (string[8] == '3' && string[9] >= '2')
     ) return 0;
     
 
     return 1;
 }
 
-int is_date_with_time(char *string) {
+int is_date_with_time(const char* string) {
     if(!is_length(string, 19)) return 0;
     if(!is_date(string)) return 0;
 
     if(string[10] != ' ' || string[13] != ':' || string[16] != ':') return 0;
     if( // Hour verifier
-        (string[11] != '0' && string[11] != '1' && string[11] != '2') ||
+        (string[11] >= '3') ||
         (string[11] == '0' && !is_digit(string[12])) ||
         (string[11] == '1' && !is_digit(string[12])) ||
-        (string[11] == '2' && (string[12] >= '5'))  //TODO: COLOCAR OS NUMEROS DESTA FORMA EM VEZ DE VER UM A UM, ASSIM VE-SE LOGO SE E' MAIOR OU IGUAL QUE 5
+        (string[11] == '2' && string[12] >= '5')
     ) return 0;
     if( // Minutes verifier
         (string[14] >= '6') ||  //TODO: Criar modularidade aqui
