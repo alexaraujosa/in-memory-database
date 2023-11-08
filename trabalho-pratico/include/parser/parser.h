@@ -31,6 +31,11 @@ Tokens tokenize_csv(char* line, ssize_t len);
 ParserStore makeStore();
 
 /*
+ * Discard helper that discards tokens to a file stream.
+ */
+void discard_to_file(Tokens tokens, FILE* store);
+
+/*
  * Parses a string.
  */
 void parse(

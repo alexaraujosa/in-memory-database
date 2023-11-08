@@ -3,6 +3,9 @@
  * By proceeding further, you forfeit your soul.
  * 
  * If you change anything, I will hunt you down and kill you in your sleep. 
+ * 
+ * 
+ * Note to Paulo: IF YOU STEAL MY COMMITS AGAIN, I WILL BREAK YOUR KNEECAPS!
  */
 
 #include "parser/parser.h"
@@ -63,6 +66,29 @@ ParserStore makeStore() {
     store->discard_file = NULL;
 
     return store;
+}
+
+void discard_to_file(Tokens tokens, FILE* store) {
+    if (store == NULL) {
+        printf("Could not discard tokens: Output file does not exist.");
+        exit(EXIT_FAILURE);
+    }
+
+    int totalLen = tokens->len + 1;
+    for (int i = 0; i < tokens->len; i++) totalLen += strlen(tokens->data[i]);
+
+    char* joint = (char*)malloc(totalLen * sizeof(char));
+    memset(joint, 0, totalLen * sizeof(char));
+
+    for (int i = 0; i < tokens->len; i++) {
+        strcat(joint, tokens->data[i]);
+        if (i != tokens->len - 1) strcat(joint, ";");
+    }
+    joint[totalLen - 2] = '\n';
+
+    fputs(joint, store);
+
+    free(joint);
 }
 
 void parse(
