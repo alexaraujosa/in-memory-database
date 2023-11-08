@@ -153,16 +153,16 @@ int is_date(const char* string) {
         || !isdigit(string[3])
     ) return 0;
     if( // Month verifier
-        (string[5] != '0' && string[5] != '1') ||
+        (string[5] >= '2') ||
         (string[5] == '0' && !is_digit_positive(string[6])) ||
-        (string[5] == '1' && (string[6] != '0' && string[6] != '1' && string[6] != '2'))
+        (string[5] == '1' && string[6] >= '3')
     ) return 0;
     if( // Day verifier
-        (string[8] != '0' && string[8] != '1' && string[8] != '2' && string[8] != '3') ||
+        (string[8] >= '4') ||
         (string[8] == '0' && !is_digit_positive(string[9])) ||
         (string[8] == '1' && !isdigit(string[9])) ||
         (string[8] == '2' && !isdigit(string[9])) ||
-        (string[8] == '3' && (string[9] != '0' && string[9] != '1'))
+        (string[8] == '3' && string[9] >= '2')
     ) return 0;
     
 
@@ -175,10 +175,10 @@ int is_date_with_time(const char* string) {
 
     if(string[10] != ' ' || string[13] != ':' || string[16] != ':') return 0;
     if( // Hour verifier
-        (string[11] != '0' && string[11] != '1' && string[11] != '2') ||
+        (string[11] >= '3') ||
         (string[11] == '0' && !is_digit(string[12])) ||
         (string[11] == '1' && !is_digit(string[12])) ||
-        (string[11] == '2' && (string[12] >= '5'))  //TODO: COLOCAR OS NUMEROS DESTA FORMA EM VEZ DE VER UM A UM, ASSIM VE-SE LOGO SE E' MAIOR OU IGUAL QUE 5
+        (string[11] == '2' && string[12] >= '5')
     ) return 0;
     if( // Minutes verifier
         (string[14] >= '6') ||  //TODO: Criar modularidade aqui
