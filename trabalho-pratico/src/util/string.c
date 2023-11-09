@@ -181,13 +181,34 @@ int is_date_with_time(const char* string) {
         (string[11] == '2' && string[12] >= '5')
     ) return 0;
     if( // Minutes verifier
-        (string[14] >= '6') ||  //TODO: Criar modularidade aqui
+        (string[14] >= '6') ||
         (!is_digit(string[15]))
     ) return 0;
     if( // Seconds verifier
-        (string[17] >= '6') ||  //TODO: Criar modularidade aqui
+        (string[17] >= '6') ||
         (!is_digit(string[18]))
     ) return 0;
 
     return 1;
 }
+
+bool get_sex(char* parameter) {
+    if(parameter[0] == 'M')  return TRUE;
+
+    return FALSE;
+}
+
+bool get_account_status(char* parameter) {
+    if(parameter[0] == 'a' || parameter[0] == 'A')  return TRUE;
+
+    return FALSE;
+}
+
+int date_string_to_int(char* parameter) {
+
+    int date = atoi(parameter);
+    rt_assert(date != 0, isnprintf("ERROR transforming date string '%s' to an integer.", parameter));
+
+    return date;
+}
+

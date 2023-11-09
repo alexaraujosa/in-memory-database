@@ -2,9 +2,11 @@
 #define TP_UTIL_STRING_H
 
 #include "common.h"
+#include "error.h"
 #include <strings.h>
 #include <stdarg.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 #define xstr(s) str(s)
 #define str(s) #s
@@ -25,5 +27,8 @@ int is_boolean(const char* value);
 int is_length(const char* string, int length);
 int is_date(const char* string);
 int is_date_with_time(const char* string);
+bool get_sex(char* parameter);
+bool get_account_status(char* parameter);
+int date_string_to_int(char* parameter);
 
 #endif
