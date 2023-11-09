@@ -11,14 +11,19 @@ typedef struct tokens {
     int len;
 } TOKENS, *Tokens;
 
-typedef struct parser_store {
-    FILE* discard_file;
-} PARSER_STORE, *ParserStore;
+// typedef struct parser_store {
+//     // FILE* discard_file;
+//     // char* file_header;
+//     GArray* data;
+// } PARSER_STORE, *ParserStore;
+
+#define ParserStore GArray*
 
 #define Tokenizer(name) Tokens(*name)(char* line, ssize_t len)
+#define PreprocessFunction(name) void(*name)(FILE*, ParserStore)
 #define VerifyFunction(name) int(*name)(Tokens)
 #define ParseFunction(name) void*(*name)(Tokens)
-#define WriteFunction(name) void(*name)(void*, FILE**)
+#define WriteFunction(name) void(*name)(void*, ParserStore)
 
 /*
  * Tokenizes a CSV line.
@@ -33,7 +38,26 @@ ParserStore makeStore();
 /*
  * Discard helper that discards tokens to a file stream.
  */
-void discard_to_file(Tokens tokens, FILE* store);
+void discard_to_file(Tokens tokens, ParserStore store);
+
+/*
+ * Fetches the header of a CSV file and stores it.
+ */
+void cvs_preprocessor_helper(FILE* stream, ParserStore store);
+
+/*
+ * Default preprocessor strategy for a parser for CSV files.
+ * 
+ * Initializes the store with the discard value as it's first value.
+ */
+void default_csv_preprocessor(FILE* stream, ParserStore store);
+
+/*
+ * Default destructor strategy for a parser for CSV files.
+ * 
+ * Frees the parser store as initialized by the default_csv_preprocessor.
+ */
+void default_csv_destructor(FILE* stream, ParserStore store);
 
 /*
  * Parses a string.
@@ -55,10 +79,12 @@ void parse(
 void parse_file(
     char* filename,
     Tokenizer(tokenizer),
+    PreprocessFunction(preprocess),
     VerifyFunction(verifier), 
     ParseFunction(parser), 
     WriteFunction(writer), 
-    WriteFunction(discarder)
+    WriteFunction(discarder),
+    PreprocessFunction(destructor)
 );
 
 #endif

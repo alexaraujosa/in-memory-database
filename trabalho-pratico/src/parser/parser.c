@@ -62,17 +62,30 @@ void destroy_tokens(Tokens tokens) {
 }
 
 ParserStore makeStore() {
-    ParserStore store = (ParserStore)malloc(sizeof(PARSER_STORE));
-    store->discard_file = NULL;
+    // ParserStore store = (ParserStore)malloc(sizeof(PARSER_STORE));
+    // store->discard_file = NULL;
+
+    // return store;
+    
+    // ParserStore store = (ParserStore)malloc(sizeof(PARSER_STORE));
+    // store = g_array_new(FALSE, FALSE, sizeof(void*));
+    ParserStore store = g_array_new(FALSE, FALSE, sizeof(void*));
+
+    // g_array_append_vals(store->data, NULL, 0); // Discard file
 
     return store;
 }
 
-void discard_to_file(Tokens tokens, FILE* store) {
+void discard_to_file(Tokens tokens, ParserStore store) { //, FILE* store
     if (store == NULL) {
-        printf("Could not discard tokens: Output file does not exist.");
+        printf("Could not discard tokens: Store does not exist.");
         exit(EXIT_FAILURE);
     }
+
+    // if (store->discard_file == NULL) {
+    //     printf("Could not discard tokens: Output file does not exist.");
+    //     exit(EXIT_FAILURE);
+    // }
 
     int totalLen = tokens->len + 1;
     for (int i = 0; i < tokens->len; i++) totalLen += strlen(tokens->data[i]);
@@ -86,9 +99,34 @@ void discard_to_file(Tokens tokens, FILE* store) {
     }
     joint[totalLen - 2] = '\n';
 
-    fputs(joint, store);
+    FILE** discard_file = &g_array_index(store, void*, 0);
+    fputs(joint, *discard_file);
 
     free(joint);
+}
+
+void cvs_preprocessor_helper(FILE* stream, ParserStore store) {
+    char* line = NULL;
+    size_t len = 0;
+    getline(&line, &len, stream);
+
+    char** file_header = &g_array_index(store, void*, 1);
+    *file_header = line;
+}
+
+void default_csv_preprocessor(FILE* stream, ParserStore store) {
+    gpointer null_element = NULL;
+    g_array_append_vals(store, &null_element, 1);
+    cvs_preprocessor_helper(stream, store);
+}
+
+void default_csv_destructor(FILE* stream, ParserStore store) {
+    for (guint i = 0; i < store->len; ++i) {
+        char *element = g_array_index(store, char *, i);
+        free(element);
+    }
+
+    g_array_free(store, TRUE);
 }
 
 void parse(
@@ -137,9 +175,9 @@ void parse(
     int valid = verifier(vertoks);
     if (!valid) {
         printf("INVALID LINE.\n");
-        discarder(tokens, &store->discard_file);
+        discarder(tokens, store);
 
-        // TODO: Pass cleanup control to discarder?
+        // Pass cleanup control to discarder?
         // Answer: FUCK NO
         destroy_tokens(vertoks);
         destroy_tokens(tokens);
@@ -164,10 +202,12 @@ void parse(
 void parse_file(
     char* filename,
     Tokenizer(tokenizer),
+    PreprocessFunction(preprocess),
     VerifyFunction(verifier), 
     ParseFunction(parser), 
     WriteFunction(writer), 
-    WriteFunction(discarder)
+    WriteFunction(discarder),
+    PreprocessFunction(destructor)
 ) {
     rt_assert(
         tokenizer != NULL, 
@@ -190,17 +230,20 @@ void parse_file(
         "Expected discarder function, but got NULL."
     );
 
-    char* paths[2] = { get_cwd()->str, filename };
-    char* path = join_paths(paths, 2);
+    ParserStore store = makeStore();
+
+    char* path;
+    
+    if (is_path_absolute(filename)) {
+        path = filename;
+    } else {
+        char* paths[2] = { get_cwd()->str, filename };
+        path = join_paths(paths, 2);
+    }
 
     FILE* stream = OPEN_FILE(path, "r");
 
-    // TODO: Move this to tokenizer or allow caller to control preprocessing of file.
-    if (skip_n_lines(stream, 1) == 1) {
-        exit(EXIT_FAILURE);
-    }
-
-    ParserStore store = makeStore();
+    preprocess(stream, store);
 
     char* line = NULL;
     size_t len = 0;
@@ -209,6 +252,8 @@ void parse_file(
     while ((read = getline(&line, &len, stream)) != -1) {
         parse(line, read, tokenizer, verifier, parser, writer, discarder, store);
     }
+
+    destructor(stream, store);
 
     CLOSE_FILE(stream);
 }

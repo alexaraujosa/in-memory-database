@@ -13,6 +13,19 @@ typedef struct test {
 
 int ind = 0;
 
+void testPreprocessor(FILE* stream, ParserStore store) {
+    // size_t len = 0;
+    // ssize_t read;
+    // char* line =  getline(&line, &len, stream);
+
+    // store->file_header = line;
+
+    gpointer null_element = NULL;
+    g_array_append_vals(store, &null_element, 1); // Discard file
+    // default_cvs_preprocessor(stream, store);   // File header
+    cvs_preprocessor_helper(stream, store);
+}
+
 int testVerifier(Tokens tokens) {
     // for (int i = 0; i < tokens->len; i++) printf("VERIFIER TOKENS %d: '%s'\n", i, tokens->data[i]);
     // if (++ind == 3) return 0; // FYIP
@@ -35,31 +48,63 @@ void testWriter(void* raw_data, FILE** store) {
     fflush(stdout);
 }
 
-void testDiscarder(void* raw_data, FILE** store) {
+// void testDiscarder(void* raw_data, FILE** store) {
+//     Tokens tokens = (Tokens)raw_data;
+
+//     if (*store == NULL) {
+//         printf("DISTORE SET\n");
+//         *store = (FILE*)0x1;
+//     }
+
+//     printf("DISTORE: '%p'\n", *store);
+
+//     int totalLen = tokens->len;
+//     for (int i = 0; i < tokens->len; i++) totalLen += strlen(tokens->data[i]);
+
+//     char* joint = (char*)malloc(totalLen * sizeof(char));
+//     memset(joint, 0, totalLen * sizeof(char));
+
+//     for (int i = 0; i < tokens->len - 1; i++) {
+//         strcat(joint, tokens->data[i]);
+//         if (i != tokens->len - 1) strcat(joint, ";");
+//     }
+
+//     printf("DISCARD: '%s'\n", joint);
+//     fflush(stdout);
+
+//     free(joint);
+// }
+
+void testDiscarder(void* raw_data, ParserStore store) {// , FILE** store
+    void** discard_file = &g_array_index(store, void*, 0);
+    if (*discard_file == NULL) {
+        char* parts[2] = {get_cwd()->str, "../Resultados/errors.csv"};
+        char* full_path = join_paths(parts, 2);
+        *discard_file = OPEN_FILE(full_path, "w");
+
+        void** file_header = &g_array_index(store, void*, 1);
+        rt_assert(
+            *file_header != NULL,
+            "Could not open discard file: Dataset header missing."
+        );
+
+        fputs(*file_header, *discard_file);
+    }
+    // if (store->discard_file == NULL) {
+    //     char* parts[2] = {get_cwd()->str, "../Resultados/errors.csv"};
+    //     char* full_path = join_paths(parts, 2);
+    //     store->discard_file = OPEN_FILE(full_path, "w");
+
+    //     fputs(store->file_header, store->discard_file);
+    // }
+
     Tokens tokens = (Tokens)raw_data;
 
-    if (*store == NULL) {
-        printf("DISTORE SET\n");
-        *store = (FILE*)0x1;
-    }
+    discard_to_file(tokens, store);
+}
 
-    printf("DISTORE: '%p'\n", *store);
-
-    int totalLen = tokens->len;
-    for (int i = 0; i < tokens->len; i++) totalLen += strlen(tokens->data[i]);
-
-    char* joint = (char*)malloc(totalLen * sizeof(char));
-    memset(joint, 0, totalLen * sizeof(char));
-
-    for (int i = 0; i < tokens->len - 1; i++) {
-        strcat(joint, tokens->data[i]);
-        if (i != tokens->len - 1) strcat(joint, ";");
-    }
-
-    printf("DISCARD: '%s'\n", joint);
-    fflush(stdout);
-
-    free(joint);
+void testDestructor(FILE* stream, ParserStore store) {
+    default_csv_destructor(stream, store);
 }
 
 int main(int argc, char const *argv[]) {
@@ -132,7 +177,17 @@ int main(int argc, char const *argv[]) {
     }
 
     // parse("../test2.txt", &tokenize_csv, &testVerifier, &testParser, &testWriter, &testDiscarder);
-    parse_file("../test2.txt", &tokenize_csv, &testVerifier, &testParser, &testWriter, &testDiscarder);
+    parse_file(
+        "../test2.txt", 
+        // "/home/rafaelsf/Desktop/Cadeiras/2ano/LI3/Project/project/trabalho-pratico/test2 copy.txt",
+        &tokenize_csv,
+        &testPreprocessor,
+        &testVerifier, 
+        &testParser, 
+        &testWriter, 
+        &testDiscarder,
+        &testDestructor
+    );
 
     // query_run_single("2 U000000001", 12);
     query_run_bulk("../testq.txt", "ignore");

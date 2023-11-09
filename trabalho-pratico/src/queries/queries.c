@@ -130,7 +130,16 @@ void* query_execute(Query query, char* args) {
 };
 void query_run_bulk(char* input_file, char* output_file) {
     IGNORE_ARG(output_file);
-    parse_file(input_file, &tokenize_query, &query_verifier, &query_parser, &query_writer, &query_discarder);
+    parse_file(
+        input_file, 
+        &tokenize_query, 
+        &default_csv_preprocessor, 
+        &query_verifier, 
+        &query_parser, 
+        &query_writer, 
+        &query_discarder,
+        &default_csv_destructor
+    );
     return;
 };
 void query_run_single(char* query, ssize_t len) {
