@@ -1,6 +1,8 @@
 #include "parser/verifier.h"
 
-int verify_user_tokens(const char** parameter) {
+int verify_user_tokens(Tokens tokens) {
+    const char** parameter = tokens->data;
+
     // Whitespace verifier
     if(have_whitespace(parameter, 12) == 0)  return 0;
     
@@ -25,7 +27,9 @@ int verify_user_tokens(const char** parameter) {
 }
 
 
-int verify_reservation_tokens(const char** parameter) {
+int verify_reservation_tokens(Tokens tokens) {
+    const char** parameter = tokens->data;
+
     // Whitespace verifier
     if(have_whitespace(parameter, 10) == 0)  return 0;
     if(IS_STRING_NULL(parameter[11]) || IS_STRING_NULL(parameter[13]))  return 0;
@@ -56,7 +60,9 @@ int verify_reservation_tokens(const char** parameter) {
 }
 
 
-int verify_flight_tokens(const char** parameter) {
+int verify_flight_tokens(Tokens tokens) {
+    const char** parameter = tokens->data;
+
     // Whitespace verifier
     if(have_whitespace(parameter, 12) == 0)  return 0;
 
@@ -88,7 +94,9 @@ int verify_flight_tokens(const char** parameter) {
 }
 
 
-int verify_passenger_tokens(const char** parameter) {
+int verify_passenger_tokens(Tokens tokens) {
+    const char** parameter = tokens->data;
+
     // Whitespace verifier
     if(have_whitespace(parameter, 2) == 0)  return 0;
     
