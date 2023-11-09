@@ -121,3 +121,7 @@ int skip_n_lines(FILE* file, int lines) {
 
     return 0;
 }
+
+int is_path_absolute(char* path) {
+    return *path == '/';
+}

@@ -53,4 +53,9 @@ GString* get_cwd();
  */
 int skip_n_lines(FILE* file, int lines);
 
+/*
+ * Determines wheather a path is absolute or not.
+ */
+int is_path_absolute(char* path);
+
 #endif
