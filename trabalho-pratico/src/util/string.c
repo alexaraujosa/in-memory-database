@@ -93,19 +93,19 @@ int is_email(const char* parameter, int length) {
 
     if(parameter[i] == '.' && tld >= 2) {
         i--;
-        while(parameter[i] != '@' && isalpha(parameter[i])) {
+        while(parameter[i] != '@' && parameter[i] != '.') {
             i--;
             domain++;
         }
 
         if(parameter[i] == '@' && domain >= 1) {
             i--;
-            while(i>=0 && isalpha(parameter[i])) {
+            while(i>=0 && parameter[i] != '@' && parameter[i] != '.') {
                 i--;
                 username++;
             }
 
-            if(!isalpha(parameter[0])) {
+            if(parameter[0] == '@' || parameter[0] == '.') {
                 return 0;
             }
         } else {
