@@ -48,18 +48,23 @@ USER parseUserFromLine(char* line, int len) {
     // TODO: Parse User from CSV line
 }
 
+int getOrder(char a, char b){
+
+}
+
 gint userTreeCompareFunc(gconstpointer a, gconstpointer b, gpointer user_data) {
     const USER* user1 = (const USER*)a;
     const USER* user2 = (const USER*)b;
 
-    if (user1->account_creation < user2->account_creation) return -1;
-    if (user1->account_creation > user2->account_creation) return 1;
-    // No caso de ser igual, avaliamos como??
+    if (strcmp(user1->name, user2->name) < 0) return -1;
+    if (strcmp(user1->name, user2->name) > 0) return 1;
+    if (strcmp(user1->id, user2->id) < 0) return -1;
+    if (strcmp(user1->id, user2->id) > 0) return 1;
     return 0;
 }
 
 void writeUser(USER* user, Catalog* userCatalog) {
-    catalog_add_to_catalog(userCatalog, user->name, user, user);
+    catalog_add_to_catalog(userCatalog, user->id, user, user);
 }
 
 void printUser(void* pt) {
