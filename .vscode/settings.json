@@ -25,7 +25,10 @@
         "syslimits.h": "c",
         "errno.h": "c",
         "queries.h": "c",
-        "passenger.h": "c"
+        "passenger.h": "c",
+        "catalogmanager.h": "c",
+        "locale.h": "c",
+        "user.h": "c"
     },
     "cmake.configureOnOpen": false,
     "todo-tree.highlights.useColourScheme": true,
