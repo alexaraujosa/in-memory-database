@@ -24,7 +24,7 @@ typedef struct flights {
     int real_departure_date; // Offset from Base Date
 } FLIGHT, *Flight;
 
-FLIGHT makeFlight(
+Flight makeFlight(
     int id,
     char* airline,
     char* plane_model,
@@ -35,6 +35,8 @@ FLIGHT makeFlight(
     int real_departure_date
 );
 
+Flight parse_flight(Tokens tokens);
+void discard_flight(void* raw_data, ParserStore store);
 FLIGHT parseFlightFromLine(char* line, int len);
 
 void print_flight(void* flight);

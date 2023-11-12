@@ -28,7 +28,7 @@ typedef struct reservation {
     int rating:RESERVATION_RATING_BF; // Depends on the scale (0-5, 0-10, etc), but can possibly be bitfielded.
 } RESERVATION, *Reservation;
 
-RESERVATION makeReservation(
+Reservation make_reservation(
     int id, 
     UserId(user_id), 
     uint8_t hotel_id, 
@@ -42,6 +42,8 @@ RESERVATION makeReservation(
     int rating
 );
 
+Reservation parse_reservation(Tokens tokens);
+void discard_reservation(void* raw_data, ParserStore store);
 RESERVATION parseReservationFromLine(char* line, int len);
 
 void print_reservation(void* reservation);

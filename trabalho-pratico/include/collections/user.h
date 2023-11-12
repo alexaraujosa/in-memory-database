@@ -9,6 +9,8 @@
 #include "util/collection.h"
 #include "util/error.h"
 #include "util/string.h"
+#include "parser/parser.h"
+#include "util/helpers.h"
 
 #define MAX_USER_ID_LEN 60
 
@@ -34,7 +36,7 @@ typedef struct user {
     uint8_t age;
 } USER, *User;
 
-USER makeUser(
+User make_user(
     // UserId(id),
     // char name[MAX_NAME_LEN]
     char* id,
@@ -43,10 +45,12 @@ USER makeUser(
     bool sex,
     CountryCode(country_code),
     int account_creation,
-    bool account_status);
+    bool account_status,
+    int birth_date
+    );
 
 USER parseUserFromLine(char* line, int len);
-
+void discard_user(void* raw_data, ParserStore store);
 void print_user(void* user);
 
 #endif

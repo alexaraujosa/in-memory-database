@@ -1,6 +1,6 @@
 #include "collections/reservation.h"
 
-RESERVATION makeReservation(
+Reservation make_reservation(
     int id,
     UserId(user_id),
     uint8_t hotel_id,
@@ -12,36 +12,68 @@ RESERVATION makeReservation(
     unsigned int price_per_night,
     bool includes_breakfast,
     int rating) {
-    rt_assert(hotel_stars > 0 && hotel_stars <= 5, "Hotel Stars must be an integer between 1 and 5.");
-    rt_assert(
-        city_tax > 0 && city_tax <= MAX_BIT_VALUE(RESERVATION_CITY_TAX_BF),
-        isnprintf("City tax must be an integer between 1 and %d", MAX_BIT_VALUE(RESERVATION_CITY_TAX_BF)));
-    // rt_assert(hotel_id > -1 && hotel_id <= 9999, "Hotel Id must be a 4-digit integer.");
 
-    RESERVATION reservation = {
-        .id = id,
-        // .user_id = user_id,
-        .hotel_id = hotel_id,
-        // .hotel_name = hotel_name,
-        .hotel_stars = hotel_stars,
-        .city_tax = city_tax,
-        .begin_date = begin_date,
-        .end_date = end_date,
-        .price_per_night = price_per_night,
-        .includes_breakfast = includes_breakfast,
-        .rating = rating};
+    Reservation reservation = malloc(sizeof(RESERVATION));
 
-    strncpy(reservation.user_id, user_id, MAX_USER_ID_LEN);
-    strncpy(reservation.hotel_name, hotel_name, MAX_HOTEL_NAME_LEN);
+    reservation->id = id;
+    strncpy(reservation->user_id, user_id, MAX_USER_ID_LEN);
+    reservation->hotel_id = hotel_id;
+    strcpy(reservation->hotel_name, hotel_name);    //TODO: Verify if theres any problem using strcpy instead strncpy
+    reservation->hotel_stars = hotel_stars;
+    reservation->city_tax = city_tax;
+    reservation->begin_date = begin_date;   //TODO: Date offset
+    reservation->end_date = end_date;       //TODO: Date offset
+    reservation->price_per_night = price_per_night;
+    reservation->includes_breakfast = includes_breakfast;
+    reservation->rating = rating;
 
     return reservation;
 }
 
-RESERVATION parseReservationFromLine(char* line, int len) {
-    IGNORE_ARG(line);
-    IGNORE_ARG(len);
-    // TODO: Parse Reservation from CSV line
+Reservation parse_reservation(Tokens tokens) {
+    char** parameter = tokens->data;
+    
+    int id = atoi(parameter[0]);
+    uint8_t hotel_id = atoi(parameter[2]);
+    unsigned int hotel_stars = atoi(parameter[4]);
+    unsigned int city_tax = atoi(parameter[5]);
+    int begin_date = date_string_to_int(parameter[7]);
+    int end_date = date_string_to_int(parameter[8]);
+    unsigned int price_per_night = atoi(parameter[8]);
+    bool includes_breakfast = get_boolean(parameter[10]);
+    int rating = atoi(parameter[12]);
+    Reservation reservation = make_reservation(id, parameter[1], hotel_id, parameter[3], hotel_stars, city_tax, begin_date, end_date, price_per_night, includes_breakfast, rating);
+
+    return reservation;
 }
+
+void discard_reservation(void* raw_data, ParserStore store) {
+    void** discard_file = &g_array_index(store, void*, 0);
+    if (*discard_file == NULL) {
+        char* parts[2] = {get_cwd()->str, "Resultados/reservations_errors.csv"};
+        char* full_path = join_paths(parts, 2);
+        *discard_file = OPEN_FILE(full_path, "w");
+
+        void** file_header = &g_array_index(store, void*, 1);
+        rt_assert(
+            *file_header != NULL,
+            "Could not open discard file: Dataset header missing."
+        );
+
+        fputs(*file_header, *discard_file);
+        free(full_path);
+    }
+
+    Tokens tokens = (Tokens)raw_data;
+
+    discard_to_file(tokens, store);
+}
+
+// RESERVATION parseReservationFromLine(char* line, int len) {
+//     IGNORE_ARG(line);
+//     IGNORE_ARG(len);
+//     // TODO: Parse Reservation from CSV line
+// }
 
 void print_reservation(void* pt) {
     RESERVATION* reservation = (RESERVATION*)pt;
