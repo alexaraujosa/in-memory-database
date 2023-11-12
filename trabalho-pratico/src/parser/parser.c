@@ -18,6 +18,8 @@
 Tokens tokenize_csv(char* line, ssize_t len) {
     // char* ptr = line;
     char* ptr = strdup(line);
+    char* ptr_root = ptr;
+
     if (ptr == NULL) exit(EXIT_FAILURE);
 
     if (ptr[len - 1] == '\n') {
@@ -42,7 +44,7 @@ Tokens tokenize_csv(char* line, ssize_t len) {
     ret->data = arr;
     ret->len = seps;
 
-    free(ptr);
+    free(ptr_root);
     return ret;
 }
 
@@ -127,7 +129,7 @@ void default_csv_destructor(FILE* stream, ParserStore store) {
 
     char* file_header = g_array_index(store, void*, 1);
     free(file_header);
-    
+
     for (guint i = 1; i < store->len; ++i) {
         char *element = g_array_index(store, char *, i);
         free(element);
@@ -261,9 +263,11 @@ void parse_file(
         free(line);
     }
 
+    // free(line);
+
     destructor(stream, store);
 
     CLOSE_FILE(stream);
 
-    if (is_path_absolute(path)) free(path);
+    if (!is_path_absolute(filename)) free(path);
 }
