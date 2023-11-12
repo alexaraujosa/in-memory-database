@@ -80,7 +80,7 @@ void testWriter(void* raw_data, FILE** store) {
 void discard_user(void* raw_data, ParserStore store) {
     void** discard_file = &g_array_index(store, void*, 0);
     if (*discard_file == NULL) {
-        char* parts[2] = {get_cwd()->str, "../Resultados/users_errors.csv"};
+        char* parts[2] = {get_cwd()->str, "Resultados/users_errors.csv"};
         char* full_path = join_paths(parts, 2);
         *discard_file = OPEN_FILE(full_path, "w");
 
@@ -101,7 +101,7 @@ void discard_user(void* raw_data, ParserStore store) {
 void discard_passenger(void* raw_data, ParserStore store) {
     void** discard_file = &g_array_index(store, void*, 0);
     if (*discard_file == NULL) {
-        char* parts[2] = {get_cwd()->str, "../Resultados/passengers_errors.csv"};
+        char* parts[2] = {get_cwd()->str, "Resultados/passengers_errors.csv"};
         char* full_path = join_paths(parts, 2);
         *discard_file = OPEN_FILE(full_path, "w");
 
@@ -123,7 +123,7 @@ void discard_passenger(void* raw_data, ParserStore store) {
 void discard_flight(void* raw_data, ParserStore store) {
     void** discard_file = &g_array_index(store, void*, 0);
     if (*discard_file == NULL) {
-        char* parts[2] = {get_cwd()->str, "../Resultados/flights_errors.csv"};
+        char* parts[2] = {get_cwd()->str, "Resultados/flights_errors.csv"};
         char* full_path = join_paths(parts, 2);
         *discard_file = OPEN_FILE(full_path, "w");
 
@@ -145,7 +145,7 @@ void discard_flight(void* raw_data, ParserStore store) {
 void discard_reservation(void* raw_data, ParserStore store) {
     void** discard_file = &g_array_index(store, void*, 0);
     if (*discard_file == NULL) {
-        char* parts[2] = {get_cwd()->str, "../Resultados/reservations_errors.csv"};
+        char* parts[2] = {get_cwd()->str, "Resultados/reservations_errors.csv"};
         char* full_path = join_paths(parts, 2);
         *discard_file = OPEN_FILE(full_path, "w");
 
