@@ -48,7 +48,7 @@ run-debug: debug
 
 .PHONY: locate
 locate:
-	@echo $(EXEC_PATH)
+	@echo ./$(EXEC_PATH)
 
 clean:
 	-rm $(BIN)/*
