@@ -201,7 +201,7 @@ void parse(
         return;
     }
 
-    writer(data, NULL);
+    writer(data, store);
 
     destroy_tokens(vertoks);
     destroy_tokens(partoks);
