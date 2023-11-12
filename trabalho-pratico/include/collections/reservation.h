@@ -14,19 +14,7 @@
 #define RESERVATION_PRICE_PER_NIGHT_BF 15
 #define RESERVATION_RATING_BF 5
 
-typedef struct reservation {
-    int id;
-    UserId(user_id); // Relates to User
-    uint8_t hotel_id; // No relation, symbolic
-    char hotel_name[MAX_HOTEL_NAME_LEN];
-    unsigned int hotel_stars:RESERVATION_HOTEL_STARS_BF;
-    unsigned int city_tax:RESERVATION_CITY_TAX_BF;
-    int begin_date; // Offset from Base Date
-    int end_date; // Offset from Base Date
-    unsigned int price_per_night:RESERVATION_PRICE_PER_NIGHT_BF;
-    bool includes_breakfast;
-    int rating:RESERVATION_RATING_BF; // Depends on the scale (0-5, 0-10, etc), but can possibly be bitfielded.
-} RESERVATION, *Reservation;
+typedef struct reservation RESERVATION, *Reservation;
 
 int verify_reservation_tokens(Tokens tokens);
 
@@ -43,6 +31,29 @@ Reservation make_reservation(
     bool includes_breakfast, 
     int rating
 );
+
+int get_reservation_id(Reservation reservation);
+void set_reservation_id(Reservation reservation, int id);
+const char *get_reservation_userID(Reservation reservation);
+void set_reservation_userID(Reservation reservation, const char *user_id);
+uint8_t get_reservation_hotelID(Reservation reservation);
+void set_reservation_hotelID(Reservation reservation, uint8_t hotel_id);
+const char *get_reservation_hotel_name(Reservation resarvation);
+void set_reservation_hotel_name(Reservation reservation, const char *hotel_name);
+unsigned int get_reservation_hotel_stars(Reservation reservation);
+void set_reservation_hotel_stars(Reservation reservation, unsigned int hotel_stars);
+unsigned int get_reservation_city_tax(Reservation reservation);
+void set_reservation_city_tax(Reservation reservation, unsigned int city_tax);
+int get_reservation_begin_date(Reservation reservation);
+void set_reservation_begin_date(Reservation reservation, int begin_date);
+int get_reservation_end_date(Reservation reservation);
+void set_reservation_end_data(Reservation reservation, int end_date);
+unsigned int get_reservation_price_per_night(Reservation reservation);
+void set_reservation_price_per_night(Reservation reservation, unsigned int price_per_night);
+bool get_reservation_includes_breakfast(Reservation reservation);
+void set_reservation_includes_breakfast(Reservation reservation, bool includes_breakfast);
+int get_reservation_rating(Reservation reservation);
+void set_reservation_rating(Reservation reservation, int rating);
 
 Reservation parse_reservation(Tokens tokens);
 void discard_reservation(void* raw_data, ParserStore store);

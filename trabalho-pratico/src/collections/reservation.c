@@ -1,5 +1,117 @@
 #include "collections/reservation.h"
 
+typedef struct reservation {
+    int id;
+    UserId(user_id); // Relates to User
+    uint8_t hotel_id; // No relation, symbolic
+    char hotel_name[MAX_HOTEL_NAME_LEN];
+    unsigned int hotel_stars:RESERVATION_HOTEL_STARS_BF;
+    unsigned int city_tax:RESERVATION_CITY_TAX_BF;
+    int begin_date; // Offset from Base Date
+    int end_date; // Offset from Base Date
+    unsigned int price_per_night:RESERVATION_PRICE_PER_NIGHT_BF;
+    bool includes_breakfast;
+    int rating:RESERVATION_RATING_BF; // Depends on the scale (0-5, 0-10, etc), but can possibly be bitfielded.
+} RESERVATION, *Reservation;
+
+int get_reservation_id(Reservation reservation){
+    int id = reservation->id;
+    return id;
+}
+
+void set_reservation_id(Reservation reservation, int id){
+    reservation->id = id;
+}
+
+const char *get_reservation_userID(Reservation reservation){
+    return strdup(reservation->user_id);
+}
+
+void set_reservation_userID(Reservation reservation, const char *user_id){
+    strncpy(reservation->user_id, user_id, sizeof(reservation->user_id) - 1);
+    reservation->user_id[sizeof(reservation->user_id) - 1] = '\0';
+}
+
+uint8_t get_reservation_hotelID(Reservation reservation){
+    uint8_t hotelID = reservation->hotel_id;
+    return hotelID;
+}
+
+void set_reservation_hotelID(Reservation reservation, uint8_t hotel_id){
+    reservation->hotel_id = hotel_id;
+}
+
+const char *get_reservation_hotel_name(Reservation resarvation){
+    return strdup(resarvation->hotel_name);
+}
+
+void set_reservation_hotel_name(Reservation reservation, const char *hotel_name){
+    reservation->hotel_name;
+}
+
+unsigned int get_reservation_hotel_stars(Reservation reservation){
+    unsigned int hotel_stars = reservation->hotel_stars;
+    return hotel_stars;
+}
+
+void set_reservation_hotel_stars(Reservation reservation, unsigned int hotel_stars){
+    reservation->hotel_stars = hotel_stars;
+}
+
+unsigned int get_reservation_city_tax(Reservation reservation){
+    unsigned int city_tax = reservation->city_tax;
+    return  city_tax;
+}
+
+void set_reservation_city_tax(Reservation reservation, unsigned int city_tax){
+    reservation->city_tax = city_tax;
+}
+
+int get_reservation_begin_date(Reservation reservation){
+    int begin_date = reservation->begin_date;
+    return begin_date;
+}
+
+void set_reservation_begin_date(Reservation reservation, int begin_date){
+    reservation->begin_date = begin_date;
+}
+
+int get_reservation_end_date(Reservation reservation){
+    int end_date = reservation->end_date;
+    return end_date;
+}
+
+void set_reservation_end_data(Reservation reservation, int end_date){
+    reservation->end_date = end_date;
+}
+
+unsigned int get_reservation_price_per_night(Reservation reservation){
+    unsigned int price_per_night = reservation->price_per_night;
+    return price_per_night;
+}
+
+void set_reservation_price_per_night(Reservation reservation, unsigned int price_per_night){
+    reservation->price_per_night = price_per_night;
+}
+
+bool get_reservation_includes_breakfast(Reservation reservation){
+    bool includes_breakfast = reservation->includes_breakfast;
+    return includes_breakfast;
+}
+
+void set_reservation_includes_breakfast(Reservation reservation, bool includes_breakfast){
+    reservation->includes_breakfast = includes_breakfast;
+}
+
+int get_reservation_rating(Reservation reservation){
+    int rating = reservation->rating;
+    return rating;
+}
+
+void set_reservation_rating(Reservation reservation, int rating){
+    reservation->rating = rating;
+}
+
 int verify_reservation_tokens(Tokens tokens) {
     char** parameter = tokens->data;
 

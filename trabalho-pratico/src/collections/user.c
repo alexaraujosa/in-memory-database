@@ -2,6 +2,84 @@
 
 #include "catalog/catalogManager.h"
 
+typedef struct user {
+    UserId(id);
+    char name[MAX_NAME_LEN + 1];
+    bool sex;
+    // char country_code[2];
+    CountryCode(country_code);
+    int account_creation;  // Offset from Base Date
+    bool account_status;
+
+    // Statistics
+    uint8_t age;
+} USER, *User;
+
+
+// SEE devemos usar copias com memoria dinamica? ou o chamador usa como input o buffer?
+const char *get_user_id(const User user) {
+    return strdup(user->id);
+}
+
+void set_user_id(User user, const char *id) {
+    strncpy(user->id, id, sizeof(user->id) - 1);
+    user->id[sizeof(user->id) - 1] = '\0'; 
+}
+
+const char *get_user_name(const User user){
+    return strdup(user->name);
+}
+
+void set_user_name(User user, const char *name){
+    strncpy(user->name, name, sizeof(user->name) - 1);
+    user->name[sizeof(user->name) - 1] = '\0';
+}
+
+bool get_user_sex(User user){
+    bool user_sex = user->sex;
+    return user_sex;
+}
+
+void set_user_sex(User user, bool sex){
+    user->sex = sex;
+}
+
+const char *get_user_country_code(const User user){
+    return strdup(user->country_code);
+}
+
+void set_user_country_code(User user, const char* country_code){
+    strncpy(user->country_code, country_code, sizeof(user->country_code) - 1);
+    user->country_code[sizeof(user->country_code) - 1] = '0';
+}
+
+int get_user_account_creation(const User user){
+    int account_status = user->account_status;
+    return account_status;
+}
+
+void set_user_account_creation(User user, int account_creation){
+    user->account_creation = account_creation;
+}
+
+bool get_user_account_status(const User user){
+    bool account_status = user->account_status;
+    return account_status;
+}
+
+void set_user_account_status(User user, bool account_status){
+    user->account_status = account_status;
+}
+
+int get_user_age(const User user){
+    int age = user->age;
+    return age;
+}
+
+void set_user_age(User user, int age){
+    user->age = age;
+}
+
 int verify_user_tokens(Tokens tokens) {
     char** parameter = tokens->data;
 
