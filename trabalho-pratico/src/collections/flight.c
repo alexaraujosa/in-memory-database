@@ -1,5 +1,89 @@
 #include "collections/flight.h"
 
+typedef struct flights {
+    int id;
+    char airline[MAX_AIRLINE_NAME_LEN + 1]; // Maybe GLib String
+    char plane_model[MAX_PLANE_NAME_LEN + 1]; // Maybe GLib String
+    char origin[LOCATION_LEN + 1];
+    char destination[LOCATION_LEN + 1];
+    int schedule_departure_date; // Offset from Base Date
+    int schedule_arrival_date; // Offset from Base Date
+    int real_departure_date; // Offset from Base Date
+} FLIGHT, *Flight;
+
+int get_flight_id(Flight flight){
+    int flight_id = flight->id;
+    return flight_id;
+}
+
+void set_flight_id(Flight flight, int id){
+    flight->id = id;
+}
+
+const char *get_flight_airline(Flight flight){
+    return strdup(flight->airline);
+}
+
+void set_flight_airline(Flight flight, const char *airline){
+    strncpy(flight->airline, airline, sizeof(flight->airline) - 1);
+    flight->airline[sizeof(flight->airline) - 1] = '\0';
+}
+
+const char *get_flight_plane_model(Flight flight){
+    return strdup(flight->plane_model);
+}
+
+void set_flight_plane_model(Flight flight, const char *plane_model){
+    strncpy(flight->plane_model, plane_model, sizeof(flight->plane_model) - 1);
+    flight->plane_model[sizeof(flight->plane_model) - 1] = '\0';
+}
+
+const char *get_flight_origin(Flight flight){
+    return strdup(flight->origin);
+}
+
+void set_flight_origin(Flight flight, const char *origin){
+    strncpy(flight->origin, origin, sizeof(flight->origin) - 1);
+    flight->origin[sizeof(flight->origin) - 1] = '\0';
+}
+
+const char *get_flight_destination(Flight flight){
+    return strdup(flight->destination);
+}
+
+void set_flight_destination(Flight flight, const char *destination){
+    strncpy(flight->destination, destination, sizeof(flight->destination) - 1);
+    flight->destination[sizeof(flight->destination) - 1] = '\0';
+}
+
+int get_flight_schedule_departure_date(Flight flight){
+    int flight_schedule_departure_date = flight->schedule_departure_date;
+    return flight_schedule_departure_date;
+}
+
+void set_flight_schedule_departure_date(Flight flight, int schedule_departure_date){
+    flight->schedule_departure_date = schedule_departure_date;
+}
+
+int get_flight_schedule_arrival_date(Flight flight){
+    int flight_schedule_arrival_date = flight->schedule_arrival_date;
+    return flight_schedule_arrival_date;
+}
+
+void set_flight_schedule_arrival_date(Flight flight, int schedule_arrival_date){
+    flight->schedule_arrival_date = schedule_arrival_date;
+}
+
+int get_flight_real_departure_date(Flight flight){
+    int flight_real_departure_date = flight->real_departure_date;
+    return flight_real_departure_date;
+}
+
+void set_flight_real_departure_date(Flight flight, int real_departure_date){
+    flight->real_departure_date = real_departure_date;
+}
+
+
 int verify_flight_tokens(Tokens tokens) {
     char** parameter = tokens->data;
 
