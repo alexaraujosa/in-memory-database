@@ -16,7 +16,7 @@
 // Post-mortem: Turns out, IT'S BECAUSE IT FUCKING WRECKS HAVOC ON THIS SHIT.
 
 Tokens tokenize_csv(char* line, ssize_t len) {
-    char* ptr = strdup(line);
+    char* ptr = line;
     if (ptr == NULL) exit(EXIT_FAILURE);
 
     if (ptr[len - 1] == '\n') {
