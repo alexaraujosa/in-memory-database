@@ -23,6 +23,7 @@ Catalog *catalog_init(GCompareDataFunc compareFunc);
  * @brief Adds an item to the Catalog.
  *
  * @param catalog The Catalog structure.
+ * @param hashkey The hashTable key of the item to be added.
  * @param key The key of the item to be added.
  * @param value A pointer to the item to be added.
  */

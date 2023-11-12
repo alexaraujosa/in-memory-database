@@ -44,4 +44,5 @@ RESERVATION makeReservation(
 
 RESERVATION parseReservationFromLine(char* line, int len);
 
+void print_reservation(void* reservation);
 #endif

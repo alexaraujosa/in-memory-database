@@ -48,3 +48,21 @@ USER parseUserFromLine(char* line, int len) {
     // TODO: Parse User from CSV line
 }
 
+void print_user(void* pt) {
+    USER* user = (USER*)pt;
+    char sex = 'F';
+    char status[10] = "Inactive";
+
+    if (user->sex) sex = 'M';
+    if (user->account_status) strcpy(status, "Active");
+
+    printf(
+        "{Id:%s; "
+        "Nome:%s; "
+        "Sex:%c; "
+        "CountryCode:%s; "
+        "Account_Creation:%d; "
+        "Account_status:%s; "
+        "Idade:%d}\n",
+        user->id, user->name, sex, user->country_code, user->account_creation, status, user->age);
+}

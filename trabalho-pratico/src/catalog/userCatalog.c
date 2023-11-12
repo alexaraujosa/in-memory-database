@@ -1,37 +1,24 @@
 #include "catalog/catalogManager.h"
+#include "catalog/userCatalog.h"
 #include "collections/user.h"
 
 
-gint userTreeCompareFunc(gconstpointer a, gconstpointer b, gpointer user_data) {
+gint user_tree_compare_func(gconstpointer a, gconstpointer b, gpointer user_data) {
     const USER* user1 = (const USER*)a;
     const USER* user2 = (const USER*)b;
 
-    if (strcoll(user1->name, user2->name) < 0) return -1;
-    if (strcoll(user1->name, user2->name) > 0) return 1;
-    if (strcoll(user1->id, user2->id) < 0) return -1;
-    if (strcoll(user1->id, user2->id) > 0) return 1;
-    return 0;
+    int name_comparison = strcasecmp(user1->name, user2->name);
+    if (name_comparison != 0) {
+        return name_comparison;
+    }
+    return strcasecmp(user1->id, user2->id);
 }
 
-void writeUser(USER* user, Catalog* userCatalog) {
-    catalog_add_to_catalog(userCatalog, user->id, user, user);
+void user_print_tree(gpointer data, gpointer user_data) {
+    const USER* user = (const USER*)user_data;
+    g_print("Value: %s\n", user->name);
 }
 
-void printUser(void* pt) {
-    USER* user = (USER*)pt;
-    char sex = 'F';
-    char status[10] = "Inactive";
-
-    if (user->sex) sex = 'M';
-    if (user->account_status) strcpy(status, "Active");
-
-    printf(
-        "{Id:%s; "
-        "Nome:%s; "
-        "Sex:%c; "
-        "CountryCode:%s; "
-        "Account_Creation:%d; "
-        "Account_status:%s; "
-        "Idade:%d}\n",
-        user->id, user->name, sex, user->country_code, user->account_creation, status, user->age);
+void write_user(USER* user, Catalog* user_catalog) {
+    catalog_add_to_catalog(user_catalog, user->id, user, user);
 }

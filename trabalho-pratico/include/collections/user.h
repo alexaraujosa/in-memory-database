@@ -47,9 +47,6 @@ USER makeUser(
 
 USER parseUserFromLine(char* line, int len);
 
-
-gint userTreeCompareFunc(gconstpointer a, gconstpointer b, gpointer user_data);
-void writeUser(USER* user, Catalog* userCatalog);
-void printUser(void* user);
+void print_user(void* user);
 
 #endif

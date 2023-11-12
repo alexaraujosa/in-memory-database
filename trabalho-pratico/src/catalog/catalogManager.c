@@ -9,8 +9,8 @@ typedef struct catalog {
 // TODO Verificar se as funções que quero usar dentro da hash estão bem
 Catalog *catalog_init(GCompareDataFunc treeCompareFunc) {
     Catalog *catalog = g_malloc(sizeof(Catalog));
-    catalog->hashTable = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
-    catalog->tree = g_tree_new_full(treeCompareFunc, NULL, g_free, g_free);
+    catalog->hashTable = g_hash_table_new(g_str_hash, g_str_equal);
+    catalog->tree = g_tree_new(treeCompareFunc);
     catalog->itemCount = 0;
     return catalog;
 }
@@ -23,8 +23,8 @@ static void _remove_from_hashtable(GHashTable *hashTable, char *key) {
     g_hash_table_remove(hashTable, key);
 }
 
-static void _add_to_tree(GTree *tree, char *key, void *value) {
-    g_tree_insert(tree, g_strdup(key), value);
+static void _add_to_tree(GTree *tree, void *key, void *value) {
+    g_tree_insert(tree, key, value);
 }
 
 static void _remove_from_tree(GTree *tree, char *key) {
@@ -64,12 +64,6 @@ void catalog_print_hash_table(Catalog *catalog, void (*printFunction)(void *)) {
     }
 }
 
-// TODO Maneira mais simples de imprimir a arvore (esquerda para a diretira)
-gboolean printTree(gpointer key, gpointer value) {
-    printf("Key: %s, Value: %p\n", (char *)key, value);
-    return FALSE;
-}
-
 void catalog_print_tree(Catalog *catalog, void (*printFunction)(void *)) {
     GTraverseFunc printTreeFunc = (GTraverseFunc)printFunction;
     g_tree_foreach(catalog->tree, printTreeFunc, NULL);
@@ -78,7 +72,7 @@ void catalog_print_tree(Catalog *catalog, void (*printFunction)(void *)) {
 void catalog_clear_all_items(Catalog *catalog, GCompareDataFunc treeCompareFunc) {
     g_hash_table_remove_all(catalog->hashTable);
     g_tree_destroy(catalog->tree);
-    catalog->tree = g_tree_new_full(treeCompareFunc, NULL, g_free, g_free);
+    catalog->tree = g_tree_new(treeCompareFunc);
     catalog->itemCount = 0;
 }
 

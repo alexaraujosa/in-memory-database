@@ -1,38 +1,34 @@
 #include "catalog/catalogManager.h"
 #include "collections/flight.h"
 
-gint flights(gconstpointer a, gconstpointer b, gpointer user_data) {
-    const FLIGHT* flights1 = (const FLIGHT*)a;
-    const FLIGHT* flights2 = (const FLIGHT*)b;
+//BUG Não guarda a origin como deve de ser
+//BUG Para guardar na hasTable é necessario converter key de int para string
+gint flight_tree_compare_func(gconstpointer a, gconstpointer b, gpointer flight_data) {
+    const FLIGHT* flight1 = (const FLIGHT*)a;
+    const FLIGHT* flight2 = (const FLIGHT*)b;
 
-    if (strcmp(flights1->origin, flights2->origin) < 0) return -1;
-    if (strcmp(flights1->origin, flights2->origin) > 0) return 1;
-    if (flights1->schedule_departure_date < flights2->schedule_departure_date) return -1;
-    if (flights1->schedule_departure_date > flights2->schedule_departure_date) return 1;
-    if (flights1->schedule_arrival_date < flights2->schedule_arrival_date) return -1;
-    if (flights1->schedule_arrival_date > flights2->schedule_arrival_date) return 1;
-    if (flights1->id < flights2->id) return -1;
-    if (flights1->id > flights2->id) return 1;
+    int origin_comparison = strcasecmp(flight1->origin, flight2->origin);
+    if (origin_comparison != 0) {
+        return origin_comparison;
+    }
+
+    if (flight1->schedule_departure_date < flight2->schedule_departure_date) return -1;
+    if (flight1->schedule_departure_date > flight2->schedule_departure_date) return 1;
+
+    if (flight1->schedule_arrival_date < flight2->schedule_arrival_date) return -1;
+    if (flight1->schedule_arrival_date > flight2->schedule_arrival_date) return 1;
+
+    if (flight1->id < flight2->id) return -1;
+    if (flight1->id > flight2->id) return 1;
+
     return 0;
 }
 
-void writeFlight(FLIGHT* fligh, Catalog* flighCatalog) {
-    catalog_add_to_catalog(flighCatalog, fligh->id, fligh, fligh);
+void flight_print_tree(gpointer data, gpointer flight_data) {
+    const FLIGHT* flight = (const FLIGHT*)flight_data;
+    g_print("flight_origin: %s; schedule_departure_date: %d\n", flight->origin, flight->schedule_departure_date);
 }
 
-void printFlight(void *pt) {
-    FLIGHT* flight = (FLIGHT*)pt;
-    printf(
-        "{Id:%d; "
-        "Airline:%s; "
-        "PlaneModel:%s; "
-        "Origin:%s; "
-        "Destination:%s; "
-        "ScheduleDepartureDate:%d; "
-        "ScheduleArrivalDate:%d; "
-        "RealDepartureDate:%d}\n",
-        flight->id, flight->airline, flight->plane_model,
-        flight->origin, flight->destination, flight->schedule_departure_date,
-        flight->schedule_arrival_date, flight->real_departure_date
-    );
+void write_flight(FLIGHT* fligh, Catalog* fligh_catalog) {
+    catalog_add_to_catalog(fligh_catalog, fligh->id, fligh, fligh);
 }

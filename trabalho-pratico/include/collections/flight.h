@@ -37,4 +37,6 @@ FLIGHT makeFlight(
 
 FLIGHT parseFlightFromLine(char* line, int len);
 
+void print_flight(void* flight);
+
 #endif
