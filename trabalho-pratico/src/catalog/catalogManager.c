@@ -7,20 +7,37 @@ typedef struct catalog {
 } Catalog;
 
 // TODO Verificar se as funções que quero usar dentro da hash estão bem
-Catalog *catalog_init(GCompareDataFunc treeCompareFunc) {
+Catalog *catalog_init(GCompareDataFunc tree_compare_func) {
     Catalog *catalog = g_malloc(sizeof(Catalog));
     catalog->hashTable = g_hash_table_new(g_str_hash, g_str_equal);
-    catalog->tree = g_tree_new(treeCompareFunc);
+    catalog->tree = g_tree_new(tree_compare_func);
     catalog->itemCount = 0;
     return catalog;
 }
 
-static void _add_to_hashtable(GHashTable *hashTable, char *key, void *value) {
-    g_hash_table_insert(hashTable, g_strdup(key), value);
+static void _add_to_hashtable(GHashTable *hashTable, gpointer key, gpointer value) {
+    gchar *formattedKey = NULL;
+
+    if (GPOINTER_TO_INT(key) || GPOINTER_TO_INT(key) == 0) {
+        formattedKey = g_strdup_printf("%p", key);
+    } else if (GPOINTER_TO_INT(key) == 0 && g_utf8_validate((const gchar *)key, -1, NULL)) {
+        formattedKey = g_strdup(key);
+    } else {
+        g_warning("Tipo de chave não suportado");
+        return;
+    }
+
+    g_hash_table_insert(hashTable, formattedKey, value);
+
+    g_free(formattedKey);
 }
 
 static void _remove_from_hashtable(GHashTable *hashTable, char *key) {
-    g_hash_table_remove(hashTable, key);
+    gpointer value = g_hash_table_lookup(hashTable, key);
+    if (value) {
+        g_free(key);
+        g_hash_table_remove(hashTable, key);
+    }
 }
 
 static void _add_to_tree(GTree *tree, void *key, void *value) {

@@ -51,7 +51,7 @@ User make_user(
     int birth_date
     );
 
-USER parseUserFromLine(char* line, int len);
+User parse_user(Tokens tokens);
 void discard_user(void* raw_data, ParserStore store);
 void print_user(void* user);
 
