@@ -50,7 +50,7 @@ int is_digit_positive(char c) {
     return (c > '0' && c <= '9');
 }
 
-int is_integer_positive_or_zero(const char* number) {
+int is_integer_positive_or_zero(char* number) {
     for(int i = 0 ; number[i] ; i++) {
         if(is_digit(number[i]) == 0)  return 0;
     }
@@ -58,7 +58,7 @@ int is_integer_positive_or_zero(const char* number) {
     return 1;
 }
 
-int is_integer_positive(const char* number) {
+int is_integer_positive(char* number) {
 
     if(!is_digit_positive(number[0])) {
         return 0;
@@ -71,36 +71,36 @@ int is_integer_positive(const char* number) {
     return 1;
 }
 
-int is_integer_between_one_and_five(const char* number) {
+int is_integer_between_one_and_five(char* number) {
     return (number[0] >= '1' && number[0] <= '5' && number[1] == '\0');
 }
 
-int have_whitespace(const char* parameter[], int num_parameters) {
+int have_whitespace(char* parameter[], int num_parameters) {
     for(int i = 0 ; i < num_parameters ; i++)
         if(IS_STRING_NULL(parameter[i]))  return 0;
     
     return 1;
 }
 
-int is_email(const char* parameter, int length) {
+int is_email(char* parameter, int length) {
     int i = length - 2;
     int tld = 1, domain = 0, username = 0;
 
-    while(parameter[i] != '.' && isalpha(parameter[i])) {
+    while(i >= 0 && parameter[i] != '.' && isalpha(parameter[i])) {
         i--;
         tld++;
     }
 
-    if(parameter[i] == '.' && tld >= 2) {
+    if(i > 0 && parameter[i] == '.' && tld >= 2) {
         i--;
-        while(parameter[i] != '@' && parameter[i] != '.') {
+        while(i >= 0 && parameter[i] != '@' && parameter[i] != '.') {
             i--;
             domain++;
         }
 
-        if(parameter[i] == '@' && domain >= 1) {
+        if(i > 0 && parameter[i] == '@' && domain >= 1) {
             i--;
-            while(i>=0 && parameter[i] != '@' && parameter[i] != '.') {
+            while(i >= 0 && parameter[i] != '@' && parameter[i] != '.') {
                 i--;
                 username++;
             }
@@ -118,7 +118,7 @@ int is_email(const char* parameter, int length) {
     return 1;
 }
 
-int is_boolean(const char* value) {
+int is_boolean(char* value) {
     int length = strlen(value);
 
     if(length == 1) {
@@ -131,7 +131,7 @@ int is_boolean(const char* value) {
     return 0;
 }
 
-int is_length(const char* string, int length) {
+int is_length(char* string, int length) {
     int i;
     for(i = 0 ; i < length ; i++) {
         if(string[i] == '\0')
@@ -141,7 +141,7 @@ int is_length(const char* string, int length) {
     return (string[i] == '\0');
 }
 
-int is_date(const char* string) {
+int is_date(char* string) {
     if(
         !is_digit_positive(string[0])
         || string[4] != '/'
@@ -169,7 +169,7 @@ int is_date(const char* string) {
     return 1;
 }
 
-int is_date_with_time(const char* string) {
+int is_date_with_time(char* string) {
     if(!is_length(string, 19)) return 0;
     if(!is_date(string)) return 0;
 
@@ -206,9 +206,37 @@ bool get_account_status(char* parameter) {
 
 int date_string_to_int(char* parameter) {
 
-    int date = atoi(parameter);
-    rt_assert(date != 0, isnprintf("ERROR transforming date string '%s' to an integer.", parameter));
+    int year, month, day, date;
+    date = year = month = day = 0 ;
+
+    if(sscanf(parameter, "%d/%d/%d", &year, &month, &day) != 3) {
+        printf("ERROR Parsing date string to int!\n");
+        exit(EXIT_FAILURE);
+    }
+
+    date = year * 10000 + month * 100 + day;
 
     return date;
 }
 
+int date_with_time_string_to_int(char* parameter) { // TODO: Performance and refactor this code
+
+    int year, month, day, hour, minute, second, date;
+    date = year = month = day = 0 ;
+
+    if(sscanf(parameter, "%d/%d/%d %d:%d:%d", &year, &month, &day, &hour, &minute, &second) != 5) {
+        printf("ERROR Parsing date string to int!\n");
+        exit(EXIT_FAILURE);
+    }
+
+    date = year * 100000000 + month * 1000000 + day + 10000 * hour + 100 * minute + second;
+
+    return date;
+}
+
+bool get_boolean(char* parameter) {
+
+    if(parameter[0] == '\0' || parameter[0] == 'f' || parameter[0] == 'F' || parameter[0] == '0')  return FALSE;
+
+    return TRUE;
+}
