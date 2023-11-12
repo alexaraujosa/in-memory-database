@@ -1,7 +1,7 @@
 #include "parser/verifier.h"
 
 int verify_user_tokens(Tokens tokens) {
-    const char** parameter = tokens->data;
+    char** parameter = tokens->data;
 
     // Whitespace verifier
     if(have_whitespace(parameter, 12) == 0)  return 0;
@@ -28,11 +28,11 @@ int verify_user_tokens(Tokens tokens) {
 
 
 int verify_reservation_tokens(Tokens tokens) {
-    const char** parameter = tokens->data;
+    char** parameter = tokens->data;
 
     // Whitespace verifier
     if(have_whitespace(parameter, 10) == 0)  return 0;
-    if(IS_STRING_NULL(parameter[11]) || IS_STRING_NULL(parameter[13]))  return 0;
+    //if(IS_STRING_NULL(parameter[11]) || IS_STRING_NULL(parameter[13]))  return 0; //BUG: Acredito que isto n seja necessario
 
     // Hotel_stars verifier
     if(is_integer_between_one_and_five(parameter[4]) == 0)  return 0;
@@ -61,7 +61,7 @@ int verify_reservation_tokens(Tokens tokens) {
 
 
 int verify_flight_tokens(Tokens tokens) {
-    const char** parameter = tokens->data;
+    char** parameter = tokens->data;
 
     // Whitespace verifier
     if(have_whitespace(parameter, 12) == 0)  return 0;
@@ -87,7 +87,7 @@ int verify_flight_tokens(Tokens tokens) {
     }
     // Date verifier (Semantic)
     // TODO: Testar a performance entre o strcmp e a comparacao de inteiros
-    if(strcmp(parameter[6], parameter[8]) >= 0)  return 0;
+    if(strcmp(parameter[6], parameter[8]) > 0)  return 0;
     if(strcmp(parameter[8], parameter[9]) >= 0)  return 0;
 
     return 1;
@@ -95,7 +95,7 @@ int verify_flight_tokens(Tokens tokens) {
 
 
 int verify_passenger_tokens(Tokens tokens) {
-    const char** parameter = tokens->data;
+    char** parameter = tokens->data;
 
     // Whitespace verifier
     if(have_whitespace(parameter, 2) == 0)  return 0;
