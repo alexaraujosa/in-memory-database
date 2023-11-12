@@ -125,7 +125,7 @@ void default_csv_preprocessor(FILE* stream, ParserStore store) {
 
 void default_csv_destructor(FILE* stream, ParserStore store) {
     FILE* discarder = g_array_index(store, FILE*, 0);
-    CLOSE_FILE(discarder);
+    if(discarder != NULL)  CLOSE_FILE(discarder);
 
     char* file_header = g_array_index(store, void*, 1);
     free(file_header);
