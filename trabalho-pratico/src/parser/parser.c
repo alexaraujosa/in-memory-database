@@ -183,7 +183,7 @@ void parse(
 
     int valid = verifier(vertoks);
     if (!valid) {
-        printf("INVALID LINE.\n");
+        //printf("INVALID LINE.\n");
         discarder(tokens, store);
 
         // Pass cleanup control to discarder?
