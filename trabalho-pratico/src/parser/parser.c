@@ -123,6 +123,8 @@ void default_csv_preprocessor(FILE* stream, ParserStore store) {
 void default_csv_destructor(FILE* stream, ParserStore store) {
     FILE* discarder = g_array_index(store, FILE*, 0);
     CLOSE_FILE(discarder);
+    char* file_header = g_array_index(store, void*, 1);
+    free(file_header);
     for (guint i = 1; i < store->len; ++i) {
         char *element = g_array_index(store, char *, i);
         free(element);
@@ -258,4 +260,5 @@ void parse_file(
     destructor(stream, store);
 
     CLOSE_FILE(stream);
+    free(line);
 }
