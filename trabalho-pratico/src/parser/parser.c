@@ -260,10 +260,10 @@ void parse_file(
     
     while ((read = getline(&line, &len, stream)) != -1) {
         parse(line, read, tokenizer, verifier, parser, writer, discarder, store);
-        free(line);
+        // free(line);
     }
 
-    // free(line);
+    free(line);
 
     destructor(stream, store);
 
