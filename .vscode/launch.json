@@ -50,7 +50,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/trabalho-pratico/${input:binFile}",
-            "args": [],
+            "args": ["/mnt/data", "/mnt/input/inputs.txt"],
             "cwd": "${workspaceFolder}/trabalho-pratico",
             "environment": [],
             "externalConsole": false,
