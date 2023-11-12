@@ -36,6 +36,8 @@ typedef struct user {
     uint8_t age;
 } USER, *User;
 
+int verify_user_tokens(Tokens tokens);
+
 User make_user(
     // UserId(id),
     // char name[MAX_NAME_LEN]

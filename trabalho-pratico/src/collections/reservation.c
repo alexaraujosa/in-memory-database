@@ -1,5 +1,37 @@
 #include "collections/reservation.h"
 
+int verify_reservation_tokens(Tokens tokens) {
+    char** parameter = tokens->data;
+
+    // Whitespace verifier
+    if(have_whitespace(parameter, 10) == 0)  return 0;
+    //if(IS_STRING_NULL(parameter[11]) || IS_STRING_NULL(parameter[13]))  return 0; //BUG: Acredito que isto n seja necessario
+
+    // Hotel_stars verifier
+    if(is_integer_between_one_and_five(parameter[4]) == 0)  return 0;
+
+    // City_tax verifier
+    if(is_integer_positive_or_zero(parameter[5]) == 0)  return 0;
+
+    // Price_per_night verifier
+    if(is_integer_positive(parameter[9]) == 0)  return 0;
+
+    // Includes_breakfast verifier
+    if(!IS_STRING_NULL(parameter[10]) && !is_boolean(parameter[10]))  return 0; 
+    
+    // Rating verifier
+    if(!IS_STRING_NULL(parameter[12]) && !is_integer_between_one_and_five(parameter[12]))  return 0;
+
+    // Date verifier (Syntax)
+    if(!is_date(parameter[7]) || !is_date(parameter[8]))  return 0;
+
+    // Date verifier (Semantic)
+    // TODO: Testar a performance entre o strcmp e a comparacao de inteiros
+    if(strcmp(parameter[7], parameter[8]) >= 0)  return 0;
+
+    return 1;
+}
+
 Reservation make_reservation(
     int id,
     UserId(user_id),

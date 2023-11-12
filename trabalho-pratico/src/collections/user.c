@@ -2,6 +2,31 @@
 
 #include "catalog/catalogManager.h"
 
+int verify_user_tokens(Tokens tokens) {
+    char** parameter = tokens->data;
+
+    // Whitespace verifier
+    if(have_whitespace(parameter, 12) == 0)  return 0;
+    
+    // Email verifier
+    int email_length = strlen(parameter[2]);
+    if(!isalpha(parameter[2][email_length - 1]) || !is_email(parameter[2], email_length))  return 0;
+
+    // Country Code verifier
+    if(!is_length(parameter[7], 2) || !isalpha(parameter[7][0]) || !isalpha(parameter[7][1]))  return 0;
+
+    // Account Status verifier
+    if(strcasecmp(parameter[11], "active") && strcasecmp(parameter[11], "inactive"))  return 0; 
+
+    // Date with(out) time verifier (Syntax)
+    if(!is_date(parameter[4]) || !is_date_with_time(parameter[9]))  return 0;
+
+    // Date verifier (Semantic)
+    // TODO: Testar a performance entre o strcmp e a comparacao de inteiros
+    if(strcmp(parameter[4], parameter[9]) >= 0)  return 0;
+
+    return 1;
+}
 
 User make_user(
     char* id,

@@ -28,6 +28,8 @@ typedef struct reservation {
     int rating:RESERVATION_RATING_BF; // Depends on the scale (0-5, 0-10, etc), but can possibly be bitfielded.
 } RESERVATION, *Reservation;
 
+int verify_reservation_tokens(Tokens tokens);
+
 Reservation make_reservation(
     int id, 
     UserId(user_id), 

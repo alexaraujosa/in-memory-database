@@ -3,11 +3,11 @@
 #include "collections/user.h"
 #include "collections/reservation.h"
 #include "collections/flight.h"
+#include "collections/passenger.h"
 #include "util/io.h"
 #include "parser/parser.h"
 #include "queries/queries.h"
 
-#include "parser/verifier.h"
 
 typedef struct test {
     char* id;
@@ -48,120 +48,6 @@ void testWriter(void* raw_data, FILE** store) {
     // Test data = (Test)raw_data;
     //printf("WRITE: %s\n", data->id);
     fflush(stdout);
-}
-
-// void testDiscarder(void* raw_data, FILE** store) {
-//     Tokens tokens = (Tokens)raw_data;
-
-//     if (*store == NULL) {
-//         printf("DISTORE SET\n");
-//         *store = (FILE*)0x1;
-//     }
-
-//     printf("DISTORE: '%p'\n", *store);
-
-//     int totalLen = tokens->len;
-//     for (int i = 0; i < tokens->len; i++) totalLen += strlen(tokens->data[i]);
-
-//     char* joint = (char*)malloc(totalLen * sizeof(char));
-//     memset(joint, 0, totalLen * sizeof(char));
-
-//     for (int i = 0; i < tokens->len - 1; i++) {
-//         strcat(joint, tokens->data[i]);
-//         if (i != tokens->len - 1) strcat(joint, ";");
-//     }
-
-//     printf("DISCARD: '%s'\n", joint);
-//     fflush(stdout);
-
-//     free(joint);
-// }
-
-void discard_user(void* raw_data, ParserStore store) {
-    void** discard_file = &g_array_index(store, void*, 0);
-    if (*discard_file == NULL) {
-        char* parts[2] = {get_cwd()->str, "Resultados/users_errors.csv"};
-        char* full_path = join_paths(parts, 2);
-        *discard_file = OPEN_FILE(full_path, "w");
-
-        void** file_header = &g_array_index(store, void*, 1);
-        rt_assert(
-            *file_header != NULL,
-            "Could not open discard file: Dataset header missing."
-        );
-
-        fputs(*file_header, *discard_file);
-        free(full_path);
-    }
-    Tokens tokens = (Tokens)raw_data;
-
-    discard_to_file(tokens, store);
-}
-
-void discard_passenger(void* raw_data, ParserStore store) {
-    void** discard_file = &g_array_index(store, void*, 0);
-    if (*discard_file == NULL) {
-        char* parts[2] = {get_cwd()->str, "Resultados/passengers_errors.csv"};
-        char* full_path = join_paths(parts, 2);
-        *discard_file = OPEN_FILE(full_path, "w");
-
-        void** file_header = &g_array_index(store, void*, 1);
-        rt_assert(
-            *file_header != NULL,
-            "Could not open discard file: Dataset header missing."
-        );
-
-        fputs(*file_header, *discard_file);
-        free(full_path);
-    }
-
-    Tokens tokens = (Tokens)raw_data;
-
-    discard_to_file(tokens, store);
-}
-
-void discard_flight(void* raw_data, ParserStore store) {
-    void** discard_file = &g_array_index(store, void*, 0);
-    if (*discard_file == NULL) {
-        char* parts[2] = {get_cwd()->str, "Resultados/flights_errors.csv"};
-        char* full_path = join_paths(parts, 2);
-        *discard_file = OPEN_FILE(full_path, "w");
-
-        void** file_header = &g_array_index(store, void*, 1);
-        rt_assert(
-            *file_header != NULL,
-            "Could not open discard file: Dataset header missing."
-        );
-
-        fputs(*file_header, *discard_file);
-        free(full_path);
-    }
-
-    Tokens tokens = (Tokens)raw_data;
-
-    discard_to_file(tokens, store);
-}
-
-void discard_reservation(void* raw_data, ParserStore store) {
-    void** discard_file = &g_array_index(store, void*, 0);
-    if (*discard_file == NULL) {
-        char* parts[2] = {get_cwd()->str, "Resultados/reservations_errors.csv"};
-        char* full_path = join_paths(parts, 2);
-        *discard_file = OPEN_FILE(full_path, "w");
-
-        void** file_header = &g_array_index(store, void*, 1);
-        rt_assert(
-            *file_header != NULL,
-            "Could not open discard file: Dataset header missing."
-        );
-
-        fputs(*file_header, *discard_file);
-        free(full_path);
-    }
-
-    Tokens tokens = (Tokens)raw_data;
-
-    discard_to_file(tokens, store);
 }
 
 void testDestructor(FILE* stream, ParserStore store) {

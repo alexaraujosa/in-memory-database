@@ -10,6 +10,8 @@ typedef struct passenger {
     UserId(user_id); // Relates to User
 } PASSENGER, *Passenger;
 
+int verify_passenger_tokens(Tokens tokens);
+
 Passenger make_passenger(
     int flight_id,
     UserId(user_id)

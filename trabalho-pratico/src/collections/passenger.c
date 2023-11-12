@@ -1,5 +1,14 @@
 #include "collections/passenger.h"
 
+int verify_passenger_tokens(Tokens tokens) {
+    char** parameter = tokens->data;
+
+    // Whitespace verifier
+    if(have_whitespace(parameter, 2) == 0)  return 0;
+    
+    return 1;
+}
+
 Passenger make_passenger(
     int flight_id,
     UserId(user_id)) {

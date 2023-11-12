@@ -1,5 +1,38 @@
 #include "collections/flight.h"
 
+int verify_flight_tokens(Tokens tokens) {
+    char** parameter = tokens->data;
+
+    // Whitespace verifier
+    if(have_whitespace(parameter, 12) == 0)  return 0;
+
+    // Origin verifier
+    if(!is_length(parameter[4], 3))  return 0;
+    for(int i = 0 ; i < 3 ; i++) {
+        if(!isalpha(parameter[4][i]))  return 0;
+    }
+    // Destination verifier
+    if(!is_length(parameter[5], 3))  return 0;
+    for(int i = 0 ; i < 3 ; i++) {
+        if(!isalpha(parameter[5][i]))  return 0;
+    }
+    // Total_seats first verifier (Syntax)
+    if(!is_integer_positive(parameter[3]))  return 0;
+    // TODO: total_seats verifier
+
+    // Dates with time verifier (Syntax)
+    for(int i = 6 ; i < 10 ; i++) {
+        if(!is_date_with_time(parameter[i]))
+            return 0;
+    }
+    // Date verifier (Semantic)
+    // TODO: Testar a performance entre o strcmp e a comparacao de inteiros
+    if(strcmp(parameter[6], parameter[8]) > 0)  return 0;
+    if(strcmp(parameter[8], parameter[9]) >= 0)  return 0;
+
+    return 1;
+}
+
 Flight make_flight(
     int id,
     char* airline,
