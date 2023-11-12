@@ -14,7 +14,8 @@ LIB		:= lib
 EXECUTABLE	:= programa-principal
 
 LIBRARIES	:=`pkg-config --libs glib-2.0` -lm 
-EXEC_PATH := $(BIN)/$(EXECUTABLE)
+# EXEC_PATH := $(BIN)/$(EXECUTABLE)
+EXEC_PATH := $(EXECUTABLE)
 
 SRC_FILES := $(wildcard $(SRC)/**/*.c $(wildcard $(SRC)/*.c))
 OBJ_FILES := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRC_FILES))
