@@ -16,7 +16,8 @@
 // Post-mortem: Turns out, IT'S BECAUSE IT FUCKING WRECKS HAVOC ON THIS SHIT.
 
 Tokens tokenize_csv(char* line, ssize_t len) {
-    char* ptr = line;
+    // char* ptr = line;
+    char* ptr = strdup(line);
     if (ptr == NULL) exit(EXIT_FAILURE);
 
     if (ptr[len - 1] == '\n') {
@@ -123,8 +124,10 @@ void default_csv_preprocessor(FILE* stream, ParserStore store) {
 void default_csv_destructor(FILE* stream, ParserStore store) {
     FILE* discarder = g_array_index(store, FILE*, 0);
     CLOSE_FILE(discarder);
+
     char* file_header = g_array_index(store, void*, 1);
     free(file_header);
+    
     for (guint i = 1; i < store->len; ++i) {
         char *element = g_array_index(store, char *, i);
         free(element);
@@ -255,10 +258,12 @@ void parse_file(
     
     while ((read = getline(&line, &len, stream)) != -1) {
         parse(line, read, tokenizer, verifier, parser, writer, discarder, store);
+        free(line);
     }
 
     destructor(stream, store);
 
     CLOSE_FILE(stream);
-    free(line);
+
+    if (is_path_absolute(path)) free(path);
 }
