@@ -6,6 +6,8 @@
 #include "collections/flight.h"
 #include "collections/passenger.h"
 #include "queries/queries.h"
+#include "catalog/userCatalog.h"
+#include "catalog/catalogManager.h"
 
 void test_preprocessor(FILE* stream, ParserStore store, va_list args);
 void test_parser(Tokens tokens);
