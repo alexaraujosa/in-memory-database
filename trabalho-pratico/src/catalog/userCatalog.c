@@ -3,6 +3,8 @@
 #include "catalog/catalogManager.h"
 #include "collections/user.h"
 
+#include "parser/parser.h"
+
 gint user_tree_compare_func(gconstpointer a, gconstpointer b, gpointer user_data) {
     const USER *user1 = (const USER*)a;
     const USER *user2 = (const USER*)b;
@@ -17,8 +19,8 @@ gint user_tree_compare_func(gconstpointer a, gconstpointer b, gpointer user_data
         return name_comparison;
     }
 
-    const char *id1 = get_user_name(id1);
-    const char *id2 = get_user_name(id2);
+    const char *id1 = get_user_id(user1);
+    const char *id2 = get_user_id(user2);
     int id_comparison = strcasecmp(id1, id2);
 
     free(name1);
@@ -35,8 +37,9 @@ void user_print_tree(gpointer data, gpointer user_data) {
     free(name);
 }
 
-void write_user(USER *user, Catalog *user_catalog) {
+void write_user(USER *user, ParserStore store) {
     const char *id = get_user_id(user);
+    Catalog* user_catalog = g_array_index(store, Catalog*, 2);
     catalog_add_to_catalog(user_catalog, id, user, user);
     free(id);
 }
