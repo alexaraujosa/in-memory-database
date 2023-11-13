@@ -127,11 +127,14 @@ void default_csv_destructor(FILE* stream, ParserStore store) {
     FILE* discarder = g_array_index(store, FILE*, 0);
     if(discarder != NULL)  CLOSE_FILE(discarder);
 
-    char* file_header = g_array_index(store, void*, 1);
+    void** file_header = g_array_index(store, void**, 1);
     free(file_header);
 
-    for (guint i = 1; i < store->len; ++i) {
-        char *element = g_array_index(store, char *, i);
+
+
+    for (guint i = 2; i < store->len - 1; ++i) {
+        // char *element = g_array_index(store, char *, i);
+        void* element = g_array_index(store, void*, i);
         free(element);
     }
 
