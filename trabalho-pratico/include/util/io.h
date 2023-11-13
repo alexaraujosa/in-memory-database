@@ -31,7 +31,8 @@
 /*
  * Concatenates an array of strings into a single filesystem path.
  */
-char* join_paths(char** paths, int len);
+// char* join_paths(char** paths, int len);
+char* join_paths(int len, ...);
 
 /*
  * Returns a GArray containing the full path of all files within a directory.

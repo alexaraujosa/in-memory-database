@@ -20,10 +20,11 @@ typedef struct tokens {
 #define ParserStore GArray*
 
 #define Tokenizer(name) Tokens(*name)(char* line, ssize_t len)
-#define PreprocessFunction(name) void(*name)(FILE*, ParserStore)
+#define PreprocessFunction(name) void(*name)(FILE*, ParserStore, va_list)
 #define VerifyFunction(name) int(*name)(Tokens)
 #define ParseFunction(name) void*(*name)(Tokens)
 #define WriteFunction(name) void(*name)(void*, ParserStore)
+#define DestructFunction(name) void(*name)(FILE*, ParserStore)
 
 /*
  * Tokenizes a CSV line.
@@ -50,7 +51,7 @@ void cvs_preprocessor_helper(FILE* stream, ParserStore store);
  * 
  * Initializes the store with the discard value as it's first value.
  */
-void default_csv_preprocessor(FILE* stream, ParserStore store);
+void default_csv_preprocessor(FILE* stream, ParserStore store, va_list args);
 
 /*
  * Default destructor strategy for a parser for CSV files.
@@ -84,7 +85,8 @@ void parse_file(
     ParseFunction(parser), 
     WriteFunction(writer), 
     WriteFunction(discarder),
-    PreprocessFunction(destructor)
+    DestructFunction(destructor),
+    ...
 );
 
 #endif

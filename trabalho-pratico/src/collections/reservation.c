@@ -194,8 +194,9 @@ Reservation parse_reservation(Tokens tokens) {
 void discard_reservation(void* raw_data, ParserStore store) {
     void** discard_file = &g_array_index(store, void*, 0);
     if (*discard_file == NULL) {
-        char* parts[2] = {get_cwd()->str, "Resultados/reservations_errors.csv"};
-        char* full_path = join_paths(parts, 2);
+        // char* parts[2] = {get_cwd()->str, "Resultados/reservations_errors.csv"};
+        // char* full_path = join_paths(parts, 2);
+        char* full_path = join_paths(2, get_cwd()->str, "Resultados/reservations_errors.csv");
         *discard_file = OPEN_FILE(full_path, "w");
 
         void** file_header = &g_array_index(store, void*, 1);

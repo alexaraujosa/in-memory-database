@@ -5,8 +5,9 @@
 #include "collections/reservation.h"
 #include "collections/flight.h"
 #include "collections/passenger.h"
+#include "queries/queries.h"
 
-void test_preprocessor(FILE* stream, ParserStore store);
+void test_preprocessor(FILE* stream, ParserStore store, va_list args);
 void test_parser(Tokens tokens);
 void test_writer(void* raw_data, FILE** store);
 

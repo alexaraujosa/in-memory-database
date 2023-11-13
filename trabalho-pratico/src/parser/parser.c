@@ -117,7 +117,7 @@ void cvs_preprocessor_helper(FILE* stream, ParserStore store) {
     *file_header = line;
 }
 
-void default_csv_preprocessor(FILE* stream, ParserStore store) {
+void default_csv_preprocessor(FILE* stream, ParserStore store, va_list args) {
     gpointer null_element = NULL;
     g_array_append_vals(store, &null_element, 1);
     cvs_preprocessor_helper(stream, store);
@@ -216,7 +216,8 @@ void parse_file(
     ParseFunction(parser), 
     WriteFunction(writer), 
     WriteFunction(discarder),
-    PreprocessFunction(destructor)
+    DestructFunction(destructor),
+    ...
 ) {
     rt_assert(
         tokenizer != NULL, 
@@ -246,13 +247,20 @@ void parse_file(
     if (is_path_absolute(filename)) {
         path = filename;
     } else {
-        char* paths[2] = { get_cwd()->str, filename };
-        path = join_paths(paths, 2);
+        // char* paths[2] = { get_cwd()->str, filename };
+        // path = join_paths(paths, 2);
+        path = join_paths(2, get_cwd()->str, filename);
     }
 
     FILE* stream = OPEN_FILE(path, "r");
 
-    preprocess(stream, store);
+    // Preprocess store
+    va_list args;
+    va_start(args, destructor);
+
+    // ssize_t argc = va_arg(args, ssize_t);
+
+    preprocess(stream, store, args);
 
     char* line = NULL;
     size_t len = 0;
@@ -270,4 +278,6 @@ void parse_file(
     CLOSE_FILE(stream);
 
     if (!is_path_absolute(filename)) free(path);
+
+    va_end(args);
 }

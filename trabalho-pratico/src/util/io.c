@@ -1,9 +1,18 @@
 #include "util/io.h"
 #include "stdint.h"
 
-char* join_paths(char** paths, int len) {
+// char* join_paths(char** paths, int len) {
+char* join_paths(int len, ...) {
+    va_list args;
+    va_start(args, len);
+
+    char* parts[len];
     int totalLen = len;
-    for (int i = 0; i < len; i++) totalLen += strlen(paths[i]);
+    for (int i = 0; i < len; i++) {
+        char* part = va_arg(args, char*);
+        parts[i] = part;
+        totalLen += strlen(part);
+    }
 
     // Some fuckery to shut GCC (https://gcc.gnu.org/bugzilla//show_bug.cgi?id=85783)
     size_t totalLenBits = totalLen * sizeof(char); 
@@ -12,9 +21,9 @@ char* join_paths(char** paths, int len) {
     char* fullPath = (char*)malloc(totalLenBits);
     int offset = 0;
     for (int i = 0; i < len; i++) {
-        int partLen = strlen(paths[i]);
+        int partLen = strlen(parts[i]);
 
-        memcpy(fullPath + offset, paths[i], partLen);
+        memcpy(fullPath + offset, parts[i], partLen);
         offset += partLen + 1;
         if (i < len - 1) fullPath[offset - 1] = FS_PATH_SEPARATOR;
     }
