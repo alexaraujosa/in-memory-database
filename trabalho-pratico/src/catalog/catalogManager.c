@@ -9,7 +9,7 @@ typedef struct catalog {
 // TODO Verificar se as funções que quero usar dentro da hash estão bem
 Catalog *catalog_init(GCompareDataFunc tree_compare_func) {
     Catalog *catalog = g_malloc(sizeof(Catalog));
-    catalog->hashTable = g_hash_table_new(g_str_hash, g_str_equal);
+    catalog->hashTable = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, free);
     catalog->tree = g_tree_new(tree_compare_func);
     catalog->itemCount = 0;
     return catalog;
