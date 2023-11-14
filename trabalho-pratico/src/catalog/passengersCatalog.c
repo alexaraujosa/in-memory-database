@@ -29,6 +29,6 @@ void passenger_print_tree(gpointer data, gpointer passenger_data) {
 }
 
 void write_passenger(Passenger passenger, ParserStore store) {
-    Catalog* passenger_catalog = g_array_index(store, Catalog*, 2);
+    Catalog* passenger_catalog = g_array_index(store, Catalog*, 4);
     catalog_add_int_to_catalog(passenger_catalog, NULL, passenger, passenger);
 }

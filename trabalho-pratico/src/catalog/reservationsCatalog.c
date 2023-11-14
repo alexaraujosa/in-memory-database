@@ -11,7 +11,7 @@ gint reservation_tree_compare_func(gconstpointer a, gconstpointer b) {
     int begin_date1 = get_reservation_begin_date(reservation1);
     int begin_date2 = get_reservation_begin_date(reservation2);
     int id1 = get_reservation_id(reservation1);
-    int id2 = get_reservation_id(reservation1);
+    int id2 = get_reservation_id(reservation2);
 
     if (hotel_id1 < hotel_id2) return -1;
     if (hotel_id1 > hotel_id2) return 1;
@@ -31,7 +31,7 @@ void reservation_print_tree(gpointer data, gpointer reservation_data) {
 
 void write_reservation(RESERVATION *reservation, ParserStore store) {
     int id = get_reservation_id(reservation);
-    Catalog* reservation_catalog = g_array_index(store, Catalog*, 2);
+    Catalog* reservation_catalog = g_array_index(store, Catalog*, 3);
     catalog_add_int_to_catalog(reservation_catalog, GINT_TO_POINTER(id), reservation, reservation);
 }
 
