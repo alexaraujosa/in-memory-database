@@ -45,7 +45,7 @@ void flight_print_tree(gpointer data, gpointer flight_data) {
     free(origin);
 }
 
-void write_flight(FLIGHT* flight, Catalog* flight_catalog) {
-    int id = get_flight_origin(flight);
-    catalog_add_to_catalog(flight_catalog, id, flight, flight);
-}
+// void write_flight(FLIGHT* flight, Catalog* flight_catalog) {
+//     int id = get_flight_origin(flight);
+//     catalog_add_to_catalog(flight_catalog, id, flight, flight);
+// }

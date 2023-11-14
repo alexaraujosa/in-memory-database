@@ -20,10 +20,7 @@ void test_writer(void* raw_data, FILE** store) {
 
 void batch(char* arg1, char* arg2) {
 
-    Catalog* user_catalog = catalog_init(&user_tree_compare_func);
-
-    // char* userdata_path_parts[2] = {arg1, "users.csv"};
-    // char* userdata_path = join_paths(userdata_path_parts, 2);
+    Catalog* user_catalog = catalog_init(&user_tree_compare_func, g_str_hash, g_str_equal);
     char* userdata_path = join_paths(2, arg1, "users.csv");
 
     parse_file(
@@ -40,26 +37,24 @@ void batch(char* arg1, char* arg2) {
 
     free(userdata_path);
 
-    // char* passengersdata_path_parts[2] = {arg1, "passengers.csv"};
-    // char* passengersdata_path = join_paths(passengersdata_path_parts, 2);
+    //TODO: Passenger catalog init
     char* passengersdata_path = join_paths(2, arg1, "passengers.csv");
-
+    //TODO: Add flight id validation (more one catalog as parameter)
     parse_file(
         passengersdata_path,
         &tokenize_csv,
         &test_preprocessor,
-        &verify_passenger_tokens, 
+        &verify_passenger_tokens,   //TODO: Change verify_passenger_tokens to receive store
         &test_parser, 
         &test_writer, 
         &discard_passenger,
         &default_csv_destructor,
-        "AAAAAAAAAAAAAA"
+        user_catalog
     );
 
     free(passengersdata_path);
 
-    // char* reservationsdata_path_parts[2] = {arg1, "reservations.csv"};
-    // char* reservationsdata_path = join_paths(reservationsdata_path_parts, 2);
+    // TODO: Reservation catalog init
     char* reservationsdata_path = join_paths(2, arg1, "reservations.csv");
 
     parse_file(
@@ -71,13 +66,12 @@ void batch(char* arg1, char* arg2) {
         &test_writer, 
         &discard_reservation,
         &default_csv_destructor,
-        "Lorem ipsum dolore sit amet"
+        user_catalog
     );
 
     free(reservationsdata_path);
 
-    // char* flightsdata_path_parts[2] = {arg1, "flights.csv"};
-    // char* flightsdata_path = join_paths(flightsdata_path_parts, 2);
+    // TODO: Flight catalog init
     char* flightsdata_path = join_paths(2, arg1, "flights.csv");
 
     parse_file(
@@ -85,7 +79,7 @@ void batch(char* arg1, char* arg2) {
         &tokenize_csv,
         &test_preprocessor,
         &verify_flight_tokens, 
-        &test_parser, 
+        &parse_flight, 
         &test_writer, 
         &discard_flight,
         &default_csv_destructor,
@@ -99,6 +93,7 @@ void batch(char* arg1, char* arg2) {
     g_free(get_cwd());
 
     catalog_destroy(user_catalog);
+    // TODO: Catalogs destroy
 
     return;
 }

@@ -29,7 +29,7 @@ void reservation_print_tree(gpointer data, gpointer reservation_data) {
     g_print("hotelId: %d; begin_Date: %d\n", id, hotel_id);
 }
 
-void write_reservation(RESERVATION *reservation, Catalog *reservation_catalog) {
-    int id = get_reservation_id(reservation);
-    catalog_add_to_catalog(reservation_catalog, id, reservation, reservation);
-}
+// void write_reservation(RESERVATION *reservation, Catalog *reservation_catalog) {
+//     int id = get_reservation_id(reservation);
+//     catalog_add_to_catalog(reservation_catalog, id, reservation, reservation);
+// }
