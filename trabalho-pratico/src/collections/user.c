@@ -121,7 +121,7 @@ User make_user(
     strncpy(user->id, id, (size_t)MAX_USER_ID_LEN);
     strncpy(user->name, name, (size_t)MAX_NAME_LEN);
     user->sex = sex;
-    strcpy(user->country_code, country_code);   //TODO: Verify if theres any problem using strcpy instead strncpy
+    strncpy(user->country_code, country_code, 2);   //TODO: Verify if theres any problem using strcpy instead strncpy
     user->account_creation = account_creation;  // TODO: Pensar melhor no offset
     user->account_status = account_status;
     user->age = get_age(birth_date);
@@ -183,6 +183,6 @@ void print_user(void* pt) {
         "CountryCode:%s; "
         "Account_Creation:%d; "
         "Account_status:%s; "
-        "Idade:%d}\n",
+        "Idade:%d}\n\n",
         user->id, user->name, sex, user->country_code, user->account_creation, status, user->age);
 }

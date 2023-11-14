@@ -17,7 +17,7 @@ typedef struct catalog Catalog;
  *
  * @return A pointer to the newly allocated Catalog structure.
  */
-Catalog *catalog_init(GCompareDataFunc compareFunc);
+Catalog *catalog_init(GCompareDataFunc tree_compare_func, GHashFunc hash_function, GEqualFunc equals);
 
 /**
  * @brief Adds an item to the Catalog.
@@ -27,7 +27,17 @@ Catalog *catalog_init(GCompareDataFunc compareFunc);
  * @param key The key of the item to be added.
  * @param value A pointer to the item to be added.
  */
-void catalog_add_to_catalog(Catalog *catalog, void *hashKey, void* treeKey,  void *value);
+void catalog_stradd_to_catalog(Catalog *catalog, gpointer hashKey, gpointer treeKey, gpointer value);
+
+/**
+ * @brief Adds an item to the Catalog.
+ *
+ * @param catalog The Catalog structure.
+ * @param hashkey The hashTable key of the item to be added.
+ * @param key The key of the item to be added.
+ * @param value A pointer to the item to be added.
+ */
+void catalog_intadd_to_catalog(Catalog *catalog, gpointer hashKey, gpointer treeKey, gpointer value);
 
 /**
  * @brief Removes an item from the Catalog.
@@ -35,7 +45,7 @@ void catalog_add_to_catalog(Catalog *catalog, void *hashKey, void* treeKey,  voi
  * @param catalog The Catalog structure.
  * @param key The key of the item to be removed.
  */
-void catalog_remove_from_catalog(Catalog *catalog, char *key);
+void catalog_remove_from_catalog(Catalog *catalog, gpointer key);
 
 /**
  * @brief Searches for an item in the GHashTable within the Catalog.
@@ -44,7 +54,9 @@ void catalog_remove_from_catalog(Catalog *catalog, char *key);
  * @param key The key of the item to be searched.
  * @return A pointer to the item if found, otherwise NULL.
  */
-void *catalog_search_in_hashtable(Catalog *catalog, char *key);
+void *catalog_search_in_strhashtable(Catalog *catalog, gpointer key);
+
+void *catalog_search_in_inthashtable(Catalog *catalog, int key);
 
 /**
  * @brief Searches for an item in the GTree within the Catalog.
@@ -53,7 +65,7 @@ void *catalog_search_in_hashtable(Catalog *catalog, char *key);
  * @param key The key of the item to be searched.
  * @return A pointer to the item if found, otherwise NULL.
  */
-void *catalog_search_in_tree(Catalog *catalog, char *key);
+void *catalog_search_in_tree(Catalog *catalog, gpointer key);
 
 /**
  * @brief Gets the number of items in the Catalog.
@@ -69,7 +81,7 @@ int catalog_get_item_count(Catalog *catalog);
  * @param catalog The Catalog structure to be printed.
  * @param printFunction A pointer to the function used to print each value in the hash table.
  */
-void catalog_print_hash_table(Catalog *catalog, void (*printFunction)(void *));
+void catalog_print_hash_table(Catalog *catalog, void (*printFunction)(gpointer, gpointer));
 
 /**
  * @brief Prints all items in the GTree within the Catalog.
@@ -77,7 +89,7 @@ void catalog_print_hash_table(Catalog *catalog, void (*printFunction)(void *));
  * @param catalog The Catalog structure.
  * @param printFunction A pointer to the function used to print each value in the hash table.
  */
-void catalog_print_tree(Catalog *catalog, void (*printFunction)(void *));
+void catalog_print_tree(Catalog *catalog, void (*printFunction)(gpointer));
 
 /**
  * @brief Clears all items from the Catalog.

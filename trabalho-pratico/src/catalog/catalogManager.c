@@ -6,65 +6,63 @@ typedef struct catalog {
     int itemCount;
 } Catalog;
 
-// TODO Verificar se as funções que quero usar dentro da hash estão bem
-Catalog *catalog_init(GCompareDataFunc tree_compare_func) {
+Catalog *catalog_init(GCompareDataFunc tree_compare_func, GHashFunc hash_function, GEqualFunc equals) {
     Catalog *catalog = g_malloc(sizeof(Catalog));
-    catalog->hashTable = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, free);
+    catalog->hashTable = g_hash_table_new_full(hash_function, equals, NULL, free);
     catalog->tree = g_tree_new(tree_compare_func);
     catalog->itemCount = 0;
     return catalog;
 }
 
 static void _add_to_hashtable(GHashTable *hashTable, gpointer key, gpointer value) {
-    gchar *formattedKey = NULL;
-
-    if (GPOINTER_TO_INT(key) || GPOINTER_TO_INT(key) == 0) {
-        formattedKey = g_strdup_printf("%p", key);
-    } else if (GPOINTER_TO_INT(key) == 0 && g_utf8_validate((const gchar *)key, -1, NULL)) {
-        formattedKey = g_strdup(key);
-    } else {
-        g_warning("Tipo de chave não suportado");
-        return;
-    }
-
-    g_hash_table_insert(hashTable, formattedKey, value);
-
-    g_free(formattedKey);
+    g_hash_table_insert(hashTable, key, value);
 }
 
-static void _remove_from_hashtable(GHashTable *hashTable, char *key) {
-    gpointer value = g_hash_table_lookup(hashTable, key);
-    if (value) {
-        g_free(key);
-        g_hash_table_remove(hashTable, key);
-    }
+static void _remove_from_hashtable(GHashTable *hashTable, gpointer key) {
+    g_hash_table_remove(hashTable, key);
 }
 
-static void _add_to_tree(GTree *tree, void *key, void *value) {
+static void _add_to_tree(GTree *tree, gpointer key, gpointer value) {
     g_tree_insert(tree, key, value);
 }
 
-static void _remove_from_tree(GTree *tree, char *key) {
+static void _remove_from_tree(GTree *tree, gpointer key) {
     g_tree_remove(tree, key);
 }
 
-void catalog_add_to_catalog(Catalog *catalog, void *hashKey, void *treeKey, void *value) {
+void catalog_stradd_to_catalog(Catalog *catalog, gpointer hashKey, gpointer treeKey, gpointer value) {
+    _add_to_hashtable(catalog->hashTable, g_strdup(hashKey), value);
+    _add_to_tree(catalog->tree, treeKey, value);
+    catalog->itemCount++;
+}
+
+void catalog_intadd_to_catalog(Catalog *catalog, gpointer hashKey, gpointer treeKey, gpointer value) {
     _add_to_hashtable(catalog->hashTable, hashKey, value);
     _add_to_tree(catalog->tree, treeKey, value);
     catalog->itemCount++;
 }
 
-void catalog_remove_from_catalog(Catalog *catalog, char *key) {
+void catalog_remove_from_catalog(Catalog *catalog, gpointer key) {
     _remove_from_hashtable(catalog->hashTable, key);
     _remove_from_tree(catalog->tree, key);
     catalog->itemCount--;
 }
 
-void *catalog_search_in_hashtable(Catalog *catalog, char *key) {
+void *catalog_search_in_strhashtable(Catalog *catalog, gpointer key) {
     return g_hash_table_lookup(catalog->hashTable, key);
 }
 
-void *catalog_search_in_tree(Catalog *catalog, char *key) {
+void *catalog_search_in_inthashtable(Catalog *catalog, int key) {
+    gchar *key_str = g_strdup_printf("%d", key);
+
+    void *result = g_hash_table_lookup(catalog->hashTable, key_str);
+
+    g_free(key_str);
+
+    return result;
+}
+
+void *catalog_search_in_tree(Catalog *catalog, gpointer key) {
     return g_tree_lookup(catalog->tree, key);
 }
 
@@ -72,16 +70,16 @@ int catalog_get_item_count(Catalog *catalog) {
     return catalog->itemCount;
 }
 
-void catalog_print_hash_table(Catalog *catalog, void (*printFunction)(void *)) {
+void catalog_print_hash_table(Catalog *catalog, void (*printFunction)(gpointer, gpointer)) {
     GHashTableIter iter;
     gpointer key, value;
     g_hash_table_iter_init(&iter, catalog->hashTable);
     while (g_hash_table_iter_next(&iter, &key, &value)) {
-        printFunction(value);
+        printFunction(key, value);
     }
 }
 
-void catalog_print_tree(Catalog *catalog, void (*printFunction)(void *)) {
+void catalog_print_tree(Catalog *catalog, void (*printFunction)(gpointer)) {
     GTraverseFunc printTreeFunc = (GTraverseFunc)printFunction;
     g_tree_foreach(catalog->tree, printTreeFunc, NULL);
 }

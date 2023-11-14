@@ -40,6 +40,12 @@ void user_print_tree(gpointer data, gpointer user_data) {
 void write_user(USER *user, ParserStore store) {
     const char *id = get_user_id(user);
     Catalog* user_catalog = g_array_index(store, Catalog*, 2);
-    catalog_add_to_catalog(user_catalog, id, user, user);
+    catalog_stradd_to_catalog(user_catalog, id, user, user);
     free(id);
+}
+
+void print_user_key_value(void* key, void* value) {
+    char *key_str = (char *)key;
+    printf("Key:(%s)\t", key_str);
+    print_user(value);
 }
