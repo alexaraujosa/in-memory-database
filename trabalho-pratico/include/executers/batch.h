@@ -7,6 +7,9 @@
 #include "collections/passenger.h"
 #include "queries/queries.h"
 #include "catalog/userCatalog.h"
+#include "catalog/reservationsCatalog.h"
+#include "catalog/flightsCatalog.h"
+#include "catalog/passengersCatalog.h"
 #include "catalog/catalogManager.h"
 
 void test_preprocessor(FILE* stream, ParserStore store, va_list args);
