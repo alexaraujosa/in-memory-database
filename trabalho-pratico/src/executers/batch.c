@@ -79,7 +79,7 @@ void batch(char* arg1, char* arg2) {
         &tokenize_csv,
         &test_preprocessor,
         &verify_flight_tokens, 
-        &parse_flight, 
+        &test_parser, 
         &test_writer, 
         &discard_flight,
         &default_csv_destructor,
