@@ -6,6 +6,5 @@
 #define DAY 1
 
 int get_age(int date);
-int get_date_offset(int date);
 
 #endif
