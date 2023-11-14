@@ -122,8 +122,7 @@ int is_boolean(char* value) {
     int length = strlen(value);
 
     if(length == 1) {
-        tolower(value[0]);
-        return (value[0] == 'f' || value[0] == 't' || value[0] == '0' || value[0] == '1');
+        return (value[0] == 'f' || value[0] == 'F' || value[0] == 't' || value[0] == 'T' || value[0] == '0' || value[0] == '1');
     } else {
         return (!strcasecmp(value, "true") || !strcasecmp(value, "false"));
     }
