@@ -3,7 +3,7 @@
 typedef struct reservation {
     int id;
     UserId(user_id); // Relates to User
-    uint8_t hotel_id; // No relation, symbolic
+    short int hotel_id; // No relation, symbolic
     char hotel_name[MAX_HOTEL_NAME_LEN];
     unsigned int hotel_stars:RESERVATION_HOTEL_STARS_BF;
     unsigned int city_tax:RESERVATION_CITY_TAX_BF;
@@ -151,7 +151,7 @@ int verify_reservation_tokens(Tokens tokens, ParserStore store) {
 Reservation make_reservation(
     int id,
     UserId(user_id),
-    uint8_t hotel_id,
+    short int hotel_id,
     char hotel_name[MAX_HOTEL_NAME_LEN],
     unsigned int hotel_stars,
     unsigned int city_tax,
@@ -181,8 +181,8 @@ Reservation make_reservation(
 Reservation parse_reservation(Tokens tokens) {
     char** parameter = tokens->data;
     
-    int id = atoi(parameter[0]);
-    uint8_t hotel_id = atoi(parameter[2]);
+    int id = atoi(parameter[0]+RESERVATION_ID_OFFSET);
+    short int hotel_id = atoi(parameter[2]+HOTEL_ID_OFFSET);
     unsigned int hotel_stars = atoi(parameter[4]);
     unsigned int city_tax = atoi(parameter[5]);
     int begin_date = date_string_to_int(parameter[7]);
