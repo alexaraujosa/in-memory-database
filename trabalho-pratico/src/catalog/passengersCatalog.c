@@ -15,13 +15,9 @@ gint passenger_tree_compare_func(gconstpointer a, gconstpointer b){
     const char *userId2 = get_passenger_userdID(passenger2);
 
     int name_comparison = strcasecmp(userId1, userId2);
-    if (name_comparison != 0) {
-        free(userId1);
-        free(userId2);
-        return name_comparison;
-    }
     free(userId1);
     free(userId2);
+    return name_comparison;
 }
 
 void passenger_print_tree(gpointer data, gpointer passenger_data) {

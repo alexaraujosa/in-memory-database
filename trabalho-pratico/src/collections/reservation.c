@@ -32,12 +32,12 @@ void set_reservation_userID(Reservation reservation, const char *user_id){
     reservation->user_id[sizeof(reservation->user_id) - 1] = '\0';
 }
 
-uint8_t get_reservation_hotelID(Reservation reservation){
-    uint8_t hotelID = reservation->hotel_id;
+short int get_reservation_hotelID(Reservation reservation){
+    short int hotelID = reservation->hotel_id;
     return hotelID;
 }
 
-void set_reservation_hotelID(Reservation reservation, uint8_t hotel_id){
+void set_reservation_hotelID(Reservation reservation, short int hotel_id){
     reservation->hotel_id = hotel_id;
 }
 

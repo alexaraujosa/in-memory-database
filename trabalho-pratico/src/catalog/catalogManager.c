@@ -6,16 +6,18 @@ typedef struct catalog {
     int itemCount;
 } Catalog;
 
-Catalog *catalog_init(GCompareDataFunc tree_compare_func, GHashFunc hash_function, GEqualFunc equals) {
+Catalog *catalog_init(GCompareDataFunc tree_compare_func, GHashFunc hash_function, GEqualFunc equals, void (*my_free)(void*)) {
     Catalog *catalog = g_malloc(sizeof(Catalog));
-    catalog->hashTable = g_hash_table_new_full(hash_function, equals, free, free);
+    catalog->hashTable = g_hash_table_new_full(hash_function, equals, my_free, free);
     catalog->tree = g_tree_new(tree_compare_func);
     catalog->itemCount = 0;
     return catalog;
 }
 
 static void _add_to_hashtable(GHashTable *hashTable, gpointer key, gpointer value) {
-    g_hash_table_insert(hashTable, key, value);
+    if (key != NULL) {
+        g_hash_table_insert(hashTable, key, value);
+    }
 }
 
 static void _remove_from_hashtable(GHashTable *hashTable, gpointer key) {

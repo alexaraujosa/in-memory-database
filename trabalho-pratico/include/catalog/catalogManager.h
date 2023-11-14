@@ -17,7 +17,7 @@ typedef struct catalog Catalog;
  *
  * @return A pointer to the newly allocated Catalog structure.
  */
-Catalog *catalog_init(GCompareDataFunc tree_compare_func, GHashFunc hash_function, GEqualFunc equals);
+Catalog *catalog_init(GCompareDataFunc tree_compare_func, GHashFunc hash_function, GEqualFunc equals, void (*my_free)(void*));
 
 /**
  * @brief Adds an item to the Catalog.
