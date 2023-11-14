@@ -17,12 +17,3 @@ int get_age(int date) {
 
     return age;
 }
-
-int get_date_offset(int date) {
-
-    int date_offset = 0;
-
-    //TODO: Continue.
-
-    return date_offset;
-}
