@@ -26,7 +26,7 @@ void set_passenger_userID(Passenger passenger, const char *user_id){
 int verify_passenger_tokens(Tokens tokens, ParserStore store) {
     char** parameter = tokens->data;
     Catalog* user_catalog = g_array_index(store, Catalog*, 2);
-    //if(catalog_search_in_str_hashtable(user_catalog, parameter[1]) == NULL)  return 0; //BUG: Esta a dar SEGV, n devo estar a passar bem os parametros
+    if(catalog_search_in_str_hashtable(user_catalog, parameter[1]) == NULL)  return 0; //BUG: Esta a dar SEGV, n devo estar a passar bem os parametros
     // Whitespace verifier
     if(have_whitespace(parameter, 2) == 0)  return 0;
     
