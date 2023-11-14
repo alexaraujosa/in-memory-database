@@ -7,7 +7,7 @@
 
 typedef struct passenger PASSENGER, *Passenger;
 
-int verify_passenger_tokens(Tokens tokens);
+int verify_passenger_tokens(Tokens tokens, ParserStore store);
 
 Passenger make_passenger(
     int flight_id,

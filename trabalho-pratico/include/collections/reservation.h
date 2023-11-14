@@ -16,7 +16,7 @@
 
 typedef struct reservation RESERVATION, *Reservation;
 
-int verify_reservation_tokens(Tokens tokens);
+int verify_reservation_tokens(Tokens tokens, ParserStore store);
 
 Reservation make_reservation(
     int id, 

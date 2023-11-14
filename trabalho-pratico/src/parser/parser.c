@@ -184,7 +184,7 @@ void parse(
 
     Tokens vertoks = duplicate_tokens(tokens);
 
-    int valid = verifier(vertoks);
+    int valid = verifier(vertoks, store);
     if (!valid) {
         //printf("INVALID LINE.\n");
         discarder(tokens, store);

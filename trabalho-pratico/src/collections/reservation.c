@@ -112,12 +112,16 @@ void set_reservation_rating(Reservation reservation, int rating){
     reservation->rating = rating;
 }
 
-int verify_reservation_tokens(Tokens tokens) {
+int verify_reservation_tokens(Tokens tokens, ParserStore store) {
     char** parameter = tokens->data;
 
     // Whitespace verifier
     if(have_whitespace(parameter, 10) == 0)  return 0;
     //if(IS_STRING_NULL(parameter[11]) || IS_STRING_NULL(parameter[13]))  return 0; //BUG: Acredito que isto n seja necessario
+
+    // User verifier
+    Catalog* user_catalog = g_array_index(store, Catalog*, 2);
+    if(catalog_search_in_strhashtable(user_catalog, parameter[1]) == NULL)  return 0;
 
     // Hotel_stars verifier
     if(is_integer_between_one_and_five(parameter[4]) == 0)  return 0;

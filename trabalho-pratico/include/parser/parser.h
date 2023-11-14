@@ -21,7 +21,7 @@ typedef struct tokens {
 
 #define Tokenizer(name) Tokens(*name)(char* line, ssize_t len)
 #define PreprocessFunction(name) void(*name)(FILE*, ParserStore, va_list)
-#define VerifyFunction(name) int(*name)(Tokens)
+#define VerifyFunction(name) int(*name)(Tokens, ParserStore)
 #define ParseFunction(name) void*(*name)(Tokens)
 #define WriteFunction(name) void(*name)(void*, ParserStore)
 #define DestructFunction(name) void(*name)(FILE*, ParserStore)
