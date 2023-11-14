@@ -7,8 +7,10 @@
 #include "util/string.h"
 #include "user.h"
 
+#define HOTEL_ID_OFFSET 3
 #define MAX_HOTEL_NAME_LEN 60
 
+#define RESERVATION_ID_OFFSET 4
 #define RESERVATION_HOTEL_STARS_BF 3
 #define RESERVATION_CITY_TAX_BF 3
 #define RESERVATION_PRICE_PER_NIGHT_BF 15
@@ -21,7 +23,7 @@ int verify_reservation_tokens(Tokens tokens, ParserStore store);
 Reservation make_reservation(
     int id, 
     UserId(user_id), 
-    uint8_t hotel_id, 
+    short int hotel_id, 
     char hotel_name[MAX_HOTEL_NAME_LEN], 
     unsigned int hotel_stars, 
     unsigned int city_tax, 
