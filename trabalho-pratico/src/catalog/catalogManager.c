@@ -8,7 +8,7 @@ typedef struct catalog {
 
 Catalog *catalog_init(GCompareDataFunc tree_compare_func, GHashFunc hash_function, GEqualFunc equals) {
     Catalog *catalog = g_malloc(sizeof(Catalog));
-    catalog->hashTable = g_hash_table_new_full(hash_function, equals, NULL, free);
+    catalog->hashTable = g_hash_table_new_full(hash_function, equals, free, free);
     catalog->tree = g_tree_new(tree_compare_func);
     catalog->itemCount = 0;
     return catalog;

@@ -6,8 +6,8 @@ gint reservation_tree_compare_func(gconstpointer a, gconstpointer b) {
     const RESERVATION *reservation1 = (const RESERVATION*)a;
     const RESERVATION *reservation2 = (const RESERVATION*)b;
 
-    uint8_t hotel_id1 = get_reservation_hotelID(reservation1);
-    uint8_t hotel_id2 = get_reservation_hotelID(reservation2);
+    short int hotel_id1 = get_reservation_hotelID(reservation1);
+    short int hotel_id2 = get_reservation_hotelID(reservation2);
     int begin_date1 = get_reservation_begin_date(reservation1);
     int begin_date2 = get_reservation_begin_date(reservation2);
     int id1 = get_reservation_id(reservation1);
@@ -24,9 +24,9 @@ gint reservation_tree_compare_func(gconstpointer a, gconstpointer b) {
 
 void reservation_print_tree(gpointer data, gpointer reservation_data) {
     const RESERVATION *reservation = (const RESERVATION*)reservation_data;
-    int id = get_reservation_id(reservation);
-    uint8_t hotel_id = get_reservation_hotelID(reservation);
-    g_print("hotelId: %d; begin_Date: %d\n", id, hotel_id);
+    short int hotel_id = get_reservation_hotelID(reservation);
+    int begin_date = get_reservation_begin_date(reservation);
+    g_print("hotelId: HTL%d; begin_Date: %d\n", hotel_id, begin_date);
 }
 
 void write_reservation(RESERVATION *reservation, ParserStore store) {
@@ -36,6 +36,7 @@ void write_reservation(RESERVATION *reservation, ParserStore store) {
 }
 
 void print_reservation_key_value(void* key, void* value) {
-    printf("Key:(%d)\t", GPOINTER_TO_INT(key));
+    int key_int = (int *)key;
+    printf("Key:(%d)\t", (key_int));
     print_reservation(value);
 }

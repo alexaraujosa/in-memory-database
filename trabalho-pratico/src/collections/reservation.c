@@ -235,7 +235,7 @@ void print_reservation(void* pt) {
     printf(
         "{Id:%d; "
         "UserId:%s; "
-        "HotelId:%d; "
+        "HotelId:HTL%d; "
         "HotelName:%s; "
         "HotelStars:%u; "
         "CityTax:%u; "
