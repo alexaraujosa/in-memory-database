@@ -1,6 +1,10 @@
 #ifndef TP_UTIL_STRING_H
 #define TP_UTIL_STRING_H
 
+// Remove warning
+#define __USE_XOPEN
+#define _GNU_SOURCE
+
 #include "common.h"
 #include "error.h"
 #include <strings.h>
@@ -8,8 +12,13 @@
 #include <ctype.h>
 #include <stdbool.h>
 
+
+#include "time.h"
+
 #define xstr(s) str(s)
 #define str(s) #s
+
+#define TIME_T_SYSTEM 1696118400
 
 #define IS_NULL(ARG)         (ARG == NULL)
 #define IS_STRING_NULL(ARG)  (IS_NULL(ARG) || *ARG == '\0')

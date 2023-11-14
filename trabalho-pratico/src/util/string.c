@@ -205,33 +205,45 @@ bool get_account_status(char* parameter) {
 }
 
 int date_string_to_int(char* parameter) {
+    struct tm temp;
+    temp.tm_sec = 0;
+    temp.tm_min = 0;
+    temp.tm_hour = 0;
+    temp.tm_wday = 0;
+    temp.tm_yday = 0;
+    temp.tm_isdst = 0;
 
-    int year, month, day, date;
-    date = year = month = day = 0 ;
-
-    if(sscanf(parameter, "%d/%d/%d", &year, &month, &day) != 3) {
-        printf("ERROR Parsing date string to int!\n");
+    if(strptime(parameter, "%Y/%m/%d", &temp) == NULL) {
+        printf("ERROR! Failed to create a date.\n");
         exit(EXIT_FAILURE);
     }
 
-    date = year * 10000 + month * 100 + day;
+    time_t date = mktime(&temp);
+    time_t system = TIME_T_SYSTEM;
+    int res = difftime(date, system)/(60*60);
 
-    return date;
+    return res;
 }
 
-int date_with_time_string_to_int(char* parameter) { // TODO: Performance and refactor this code
+int date_with_time_string_to_int(char* parameter) {
+    struct tm temp;
+    temp.tm_sec = 0;
+    temp.tm_min = 0;
+    temp.tm_hour = 0;
+    temp.tm_wday = 0;
+    temp.tm_yday = 0;
+    temp.tm_isdst = 0;
 
-    int year, month, day, hour, minute, second, date;
-    date = year = month = day = 0 ;
-
-    if(sscanf(parameter, "%d/%d/%d %d:%d:%d", &year, &month, &day, &hour, &minute, &second) != 5) {
-        printf("ERROR Parsing date string to int!\n");
+    if(strptime(parameter, "%Y/%m/%d %H", &temp) == NULL) {
+        printf("ERROR! Failed to create a date with time.\n");
         exit(EXIT_FAILURE);
     }
 
-    date = year * 100000000 + month * 1000000 + day + 10000 * hour + 100 * minute + second;
+    time_t date = mktime(&temp);
+    time_t system = TIME_T_SYSTEM;
+    int res = difftime(date, system)/(60*60);
 
-    return date;
+    return res;
 }
 
 bool get_boolean(char* parameter) {
