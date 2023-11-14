@@ -30,13 +30,13 @@ static void _remove_from_tree(GTree *tree, gpointer key) {
     g_tree_remove(tree, key);
 }
 
-void catalog_stradd_to_catalog(Catalog *catalog, gpointer hashKey, gpointer treeKey, gpointer value) {
+void catalog_add_str_to_catalog(Catalog *catalog, gpointer hashKey, gpointer treeKey, gpointer value) {
     _add_to_hashtable(catalog->hashTable, g_strdup(hashKey), value);
     _add_to_tree(catalog->tree, treeKey, value);
     catalog->itemCount++;
 }
 
-void catalog_intadd_to_catalog(Catalog *catalog, gpointer hashKey, gpointer treeKey, gpointer value) {
+void catalog_add_int_to_catalog(Catalog *catalog, gpointer hashKey, gpointer treeKey, gpointer value) {
     _add_to_hashtable(catalog->hashTable, hashKey, value);
     _add_to_tree(catalog->tree, treeKey, value);
     catalog->itemCount++;
@@ -48,18 +48,12 @@ void catalog_remove_from_catalog(Catalog *catalog, gpointer key) {
     catalog->itemCount--;
 }
 
-void *catalog_search_in_strhashtable(Catalog *catalog, gpointer key) {
+void *catalog_search_in_str_hashtable(Catalog *catalog, gpointer key) {
     return g_hash_table_lookup(catalog->hashTable, key);
 }
 
-void *catalog_search_in_inthashtable(Catalog *catalog, int key) {
-    gchar *key_str = g_strdup_printf("%d", key);
-
-    void *result = g_hash_table_lookup(catalog->hashTable, key_str);
-
-    g_free(key_str);
-
-    return result;
+void *catalog_search_in_int_hashtable(Catalog *catalog, int key) {
+    return g_hash_table_lookup(catalog->hashTable, GINT_TO_POINTER(key));
 }
 
 void *catalog_search_in_tree(Catalog *catalog, gpointer key) {

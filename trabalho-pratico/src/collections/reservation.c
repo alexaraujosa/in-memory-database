@@ -121,7 +121,7 @@ int verify_reservation_tokens(Tokens tokens, ParserStore store) {
 
     // User verifier
     Catalog* user_catalog = g_array_index(store, Catalog*, 2);
-    if(catalog_search_in_strhashtable(user_catalog, parameter[1]) == NULL)  return 0;
+    if(catalog_search_in_str_hashtable(user_catalog, parameter[1]) == NULL)  return 0;
 
     // Hotel_stars verifier
     if(is_integer_between_one_and_five(parameter[4]) == 0)  return 0;

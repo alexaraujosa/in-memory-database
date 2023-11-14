@@ -14,7 +14,7 @@ Passenger make_passenger(
     UserId(user_id)
 );
 
-int get_passanger_flightID(Passenger passenger);
+int get_passenger_flightID(Passenger passenger);
 void set_passenger_flightID(Passenger passenger, int flight_id);
 const char *get_passenger_userdID(Passenger passenger);
 void set_passenger_userID(Passenger passenger, const char *user_id);

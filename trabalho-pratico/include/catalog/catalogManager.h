@@ -23,21 +23,21 @@ Catalog *catalog_init(GCompareDataFunc tree_compare_func, GHashFunc hash_functio
  * @brief Adds an item to the Catalog.
  *
  * @param catalog The Catalog structure.
- * @param hashkey The hashTable key of the item to be added.
+ * @param hashkey The hashTable key of the item to be added(must be a string).
  * @param key The key of the item to be added.
  * @param value A pointer to the item to be added.
  */
-void catalog_stradd_to_catalog(Catalog *catalog, gpointer hashKey, gpointer treeKey, gpointer value);
+void catalog_add_str_to_catalog(Catalog *catalog, gpointer hashKey, gpointer treeKey, gpointer value);
 
 /**
  * @brief Adds an item to the Catalog.
  *
  * @param catalog The Catalog structure.
- * @param hashkey The hashTable key of the item to be added.
+ * @param hashkey The hashTable key of the item to be added(must be an int).
  * @param key The key of the item to be added.
  * @param value A pointer to the item to be added.
  */
-void catalog_intadd_to_catalog(Catalog *catalog, gpointer hashKey, gpointer treeKey, gpointer value);
+void catalog_add_int_to_catalog(Catalog *catalog, gpointer hashKey, gpointer treeKey, gpointer value);
 
 /**
  * @brief Removes an item from the Catalog.
@@ -51,12 +51,19 @@ void catalog_remove_from_catalog(Catalog *catalog, gpointer key);
  * @brief Searches for an item in the GHashTable within the Catalog.
  *
  * @param catalog The Catalog structure.
- * @param key The key of the item to be searched.
+ * @param key The key of the item to be searched(must be a string).
  * @return A pointer to the item if found, otherwise NULL.
  */
-void *catalog_search_in_strhashtable(Catalog *catalog, gpointer key);
+void *catalog_search_in_str_hashtable(Catalog *catalog, gpointer key);
 
-void *catalog_search_in_inthashtable(Catalog *catalog, int key);
+/**
+ * @brief Searches for an item in the GHashTable within the Catalog.
+ *
+ * @param catalog The Catalog structure.
+ * @param key The key of the item to be searched(must be an int).
+ * @return A pointer to the item if found, otherwise NULL.
+ */
+void *catalog_search_in_int_hashtable(Catalog *catalog, int key);
 
 /**
  * @brief Searches for an item in the GTree within the Catalog.

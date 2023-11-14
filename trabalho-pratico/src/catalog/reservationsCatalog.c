@@ -2,7 +2,7 @@
 #include "collections/reservation.h"
 
 
-gint reservation_tree_compare_func(gconstpointer a, gconstpointer b, gpointer reservation_data) {
+gint reservation_tree_compare_func(gconstpointer a, gconstpointer b) {
     const RESERVATION *reservation1 = (const RESERVATION*)a;
     const RESERVATION *reservation2 = (const RESERVATION*)b;
 
@@ -29,7 +29,13 @@ void reservation_print_tree(gpointer data, gpointer reservation_data) {
     g_print("hotelId: %d; begin_Date: %d\n", id, hotel_id);
 }
 
-// void write_reservation(RESERVATION *reservation, Catalog *reservation_catalog) {
-//     int id = get_reservation_id(reservation);
-//     catalog_add_to_catalog(reservation_catalog, id, reservation, reservation);
-// }
+void write_reservation(RESERVATION *reservation, ParserStore store) {
+    int id = get_reservation_id(reservation);
+    Catalog* reservation_catalog = g_array_index(store, Catalog*, 2);
+    catalog_add_int_to_catalog(reservation_catalog, GINT_TO_POINTER(id), reservation, reservation);
+}
+
+void print_reservation_key_value(void* key, void* value) {
+    printf("Key:(%d)\t", GPOINTER_TO_INT(key));
+    print_reservation(value);
+}
