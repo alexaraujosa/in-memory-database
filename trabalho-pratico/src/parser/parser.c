@@ -102,7 +102,7 @@ void discard_to_file(Tokens tokens, ParserStore store) { //, FILE* store
     }
     joint[totalLen - 2] = '\n';
 
-    FILE** discard_file = &g_array_index(store, void*, 0);
+    FILE** discard_file = (FILE**)&g_array_index(store, void*, 0);
     fputs(joint, *discard_file);
 
     free(joint);
@@ -111,19 +111,24 @@ void discard_to_file(Tokens tokens, ParserStore store) { //, FILE* store
 void cvs_preprocessor_helper(FILE* stream, ParserStore store) {
     char* line = NULL;
     size_t len = 0;
-    getline(&line, &len, stream);
+    ssize_t _ = getline(&line, &len, stream);
+    IGNORE_ARG(_);
 
-    char** file_header = &g_array_index(store, void*, 1);
+    char** file_header = (char**)&g_array_index(store, void*, 1);
     *file_header = line;
 }
 
 void default_csv_preprocessor(FILE* stream, ParserStore store, va_list args) {
+    IGNORE_ARG(args);
+
     gpointer null_element = NULL;
     g_array_append_vals(store, &null_element, 1);
     cvs_preprocessor_helper(stream, store);
 }
 
 void default_csv_destructor(FILE* stream, ParserStore store) {
+    IGNORE_ARG(stream);
+
     FILE* discarder = g_array_index(store, FILE*, 0);
     if(discarder != NULL)  CLOSE_FILE(discarder);
 
