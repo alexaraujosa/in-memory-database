@@ -1,6 +1,10 @@
 #include "util/io.h"
 #include "stdint.h"
 
+int is_path_absolute(char* path) {
+    return *path == '/';
+}
+
 // char* join_paths(char** paths, int len) {
 char* join_paths(int len, ...) {
     va_list args;
@@ -49,8 +53,7 @@ GArray* get_files(char* path) {
         if(strcmp(dp->d_name, ".") == 0 || strcmp(dp->d_name, "..") == 0) continue;
         if (dp->d_type != DT_REG) continue;
 
-        char* parts[2] = {get_cwd()->str, dp->d_name};
-        char* full_path = join_paths(parts, 2);
+        char* full_path = join_paths(2, get_cwd()->str, dp->d_name);
         g_array_append_vals(paths, &full_path, 1);
     }
     closedir(dirptr);
@@ -81,8 +84,7 @@ GArray* get_subdirs(char* path) {
         }
 
         if (S_ISDIR(st.st_mode)) {
-            char* parts[2] = {get_cwd()->str, dp->d_name};
-            char* full_path = join_paths(parts, 2);
+            char* full_path = join_paths(2, get_cwd()->str, dp->d_name);
             g_array_append_vals(paths, &full_path, 1);
         }
     }
@@ -109,6 +111,30 @@ GString* get_cwd() {
     return BIN_PATH; 
 }
 
+char* dirname_absolute(char* path) {
+    char* dpath;
+
+    if (is_path_absolute(path)) dpath = strdup(path);
+    else dpath = join_paths(2, get_cwd()->str, path);
+
+    int len = strlen(dpath);
+
+    for (int i = len - 1; i >= 0; i--) {
+        if (dpath[i] == FS_PATH_SEPARATOR) {
+            if (i == len - 1) continue;
+            dpath[i] = '\0';
+            break;
+        }
+    }
+
+    return dpath;
+}
+
+char* resolve_to_cwd(char* path) {
+    if (is_path_absolute(path)) return strdup(path);
+    else return join_paths(2, get_cwd()->str, path);
+}
+
 int skip_n_lines(FILE* file, int lines) {
     if (file == NULL) {
         printf("No file provided.\n");
@@ -129,8 +155,4 @@ int skip_n_lines(FILE* file, int lines) {
     }
 
     return 0;
-}
-
-int is_path_absolute(char* path) {
-    return *path == '/';
 }

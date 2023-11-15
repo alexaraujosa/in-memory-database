@@ -50,6 +50,16 @@ GArray* get_subdirs(char* path);
 GString* get_cwd();
 
 /*
+ * Returns the directory part of a path. If the path is relative, it is resolved against the CWD.
+ */
+char* dirname_absolute(char* path);
+
+/*
+ * Resolves the path against the CWD. If the path is absolute, the path itself is return.
+ */
+char* resolve_to_cwd(char* path);
+
+/*
  * Attemps to skip N lines of a given FILE.
  */
 int skip_n_lines(FILE* file, int lines);
