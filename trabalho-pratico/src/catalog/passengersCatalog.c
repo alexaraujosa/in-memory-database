@@ -2,8 +2,8 @@
 #include "collections/passenger.h"
 
 gint passenger_tree_compare_func(gconstpointer a, gconstpointer b){
-    Passenger passenger1 = *(Passenger*)a;
-    Passenger passenger2 = *(Passenger*)b;
+    const Passenger passenger1 = *(const Passenger*)a;
+    const Passenger passenger2 = *(const Passenger*)b;
 
     int id1 = get_passenger_flightID(passenger1);
     int id2 = get_passenger_flightID(passenger2);

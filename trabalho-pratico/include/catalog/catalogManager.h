@@ -65,14 +65,10 @@ void *catalog_search_in_str_hashtable(Catalog *catalog, gpointer key);
  */
 void *catalog_search_in_int_hashtable(Catalog *catalog, int key);
 
-/**
- * @brief Searches for an item in the GTree within the Catalog.
- *
- * @param catalog The Catalog structure.
- * @param key The key of the item to be searched.
- * @return A pointer to the item if found, otherwise NULL.
- */
-void *catalog_search_in_tree(Catalog *catalog, gpointer key);
+
+gboolean catalog_exists_in_array(Catalog *catalog, gconstpointer target, GCompareFunc compare_func, guint *out_match_index);
+
+void *catalog_search_in_array(Catalog *catalog, guint index);
 
 /**
  * @brief Gets the number of items in the Catalog.

@@ -1,5 +1,7 @@
 #include "executers/batch.h"
 
+#include "stats/stats.h"
+
 void test_preprocessor(FILE* stream, ParserStore store, va_list args) {
     gpointer null_element = NULL;
     g_array_append_vals(store, &null_element, 1); // Discard file
@@ -58,7 +60,7 @@ void test_writer(void* raw_data, FILE** store) {
 
 void batch(const char* arg1, const char* arg2) {
 
-    Catalog* user_catalog = catalog_init(&user_tree_compare_func, g_str_hash, g_str_equal, free);
+    Catalog* user_catalog = catalog_init(g_str_hash, g_str_equal, free);
     char* userdata_path = join_paths(2, arg1, "users.csv");
     parse_file(
         userdata_path,     
@@ -72,9 +74,10 @@ void batch(const char* arg1, const char* arg2) {
         user_catalog
     );  
     free(userdata_path);
-    // catalog_print_hash_table(user_catalog, &print_user_key_value);
+    //catalog_sort(user_catalog, &user_tree_compare_func);
+    //catalog_print_array(user_catalog, &print_user);
 
-    Catalog* flight_catalog = catalog_init(&flight_tree_compare_func, g_direct_hash, g_direct_equal, NULL);
+    Catalog* flight_catalog = catalog_init(g_direct_hash, g_direct_equal, NULL);
     char* flightsdata_path = join_paths(2, arg1, "flights.csv");
     parse_file(
         flightsdata_path,
@@ -90,7 +93,7 @@ void batch(const char* arg1, const char* arg2) {
     free(flightsdata_path);
     // catalog_print_hash_table(flight_catalog, &print_flights_key_value);
 
-    Catalog* passengers_catalog = catalog_init(&passenger_tree_compare_func, NULL, NULL, NULL);
+    Catalog* passengers_catalog = catalog_init(NULL, NULL, NULL);
     char* passengersdata_path = join_paths(2, arg1, "passengers.csv");
     parse_file(
         passengersdata_path,
@@ -106,9 +109,9 @@ void batch(const char* arg1, const char* arg2) {
         passengers_catalog
     );
     free(passengersdata_path);
-    // catalog_print_tree(passengers_catalog, &passenger_print_tree);
+    //catalog_print_array(passengers_catalog, &passenger_print_tree);
 
-    Catalog* reservation_catalog = catalog_init(&reservation_tree_compare_func, g_direct_hash, g_direct_equal, NULL);
+    Catalog* reservation_catalog = catalog_init(g_direct_hash, g_direct_equal, NULL);
     char* reservationsdata_path = join_paths(2, arg1, "reservations.csv");
     parse_file(
         reservationsdata_path,
@@ -123,7 +126,12 @@ void batch(const char* arg1, const char* arg2) {
         reservation_catalog
     );//TODO: passar o reservation_catalog, pq preciso de guardar os valores das reservas nele
     free(reservationsdata_path);
+    
+    catalog_sort(reservation_catalog, &reservation_tree_compare_func);
+    
+    //catalog_print_array(reservation_catalog, &print_reservation);
 
+    calculate_hotel_average_rating(reservation_catalog, 1605);
 
     // Run queries
     query_run_bulk((char* )arg2, "Resultados");

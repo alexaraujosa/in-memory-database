@@ -66,6 +66,10 @@ void *catalog_search_in_int_hashtable(Catalog *catalog, int key) {
     return g_hash_table_lookup(catalog->hashTable, GINT_TO_POINTER(key));
 }
 
+gboolean catalog_exists_in_array(Catalog *catalog, gconstpointer target, GCompareFunc compare_func, guint *out_match_index){
+    return g_array_binary_search(catalog->array, target, compare_func, out_match_index); 
+}
+
 void *catalog_search_in_array(Catalog *catalog, guint index) {
     return g_array_index(catalog->array, gpointer, index);
 }
