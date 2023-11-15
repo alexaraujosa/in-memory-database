@@ -56,7 +56,7 @@ void test_writer(void* raw_data, FILE** store) {
     fflush(stdout);
 }
 
-void batch(char* arg1, char* arg2) {
+void batch(const char* arg1, const char* arg2) {
 
     Catalog* user_catalog = catalog_init(&user_tree_compare_func, g_str_hash, g_str_equal, free);
     char* userdata_path = join_paths(2, arg1, "users.csv");
@@ -125,12 +125,8 @@ void batch(char* arg1, char* arg2) {
     free(reservationsdata_path);
 
 
-
-    // query_run_bulk(arg2, "ignore"); //TODO: change ignore to path where output files will be
-
-
-
-
+    // Run queries
+    query_run_bulk((char* )arg2, "Resultados");
 
 
     // Cleanup cwd

@@ -16,6 +16,6 @@ void test_preprocessor(FILE* stream, ParserStore store, va_list args);
 void test_parser(Tokens tokens);
 void test_writer(void* raw_data, FILE** store);
 
-void batch(char* arg1, char* arg2);
+void batch(const char* arg1, const char* arg2);
 
 #endif
