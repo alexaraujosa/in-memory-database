@@ -2,8 +2,8 @@
 #include "collections/passenger.h"
 
 gint passenger_tree_compare_func(gconstpointer a, gconstpointer b){
-    Passenger passenger1 = (Passenger)a;
-    Passenger passenger2 = (Passenger)b;
+    Passenger passenger1 = *(Passenger*)a;
+    Passenger passenger2 = *(Passenger*)b;
 
     int id1 = get_passenger_flightID(passenger1);
     int id2 = get_passenger_flightID(passenger2);
@@ -30,5 +30,5 @@ void passenger_print_tree(gpointer data, gpointer passenger_data) {
 
 void write_passenger(Passenger passenger, ParserStore store) {
     Catalog* passenger_catalog = g_array_index(store, Catalog*, 4);
-    catalog_add_int_to_catalog(passenger_catalog, NULL, passenger, passenger);
+    catalog_add_int_to_catalog(passenger_catalog, NULL, passenger);
 }

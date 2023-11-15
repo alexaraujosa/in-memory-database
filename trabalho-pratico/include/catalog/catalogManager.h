@@ -17,7 +17,7 @@ typedef struct catalog Catalog;
  *
  * @return A pointer to the newly allocated Catalog structure.
  */
-Catalog *catalog_init(GCompareDataFunc tree_compare_func, GHashFunc hash_function, GEqualFunc equals, void (*my_free)(void*));
+Catalog *catalog_init(GHashFunc hash_function, GEqualFunc equals, void (*my_free)(void *));
 
 /**
  * @brief Adds an item to the Catalog.
@@ -27,7 +27,7 @@ Catalog *catalog_init(GCompareDataFunc tree_compare_func, GHashFunc hash_functio
  * @param key The key of the item to be added.
  * @param value A pointer to the item to be added.
  */
-void catalog_add_str_to_catalog(Catalog *catalog, gpointer hashKey, gpointer treeKey, gpointer value);
+void catalog_add_str_to_catalog(Catalog *catalog, gpointer hashKey, gpointer value);
 
 /**
  * @brief Adds an item to the Catalog.
@@ -37,7 +37,7 @@ void catalog_add_str_to_catalog(Catalog *catalog, gpointer hashKey, gpointer tre
  * @param key The key of the item to be added.
  * @param value A pointer to the item to be added.
  */
-void catalog_add_int_to_catalog(Catalog *catalog, gpointer hashKey, gpointer treeKey, gpointer value);
+void catalog_add_int_to_catalog(Catalog *catalog, gpointer hashKey, gpointer value);
 
 /**
  * @brief Removes an item from the Catalog.
@@ -96,14 +96,14 @@ void catalog_print_hash_table(Catalog *catalog, void (*printFunction)(gpointer, 
  * @param catalog The Catalog structure.
  * @param printFunction A pointer to the function used to print each value in the hash table.
  */
-void catalog_print_tree(Catalog *catalog, void (*printFunction)(gpointer));
+void catalog_print_array(Catalog *catalog, void (*printFunction)(gpointer));
 
 /**
  * @brief Clears all items from the Catalog.
  *
  * @param catalog The Catalog structure.
  */
-void catalog_clear_all_items(Catalog *catalog, GCompareDataFunc treeCompareFunc);
+void catalog_clear_all_items(Catalog *catalog);
 
 /**
  * @brief Destroys the Catalog structure, freeing all associated resources.
@@ -111,6 +111,8 @@ void catalog_clear_all_items(Catalog *catalog, GCompareDataFunc treeCompareFunc)
  * @param catalog The Catalog structure to be destroyed.
  */
 void catalog_destroy(Catalog *catalog);
+
+void catalog_sort(Catalog *catalog, GCompareFunc compare_func);
 
 /* FUNÇÕES QUE SÃO INTERNAS AO CÓDIGO... NÃO AS VOU QUERER DISPONIBILIZAR A NÃO SER QUE SEJA ABSOLUTAMENTE NECESSÁRIO
 void catalog_remove_item_from_tree(Catalog *catalog, char *key);

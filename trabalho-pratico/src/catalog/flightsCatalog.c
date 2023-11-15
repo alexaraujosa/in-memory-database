@@ -3,8 +3,8 @@
 
 //BUG Aparece "CityCity" na origem
 gint flight_tree_compare_func(gconstpointer a, gconstpointer b) {
-    const FLIGHT *flight1 = (const FLIGHT*)a;
-    const FLIGHT *flight2 = (const FLIGHT*)b;
+    const Flight flight1 = *(const Flight*)a;
+    const Flight flight2 = *(const Flight*)b;
 
     const char *origin1 = get_flight_origin(flight1);
     const char *origin2 = get_flight_origin(flight2);
@@ -48,7 +48,7 @@ void flight_print_tree(gpointer data, gpointer flight_data) {
 void write_flight(FLIGHT* flight, ParserStore store) {
     int id = get_flight_id(flight);
     Catalog *flight_catalog = g_array_index(store, Catalog*, 2);
-    catalog_add_int_to_catalog(flight_catalog, GINT_TO_POINTER(id), flight, flight);
+    catalog_add_int_to_catalog(flight_catalog, GINT_TO_POINTER(id), flight);
 }
 
 void print_flights_key_value(void* key, void* value) {

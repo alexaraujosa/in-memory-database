@@ -6,8 +6,8 @@
 #include "parser/parser.h"
 
 gint user_tree_compare_func(gconstpointer a, gconstpointer b) {
-    const User user1 = (const User)a;
-    const User user2 = (const User)b;
+    const User user1 = *(const User*)a;
+    const User user2 = *(const User*)b;
 
     const char *name1 = get_user_name(user1);
     const char *name2 = get_user_name(user2);
@@ -40,7 +40,7 @@ void user_print_tree(gpointer data, gpointer user_data) {
 void write_user(User user, ParserStore store) {
     const char *id = get_user_id(user);
     Catalog* user_catalog = g_array_index(store, Catalog*, 2);
-    catalog_add_str_to_catalog(user_catalog, id, user, user);
+    catalog_add_str_to_catalog(user_catalog, id, user);
     free(id);
 }
 
