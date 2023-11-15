@@ -50,7 +50,8 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/trabalho-pratico/${input:binFile}",
-            "args": ["/mnt/data", "/mnt/input/inputs.txt"],
+            // "args": ["/mnt/data", "/mnt/input/inputs.txt"],
+            "args": ["${input:arg1}", "${input:arg2}"],
             "cwd": "${workspaceFolder}/trabalho-pratico",
             "environment": [],
             "externalConsole": false,
@@ -75,6 +76,26 @@
             "command": "shellCommand.execute",
             "args": {
                 "command": "make locate",
+                "cwd": "${workspaceFolder}/trabalho-pratico",
+                "useFirstResult": true
+            }
+        },
+        {
+            "id": "arg1",
+            "type": "command",
+            "command": "shellCommand.execute",
+            "args": {
+                "command": "sed '1q;d' vscode_args.txt",
+                "cwd": "${workspaceFolder}/trabalho-pratico",
+                "useFirstResult": true
+            }
+        },
+        {
+            "id": "arg2",
+            "type": "command",
+            "command": "shellCommand.execute",
+            "args": {
+                "command": "sed '2q;d' vscode_args.txt",
                 "cwd": "${workspaceFolder}/trabalho-pratico",
                 "useFirstResult": true
             }

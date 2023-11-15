@@ -53,3 +53,4 @@ locate:
 clean:
 	-rm $(BIN)/*
 	-rm -rf $(OBJ)/*
+	-rm -rf Resultados/*.csv

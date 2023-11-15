@@ -28,7 +28,8 @@
         "passenger.h": "c",
         "catalogmanager.h": "c",
         "locale.h": "c",
-        "user.h": "c"
+        "user.h": "c",
+        "batch.h": "c"
     },
     "cmake.configureOnOpen": false,
     "todo-tree.highlights.useColourScheme": true,
