@@ -15,8 +15,29 @@
 
 typedef struct flights FLIGHT, *Flight;
 
+/**
+ * @brief Verifies if tokens are valid to create a flight.
+ * 
+ * @param tokens A pointer to the struct used for verifying the data.
+ * 
+ * @return 1 if all the tokens are valid. Otherwise, 0.
+*/
 int verify_flight_tokens(Tokens tokens);
 
+/**
+ * @brief Creates a flight using dynamic memory.
+ * 
+ * @param id Flight id.
+ * @param airline Flight airline.
+ * @param plane_model Flight plane model.
+ * @param origin Flight origin.
+ * @param destination Flight destination.
+ * @param schedule_departure_date Offset from system start date, relative to the flight schedule departure date.
+ * @param schedule_arrival_data Offset from system start date, relative to the flight schedule arrival date.
+ * @param real_departure_date Offset from system start date, relative to the flight real departure date.
+ * 
+ * @return Pointer to the Flight struct.
+*/
 Flight makeFlight(
     int id,
     char* airline,
@@ -45,10 +66,32 @@ void set_flight_schedule_arrival_date(Flight flight, int schedule_arrival_date);
 int get_flight_real_departure_date(Flight flight);
 void set_flight_real_departure_date(Flight flight, int real_departure_date);
 
+/**
+ * @brief Creates a flight, transforming data.
+ * 
+ * @param tokens Valid tokens previously verified.
+ * 
+ * @return Pointer to the Flight struct.
+*/
 Flight parse_flight(Tokens tokens);
-void discard_flight(void* raw_data, ParserStore store);
-FLIGHT parseFlightFromLine(char* line, int len);
 
+/**
+ * @brief Creates the flight_errors file and writes the lines with invalid data.
+ * 
+ * @param raw_data Invalid data contained in the line.
+ * @param store Connection with the outside part of the parser, used to store the discard file address.
+ * 
+ * @return void.
+*/
+void discard_flight(void* raw_data, ParserStore store);
+
+/**
+ * @brief Prints a flight (Mainly usage for debug).
+ * 
+ * @param flight Pointer to the flight struct.
+ * 
+ * @return void.
+*/
 void print_flight(void* flight);
 
 #endif

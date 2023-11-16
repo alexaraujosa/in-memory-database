@@ -175,12 +175,6 @@ void discard_flight(void* raw_data, ParserStore store) {
     discard_to_file(tokens, store);
 }
 
-// FLIGHT parseFlightFromLine(char* line, int len) {
-//     IGNORE_ARG(line);
-//     IGNORE_ARG(len);
-//     // TODO: Parse Flight from CSV line
-// }
-
 void print_flight(void* pt) {
     FLIGHT* flight = (FLIGHT*)pt;
     printf(
