@@ -10,6 +10,7 @@
 
 int main(int argc, char const *argv[]) {
     clock_t start_time = clock();
+
     if(argc > 2) {
         batch(argv[1], argv[2]);
     } else {
@@ -18,9 +19,7 @@ int main(int argc, char const *argv[]) {
     }
     
     clock_t end_time = clock();
-
     double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-
     printf(RED "\n\nExecution Time: %f seconds\n" RESET, elapsed_time);
 
     return 0;
