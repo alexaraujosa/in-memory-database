@@ -82,3 +82,12 @@ void discard_passenger(void* raw_data, ParserStore store) {
 
     discard_to_file(tokens, store);
 }
+
+void print_passenger(void* pt) {
+    Passenger passenger = (Passenger)pt;
+
+    printf(
+        "{FlightID:%d; "
+        "UserId:%s; "
+        ,passenger->flight_id, passenger->user_id);
+}

@@ -100,7 +100,6 @@ void catalog_sort(Catalog *catalog, GCompareFunc compare_func) {
     g_array_sort(catalog->array, compare_func);
 }
 
-
 void catalog_clear_all_items(Catalog *catalog) {
     g_hash_table_remove_all(catalog->hashTable);
     g_array_set_size(catalog->array, 0);

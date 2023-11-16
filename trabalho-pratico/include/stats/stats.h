@@ -15,4 +15,8 @@ typedef struct aeroport_stats AEROPORT_STATS, *Aeroport_stats;
 
 double calculate_hotel_average_rating(Catalog * catalog, int hotel_id);
 
+int calculate_user_n_flights(Catalog *catalog, char *userID);
+
+double calculate_user_total_spent(Catalog *catalog, char *userID);
+
 #endif

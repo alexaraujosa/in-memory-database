@@ -53,4 +53,6 @@ Passenger parse_passenger(Tokens tokens);
 */
 void discard_passenger(void* raw_data, ParserStore store);
 
+void print_passenger(void* pt);
+
 #endif

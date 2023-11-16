@@ -74,7 +74,7 @@ void batch(const char* arg1, const char* arg2) {
         user_catalog
     );  
     free(userdata_path);
-    //catalog_sort(user_catalog, &user_tree_compare_func);
+    catalog_sort(user_catalog, &usersCatalog_full_compare_func);
     //catalog_print_array(user_catalog, &print_user);
 
     Catalog* flight_catalog = catalog_init(g_direct_hash, g_direct_equal, NULL);
@@ -91,7 +91,8 @@ void batch(const char* arg1, const char* arg2) {
         flight_catalog
     );
     free(flightsdata_path);
-    // catalog_print_hash_table(flight_catalog, &print_flights_key_value);
+    catalog_sort(flight_catalog, &flightsCatalog_full_compare_func);
+    //catalog_print_array(flight_catalog, &print_flight);
 
     Catalog* passengers_catalog = catalog_init(NULL, NULL, NULL);
     char* passengersdata_path = join_paths(2, arg1, "passengers.csv");
@@ -109,7 +110,8 @@ void batch(const char* arg1, const char* arg2) {
         passengers_catalog
     );
     free(passengersdata_path);
-    //catalog_print_array(passengers_catalog, &passenger_print_tree);
+    catalog_sort(passengers_catalog, &passengersCatalog_full_compare_func);
+    //catalog_print_array(passengers_catalog, &passengersCatalog_print_array);
 
     Catalog* reservation_catalog = catalog_init(g_direct_hash, g_direct_equal, NULL);
     char* reservationsdata_path = join_paths(2, arg1, "reservations.csv");
@@ -131,7 +133,19 @@ void batch(const char* arg1, const char* arg2) {
     
     //catalog_print_array(reservation_catalog, &print_reservation);
 
-    calculate_hotel_average_rating(reservation_catalog, 1605);
+    double rating = 0;
+    rating = calculate_hotel_average_rating(reservation_catalog, 1001);
+    printf("Rating = %.3f\n", rating);
+    rating = calculate_hotel_average_rating(reservation_catalog, 1002);
+    printf("Rating = %.3f\n", rating);
+    rating = calculate_hotel_average_rating(reservation_catalog, 1003);
+    printf("Rating = %.3f\n", rating);
+    
+    int n_flights = calculate_user_n_flights(passengers_catalog, "JéssiTavares910");
+    printf("n_flights = %d\n", n_flights);
+
+    double total_spent = calculate_user_total_spent(reservation_catalog, "JéssiTavares910");
+    printf("total_spent = %.3f\n", total_spent);
 
     // Run queries
     Catalog** catalogues = (Catalog*)malloc(4 * sizeof(Catalog*));

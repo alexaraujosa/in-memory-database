@@ -187,7 +187,7 @@ Reservation parse_reservation(Tokens tokens) {
     unsigned int city_tax = atoi(parameter[5]);
     int begin_date = date_string_to_int(parameter[7]);
     int end_date = date_string_to_int(parameter[8]);
-    unsigned int price_per_night = atoi(parameter[8]);
+    unsigned int price_per_night = atoi(parameter[9]);
     bool includes_breakfast = get_boolean(parameter[10]);
     int rating = atoi(parameter[12]);
     Reservation reservation = make_reservation(id, parameter[1], hotel_id, parameter[3], hotel_stars, city_tax, begin_date, end_date, price_per_night, includes_breakfast, rating);

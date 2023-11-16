@@ -1,5 +1,7 @@
 #include "catalog/catalogManager.h"
 #include "catalog/reservationsCatalog.h"
+#include "catalog/usersCatalog.h"
+#include "catalog/passengersCatalog.h"
 #include "common.h"
 
 typedef struct users_stats {
@@ -33,6 +35,7 @@ typedef struct aeroport_stats {
     double mediana_delays;
 } AEROPORT_STATS, *Aeroport_stats;
 
+
 gint reservation_hotelID_compare_func(gconstpointer a, gconstpointer b) {
     const Reservation *reservation1 = (const Reservation*)a;
     const short int hotel_id2 = (const short int *)b;
@@ -42,6 +45,48 @@ gint reservation_hotelID_compare_func(gconstpointer a, gconstpointer b) {
     if (hotel_id1 < hotel_id2) return -1;
     if (hotel_id1 > hotel_id2) return 1;
     return 0;
+}
+
+//TODO PRECORRE O ARRAY TODO
+int calculate_user_n_flights(Catalog *catalog, char *userID){
+    int n_flights = 0;
+    char *name_to_compare = NULL;
+    for(int i = 0; i < catalog_get_item_count(catalog); i++){
+        const Passenger passenger_temp = (const Passenger)(catalog_search_in_array(catalog,i));
+        name_to_compare = get_passenger_userdID(passenger_temp);
+        if(strcmp(userID, name_to_compare) == 0){
+            n_flights++;
+        }
+    }
+    free(name_to_compare);
+    return n_flights;
+}
+
+// BUG problema com datas, provavelmente pelos offsets... quanto corresponde a 1 dia?
+double calculate_reservation_total_price(Reservation reservation){
+    int n_nights = get_reservation_end_date(reservation) - get_reservation_begin_date(reservation);
+    unsigned int price_per_night = get_reservation_price_per_night(reservation);
+    unsigned int tax = get_reservation_city_tax(reservation);
+
+    double res = (double)(price_per_night * n_nights) + ((double)(price_per_night * n_nights) / 100.0) * tax;
+
+    return res;
+}
+
+
+// TODO Podes aproveitar para saber o numero de reservas
+double calculate_user_total_spent(Catalog *catalog, char *userID){
+    double total_spent = 0;
+    char *name_to_compare = NULL;
+    for(int i = 0; i < catalog_get_item_count(catalog); i++){
+        const Reservation reservation_temp = (const Reservation)(catalog_search_in_array(catalog,i));
+        name_to_compare = get_reservation_userID(reservation_temp);
+        if(strcmp(userID, name_to_compare) == 0){
+            total_spent += calculate_reservation_total_price(reservation_temp);
+        }
+    }
+    free(name_to_compare);
+    return total_spent;
 }
 
 // TODO Fazer com que não haja necessidade de usar arrays
@@ -110,3 +155,4 @@ double calculate_hotel_average_rating(Catalog *catalog, int hotel_id) {
         return -1;
     }
 }
+
