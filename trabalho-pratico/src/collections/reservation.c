@@ -218,12 +218,6 @@ void discard_reservation(void* raw_data, ParserStore store) {
     discard_to_file(tokens, store);
 }
 
-// RESERVATION parseReservationFromLine(char* line, int len) {
-//     IGNORE_ARG(line);
-//     IGNORE_ARG(len);
-//     // TODO: Parse Reservation from CSV line
-// }
-
 void print_reservation(void* pt) {
     RESERVATION* reservation = (RESERVATION*)pt;
     char breakfast_status[10] = "No";
