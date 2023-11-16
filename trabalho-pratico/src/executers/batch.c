@@ -134,7 +134,13 @@ void batch(const char* arg1, const char* arg2) {
     calculate_hotel_average_rating(reservation_catalog, 1605);
 
     // Run queries
-    query_run_bulk((char* )arg2, "Resultados");
+    Catalog** catalogues = (Catalog*)malloc(4 * sizeof(Catalog*));
+    catalogues[0] = user_catalog;
+    catalogues[1] = flight_catalog;
+    catalogues[2] = passengers_catalog;
+    catalogues[3] = reservation_catalog;
+
+    query_run_bulk((char* )arg2, "Resultados", catalogues);
 
 
     // Cleanup cwd

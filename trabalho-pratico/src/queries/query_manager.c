@@ -58,6 +58,15 @@ void query_preprocessor(FILE* stream, ParserStore store, va_list args) {
 
     int** s_query_num = (int**)&g_array_index(store, void*, 1);
     *s_query_num = query_num;
+
+    // ------- CATALOGUES -------
+    g_array_append_vals(store, &null_element, 1);
+    Catalog** catalogues = va_arg(args, Catalog**);
+
+    Catalog*** s_catalogues = (Catalog***)&g_array_index(store, void*, 2);
+    *s_catalogues = catalogues;
+
+    *s_catalogues = catalogues;
 }
 
 int query_verifier(Tokens tokens, ParserStore store) {
@@ -140,7 +149,9 @@ void query_writer(void* raw_data, ParserStore store) {
     int* s_query_num = g_array_index(store, void*, 1);
     char* path = join_paths(2, *s_output_dir, isnprintf("command%d_output.txt", *s_query_num));
 
-    void* ret = query_execute(data);
+    Catalog** catalogues = ((Catalog**)g_array_index(store, void*, 2));
+
+    void* ret = query_execute(data, catalogues);
 
     FILE* retFile = OPEN_FILE(path, "w");
     fputs(ret, retFile);
@@ -167,24 +178,24 @@ void query_destructor(FILE* stream, ParserStore store) {
 // #pragma GCC pop_options
 // #pragma endregion
 
-char* query_execute(Query query) {
+char* query_execute(Query query, Catalog** catalogues) {
     switch (atoi(query->id)) {
-        case 1:  return query1 (query->flag, query->argc, query->argv); break;
-        case 2:  return query2 (query->flag, query->argc, query->argv); break;
-        case 3:  return query3 (query->flag, query->argc, query->argv); break;
-        case 4:  return query4 (query->flag, query->argc, query->argv); break;
-        case 5:  return query5 (query->flag, query->argc, query->argv); break;
-        case 6:  return query6 (query->flag, query->argc, query->argv); break;
-        case 7:  return query7 (query->flag, query->argc, query->argv); break;
-        case 8:  return query8 (query->flag, query->argc, query->argv); break;
-        case 9:  return query9 (query->flag, query->argc, query->argv); break;
-        case 10: return query10(query->flag, query->argc, query->argv); break;
+        case 1:  return query1 (query->flag, query->argc, query->argv, catalogues); break;
+        case 2:  return query2 (query->flag, query->argc, query->argv, catalogues); break;
+        case 3:  return query3 (query->flag, query->argc, query->argv, catalogues); break;
+        case 4:  return query4 (query->flag, query->argc, query->argv, catalogues); break;
+        case 5:  return query5 (query->flag, query->argc, query->argv, catalogues); break;
+        case 6:  return query6 (query->flag, query->argc, query->argv, catalogues); break;
+        case 7:  return query7 (query->flag, query->argc, query->argv, catalogues); break;
+        case 8:  return query8 (query->flag, query->argc, query->argv, catalogues); break;
+        case 9:  return query9 (query->flag, query->argc, query->argv, catalogues); break;
+        case 10: return query10(query->flag, query->argc, query->argv, catalogues); break;
     }
 
     return NULL;
 };
 
-void query_run_bulk(char* input_file, char* output_dir) {
+void query_run_bulk(char* input_file, char* output_dir, Catalog** catalogues) {
     parse_file(
         input_file, 
         &tokenize_query, 
@@ -194,7 +205,8 @@ void query_run_bulk(char* input_file, char* output_dir) {
         &query_writer, 
         &query_discarder,
         &query_destructor,
-        output_dir
+        output_dir,
+        catalogues
     );
     return;
 };
