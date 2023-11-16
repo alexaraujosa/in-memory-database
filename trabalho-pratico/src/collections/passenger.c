@@ -82,8 +82,3 @@ void discard_passenger(void* raw_data, ParserStore store) {
 
     discard_to_file(tokens, store);
 }
-
-// PASSENGER parsePassengerFromLine(char* line, int len) {
-//     IGNORE_ARG(line);
-//     IGNORE_ARG(len);
-// }
