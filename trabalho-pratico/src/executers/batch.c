@@ -68,7 +68,7 @@ void batch(const char* arg1, const char* arg2) {
         &test_preprocessor,
         &verify_user_tokens, 
         &parse_user, 
-        &write_user, 
+        &usersCatalog_write_to_catalog, 
         &discard_user,
         &default_csv_destructor,
         user_catalog
@@ -85,7 +85,7 @@ void batch(const char* arg1, const char* arg2) {
         &test_preprocessor,
         &verify_flight_tokens, 
         &parse_flight, 
-        &write_flight, 
+        &flightsCatalog_write_to_catalog, 
         &discard_flight,
         &default_csv_destructor,
         flight_catalog
@@ -101,7 +101,7 @@ void batch(const char* arg1, const char* arg2) {
         &test_preprocessor_passenger,
         &verify_passenger_tokens,
         &parse_passenger, 
-        &write_passenger, 
+        &passengersCatalog_write_to_catalog, 
         &discard_passenger,
         &default_csv_destructor_reservation,
         user_catalog,
@@ -119,7 +119,7 @@ void batch(const char* arg1, const char* arg2) {
         &test_preprocessor_reservation,
         &verify_reservation_tokens, 
         &parse_reservation, 
-        &write_reservation, 
+        &reservationsCatalog_write_to_catalog, 
         &discard_reservation,
         &default_csv_destructor_reservation,
         user_catalog,
@@ -127,7 +127,7 @@ void batch(const char* arg1, const char* arg2) {
     );//TODO: passar o reservation_catalog, pq preciso de guardar os valores das reservas nele
     free(reservationsdata_path);
     
-    catalog_sort(reservation_catalog, &reservation_tree_compare_func);
+    catalog_sort(reservation_catalog, &reservationsCatalog_full_compare_func);
     
     //catalog_print_array(reservation_catalog, &print_reservation);
 
