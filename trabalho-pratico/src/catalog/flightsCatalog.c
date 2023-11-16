@@ -1,8 +1,8 @@
 #include "catalog/catalogManager.h"
 #include "collections/flight.h"
 
-//BUG Aparece "CityCity" na origem
-gint flight_tree_compare_func(gconstpointer a, gconstpointer b) {
+
+gint flightsCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
     const Flight flight1 = *(const Flight*)a;
     const Flight flight2 = *(const Flight*)b;
 
@@ -37,7 +37,8 @@ gint flight_tree_compare_func(gconstpointer a, gconstpointer b) {
     return 0;
 }
 
-void flight_print_tree(gpointer data, gpointer flight_data) {
+//FIXME THis fucntion is not well implemented
+void flightsCatalog_print_array(gpointer data, gpointer flight_data) {
     const FLIGHT* flight = (const FLIGHT*)flight_data;
     const char *origin = get_flight_origin(flight);
     int schedule_departure_date = get_flight_schedule_departure_date(flight);
@@ -45,13 +46,13 @@ void flight_print_tree(gpointer data, gpointer flight_data) {
     free(origin);
 }
 
-void write_flight(FLIGHT* flight, ParserStore store) {
+void flightsCatalog_write_to_catalog(FLIGHT* flight, ParserStore store) {
     int id = get_flight_id(flight);
     Catalog *flight_catalog = g_array_index(store, Catalog*, 2);
     catalog_add_int_to_catalog(flight_catalog, GINT_TO_POINTER(id), flight);
 }
 
-void print_flights_key_value(void* key, void* value) {
+void flightsCatalog_print_flights_key_value(void* key, void* value) {
     int key_int = GPOINTER_TO_INT(key);
     printf("Key:(%d)\t", key_int);
     print_flight(value);

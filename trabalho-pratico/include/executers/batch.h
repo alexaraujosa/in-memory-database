@@ -2,7 +2,7 @@
 #define TP_EXECUTERS_BATCH_H
 
 #include "queries/queries.h"
-#include "catalog/userCatalog.h"
+#include "catalog/usersCatalog.h"
 #include "catalog/reservationsCatalog.h"
 #include "catalog/flightsCatalog.h"
 #include "catalog/passengersCatalog.h"

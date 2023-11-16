@@ -1,7 +1,7 @@
 #include "catalog/catalogManager.h"
 #include "collections/passenger.h"
 
-gint passenger_tree_compare_func(gconstpointer a, gconstpointer b){
+gint passengersCatalog_full_compare_func(gconstpointer a, gconstpointer b){
     const Passenger passenger1 = *(const Passenger*)a;
     const Passenger passenger2 = *(const Passenger*)b;
 
@@ -20,7 +20,8 @@ gint passenger_tree_compare_func(gconstpointer a, gconstpointer b){
     return name_comparison;
 }
 
-void passenger_print_tree(gpointer data, gpointer passenger_data) {
+//FIXME THis fucntion is not well implemented
+void passengersCatalog_print_array(gpointer data, gpointer passenger_data) {
     const Passenger passenger = (Passenger)passenger_data;
     int flightID = get_passenger_flightID(passenger);
     const char* userID = get_passenger_userdID(passenger);
@@ -28,7 +29,7 @@ void passenger_print_tree(gpointer data, gpointer passenger_data) {
     free(userID);
 }
 
-void write_passenger(Passenger passenger, ParserStore store) {
+void passengersCatalog_write_to_catalog(Passenger passenger, ParserStore store) {
     Catalog* passenger_catalog = g_array_index(store, Catalog*, 4);
     catalog_add_int_to_catalog(passenger_catalog, NULL, passenger);
 }

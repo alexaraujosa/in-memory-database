@@ -2,13 +2,15 @@
 
 #include <glib.h>
 
+#include "common.h"
+
 typedef struct catalog {
     GHashTable *hashTable;
     GArray *array;
     int itemCount;
 } Catalog;
 
-Catalog *catalog_init(GHashFunc hash_function, GEqualFunc equals, void (*my_free)(void*)) {
+Catalog *catalog_init(GHashFunc hash_function, GEqualFunc equals, void (*my_free)(void *)) {
     Catalog *catalog = g_malloc(sizeof(Catalog));
     catalog->hashTable = g_hash_table_new_full(hash_function, equals, my_free, NULL);
     catalog->array = g_array_new(FALSE, FALSE, sizeof(gpointer));
@@ -66,8 +68,8 @@ void *catalog_search_in_int_hashtable(Catalog *catalog, int key) {
     return g_hash_table_lookup(catalog->hashTable, GINT_TO_POINTER(key));
 }
 
-gboolean catalog_exists_in_array(Catalog *catalog, gconstpointer target, GCompareFunc compare_func, guint *out_match_index){
-    return g_array_binary_search(catalog->array, target, compare_func, out_match_index); 
+gboolean catalog_exists_in_array(Catalog *catalog, gconstpointer target, GCompareFunc compare_func, guint *out_match_index) {
+    return g_array_binary_search(catalog->array, target, compare_func, out_match_index);
 }
 
 void *catalog_search_in_array(Catalog *catalog, guint index) {
@@ -94,6 +96,11 @@ void catalog_print_array(Catalog *catalog, void (*printFunction)(gpointer)) {
     }
 }
 
+void catalog_sort(Catalog *catalog, GCompareFunc compare_func) {
+    g_array_sort(catalog->array, compare_func);
+}
+
+
 void catalog_clear_all_items(Catalog *catalog) {
     g_hash_table_remove_all(catalog->hashTable);
     g_array_set_size(catalog->array, 0);
@@ -107,8 +114,4 @@ void catalog_destroy(Catalog *catalog) {
     }
     g_array_free(catalog->array, TRUE);
     g_free(catalog);
-}
-
-void catalog_sort(Catalog *catalog, GCompareFunc compare_func){
-    g_array_sort(catalog->array, compare_func);
 }
