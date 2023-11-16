@@ -13,6 +13,6 @@ typedef struct hotels_stats HOTELS_STATS, *Hotels_stats;
 
 typedef struct aeroport_stats AEROPORT_STATS, *Aeroport_stats;
 
-int calculate_hotel_average_rating(Catalog * catalog, int hotel_id);
+double calculate_hotel_average_rating(Catalog * catalog, int hotel_id);
 
 #endif

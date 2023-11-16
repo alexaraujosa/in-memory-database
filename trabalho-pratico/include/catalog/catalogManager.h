@@ -1,6 +1,8 @@
 #ifndef CATALOG_MANAGER_H
 #define CATALOG_MANAGER_H
 
+#include "glib.h"
+
 /**
  * @file catalog_manager.h
  * @brief Header file for Catalog Manager.
