@@ -25,14 +25,31 @@
 
 typedef struct user USER, *User;
 
+/**
+ * @brief Verifies if tokens are valid to create an user.
+ * 
+ * @param tokens A pointer to the struct used for verifying the data.
+ * 
+ * @return 1 if all the tokens are valid. Otherwise, 0.
+*/
 int verify_user_tokens(Tokens tokens);
 
+/**
+ * @brief Creates an user using dynamic memory.
+ * 
+ * @param id User id.
+ * @param name User name.
+ * @param sex User sex.
+ * @param country_code User country code
+ * @param account_creation Offset from system start date, relative to the user account creation.
+ * @param account_status User account status.
+ * @param birth_date Offset from system start date, relative to the user birth date.
+ * 
+ * @return Pointer to the User struct.
+*/
 User make_user(
-    // UserId(id),
-    // char name[MAX_NAME_LEN]
     char* id,
     char* name,
-
     bool sex,
     CountryCode(country_code),
     int account_creation,
@@ -55,8 +72,32 @@ void set_user_account_status(User user, bool account_status);
 int get_user_age(const User user);
 void set_user_age(User user, int age);
 
+/**
+ * @brief Creates an user, transforming data.
+ * 
+ * @param tokens Valid tokens previously verified.
+ * 
+ * @return Pointer to the User struct.
+*/
 User parse_user(Tokens tokens);
+
+/**
+ * @brief Creates the users_errors file and writes the lines with invalid data.
+ * 
+ * @param raw_data Invalid data contained in the line.
+ * @param store Connection with the outside part of the parser, used to store the discard file address.
+ * 
+ * @return void.
+*/
 void discard_user(void* raw_data, ParserStore store);
+
+/**
+ * @brief Prints an user (Mainly usage for debug).
+ * 
+ * @param user Pointer to the user struct.
+ * 
+ * @return void.
+*/
 void print_user(void* user);
 
 #endif

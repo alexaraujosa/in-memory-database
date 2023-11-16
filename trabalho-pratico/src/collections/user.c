@@ -162,12 +162,6 @@ void discard_user(void* raw_data, ParserStore store) {
     discard_to_file(tokens, store);
 }
 
-// USER parseUserFromLine(char* line, int len) {
-//     IGNORE_ARG(line);
-//     IGNORE_ARG(len);
-//     // TODO: Parse User from CSV line
-// }
-
 void print_user(void* pt) {
     USER* user = (USER*)pt;
     char sex = 'F';
