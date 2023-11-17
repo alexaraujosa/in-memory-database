@@ -62,7 +62,7 @@ void query_preprocessor(FILE* stream, ParserStore store, va_list args) {
     g_array_append_vals(store, &null_element, 1); // Current query number
 
     int* query_num = (int*)malloc(sizeof(int));
-    *query_num = 0;
+    *query_num = 1;
 
     int** s_query_num = (int**)&g_array_index(store, void*, 1);
     *s_query_num = query_num;
@@ -129,11 +129,13 @@ void* query_parser(Tokens tokens) {
 
             args[j] = (char*)malloc(totalLen * sizeof(char*));
 
-            strcpy(args[j], tokens->data[i]);
+            strcpy(args[j], tokens->data[i] + 1);
             for (int k = start + 1; k <= end; k++) {
                 strcat(args[j], " ");
                 strcat(args[j], tokens->data[k]);
             }
+            args[j][totalLen - 3] = '\0';
+
             query->argc++;
 
             i += end - start;
