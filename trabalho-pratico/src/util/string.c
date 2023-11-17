@@ -251,3 +251,10 @@ bool get_boolean(char* parameter) {
 
     return TRUE;
 }
+
+char* to_upper_string(char* parameter) {
+    for(int i = 0 ; parameter[i] ; i++)
+        parameter[i] = toupper(parameter[i]);
+
+    return parameter;
+}
