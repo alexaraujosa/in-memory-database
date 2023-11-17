@@ -138,7 +138,7 @@ void* query_parser(Tokens tokens) {
 
             i += end - start;
         } else {
-            args[j] = tokens->data[i];
+            args[j] = strdup(tokens->data[i]);
             if (tokens->data[i][0] != '\0') query->argc++;
         }
     }
@@ -175,9 +175,7 @@ void query_writer(void* raw_data, ParserStore store) {
     free(path);
 
     // Destroy query
-    free(data->id);
     for (int i = 0; i < data->argc; i++) free(data->argv[i]);
-    free(data->argv);
     free(data);
 
     // ------- Write flags -------
