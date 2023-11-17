@@ -1,3 +1,15 @@
+/**
+ * QUERIES
+ * 
+ * This module is composed by the Query Manager and the Queries.
+ * 
+ * Catalogue order:
+ * 0: Users
+ * 1: Flights
+ * 2: Reservations
+ * 3: Passengers
+ */
+
 #ifndef TP_QUERY_H
 #define TP_QUERY_H
 

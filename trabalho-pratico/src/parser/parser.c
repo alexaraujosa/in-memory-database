@@ -187,23 +187,25 @@ void parse(
 
     volatile Tokens tokens = tokenizer(input, input_len);
 
-    Tokens vertoks = duplicate_tokens(tokens);
+    // Tokens vertoks = duplicate_tokens(tokens);
 
-    int valid = verifier(vertoks, store);
+    // int valid = verifier(vertoks, store);
+    int valid = verifier(tokens, store);
     if (!valid) {
         //printf("INVALID LINE.\n");
         discarder(tokens, store);
 
         // Pass cleanup control to discarder?
         // Answer: FUCK NO
-        destroy_tokens(vertoks);
+        // destroy_tokens(vertoks);
         destroy_tokens(tokens);
         return;
     }
 
-    Tokens partoks = duplicate_tokens(tokens);
+    // Tokens partoks = duplicate_tokens(tokens);
 
-    void* data = parser(partoks);
+    // void* data = parser(partoks);
+    void* data = parser(tokens);
     if (data == NULL) {
         printf("Error while parsing: Unable to transform tokens.\n");
         return;
@@ -211,8 +213,8 @@ void parse(
 
     writer(data, store);
 
-    destroy_tokens(vertoks);
-    destroy_tokens(partoks);
+    // destroy_tokens(vertoks);
+    // destroy_tokens(partoks);
     destroy_tokens(tokens);
 }
 

@@ -1,8 +1,16 @@
+/**
+ * QUERY MANAGER
+ * 
+ * This module manages and executes queries according to a source (line or file).
+ */
+
 #include "queries/queries.h"
 #include "util/string.h"
 
 Tokens tokenize_query(char* line, ssize_t len) {
     char* ptr = strdup(line);
+    char* ptr_root = ptr;
+
     if (ptr == NULL) exit(EXIT_FAILURE);
 
     if (ptr[len - 1] == '\n') {
@@ -27,7 +35,7 @@ Tokens tokenize_query(char* line, ssize_t len) {
     ret->data = arr;
     ret->len = seps;
 
-    free(ptr);
+    free(ptr_root);
     return ret;
 }
 
@@ -145,17 +153,34 @@ void* query_parser(Tokens tokens) {
 void query_writer(void* raw_data, ParserStore store) {
     Query data = (Query)raw_data;
 
+    // ------- Fetch store arguments -------
     char** s_output_dir = (char**)&g_array_index(store, void*, 0);
     int* s_query_num = g_array_index(store, void*, 1);
-    char* path = join_paths(2, *s_output_dir, isnprintf("command%d_output.txt", *s_query_num));
-
     Catalog** catalogues = ((Catalog**)g_array_index(store, void*, 2));
+    
+    // ------- Process required variables -------
+    char* output_file = isnprintf("command%d_output.txt", *s_query_num);
+    char* path = join_paths(2, *s_output_dir, output_file);
 
+    // ------- Execute query -------
     void* ret = query_execute(data, catalogues);
 
+    // ------- Write output -------
     FILE* retFile = OPEN_FILE(path, "w");
     fputs(ret, retFile);
     CLOSE_FILE(retFile);
+
+    // ------- Free memory -------
+    free(output_file);
+    free(path);
+
+    // Destroy query
+    free(data->id);
+    for (int i = 0; i < data->argc; i++) free(data->argv[i]);
+    free(data->argv);
+    free(data);
+
+    // ------- Write flags -------
 
     *s_query_num = *s_query_num + 1;
     return;
@@ -174,6 +199,8 @@ void query_destructor(FILE* stream, ParserStore store) {
         void* element = g_array_index(store, void*, i);
         free(element);
     }
+
+    g_array_free(store, TRUE);
 }
 // #pragma GCC pop_options
 // #pragma endregion
