@@ -219,7 +219,7 @@ int date_string_to_int(char* parameter) {
 
     time_t date = mktime(&temp);
     time_t system = TIME_T_SYSTEM;
-    int res = difftime(date, system)/(60*60);
+    int res = difftime(date, system);
 
     return res;
 }
@@ -233,14 +233,14 @@ int date_with_time_string_to_int(char* parameter) {
     temp.tm_yday = 0;
     temp.tm_isdst = 0;
 
-    if(strptime(parameter, "%Y/%m/%d %H", &temp) == NULL) {
+    if(strptime(parameter, "%Y/%m/%d %T", &temp) == NULL) {
         printf("ERROR! Failed to create a date with time.\n");
         exit(EXIT_FAILURE);
     }
 
     time_t date = mktime(&temp);
     time_t system = TIME_T_SYSTEM;
-    int res = difftime(date, system)/(60*60);
+    int res = difftime(date, system);
 
     return res;
 }
