@@ -1,7 +1,5 @@
 #include "executers/batch.h"
 
-#include "stats/stats.h"
-
 void test_preprocessor(FILE* stream, ParserStore store, va_list args) {
     gpointer null_element = NULL;
     g_array_append_vals(store, &null_element, 1); // Discard file
@@ -59,6 +57,9 @@ void test_writer(void* raw_data, FILE** store) {
 }
 
 void batch(const char* arg1, const char* arg2) {
+
+    setlocale(LC_COLLATE, "en_US.UTF-8");
+    setenv("TZ", "", 1);
 
     Catalog* user_catalog = catalog_init(g_str_hash, g_str_equal, free);
     char* userdata_path = join_paths(2, arg1, "users.csv");
@@ -126,7 +127,7 @@ void batch(const char* arg1, const char* arg2) {
         &default_csv_destructor_reservation,
         user_catalog,
         reservation_catalog
-    );//TODO: passar o reservation_catalog, pq preciso de guardar os valores das reservas nele
+    );
     free(reservationsdata_path);
     
     catalog_sort(reservation_catalog, &reservationsCatalog_full_compare_func);

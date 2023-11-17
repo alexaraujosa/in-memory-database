@@ -2,6 +2,8 @@
 #define TP_EXECUTERS_BATCH_H
 
 #include "queries/queries.h"
+#include "stats/stats.h"
+#include "locale.h"
 #include "catalog/usersCatalog.h"
 #include "catalog/reservationsCatalog.h"
 #include "catalog/flightsCatalog.h"
