@@ -1,6 +1,7 @@
 #ifndef TP_EXECUTERS_BATCH_H
 #define TP_EXECUTERS_BATCH_H
 
+#include <locale.h>
 #include "queries/queries.h"
 #include "stats/stats.h"
 #include <locale.h>

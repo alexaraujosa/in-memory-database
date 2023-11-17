@@ -57,6 +57,8 @@ void test_writer(void* raw_data, FILE** store) {
 }
 
 void batch(const char* arg1, const char* arg2) {
+    setlocale(LC_COLLATE, "en_US.UTF-8");
+    setenv("TZ", "", 1);
 
     setlocale(LC_COLLATE, "en_US.UTF-8");
     setenv("TZ", "", 1);
