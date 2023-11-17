@@ -2,72 +2,78 @@
 
 // Queries: 1, 3, 4, 7, 8, 9
 
-char* query1(char flag, int argc, char** argv, Catalog** catalogues) {
+void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
-    return "1";
+    fputs("1", output_file);
 }
 
-char* query2(char flag, int argc, char** argv, Catalog** catalogues) {
+void query2(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
-    return "2";
+    fputs("2", output_file);
 }
 
-char* query3(char flag, int argc, char** argv, Catalog** catalogues) {
+void query3(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
-    return "3";
+    fputs("3", output_file);
 }
 
-char* query4(char flag, int argc, char** argv, Catalog** catalogues) {
+void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
-    return "4";
+    fputs("4", output_file);
 }
 
-char* query5(char flag, int argc, char** argv, Catalog** catalogues) {
+void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
-    return "5";
+    fputs("5", output_file);
 }
 
-char* query6(char flag, int argc, char** argv, Catalog** catalogues) {
+void query6(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
-    return "6";
+    fputs("6", output_file);
 }
 
-char* query7(char flag, int argc, char** argv, Catalog** catalogues) {
+void query7(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
-    return "7";
+    fputs("7", output_file);
+
+    // Catalog* flights = catalogues[1];
+    // int size = catalog_get_item_count(flights);
+    // for (int i = 0; i < size; i++) {
+
+    // }
 }
 
-char* query8(char flag, int argc, char** argv, Catalog** catalogues) {
+void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
-    return "8";
+    fputs("8", output_file);
 }
 
-char* query9(char flag, int argc, char** argv, Catalog** catalogues) {
+void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
-    return "9";
+    fputs("9", output_file);
 }
 
-char* query10(char flag, int argc, char** argv, Catalog** catalogues) {
+void query10(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
-    return "10";
+    fputs("10", output_file);
 }
