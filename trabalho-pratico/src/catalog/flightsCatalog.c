@@ -25,8 +25,8 @@ gint flightsCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
     int id1 = get_flight_id(flight1);
     int id2 = get_flight_id(flight2);
     
-    if (schedule_departure_date1 < schedule_departure_date2) return -1;
-    if (schedule_departure_date1 > schedule_departure_date2) return 1;
+    if (schedule_departure_date1 < schedule_departure_date2) return 1;
+    if (schedule_departure_date1 > schedule_departure_date2) return -1;
 
     if (schedule_arrival_date1 < schedule_arrival_date2) return -1;
     if (schedule_arrival_date1 > schedule_arrival_date2) return 1;
