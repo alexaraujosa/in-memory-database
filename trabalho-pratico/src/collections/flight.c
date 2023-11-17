@@ -134,7 +134,7 @@ Flight make_flight(
     strncpy(flight->airline, airline, (size_t)MAX_AIRLINE_NAME_LEN);
     strncpy(flight->plane_model, plane_model, (size_t)MAX_PLANE_NAME_LEN);
     strcpy(flight->origin, origin);
-    strcpy(flight->destination, destination);
+    strcpy(flight->destination, to_upper_string(destination));
     flight->schedule_departure_date = schedule_departure_date;
     flight->schedule_arrival_date = schedule_arrival_date;      //TODO: Date offset
     flight->real_departure_date = real_departure_date;

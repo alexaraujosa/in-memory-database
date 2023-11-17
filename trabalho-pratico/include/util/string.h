@@ -173,4 +173,6 @@ int date_with_time_string_to_int(char* parameter);
 */
 bool get_boolean(char* parameter);
 
+char* to_upper_string(char* parameter);
+
 #endif

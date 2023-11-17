@@ -34,7 +34,69 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
-    fputs("5", output_file);
+
+    GArray *arrTemp = g_array_new(FALSE, FALSE, sizeof(gpointer));
+    guint matched_index = 0;
+    gboolean exists = catalog_exists_in_array(catalogues[1], argv[0], &flight_origin_compare_func, &matched_index);
+    void *data1, *data2;
+    if (exists) {
+        guint cur_index = 0;
+        void *data = catalog_search_in_array(catalogues[1], matched_index);
+        g_array_append_val(arrTemp,data);
+        int matched_index_down = matched_index - 1;
+        int matched_index_up = matched_index + 1;
+        void *data1 = catalog_search_in_array(catalogues[1], matched_index_down);
+        void *data2 = catalog_search_in_array(catalogues[1], matched_index_up);
+        while (strcasecmp(argv[0], get_flight_origin((Flight*)data1)) == 0 && matched_index_down >= 0) {
+            data1 = catalog_search_in_array(catalogues[1], matched_index_down);
+            g_array_append_val(arrTemp,data1);
+            // print_flight(data1);
+            matched_index_down--;
+            if(matched_index_down < 0) break;
+            data1 = catalog_search_in_array(catalogues[1], matched_index_down);
+            // data1 = catalog_search_in_array(catalog, matched_index_down);
+            // print_flight(data1);
+            
+        };
+        while (strcasecmp(argv[0], get_flight_origin((Flight*)data2)) == 0 && matched_index_up != catalog_get_item_count(catalogues[1])) {
+            // g_array_append_val(arrTemp,data2);
+            data2 = catalog_search_in_array(catalogues[1], matched_index_up);
+            g_array_append_val(arrTemp,data2);
+            matched_index_up++;
+            // print_flight(data2);
+            data2 = catalog_search_in_array(catalogues[1], matched_index_up);
+        };
+
+        g_array_sort(arrTemp, &flightsCatalog_full_compare_func);
+
+        for (int i = 0; i < arrTemp->len; i++) {
+            const Flight flight_temp = (const Flight*)(g_array_index(arrTemp, gpointer, i));
+            if(date_with_time_string_to_int(argv[1]) <= get_flight_schedule_departure_date(flight_temp) && get_flight_schedule_departure_date(flight_temp) <= date_with_time_string_to_int(argv[2])) {
+                int parameter = get_flight_schedule_departure_date(flight_temp);
+                parameter = parameter + TIME_T_SYSTEM;
+                time_t converted_time = (time_t)parameter;
+
+                struct tm *timeinfo;
+                timeinfo = localtime(&converted_time);
+                fprintf(
+                    output_file,
+                    "%.10d;%.4d/%.2d/%.2d %.2d:%.2d:%.2d;%s;%s;%s",
+                    get_flight_id(flight_temp),
+                    timeinfo->tm_year + 1900,
+                    timeinfo->tm_mon + 1,
+                    timeinfo->tm_mday,
+                    timeinfo->tm_hour,
+                    timeinfo->tm_min,
+                    timeinfo->tm_sec,
+                    get_flight_destination(flight_temp),
+                    get_flight_airline(flight_temp),
+                    get_flight_plane_model(flight_temp)
+                );
+
+                if(i != arrTemp->len - 1)   fprintf(output_file, "\n");
+            }
+        };
+    };
 }
 
 void query6(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file) {

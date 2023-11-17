@@ -37,6 +37,16 @@ gint flightsCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
     return 0;
 }
 
+gint flight_origin_compare_func(gconstpointer a, gconstpointer b) {
+    const Flight *user1 = (const Flight*)a;
+    const char* user_NAME2 = (const char*) b;
+
+    const char* user_NAME1 = get_flight_origin(*user1);   // TODO: falta dar free
+    if(strcasecmp(user_NAME1, user_NAME2) > 0) return 1;
+    if(strcasecmp(user_NAME1, user_NAME2) < 0) return -1;
+    return 0;
+}
+
 //FIXME THis fucntion is not well implemented
 void flightsCatalog_print_array(gpointer data, gpointer flight_data) {
     const FLIGHT* flight = (const FLIGHT*)flight_data;

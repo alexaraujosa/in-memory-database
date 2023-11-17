@@ -18,6 +18,8 @@
  */
 gint flightsCatalog_full_compare_func(gconstpointer a, gconstpointer b);
 
+gint flight_origin_compare_func(gconstpointer a, gconstpointer b);
+
 /**
  * @brief Prints the Flights Catalog array.
  *
