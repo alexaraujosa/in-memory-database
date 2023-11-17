@@ -65,30 +65,16 @@ void destroy_tokens(Tokens tokens) {
 }
 
 ParserStore makeStore() {
-    // ParserStore store = (ParserStore)malloc(sizeof(PARSER_STORE));
-    // store->discard_file = NULL;
-
-    // return store;
-    
-    // ParserStore store = (ParserStore)malloc(sizeof(PARSER_STORE));
-    // store = g_array_new(FALSE, FALSE, sizeof(void*));
     ParserStore store = g_array_new(FALSE, FALSE, sizeof(void*));
-
-    // g_array_append_vals(store->data, NULL, 0); // Discard file
 
     return store;
 }
 
-void discard_to_file(Tokens tokens, ParserStore store) { //, FILE* store
+void discard_to_file(Tokens tokens, ParserStore store) {
     if (store == NULL) {
         printf("Could not discard tokens: Store does not exist.");
         exit(EXIT_FAILURE);
     }
-
-    // if (store->discard_file == NULL) {
-    //     printf("Could not discard tokens: Output file does not exist.");
-    //     exit(EXIT_FAILURE);
-    // }
 
     int totalLen = tokens->len + 1;
     for (int i = 0; i < tokens->len; i++) totalLen += strlen(tokens->data[i]);
@@ -138,7 +124,6 @@ void default_csv_destructor(FILE* stream, ParserStore store) {
 
 
     for (guint i = 2; i < store->len - 1; ++i) {
-        // char *element = g_array_index(store, char *, i);
         void* element = g_array_index(store, void*, i);
         free(element);
     }
@@ -187,24 +172,16 @@ void parse(
 
     volatile Tokens tokens = tokenizer(input, input_len);
 
-    // Tokens vertoks = duplicate_tokens(tokens);
-
-    // int valid = verifier(vertoks, store);
     int valid = verifier(tokens, store);
     if (!valid) {
-        //printf("INVALID LINE.\n");
         discarder(tokens, store);
 
         // Pass cleanup control to discarder?
         // Answer: FUCK NO
-        // destroy_tokens(vertoks);
         destroy_tokens(tokens);
         return;
     }
 
-    // Tokens partoks = duplicate_tokens(tokens);
-
-    // void* data = parser(partoks);
     void* data = parser(tokens);
     if (data == NULL) {
         printf("Error while parsing: Unable to transform tokens.\n");
@@ -213,8 +190,6 @@ void parse(
 
     writer(data, store);
 
-    // destroy_tokens(vertoks);
-    // destroy_tokens(partoks);
     destroy_tokens(tokens);
 }
 
@@ -257,8 +232,6 @@ void parse_file(
     if (is_path_absolute(filename)) {
         path = filename;
     } else {
-        // char* paths[2] = { get_cwd()->str, filename };
-        // path = join_paths(paths, 2);
         path = join_paths(2, get_cwd()->str, filename);
     }
 
@@ -268,8 +241,6 @@ void parse_file(
     va_list args;
     va_start(args, destructor);
 
-    // ssize_t argc = va_arg(args, ssize_t);
-
     preprocess(stream, store, args);
 
     char* line = NULL;
@@ -278,7 +249,6 @@ void parse_file(
     
     while ((read = getline(&line, &len, stream)) != -1) {
         parse(line, read, tokenizer, verifier, parser, writer, discarder, store);
-        // free(line);
     }
 
     free(line);
