@@ -136,6 +136,7 @@ void batch(const char* arg1, const char* arg2) {
     
     //catalog_print_array(reservation_catalog, &print_reservation);
 
+    /*PAULO IS TESTING WITH THIS...DONT TOUCH
     double rating = 0;
     rating = calculate_hotel_average_rating(reservation_catalog, 1001);
     printf("Rating = %.3f\n", rating);
@@ -147,8 +148,13 @@ void batch(const char* arg1, const char* arg2) {
     int n_flights = calculate_user_n_flights(passengers_catalog, "JéssiTavares910");
     printf("n_flights = %d\n", n_flights);
 
-    double total_spent = calculate_user_total_spent(reservation_catalog, "JéssiTavares910");
-    printf("total_spent = %.3f\n", total_spent);
+    int n_reservations = 10;
+    double total_spent = calculate_user_total_spent(reservation_catalog, "JéssiTavares910", &n_reservations);
+    printf("total_spent = %.3f && n_reservations:%d\n", total_spent, n_reservations);
+
+    int n_passengers = calculate_flight_total_passengers(passengers_catalog, 444);
+    printf("n_passengers = %d\n", n_passengers);
+    */
 
     // Run queries
     Catalog** catalogues = (Catalog*)malloc(4 * sizeof(Catalog*));

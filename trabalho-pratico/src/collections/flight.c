@@ -1,4 +1,5 @@
 #include "collections/flight.h"
+#include "time.h"
 
 typedef struct flights {
     int id;
@@ -177,16 +178,29 @@ void discard_flight(void* raw_data, ParserStore store) {
 
 void print_flight(void* pt) {
     FLIGHT* flight = (FLIGHT*)pt;
+    int parameter = flight->schedule_departure_date;
+    parameter = parameter + TIME_T_SYSTEM;
+    time_t converted_time = (time_t)parameter;
+
+    struct tm *timeinfo;
+    timeinfo = localtime(&converted_time);
+
+    char buffer[20];
     printf(
-        "{Id:%d; "
-        "Airline:%s; "
-        "PlaneModel:%s; "
-        "Origin:%s; "
-        "Destination:%s; "
-        "ScheduleDepartureDate:%d; "
-        "ScheduleArrivalDate:%d; "
-        "RealDepartureDate:%d}\n",
-        flight->id, flight->airline, flight->plane_model,
-        flight->origin, flight->destination, flight->schedule_departure_date,
-        flight->schedule_arrival_date, flight->real_departure_date);
+        "%.10d;"
+        "%.4d/%.2d/%.2d %.2d:%.2d:%.2d;"        
+        "%s;"       
+        "%s;"
+        "%s;\n",
+        flight->id, 
+        timeinfo->tm_year + 1900, 
+        timeinfo->tm_mon + 1, 
+        timeinfo->tm_mday, 
+        timeinfo->tm_hour, 
+        timeinfo->tm_min, 
+        timeinfo->tm_sec, 
+        flight->destination, 
+        flight->airline, 
+        flight->plane_model
+    );
 }
