@@ -54,11 +54,13 @@ int calculate_user_n_flights(Catalog *catalog, char *userID){
     for(int i = 0; i < catalog_get_item_count(catalog); i++){
         const Passenger passenger_temp = (const Passenger)(catalog_search_in_array(catalog,i));
         name_to_compare = get_passenger_userdID(passenger_temp);
+        
         if(strcmp(userID, name_to_compare) == 0){
             n_flights++;
         }
+
+        free(name_to_compare);
     }
-    free(name_to_compare);
     return n_flights;
 }
 
@@ -81,11 +83,13 @@ double calculate_user_total_spent(Catalog *catalog, char *userID){
     for(int i = 0; i < catalog_get_item_count(catalog); i++){
         const Reservation reservation_temp = (const Reservation)(catalog_search_in_array(catalog,i));
         name_to_compare = get_reservation_userID(reservation_temp);
+
         if(strcmp(userID, name_to_compare) == 0){
             total_spent += calculate_reservation_total_price(reservation_temp);
         }
+
+        free(name_to_compare);
     }
-    free(name_to_compare);
     return total_spent;
 }
 
