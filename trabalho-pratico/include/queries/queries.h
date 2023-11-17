@@ -19,6 +19,7 @@
 #include "util/misc.h"
 #include "parser/parser.h"
 #include "catalog/catalogManager.h"
+#include "catalog/usersCatalog.h"
 
 #define QUERIES_CHAR_LEN 3 // Including null-terminator
 #define QUERIES_MAX_ARGS 3

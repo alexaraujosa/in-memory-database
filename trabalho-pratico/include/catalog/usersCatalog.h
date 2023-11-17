@@ -18,6 +18,9 @@
  */
 gint usersCatalog_full_compare_func(gconstpointer a, gconstpointer b);
 
+gint users_full_compare_func(gconstpointer a, gconstpointer b);
+gint user_username_compare_func(gconstpointer a, gconstpointer b);
+
 /**
  * @brief Prints the User Catalog array.
  *
