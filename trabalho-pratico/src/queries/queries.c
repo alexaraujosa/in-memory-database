@@ -119,6 +119,8 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
 
                 struct tm *timeinfo;
                 timeinfo = localtime(&converted_time);
+
+                if(count != 1)  fprintf(output_file, "\n");
                 fprintf(
                     output_file,
                     "%.10d;%.4d/%.2d/%.2d %.2d:%.2d:%.2d;%s;%s;%s",
@@ -133,8 +135,8 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
                     get_flight_airline(flight_temp),
                     get_flight_plane_model(flight_temp)
                 );
-
-                if(i != arrTemp->len - 1)   fprintf(output_file, "\n");
+                count++;
+                // if(i != arrTemp->len - 1)   fprintf(output_file, "\n");
 
             } else if(date_with_time_string_to_int(argv[1]) <= get_flight_schedule_departure_date(flight_temp) && get_flight_schedule_departure_date(flight_temp) <= date_with_time_string_to_int(argv[2]) && flag == 'F') {
                 int parameter = get_flight_schedule_departure_date(flight_temp);
@@ -158,6 +160,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
                 get_flight_plane_model(flight_temp)
                 );
                 count++;
+                // if(i == arrTemp->len - 1)   fprintf(output_file, "\n");
             }
             if(i == arrTemp->len - 1)   fprintf(output_file, "\n");
         };
