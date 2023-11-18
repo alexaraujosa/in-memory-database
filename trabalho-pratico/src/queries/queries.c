@@ -143,7 +143,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
 
                 struct tm *timeinfo;
                 timeinfo = localtime(&converted_time);
-                if(i != 0) fprintf(output_file, "\n\n");
+                if(count != 1) fprintf(output_file, "\n\n");
                 fprintf(output_file, "--- %d ---\n", count);
                 fprintf(output_file, "id: %.10d\nschedule_departure_date: %.4d/%.2d/%.2d %.2d:%.2d:%.2d\ndestination: %s\nairline: %s\nplane_model: %s", 
                 get_flight_id(flight_temp), 
@@ -154,7 +154,8 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
                 timeinfo->tm_min,
                 timeinfo->tm_sec,
                 get_flight_destination(flight_temp),
-                get_flight_airline(flight_temp)
+                get_flight_airline(flight_temp),
+                get_flight_plane_model(flight_temp)
                 );
                 count++;
             }
