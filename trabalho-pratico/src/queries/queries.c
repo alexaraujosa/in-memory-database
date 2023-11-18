@@ -1,4 +1,6 @@
 #include "queries/queries.h"
+#include "collections/flight.h"
+#include "stats/stats.h"
 
 // Queries: 1, 3, 4, 7, 8, 9
 
@@ -284,17 +286,87 @@ void query6(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
     fputs("6", output_file);
 }
 
+struct q7_index {
+    char* origin;
+    int median;
+};
+gint compare_q7_indices(gconstpointer a, gconstpointer b, gpointer user_data) {
+    const struct q7_index *index_a = (const struct q7_index *)a;
+    const struct q7_index *index_b = (const struct q7_index *)b;
+
+    return index_b->median - index_a->median;
+}
+
 void query7(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file) {
-    IGNORE_ARG(flag);
-    IGNORE_ARG(argc);
-    IGNORE_ARG(argv);
-    fputs("7", output_file);
+    Catalog* flights = catalogues[1];
+    int size = catalog_get_item_count(flights);
 
-    // Catalog* flights = catalogues[1];
-    // int size = catalog_get_item_count(flights);
-    // for (int i = 0; i < size; i++) {
+    GSequence* sequence = g_sequence_new(NULL);
 
-    // }
+    for (guint i = 0; i < size; i++) {
+        Flight flight = (Flight)catalog_search_in_array(flights, i);
+        char* flight_origin = get_flight_origin(flight);
+
+        int calculated = 0;
+
+        GSequenceIter *iter = g_sequence_get_begin_iter(sequence);
+        while (!g_sequence_iter_is_end(iter)) {
+            const struct q7_index *ind = g_sequence_get(iter);
+            if (strcmp(ind->origin, flight_origin) == 0) {
+                calculated = 1;
+                break;
+            }
+
+            iter = g_sequence_iter_next(iter);
+        }
+
+        if (calculated) {
+            free(flight_origin);
+            continue;
+        }
+
+        struct q7_index* ind = (struct q7_index*)malloc(sizeof(struct q7_index));
+        ind->origin = flight_origin;
+
+        // This function does the heavy lifting. It has cost both me and Paulo most of our sanities.
+        ind->median = calculate_flight_delay_median(flights, flight_origin);
+
+        g_sequence_insert_sorted(sequence, ind, compare_q7_indices, NULL);
+    }
+
+    GSequenceIter* iter = g_sequence_get_begin_iter(sequence);
+    GSequenceIter* iter_root = iter;
+
+    int count = 0;
+    
+    while (!g_sequence_iter_is_end(iter) && count < atoi(argv[0])) {
+        const struct q7_index *ind = g_sequence_get(iter);
+        
+        char* line;
+        if (flag == 'F') line = isnprintf("--- %d ---\nname: %s\nmedian: %d\n", count + 1, ind->origin, ind->median);
+        else line = isnprintf("%s;%d\n", ind->origin, ind->median);
+
+        fputs(line, output_file);
+        free(line);
+
+        iter = g_sequence_iter_next(iter);
+        count++;
+        
+        if (
+            flag == 'F' && count < atoi(argv[0]) && !g_sequence_iter_is_end(iter) && count < atoi(argv[0])
+        ) fputs("\n", output_file);
+        else if (flag == 'F' && count < atoi(argv[0]) -1) fputs("\n", output_file);
+    }
+
+    iter = iter_root;
+    while (!g_sequence_iter_is_end(iter)) {
+        const struct q7_index* ind = g_sequence_get(iter);
+        free(ind->origin);
+        free(ind);
+        iter = g_sequence_iter_next(iter);
+    }
+
+    g_sequence_free(sequence);
 }
 
 void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file) {
