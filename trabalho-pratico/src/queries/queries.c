@@ -573,7 +573,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
                 char* flight_airline = get_flight_airline(flight_temp);
                 char* flight_plane_model = get_flight_plane_model(flight_temp);
 
-                if(count != 1)  fprintf(output_file, "\n");
+                if(count != 1)  fprintf(output_file, "\n\n");
                 fprintf(output_file, "--- %d ---\n", count);
                 fprintf(
                     output_file,
