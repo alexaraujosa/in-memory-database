@@ -131,7 +131,6 @@ void batch(const char* arg1, const char* arg2) {
     //catalog_print_array(reservation_catalog, &print_reservation);
 
     /*PAULO IS TESTING WITH THIS...DONT TOUCH
-    */
     
     int n_flights = calculate_user_n_flights(passengers_catalog, "JéssiTavares910");
     printf("n_flights = %d\n", n_flights);
@@ -142,6 +141,7 @@ void batch(const char* arg1, const char* arg2) {
 
     int n_passengers = calculate_flight_total_passengers(passengers_catalog, 444);
     printf("n_passengers = %d\n", n_passengers);
+    */
 
     // Run queries
     Catalog** catalogues = (Catalog**)malloc(4 * sizeof(Catalog*));

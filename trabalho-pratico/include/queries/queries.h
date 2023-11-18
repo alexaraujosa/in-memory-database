@@ -34,19 +34,19 @@ typedef struct {
     char* argv[QUERIES_MAX_ARGS];
 } QUERY, *Query;
 
-void query_execute(Query query, Catalog** catalogues, FILE** output_file);
+void query_execute(Query query, Catalog** catalogues, FILE* output_file);
 void query_run_bulk(char* input_file, char* output_filer, Catalog** catalogues);
 void query_run_single(char* query, ssize_t len);
 
-void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file);
-void query2(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file);
-void query3(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file);
-void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file);
-void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file);
-void query6(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file);
-void query7(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file);
-void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file);
-void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file);
-void query10(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file);
+void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
+void query2(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
+void query3(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
+void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
+void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
+void query6(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
+void query7(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
+void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
+void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
+void query10(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
 
 #endif

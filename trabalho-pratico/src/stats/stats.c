@@ -86,29 +86,28 @@ double calculate_user_total_spent(Catalog *catalog, char *userID, int *n_reserva
     return total_spent;
 }
 
-int calculate_flight_total_passengers(Catalog *catalog, int flightId){
+int calculate_flight_total_passengers(Catalog *catalog, int *flightId){
     guint matched_index = 0;
     gboolean exists = catalog_exists_in_array(catalog, flightId, &passenger_flightID_compare_func, &matched_index);
-    void *data1, *data2;
     if (exists) {
         int matched_index_down = matched_index;
         
         void *data1 = catalog_search_in_array(catalog, matched_index_down);
-        while (get_passenger_flightID((Passenger*)data1)==flightId && matched_index_down > 0) {
+        while (get_passenger_flightID((Passenger)data1)==GPOINTER_TO_INT(flightId) && matched_index_down > 0) {
             data1 = catalog_search_in_array(catalog, --matched_index_down);
         };
-        if(get_reservation_hotelID((Passenger*)data1)!=flightId) matched_index_down++;
+        if(get_reservation_hotelID(data1)!=GPOINTER_TO_INT(flightId)) matched_index_down++;
 
         int matched_index_up = matched_index;
         void *data2 = catalog_search_in_array(catalog, matched_index_up);
-        while (get_passenger_flightID((Passenger*)data2)==flightId && matched_index_up<catalog_get_item_count(catalog)-1) {
+        while (get_passenger_flightID((Passenger)data2)==GPOINTER_TO_INT(flightId) && matched_index_up<catalog_get_item_count(catalog)-1) {
             data2 = catalog_search_in_array(catalog, ++matched_index_up);
         };
-        if(get_reservation_hotelID((Passenger*)data2)!=flightId) matched_index_up--;
+        if(get_reservation_hotelID(data2)!=GPOINTER_TO_INT(flightId)) matched_index_up--;
         
         return (matched_index_up - matched_index_down + 1);
     } else {
-        printf("Flight with that id not found");
+        printf("Flight with that id not found\n");
         return -1;
     }
 }
@@ -125,48 +124,46 @@ int compareIntegers(const void *a, const void *b) {
 int calculate_flight_delay_median(Catalog *catalog, char *origin_name){
     guint matched_index = 0;
     gboolean exists = catalog_exists_in_array(catalog, origin_name, &flight_origin_compare_func, &matched_index);
-    void *data1, *data2;
     char* orig;
 
     if (exists) {
         // ------- DATA 1 -------
         int matched_index_down = matched_index;
         void *data1 = catalog_search_in_array(catalog, matched_index_down);
-        orig = get_flight_origin((Flight*)data1);
+        orig = get_flight_origin((Flight)data1);
 
         // while (strcasecmp(origin_name, get_flight_origin((Flight*)data1)) == 0 && matched_index_down > 0) {
         while (strcasecmp(origin_name, orig) == 0 && matched_index_down > 0) {
             data1 = catalog_search_in_array(catalog, --matched_index_down);
 
             free(orig);
-            orig = get_flight_origin((Flight*)data1);
+            orig = get_flight_origin((Flight)data1);
         };
         free(orig);
 
-        orig = get_flight_origin((Flight*)data1);
+        orig = get_flight_origin((Flight)data1);
         if(strcasecmp(origin_name, orig) != 0) matched_index_down++;
         free(orig);
 
         // ------- DATA 2 -------
         int matched_index_up = matched_index;
         void *data2 = catalog_search_in_array(catalog, matched_index_up);
-        orig = get_flight_origin((Flight*)data2);
+        orig = get_flight_origin((Flight)data2);
 
         // while (strcasecmp(origin_name, get_flight_origin((Flight*)data2)) == 0 && matched_index_up < (catalog_get_item_count(catalog) - 1)) {
         while (strcasecmp(origin_name, orig) == 0 && matched_index_up < (catalog_get_item_count(catalog) - 1)) {
             data2 = catalog_search_in_array(catalog, ++matched_index_up);
 
             free(orig);
-            orig = get_flight_origin((Flight*)data2);
+            orig = get_flight_origin((Flight)data2);
         };
         free(orig);
 
-        orig = get_flight_origin((Flight*)data1);
+        orig = get_flight_origin((Flight)data1);
         if(strcasecmp(origin_name, orig) != 0) matched_index_up--;
         free(orig);
         
         int i = matched_index_down;
-        int delay = 0;
         int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
         int len = quantidade_a_percorrer;
         int arr[len];
@@ -199,28 +196,28 @@ int calculate_flight_delay_median(Catalog *catalog, char *origin_name){
 int calculate_aeroport_n_passengers(Catalog *flight_catalog, Catalog *passenger_catalog, char *origin_name){
     guint matched_index = 0;
     gboolean exists = catalog_exists_in_array(flight_catalog, origin_name, &flight_origin_compare_func, &matched_index);
-    void *data1, *data2;
     if(exists){
         int matched_index_down = matched_index;
         void *data1 = catalog_search_in_array(flight_catalog, matched_index_down);
-        while (strcasecmp(origin_name, get_flight_origin((Flight*)data1)) == 0 && matched_index_down > 0) {
+        while (strcasecmp(origin_name, get_flight_origin((Flight)data1)) == 0 && matched_index_down > 0) {
             data1 = catalog_search_in_array(flight_catalog, --matched_index_down);
         };
-        if(strcasecmp(origin_name, get_flight_origin((Flight*)data1)) != 0) matched_index_down++;
+        if(strcasecmp(origin_name, get_flight_origin((Flight)data1)) != 0) matched_index_down++;
 
         int matched_index_up = matched_index;
         void *data2 = catalog_search_in_array(flight_catalog, matched_index_up);
-        while (strcasecmp(origin_name, get_flight_origin((Flight*)data2)) == 0 && matched_index_up<catalog_get_item_count(flight_catalog)-1) {
+        while (strcasecmp(origin_name, get_flight_origin((Flight)data2)) == 0 && matched_index_up<catalog_get_item_count(flight_catalog)-1) {
             data2 = catalog_search_in_array(flight_catalog, ++matched_index_up);
         };
-        if(strcasecmp(origin_name, get_flight_origin((Flight*)data1)) != 0) matched_index_up--;
+        if(strcasecmp(origin_name, get_flight_origin((Flight)data1)) != 0) matched_index_up--;
         
         int i = matched_index_down;
         int n_passengers = 0;
         int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
         while ( 0 < quantidade_a_percorrer) {
             const Flight flight_temp = (const Flight)(catalog_search_in_array(flight_catalog,i));
-            n_passengers += calculate_flight_total_passengers(passenger_catalog, get_flight_id(flight_temp));
+            int flight_id = get_flight_id(flight_temp);
+            n_passengers += calculate_flight_total_passengers(passenger_catalog, &flight_id);
             i++;
             quantidade_a_percorrer--;
         };

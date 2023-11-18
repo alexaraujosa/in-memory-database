@@ -210,7 +210,7 @@ void query_destructor(FILE* stream, ParserStore store) {
 // #pragma GCC pop_options
 // #pragma endregion
 
-void query_execute(Query query, Catalog** catalogues, FILE** output_file) {
+void query_execute(Query query, Catalog** catalogues, FILE* output_file) {
     switch (atoi(query->id)) {
         case 1:  query1 (query->flag, query->argc, query->argv, catalogues, output_file); break;
         case 2:  query2 (query->flag, query->argc, query->argv, catalogues, output_file); break;

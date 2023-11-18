@@ -24,7 +24,7 @@ int calculate_user_n_flights(Catalog *catalog, char *userID);
 
 double calculate_user_total_spent(Catalog *catalog, char *userID, int *n_reservations);
 
-int calculate_flight_total_passengers(Catalog *catalog, int flightId);
+int calculate_flight_total_passengers(Catalog *catalog, int *flightId);
 
 int calculate_flight_delay_median(Catalog *catalog, char *origin_name);
 
