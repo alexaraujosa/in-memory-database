@@ -133,7 +133,8 @@ Flight make_flight(
     flight->id = id;
     strncpy(flight->airline, airline, (size_t)MAX_AIRLINE_NAME_LEN);
     strncpy(flight->plane_model, plane_model, (size_t)MAX_PLANE_NAME_LEN);
-    strcpy(flight->origin, origin);
+    // strcpy(flight->origin, origin);
+    strcpy(flight->origin, to_upper_string(origin));
     strcpy(flight->destination, to_upper_string(destination));
     flight->schedule_departure_date = schedule_departure_date;
     flight->schedule_arrival_date = schedule_arrival_date;      //TODO: Date offset
@@ -188,18 +189,16 @@ void print_flight(void* pt) {
     char buffer[20];
     printf(
         "%.10d;"
-        "%.4d/%.2d/%.2d %.2d:%.2d:%.2d;"        
+        "%s;"
         "%s;"       
         "%s;"
+        "%s"
         "%s;\n",
         flight->id, 
-        timeinfo->tm_year + 1900, 
-        timeinfo->tm_mon + 1, 
-        timeinfo->tm_mday, 
-        timeinfo->tm_hour, 
-        timeinfo->tm_min, 
-        timeinfo->tm_sec, 
-        flight->origin, 
+        date_int_to_string(flight->schedule_departure_date + TIME_T_SYSTEM), 
+        date_int_to_string(flight->schedule_arrival_date + TIME_T_SYSTEM), 
+        date_int_to_string(flight->real_departure_date + TIME_T_SYSTEM),
+        flight->destination, 
         flight->airline, 
         flight->plane_model
     );

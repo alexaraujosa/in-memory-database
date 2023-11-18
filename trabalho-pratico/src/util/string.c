@@ -245,6 +245,16 @@ int date_with_time_string_to_int(char* parameter) {
     return res;
 }
 
+char* date_int_to_string(int time) {
+    time_t converted = (time_t)time;
+    struct tm* temp = gmtime(&converted);
+
+    char* buf = (char*)malloc(20 * sizeof(char));
+    strftime(buf, 20, "%Y/%m/%d %T", temp);
+
+    return buf;
+}
+
 bool get_boolean(char* parameter) {
 
     if(parameter[0] == '\0' || parameter[0] == 'f' || parameter[0] == 'F' || parameter[0] == '0')  return FALSE;

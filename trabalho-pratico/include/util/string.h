@@ -165,6 +165,15 @@ int date_string_to_int(char* parameter);
 int date_with_time_string_to_int(char* parameter);
 
 /**
+ * @brief Turns an that represents a date with time to a string.
+ * 
+ * @param parameter Integer containing the date with time.
+ * 
+ * @return String formatted with the date.
+*/
+char* date_int_to_string(int time);
+
+/**
  * @brief Get the boolean from the string.
  * 
  * @param parameter String containing the boolean.
