@@ -33,6 +33,25 @@ gint reservation_hotelID_compare_func(gconstpointer a, gconstpointer b) {
     return 0;
 }
 
+gint reservation_date_compare_func(gconstpointer a, gconstpointer b) {
+    const Reservation reservation1 = *(const Reservation*)a;
+    const Reservation reservation2 = *(const Reservation*)b;
+    
+    int start_date1 = get_reservation_begin_date(reservation1);
+    int start_date2 = get_reservation_begin_date(reservation2);
+    int id1 = get_reservation_id(reservation1);
+    int id2 = get_reservation_id(reservation2);
+    
+    if (start_date1 < start_date2) return 1;
+    if (start_date1 > start_date2) return -1;
+
+
+    if (id1 < id2) return -1;
+    if (id1 > id2) return 1;
+
+    return 0;
+}
+
 //FIXME THis fucntion is not well implemented
 void reservationsCatalog_print_array(gpointer data, gpointer reservation_data) {
     const RESERVATION *reservation = (const RESERVATION*)reservation_data;

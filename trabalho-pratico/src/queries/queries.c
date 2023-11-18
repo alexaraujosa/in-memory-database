@@ -67,7 +67,117 @@ void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
-    fputs("4", output_file);
+
+    GArray *arrTemp = g_array_new(FALSE, FALSE, sizeof(gpointer));
+    guint matched_index = 0;
+    gboolean exists = catalog_exists_in_array(catalogues[3], atoi(argv[0]+3), &reservation_hotelID_compare_func, &matched_index);
+    void *data1, *data2;
+    if (exists) {
+        guint cur_index = 0;
+        void *data = catalog_search_in_array(catalogues[3], matched_index);
+        g_array_append_val(arrTemp,data);
+        int matched_index_down = matched_index - 1;
+        int matched_index_up = matched_index + 1;
+        void *data1 = catalog_search_in_array(catalogues[3], matched_index_down);
+        void *data2 = catalog_search_in_array(catalogues[3], matched_index_up);
+        while (atoi(argv[0]+3) == get_reservation_hotelID((Reservation*)data1) && matched_index_down >= 0) {
+            data1 = catalog_search_in_array(catalogues[3], matched_index_down);
+            g_array_append_val(arrTemp,data1);
+            // print_flight(data1);
+            matched_index_down--;
+            if(matched_index_down < 0) break;
+            data1 = catalog_search_in_array(catalogues[3], matched_index_down);
+            // data1 = catalog_search_in_array(catalog, matched_index_down);
+            // print_flight(data1);
+            
+        };
+        while (atoi(argv[0]+3) == get_reservation_hotelID((Reservation*)data2) && matched_index_up != catalog_get_item_count(catalogues[3])) {
+            // g_array_append_val(arrTemp,data2);
+            data2 = catalog_search_in_array(catalogues[3], matched_index_up);
+            g_array_append_val(arrTemp,data2);
+            matched_index_up++;
+            // print_flight(data2);
+            data2 = catalog_search_in_array(catalogues[3], matched_index_up);
+        };
+
+        g_array_sort(arrTemp, &reservation_date_compare_func);
+
+        int count = 1;
+        for (int i = 0; i < arrTemp->len; i++) {
+            const Reservation reservation_temp = (const Reservation*)(g_array_index(arrTemp, gpointer, i));
+            int parameter = get_reservation_begin_date(reservation_temp);
+            parameter = parameter + TIME_T_SYSTEM;
+            time_t converted_time = (time_t)parameter;
+
+            struct tm *timeinfo;
+            timeinfo = localtime(&converted_time);
+            if(flag == '\0') {
+                fprintf(
+                    output_file, 
+                    "Book%.10d;%.4d/%.2d/%.2d",
+                    get_reservation_id(reservation_temp),
+                    timeinfo->tm_year + 1900,
+                    timeinfo->tm_mon + 1,
+                    timeinfo->tm_mday
+                );
+
+                int parameter2 = get_reservation_end_date(reservation_temp);
+                parameter2 = parameter2 + TIME_T_SYSTEM;
+                time_t time_converted = (time_t)parameter2;
+
+                timeinfo = localtime(&time_converted);
+
+                float days = difftime(time_converted, converted_time);
+                days /= 60*60*24;
+                float res = get_reservation_price_per_night(reservation_temp)*days+((get_reservation_price_per_night(reservation_temp)*days)/100)*get_reservation_city_tax(reservation_temp);
+
+                fprintf(
+                    output_file,
+                    ";%.4d/%.2d/%.2d;%s;%d;%0.3f\n",
+                    timeinfo->tm_year + 1900,
+                    timeinfo->tm_mon + 1,
+                    timeinfo->tm_mday,     
+                    get_reservation_userID(reservation_temp),
+                    get_reservation_rating(reservation_temp),
+                    res
+                );
+            } else if(flag == 'F') {
+                if(i != 0) fprintf(output_file, "\n");
+                fprintf(
+                    output_file, 
+                    "--- %d ---\nid: Book%.10d\nbegin_date: %.4d/%.2d/%.2d\n",
+                    count,
+                    get_reservation_id(reservation_temp),
+                    timeinfo->tm_year + 1900,
+                    timeinfo->tm_mon + 1,
+                    timeinfo->tm_mday
+                );
+
+                int parameter2 = get_reservation_end_date(reservation_temp);
+                parameter2 = parameter2 + TIME_T_SYSTEM;
+                time_t time_converted = (time_t)parameter2;
+
+                timeinfo = localtime(&time_converted);
+
+                float days = difftime(time_converted, converted_time);
+                days /= 60*60*24;
+                float res = get_reservation_price_per_night(reservation_temp)*days+((get_reservation_price_per_night(reservation_temp)*days)/100)*get_reservation_city_tax(reservation_temp);
+
+                fprintf(
+                    output_file,
+                    "end_date: %.4d/%.2d/%.2d\nuser_id: %s\nrating: %d\ntotal_price: %0.3f\n",
+                    timeinfo->tm_year + 1900,
+                    timeinfo->tm_mon + 1,
+                    timeinfo->tm_mday,     
+                    get_reservation_userID(reservation_temp),
+                    get_reservation_rating(reservation_temp),
+                    res
+                );
+                count++;
+            }
+        };
+    };
+
 }
 
 void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file) {
