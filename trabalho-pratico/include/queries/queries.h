@@ -21,6 +21,7 @@
 #include "catalog/catalogManager.h"
 #include "catalog/usersCatalog.h"
 #include "catalog/flightsCatalog.h"
+#include "catalog/reservationsCatalog.h"
 
 #define QUERIES_CHAR_LEN 3 // Including null-terminator
 #define QUERIES_MAX_ARGS 3

@@ -22,6 +22,17 @@ gint reservationsCatalog_full_compare_func(gconstpointer* a, gconstpointer* b) {
     return 0;
 }
 
+gint reservation_hotelID_compare_func(gconstpointer a, gconstpointer b) {
+    const Reservation *reservation1 = (const Reservation*)a;
+    const short int hotel_id2 = (const short int *)b;
+
+    short int hotel_id1 = get_reservation_hotelID(*reservation1);
+
+    if (hotel_id1 < hotel_id2) return -1;
+    if (hotel_id1 > hotel_id2) return 1;
+    return 0;
+}
+
 //FIXME THis fucntion is not well implemented
 void reservationsCatalog_print_array(gpointer data, gpointer reservation_data) {
     const RESERVATION *reservation = (const RESERVATION*)reservation_data;

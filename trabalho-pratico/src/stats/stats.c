@@ -35,22 +35,6 @@ typedef struct aeroport_stats {
     double mediana_delays;
 } AEROPORT_STATS, *Aeroport_stats;
 
-
-
-
-
-
-gint reservation_hotelID_compare_func(gconstpointer a, gconstpointer b) {
-    const Reservation *reservation1 = (const Reservation*)a;
-    const short int hotel_id2 = (const short int *)b;
-
-    short int hotel_id1 = get_reservation_hotelID(*reservation1);
-
-    if (hotel_id1 < hotel_id2) return -1;
-    if (hotel_id1 > hotel_id2) return 1;
-    return 0;
-}
-
 gint passenger_flightID_compare_func(gconstpointer a, gconstpointer b){
     const Passenger *passenger1 = (const Passenger*)a;
     const int flightID2 = (const int *)b;
@@ -141,8 +125,6 @@ int calculate_flight_total_passengers(Catalog *catalog, int flightId){
         return -1;
     }
 }
-
-
 
 
 

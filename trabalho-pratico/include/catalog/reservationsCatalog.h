@@ -18,6 +18,8 @@
  */
 gint reservationsCatalog_full_compare_func(gconstpointer *a, gconstpointer *b);
 
+gint reservation_hotelID_compare_func(gconstpointer a, gconstpointer b);
+
 /**
  * @brief Prints the Reservation Catalog array.
  *

@@ -20,7 +20,41 @@ void query3(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
-    fputs("3", output_file);
+    guint matched_index = 0;
+    int hotel_id = atoi(argv[0] + 3);
+    gboolean exists = catalog_exists_in_array(catalogues[3], hotel_id, &reservation_hotelID_compare_func, &matched_index);
+    void *data1, *data2;
+    if (exists) {
+        int matched_index_down = matched_index;
+        
+        void *data1 = catalog_search_in_array(catalogues[3], matched_index_down);
+        while (get_reservation_hotelID((Reservation*)data1)==hotel_id && matched_index_down > 0) {
+            data1 = catalog_search_in_array(catalogues[3], --matched_index_down);
+        };
+        if(get_reservation_hotelID((Reservation*)data1)!=hotel_id) matched_index_down++;
+
+        int matched_index_up = matched_index;
+        void *data2 = catalog_search_in_array(catalogues[3], matched_index_up);
+        while (get_reservation_hotelID((Reservation*)data2)==hotel_id && matched_index_up<catalog_get_item_count(catalogues[3])) {
+            data2 = catalog_search_in_array(catalogues[3], ++matched_index_up);
+        };
+        if(get_reservation_hotelID((Reservation*)data2)!=hotel_id) matched_index_up--;
+        
+        
+        int i = matched_index_down;
+        double rating = 0;
+        int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
+        while ( 0 < quantidade_a_percorrer) {
+           const Reservation reservation_temp = (const Reservation)(catalog_search_in_array(catalogues[3],i));
+           rating += get_reservation_rating(reservation_temp);
+           i++;
+           quantidade_a_percorrer--;
+        };
+        rating /= (matched_index_up - matched_index_down + 1);
+        fprintf(output_file, "%.3f", (rating/(matched_index_up - matched_index_down + 1)));
+    } else {
+        fprintf(output_file, "Reservation with that hotel id not found\n");
+    }
 }
 
 void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE** output_file) {
