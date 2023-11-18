@@ -138,7 +138,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             fprintf(
                 output_file, 
                 "passengers: %d\n",
-                calculate_flight_total_passengers(catalogues[2], GINT_TO_POINTER((flight)))
+                calculate_flight_total_passengers(catalogues[2], GINT_TO_POINTER(get_flight_id(flight)))
             );
             fprintf(
                 output_file, 
