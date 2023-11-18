@@ -2,6 +2,7 @@
 #include "catalog/reservationsCatalog.h"
 #include "catalog/usersCatalog.h"
 #include "catalog/passengersCatalog.h"
+#include "catalog/flightsCatalog.h"
 #include "common.h"
 
 typedef struct users_stats {
@@ -126,5 +127,55 @@ int calculate_flight_total_passengers(Catalog *catalog, int flightId){
     }
 }
 
+int calculate_flight_delay(Flight flight){
+    int delay = (get_flight_schedule_departure_date(flight) - get_flight_real_departure_date(flight));
+    return delay;
+}
 
+int compareIntegers(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
 
+int calculate_flight_delay_median(Catalog *catalog, char *origin_name){
+    guint matched_index = 0;
+    gboolean exists = catalog_exists_in_array(catalog, origin_name, &flight_origin_compare_func, &matched_index);
+    void *data1, *data2;
+    if (exists) {
+        int matched_index_down = matched_index;
+        void *data1 = catalog_search_in_array(catalog, matched_index_down);
+        while (strcasecmp(origin_name, get_flight_origin((Flight*)data1)) == 0 && matched_index_down > 0) {
+            data1 = catalog_search_in_array(catalog, --matched_index_down);
+        };
+        if(strcasecmp(origin_name, get_flight_origin((Flight*)data1)) != 0) matched_index_down++;
+
+        int matched_index_up = matched_index;
+        void *data2 = catalog_search_in_array(catalog, matched_index_up);
+        while (strcasecmp(origin_name, get_flight_origin((Flight*)data2)) == 0 && matched_index_up<catalog_get_item_count(catalog)) {
+            data2 = catalog_search_in_array(catalog, ++matched_index_up);
+        };
+        if(strcasecmp(origin_name, get_flight_origin((Flight*)data1)) != 0) matched_index_up--;
+        
+        int i = matched_index_down;
+        int delay = 0;
+        int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
+        int len = quantidade_a_percorrer;
+        int arr[len];
+        while ( 0 < quantidade_a_percorrer) {
+            const Flight flight_temp = (const Flight)(catalog_search_in_array(catalog,i));
+            //delay += calculate_flight_delay(flight_temp);
+            arr[quantidade_a_percorrer-1] = calculate_flight_delay(flight_temp)*(-1);
+            i++;
+            quantidade_a_percorrer--;
+        };
+        qsort(arr, len, sizeof(arr[0]), &compareIntegers);
+        int mediana = len/2;
+        if((len%2)!=0){
+            return arr[mediana];
+        } else {
+            return ((arr[mediana-1]+arr[mediana])/2);
+        }
+    } else {
+        printf("Flight with that origin not found");
+        return -1;
+    }
+}

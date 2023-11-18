@@ -199,7 +199,7 @@ void print_flight(void* pt) {
         timeinfo->tm_hour, 
         timeinfo->tm_min, 
         timeinfo->tm_sec, 
-        flight->destination, 
+        flight->origin, 
         flight->airline, 
         flight->plane_model
     );

@@ -1,6 +1,13 @@
 #ifndef STATS_H
 #define STATS_H
 
+#include "catalog/catalogManager.h"
+#include "catalog/reservationsCatalog.h"
+#include "catalog/usersCatalog.h"
+#include "catalog/passengersCatalog.h"
+#include "catalog/flightsCatalog.h"
+#include "common.h"
+
 gint reservation_hotelID_compare_func(gconstpointer a, gconstpointer b);
 
 typedef struct users_stats USERS_STATS, *Users_stats;
@@ -20,5 +27,7 @@ int calculate_user_n_flights(Catalog *catalog, char *userID);
 double calculate_user_total_spent(Catalog *catalog, char *userID, int *n_reservations);
 
 int calculate_flight_total_passengers(Catalog *catalog, int flightId);
+
+int calculate_flight_delay_median(Catalog *catalog, char *origin_name);
 
 #endif
