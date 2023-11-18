@@ -197,11 +197,10 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
         for (int i = 0; i < arrTemp->len; i++) {
            const User user_temp = (const User*)(g_array_index(arrTemp, gpointer, i));
            if(get_user_account_status(user_temp) == TRUE && flag == 'F'){
+                if(i != 0) fprintf(output_file, "\n\n");
                 fprintf(output_file, "--- %d ---\n", count);
-                if(i != arrTemp->len - 1)
-                    fprintf(output_file, "id: %s\nname: %s\n\n", get_user_id(user_temp), get_user_name(user_temp));
-                else 
-                    fprintf(output_file, "id: %s\nname: %s", get_user_id(user_temp), get_user_name(user_temp));
+                fprintf(output_file, "id: %s\nname: %s", get_user_id(user_temp), get_user_name(user_temp));
+
                 count++;
            } else if(get_user_account_status(user_temp) == TRUE && flag == '\0') {
                 if(i != arrTemp->len - 1)
@@ -209,6 +208,8 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
                 else
                     fprintf(output_file, "%s;%s", get_user_id(user_temp), get_user_name(user_temp));
            }
+                if(i == arrTemp->len - 1)
+                    fprintf(output_file, "\n");
         };
     }
 }
