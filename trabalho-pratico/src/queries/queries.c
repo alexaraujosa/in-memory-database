@@ -109,9 +109,10 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
 
         g_array_sort(arrTemp, &flightsCatalog_full_compare_func);
 
+        int count = 1;
         for (int i = 0; i < arrTemp->len; i++) {
             const Flight flight_temp = (const Flight*)(g_array_index(arrTemp, gpointer, i));
-            if(date_with_time_string_to_int(argv[1]) <= get_flight_schedule_departure_date(flight_temp) && get_flight_schedule_departure_date(flight_temp) <= date_with_time_string_to_int(argv[2])) {
+            if(date_with_time_string_to_int(argv[1]) <= get_flight_schedule_departure_date(flight_temp) && get_flight_schedule_departure_date(flight_temp) <= date_with_time_string_to_int(argv[2]) && flag == '\0') {
                 int parameter = get_flight_schedule_departure_date(flight_temp);
                 parameter = parameter + TIME_T_SYSTEM;
                 time_t converted_time = (time_t)parameter;
@@ -134,7 +135,30 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
                 );
 
                 if(i != arrTemp->len - 1)   fprintf(output_file, "\n");
+
+            } else if(date_with_time_string_to_int(argv[1]) <= get_flight_schedule_departure_date(flight_temp) && get_flight_schedule_departure_date(flight_temp) <= date_with_time_string_to_int(argv[2]) && flag == 'F') {
+                int parameter = get_flight_schedule_departure_date(flight_temp);
+                parameter = parameter + TIME_T_SYSTEM;
+                time_t converted_time = (time_t)parameter;
+
+                struct tm *timeinfo;
+                timeinfo = localtime(&converted_time);
+                if(i != 0) fprintf(output_file, "\n\n");
+                fprintf(output_file, "--- %d ---\n", count);
+                fprintf(output_file, "id: %.10d\nschedule_departure_date: %.4d/%.2d/%.2d %.2d:%.2d:%.2d\ndestination: %s\nairline: %s\nplane_model: %s", 
+                get_flight_id(flight_temp), 
+                timeinfo->tm_year + 1900,
+                timeinfo->tm_mon + 1,
+                timeinfo->tm_mday,
+                timeinfo->tm_hour,
+                timeinfo->tm_min,
+                timeinfo->tm_sec,
+                get_flight_destination(flight_temp),
+                get_flight_airline(flight_temp)
+                );
+                count++;
             }
+            if(i == arrTemp->len - 1)   fprintf(output_file, "\n");
         };
     };
 }
