@@ -37,10 +37,8 @@ gint user_username_compare_func(gconstpointer a, gconstpointer b) {
     int length = strlen(user_NAME2);
     
     int name_comparison = strncasecmp(user_NAME1, user_NAME2, length);
-    if (name_comparison != 0) {
-        free(user_NAME1);
-        return name_comparison;
-    }
+    free(user_NAME1);
+    return name_comparison;
 }
 
 gint usersCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
@@ -68,15 +66,8 @@ gint usersCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
     return id_comparison;
 }
 
-void usersCatalog_print_array(gpointer data, gpointer user_data) {
-    const User user = (const User)user_data;
-    char *name = get_user_name(user);
-    g_print("Value: %s\n", name);
-    free(name);
-}
-
 void usersCatalog_write_to_catalog(User user, ParserStore store) {
-    const char *id = get_user_id(user);
+    char *id = get_user_id(user);
     Catalog *user_catalog = g_array_index(store, Catalog *, 2);
     catalog_add_str_to_catalog(user_catalog, id, user);
     free(id);

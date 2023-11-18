@@ -22,22 +22,13 @@ gint passengersCatalog_full_compare_func(gconstpointer a, gconstpointer b){
 
 gint passenger_flightID_compare_func(gconstpointer a, gconstpointer b){
     const Passenger *passenger1 = (const Passenger*)a;
-    const int flightID2 = (const int *)b;
+    const int flightID2 = GPOINTER_TO_INT(b);
 
     short int flightID1 = get_passenger_flightID(*passenger1);
 
     if (flightID1 < flightID2) return -1;
     if (flightID1 > flightID2) return 1;
     return 0;
-}
-
-//FIXME THis fucntion is not well implemented
-void passengersCatalog_print_array(gpointer data, gpointer passenger_data) {
-    const Passenger passenger = (Passenger)passenger_data;
-    int flightID = get_passenger_flightID(passenger);
-    char* userID = get_passenger_userdID(passenger);
-    g_print("flightID: %d; userID: %s\n", flightID, userID);
-    free(userID);
 }
 
 void passengersCatalog_write_to_catalog(Passenger passenger, ParserStore store) {

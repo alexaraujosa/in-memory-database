@@ -38,6 +38,8 @@ void test_preprocessor_passenger(FILE* stream, ParserStore store, va_list args) 
     Catalog* catalogo3 = va_arg(args, Catalog*);
     g_array_append_vals(store, &catalogo3, 1);
 }
+
+// TODO Stream unused value
 void default_csv_destructor_reservation(FILE* stream, ParserStore store) {
     FILE* discarder = g_array_index(store, FILE*, 0);
     if(discarder != NULL)  CLOSE_FILE(discarder);
@@ -46,14 +48,6 @@ void default_csv_destructor_reservation(FILE* stream, ParserStore store) {
     free(file_header);
 
     g_array_free(store, TRUE);
-}
-
-void test_parser(Tokens tokens) {
-    return;
-}
-
-void test_writer(void* raw_data, FILE** store) {
-    fflush(stdout);
 }
 
 void batch(const char* arg1, const char* arg2) {
@@ -77,7 +71,6 @@ void batch(const char* arg1, const char* arg2) {
         user_catalog
     );  
     free(userdata_path);
-    catalog_sort(user_catalog, &usersCatalog_full_compare_func);
     //catalog_print_array(user_catalog, &print_user);
 
     Catalog* flight_catalog = catalog_init(g_direct_hash, g_direct_equal, NULL);
@@ -94,7 +87,6 @@ void batch(const char* arg1, const char* arg2) {
         flight_catalog
     );
     free(flightsdata_path);
-    catalog_sort(flight_catalog, &flightsCatalog_full_compare_func);
     //catalog_print_array(flight_catalog, &print_flight);
 
     Catalog* passengers_catalog = catalog_init(NULL, NULL, NULL);
@@ -113,7 +105,6 @@ void batch(const char* arg1, const char* arg2) {
         passengers_catalog
     );
     free(passengersdata_path);
-    catalog_sort(passengers_catalog, &passengersCatalog_full_compare_func);
     //catalog_print_array(passengers_catalog, &passengersCatalog_print_array);
 
     Catalog* reservation_catalog = catalog_init(g_direct_hash, g_direct_equal, NULL);
@@ -132,18 +123,15 @@ void batch(const char* arg1, const char* arg2) {
     );
     free(reservationsdata_path);
     
-    catalog_sort(reservation_catalog, &reservationsCatalog_full_compare_func);
+    catalog_sort(user_catalog, (GCompareFunc)&usersCatalog_full_compare_func);
+    catalog_sort(flight_catalog, (GCompareFunc)&flightsCatalog_full_compare_func);
+    catalog_sort(passengers_catalog, (GCompareFunc)&passengersCatalog_full_compare_func);
+    catalog_sort(reservation_catalog, (GCompareFunc)&reservationsCatalog_full_compare_func);
     
     //catalog_print_array(reservation_catalog, &print_reservation);
 
     /*PAULO IS TESTING WITH THIS...DONT TOUCH
-    double rating = 0;
-    rating = calculate_hotel_average_rating(reservation_catalog, 1001);
-    printf("Rating = %.3f\n", rating);
-    rating = calculate_hotel_average_rating(reservation_catalog, 1002);
-    printf("Rating = %.3f\n", rating);
-    rating = calculate_hotel_average_rating(reservation_catalog, 1003);
-    printf("Rating = %.3f\n", rating);
+    */
     
     int n_flights = calculate_user_n_flights(passengers_catalog, "JéssiTavares910");
     printf("n_flights = %d\n", n_flights);
@@ -154,10 +142,9 @@ void batch(const char* arg1, const char* arg2) {
 
     int n_passengers = calculate_flight_total_passengers(passengers_catalog, 444);
     printf("n_passengers = %d\n", n_passengers);
-    */
 
     // Run queries
-    Catalog** catalogues = (Catalog*)malloc(4 * sizeof(Catalog*));
+    Catalog** catalogues = (Catalog**)malloc(4 * sizeof(Catalog*));
     catalogues[0] = user_catalog;
     catalogues[1] = flight_catalog;
     catalogues[2] = passengers_catalog;

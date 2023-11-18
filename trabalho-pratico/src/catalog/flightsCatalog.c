@@ -39,7 +39,7 @@ gint flightsCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
 
 gint flight_origin_compare_func(gconstpointer a, gconstpointer b) {
     const Flight *user1 = (const Flight*)a;
-    char* user_NAME2 = (const char*) b;
+    char* user_NAME2 = (char*) b;
 
     char* user_NAME1 = get_flight_origin(*user1);   // TODO: falta dar free
     if(strcasecmp(user_NAME1, user_NAME2) > 0) {
@@ -54,15 +54,6 @@ gint flight_origin_compare_func(gconstpointer a, gconstpointer b) {
 
     free(user_NAME1);
     return 0;
-}
-
-//FIXME THis fucntion is not well implemented
-void flightsCatalog_print_array(gpointer data, gpointer flight_data) {
-    const FLIGHT* flight = (const FLIGHT*)flight_data;
-    char *origin = get_flight_origin(flight);
-    int schedule_departure_date = get_flight_schedule_departure_date(flight);
-    g_print("flight_origin: %s; schedule_departure_date: %d\n", origin, schedule_departure_date);
-    free(origin);
 }
 
 void flightsCatalog_write_to_catalog(FLIGHT* flight, ParserStore store) {

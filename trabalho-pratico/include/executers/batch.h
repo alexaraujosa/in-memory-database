@@ -12,8 +12,6 @@
 #include "catalog/catalogManager.h"
 
 void test_preprocessor(FILE* stream, ParserStore store, va_list args);
-void test_parser(Tokens tokens);
-void test_writer(void* raw_data, FILE** store);
 
 /**
  * @brief Program execution in batch mode.
