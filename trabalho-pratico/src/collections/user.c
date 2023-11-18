@@ -177,6 +177,6 @@ void print_user(void* pt) {
         "CountryCode:%s; "
         "Account_Creation:%d; "
         "Account_status:%s; "
-        "Idade:%d}\n\n",
+        "Idade:%d}\n",
         user->id, user->name, sex, user->country_code, user->account_creation, status, user->age);
 }

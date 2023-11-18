@@ -17,6 +17,7 @@
 #include "debug.h"
 #include "util/io.h"
 #include "util/misc.h"
+#include "stats/stats.h"
 #include "parser/parser.h"
 #include "catalog/catalogManager.h"
 #include "catalog/usersCatalog.h"
