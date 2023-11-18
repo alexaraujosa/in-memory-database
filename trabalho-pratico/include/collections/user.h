@@ -61,14 +61,15 @@ User make_user(
     int birth_date
     );
 
-const char *get_user_id(const User user);
+char *get_user_id(const User user);
 void set_user_id(User user, const char *id);
-const char *get_user_name(const User user);
+char *get_user_name(const User user);
 void set_user_name(User user, const char *name);
-bool get_user_sex(User user);
+bool get_user_sex(const User user);
 void set_user_sex(User user, bool sex);
-const char* get_user_passport(const User user);
-const char *get_user_country_code(const User user);
+char* get_user_passport(const User user);
+void set_user_passport(User user, const char *passport);
+char *get_user_country_code(const User user);
 void set_user_country_code(User user, const char* country_code);
 int get_user_account_creation(const User user);
 void set_user_account_creation(User user, int account_creation);

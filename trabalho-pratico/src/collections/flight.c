@@ -12,7 +12,7 @@ typedef struct flights {
     int real_departure_date; // Offset from Base Date
 } FLIGHT, *Flight;
 
-int get_flight_id(Flight flight){
+int get_flight_id(const Flight flight){
     int flight_id = flight->id;
     return flight_id;
 }
@@ -21,7 +21,7 @@ void set_flight_id(Flight flight, int id){
     flight->id = id;
 }
 
-const char *get_flight_airline(Flight flight){
+char *get_flight_airline(const Flight flight){
     return strdup(flight->airline);
 }
 
@@ -30,7 +30,7 @@ void set_flight_airline(Flight flight, const char *airline){
     flight->airline[sizeof(flight->airline) - 1] = '\0';
 }
 
-const char *get_flight_plane_model(Flight flight){
+char *get_flight_plane_model(const Flight flight){
     return strdup(flight->plane_model);
 }
 
@@ -39,7 +39,7 @@ void set_flight_plane_model(Flight flight, const char *plane_model){
     flight->plane_model[sizeof(flight->plane_model) - 1] = '\0';
 }
 
-const char *get_flight_origin(Flight flight){
+char *get_flight_origin(const Flight flight){
     return strdup(flight->origin);
 }
 
@@ -48,7 +48,7 @@ void set_flight_origin(Flight flight, const char *origin){
     flight->origin[sizeof(flight->origin) - 1] = '\0';
 }
 
-const char *get_flight_destination(Flight flight){
+char *get_flight_destination(const Flight flight){
     return strdup(flight->destination);
 }
 
@@ -57,7 +57,7 @@ void set_flight_destination(Flight flight, const char *destination){
     flight->destination[sizeof(flight->destination) - 1] = '\0';
 }
 
-int get_flight_schedule_departure_date(Flight flight){
+int get_flight_schedule_departure_date(const Flight flight){
     int flight_schedule_departure_date = flight->schedule_departure_date;
     return flight_schedule_departure_date;
 }
@@ -66,7 +66,7 @@ void set_flight_schedule_departure_date(Flight flight, int schedule_departure_da
     flight->schedule_departure_date = schedule_departure_date;
 }
 
-int get_flight_schedule_arrival_date(Flight flight){
+int get_flight_schedule_arrival_date(const Flight flight){
     int flight_schedule_arrival_date = flight->schedule_arrival_date;
     return flight_schedule_arrival_date;
 }
@@ -75,7 +75,7 @@ void set_flight_schedule_arrival_date(Flight flight, int schedule_arrival_date){
     flight->schedule_arrival_date = schedule_arrival_date;
 }
 
-int get_flight_real_departure_date(Flight flight){
+int get_flight_real_departure_date(const Flight flight){
     int flight_real_departure_date = flight->real_departure_date;
     return flight_real_departure_date;
 }
@@ -181,19 +181,15 @@ void print_flight(void* pt) {
     FLIGHT* flight = (FLIGHT*)pt;
     int parameter = flight->schedule_departure_date;
     parameter = parameter + TIME_T_SYSTEM;
-    time_t converted_time = (time_t)parameter;
 
-    struct tm *timeinfo;
-    timeinfo = localtime(&converted_time);
-
-    char buffer[20];
     printf(
         "%.10d;"
         "%s;"
         "%s;"       
         "%s;"
-        "%s"
-        "%s;\n",
+        "%s;"
+        "%s;"
+        "%s\n",
         flight->id, 
         date_int_to_string(flight->schedule_departure_date + TIME_T_SYSTEM), 
         date_int_to_string(flight->schedule_arrival_date + TIME_T_SYSTEM), 

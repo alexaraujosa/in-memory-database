@@ -17,8 +17,7 @@ typedef struct user {
 } USER, *User;
 
 
-// SEE devemos usar copias com memoria dinamica? ou o chamador usa como input o buffer?
-const char *get_user_id(const User user) {
+char *get_user_id(const User user) {
     return strdup(user->id);
 }
 
@@ -27,7 +26,7 @@ void set_user_id(User user, const char *id) {
     user->id[sizeof(user->id) - 1] = '\0'; 
 }
 
-const char *get_user_name(const User user){
+char *get_user_name(const User user){
     return strdup(user->name);
 }
 
@@ -36,7 +35,7 @@ void set_user_name(User user, const char *name){
     user->name[sizeof(user->name) - 1] = '\0';
 }
 
-bool get_user_sex(User user){
+bool get_user_sex(const User user){
     bool user_sex = user->sex;
     return user_sex;
 }
@@ -45,11 +44,16 @@ void set_user_sex(User user, bool sex){
     user->sex = sex;
 }
 
-const char* get_user_passport(const User user) {
+char* get_user_passport(const User user) {
     return strdup(user->passport);
 }
 
-const char *get_user_country_code(const User user){
+char* set_user_passport(User user, const char *passport) {
+    strncpy(user->passport, passport, sizeof(user->passport) - 1);
+    user->passport[sizeof(user->passport) - 1] = '\0';
+}
+
+char *get_user_country_code(const User user){
     return strdup(user->country_code);
 }
 

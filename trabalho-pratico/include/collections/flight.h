@@ -49,21 +49,21 @@ Flight makeFlight(
     int real_departure_date
 );
 
-int get_flight_id(Flight flight);
+int get_flight_id(const Flight flight);
 void set_flight_id(Flight flight, int id);
-const char *get_flight_airline(Flight flight);
+char *get_flight_airline(const Flight flight);
 void set_flight_airline(Flight flight, const char *airline);
-const char *get_flight_plane_model(Flight flight);
+char *get_flight_plane_model(const Flight flight);
 void set_flight_plane_model(Flight flight, const char *plane_model);
-const char *get_flight_origin(Flight flight);
+char *get_flight_origin(const Flight flight);
 void set_flight_origin(Flight flight, const char *origin);
-const char *get_flight_destination(Flight flight);
+char *get_flight_destination(const Flight flight);
 void set_flight_destination(Flight flight, const char *destination);
-int get_flight_schedule_departure_date(Flight flight);
+int get_flight_schedule_departure_date(const Flight flight);
 void set_flight_schedule_departure_date(Flight flight, int schedule_departure_date);
-int get_flight_schedule_arrival_date(Flight flight);
+int get_flight_schedule_arrival_date(const Flight flight);
 void set_flight_schedule_arrival_date(Flight flight, int schedule_arrival_date);
-int get_flight_real_departure_date(Flight flight);
+int get_flight_real_departure_date(const Flight flight);
 void set_flight_real_departure_date(Flight flight, int real_departure_date);
 
 /**

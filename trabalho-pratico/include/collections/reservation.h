@@ -58,27 +58,27 @@ Reservation make_reservation(
     int rating
 );
 
-int get_reservation_id(Reservation reservation);
+int get_reservation_id(const Reservation reservation);
 void set_reservation_id(Reservation reservation, int id);
-const char *get_reservation_userID(Reservation reservation);
+char *get_reservation_userID(const Reservation reservation);
 void set_reservation_userID(Reservation reservation, const char *user_id);
-short int get_reservation_hotelID(Reservation reservation);
+short int get_reservation_hotelID(const Reservation reservation);
 void set_reservation_hotelID(Reservation reservation, short int hotel_id);
-const char *get_reservation_hotel_name(Reservation resarvation);
+char *get_reservation_hotel_name(const Reservation resarvation);
 void set_reservation_hotel_name(Reservation reservation, const char *hotel_name);
-unsigned int get_reservation_hotel_stars(Reservation reservation);
+unsigned int get_reservation_hotel_stars(const Reservation reservation);
 void set_reservation_hotel_stars(Reservation reservation, unsigned int hotel_stars);
-unsigned int get_reservation_city_tax(Reservation reservation);
+unsigned int get_reservation_city_tax(const Reservation reservation);
 void set_reservation_city_tax(Reservation reservation, unsigned int city_tax);
-int get_reservation_begin_date(Reservation reservation);
+int get_reservation_begin_date(const Reservation reservation);
 void set_reservation_begin_date(Reservation reservation, int begin_date);
-int get_reservation_end_date(Reservation reservation);
+int get_reservation_end_date(const Reservation reservation);
 void set_reservation_end_data(Reservation reservation, int end_date);
-unsigned int get_reservation_price_per_night(Reservation reservation);
+unsigned int get_reservation_price_per_night(const Reservation reservation);
 void set_reservation_price_per_night(Reservation reservation, unsigned int price_per_night);
-bool get_reservation_includes_breakfast(Reservation reservation);
+bool get_reservation_includes_breakfast(const Reservation reservation);
 void set_reservation_includes_breakfast(Reservation reservation, bool includes_breakfast);
-int get_reservation_rating(Reservation reservation);
+int get_reservation_rating(const Reservation reservation);
 void set_reservation_rating(Reservation reservation, int rating);
 
 /**

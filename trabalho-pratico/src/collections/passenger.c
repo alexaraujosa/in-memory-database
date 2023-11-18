@@ -5,7 +5,7 @@ typedef struct passenger {
     UserId(user_id); // Relates to User
 } PASSENGER, *Passenger;
 
-int get_passenger_flightID(Passenger passenger){
+int get_passenger_flightID(const Passenger passenger){
     int flight_id = passenger->flight_id;
     return flight_id;
 }
@@ -14,7 +14,7 @@ void set_passenger_flightID(Passenger passenger, int flight_id){
     passenger->flight_id = flight_id;
 }
 
-const char *get_passenger_userdID(Passenger passenger){
+char *get_passenger_userdID(const Passenger passenger){
     return strdup(passenger->user_id);
 }
 
