@@ -6,8 +6,8 @@
  * Catalogue order:
  * 0: Users
  * 1: Flights
- * 2: Reservations
- * 3: Passengers
+ * 2: Passengers
+ * 3: Reservations
  */
 
 #ifndef TP_QUERY_H
