@@ -32,7 +32,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
             converted_time = (time_t)parameter;
             timeinfo = localtime(&converted_time);
             fprintf(output_file, "end_date: %.4d/%.2d/%.2d\n", timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday);
-            fprintf(output_file, "inclues_breakfast: %s\n", get_reservation_includes_breakfast(reservation) ? "True" : "False");
+            fprintf(output_file, "includes_breakfast: %s\n", get_reservation_includes_breakfast(reservation) ? "True" : "False");
             fprintf(output_file, "nights: %d\n", nights);
             fprintf(output_file, "total_price: %0.3f\n", total_price);
         } else {
@@ -94,7 +94,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
 
             struct tm *timeinfo;
             timeinfo = localtime(&converted_time);
-            fprintf(output_file, "%s;%s;%s;%s;%.4d/%.2d/%.2d %.2d:%.2d%.2d;", get_flight_airline(flight),
+            fprintf(output_file, "%s;%s;%s;%s;%.4d/%.2d/%.2d %.2d:%.2d:%.2d;", get_flight_airline(flight),
                                                                                 get_flight_plane_model(flight),
                                                                                 get_flight_origin(flight),
                                                                                 get_flight_destination(flight),
