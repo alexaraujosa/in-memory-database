@@ -48,7 +48,7 @@ char* get_user_passport(const User user) {
     return strdup(user->passport);
 }
 
-char* set_user_passport(User user, const char *passport) {
+void set_user_passport(User user, const char *passport) {
     strncpy(user->passport, passport, sizeof(user->passport) - 1);
     user->passport[sizeof(user->passport) - 1] = '\0';
 }
