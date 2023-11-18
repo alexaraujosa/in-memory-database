@@ -33,16 +33,16 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
             fprintf(output_file, "sex: %s\n",get_user_sex(user) ? "M" : "F");
             fprintf(output_file, "age: %d\n",get_user_age(user));
             fprintf(output_file, "country_code: %s\n",country_code);
-            fprintf(output_file, "passport: %s\n","PASSPORT");
+            fprintf(output_file, "passport: %s\n",get_user_passport(user));
             fprintf(output_file, "number_of_flights: %d\n",calculate_user_n_flights(catalogues[2], argv[0]));
             fprintf(output_file, "number_of_reservations: %d\n",n_reservas);
             fprintf(output_file, "total_spent: %.3f\n",total_spent);
         } else {
-            fprintf(output_file, "%s;%s;%d;%s,%s;%d,%d,%.3f\n", name,
+            fprintf(output_file, "%s;%s;%d;%s;%s;%d;%d;%.3f\n", name,
                                                                 get_user_sex(user) ? "M" : "F",
                                                                 get_user_age(user),
                                                                 country_code,
-                                                                "PASSPORT",
+                                                                get_user_passport(user),
                                                                 calculate_user_n_flights(catalogues[2], argv[0]),
                                                                 n_reservas,
                                                                 total_spent);

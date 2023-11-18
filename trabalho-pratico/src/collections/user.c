@@ -6,6 +6,7 @@ typedef struct user {
     UserId(id);
     char name[MAX_NAME_LEN + 1];
     bool sex;
+    char passport[MAX_USER_PASSPORT_LEN + 1];
     // char country_code[2];
     CountryCode(country_code);
     int account_creation;  // Offset from Base Date
@@ -42,6 +43,10 @@ bool get_user_sex(User user){
 
 void set_user_sex(User user, bool sex){
     user->sex = sex;
+}
+
+const char* get_user_passport(const User user) {
+    return strdup(user->passport);
 }
 
 const char *get_user_country_code(const User user){
@@ -110,6 +115,7 @@ User make_user(
     char* id,
     char* name,
     bool sex,
+    char* passport,
     CountryCode(country_code),
     int account_creation,
     bool account_status,
@@ -121,6 +127,7 @@ User make_user(
     strncpy(user->id, id, (size_t)MAX_USER_ID_LEN);
     strncpy(user->name, name, (size_t)MAX_NAME_LEN);
     user->sex = sex;
+    strncpy(user->passport, passport, (size_t)MAX_USER_PASSPORT_LEN);
     strncpy(user->country_code, country_code, 2);   //TODO: Verify if theres any problem using strcpy instead strncpy
     user->account_creation = account_creation;  // TODO: Pensar melhor no offset
     user->account_status = account_status;
@@ -136,7 +143,7 @@ User parse_user(Tokens tokens) {
     int account_creation = date_string_to_int(parameter[9]);
     int birth_date = date_string_to_int(parameter[4]);
     
-    User user = make_user(parameter[0], parameter[1], sex, parameter[7], account_creation, account_status, birth_date);
+    User user = make_user(parameter[0], parameter[1], sex, parameter[6], parameter[7], account_creation, account_status, birth_date);
     return user;
 }
 

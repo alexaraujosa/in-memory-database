@@ -19,6 +19,8 @@
 // "Francisco de Assis Eugénio de Bragança Orleães Sabóia e Saxe-Coburgo-Gotha"
 #define MAX_NAME_LEN 156
 
+#define MAX_USER_PASSPORT_LEN 8
+
 // #define UserId(_id) char _id[MAX_USER_ID_LEN]
 #define UserId(name) TypedArrayVariable(char, name, MAX_USER_ID_LEN + 1)
 #define CountryCode(name) TypedArrayVariable(char, name, 2)
@@ -40,6 +42,7 @@ int verify_user_tokens(Tokens tokens);
  * @param id User id.
  * @param name User name.
  * @param sex User sex.
+ * @param passport User passport.
  * @param country_code User country code
  * @param account_creation Offset from system start date, relative to the user account creation.
  * @param account_status User account status.
@@ -51,6 +54,7 @@ User make_user(
     char* id,
     char* name,
     bool sex,
+    char* passport,
     CountryCode(country_code),
     int account_creation,
     bool account_status,
@@ -63,6 +67,7 @@ const char *get_user_name(const User user);
 void set_user_name(User user, const char *name);
 bool get_user_sex(User user);
 void set_user_sex(User user, bool sex);
+const char* get_user_passport(const User user);
 const char *get_user_country_code(const User user);
 void set_user_country_code(User user, const char* country_code);
 int get_user_account_creation(const User user);
