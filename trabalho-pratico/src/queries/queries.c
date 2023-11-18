@@ -51,7 +51,13 @@ void query3(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
            quantidade_a_percorrer--;
         };
         rating /= (matched_index_up - matched_index_down + 1);
-        fprintf(output_file, "%.3f", (rating/(matched_index_up - matched_index_down + 1)));
+        if(flag == 'F'){
+            fprintf(output_file, "--- 1 ---\n");
+            fprintf(output_file, "%.3f\n", rating);
+        }
+        else{
+            fprintf(output_file, "rating: %.3f\n", rating);
+        }
     } else {
         fprintf(output_file, "Reservation with that hotel id not found\n");
     }
