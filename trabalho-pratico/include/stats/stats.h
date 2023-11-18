@@ -20,8 +20,6 @@ typedef struct hotels_stats HOTELS_STATS, *Hotels_stats;
 
 typedef struct aeroport_stats AEROPORT_STATS, *Aeroport_stats;
 
-double calculate_hotel_average_rating(Catalog * catalog, int hotel_id);
-
 int calculate_user_n_flights(Catalog *catalog, char *userID);
 
 double calculate_user_total_spent(Catalog *catalog, char *userID, int *n_reservations);
@@ -29,5 +27,7 @@ double calculate_user_total_spent(Catalog *catalog, char *userID, int *n_reserva
 int calculate_flight_total_passengers(Catalog *catalog, int flightId);
 
 int calculate_flight_delay_median(Catalog *catalog, char *origin_name);
+
+int calculate_aeroport_n_passengers(Catalog *flights_catalog, Catalog *passenger_catalog, char *origin_name);
 
 #endif

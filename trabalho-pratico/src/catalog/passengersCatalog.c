@@ -20,6 +20,17 @@ gint passengersCatalog_full_compare_func(gconstpointer a, gconstpointer b){
     return name_comparison;
 }
 
+gint passenger_flightID_compare_func(gconstpointer a, gconstpointer b){
+    const Passenger *passenger1 = (const Passenger*)a;
+    const int flightID2 = (const int *)b;
+
+    short int flightID1 = get_passenger_flightID(*passenger1);
+
+    if (flightID1 < flightID2) return -1;
+    if (flightID1 > flightID2) return 1;
+    return 0;
+}
+
 //FIXME THis fucntion is not well implemented
 void passengersCatalog_print_array(gpointer data, gpointer passenger_data) {
     const Passenger passenger = (Passenger)passenger_data;

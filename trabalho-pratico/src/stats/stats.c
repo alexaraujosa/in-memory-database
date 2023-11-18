@@ -36,20 +36,6 @@ typedef struct aeroport_stats {
     double mediana_delays;
 } AEROPORT_STATS, *Aeroport_stats;
 
-gint passenger_flightID_compare_func(gconstpointer a, gconstpointer b){
-    const Passenger *passenger1 = (const Passenger*)a;
-    const int flightID2 = (const int *)b;
-
-    short int flightID1 = get_passenger_flightID(*passenger1);
-
-    if (flightID1 < flightID2) return -1;
-    if (flightID1 > flightID2) return 1;
-    return 0;
-}
-
-
-
-
 //TODO PRECORRE O ARRAY TODO
 int calculate_user_n_flights(Catalog *catalog, char *userID){
     int n_flights = 0;
@@ -115,7 +101,7 @@ int calculate_flight_total_passengers(Catalog *catalog, int flightId){
 
         int matched_index_up = matched_index;
         void *data2 = catalog_search_in_array(catalog, matched_index_up);
-        while (get_passenger_flightID((Passenger*)data2)==flightId && matched_index_up<catalog_get_item_count(catalog)) {
+        while (get_passenger_flightID((Passenger*)data2)==flightId && matched_index_up<catalog_get_item_count(catalog)-1) {
             data2 = catalog_search_in_array(catalog, ++matched_index_up);
         };
         if(get_reservation_hotelID((Passenger*)data2)!=flightId) matched_index_up--;
@@ -150,7 +136,7 @@ int calculate_flight_delay_median(Catalog *catalog, char *origin_name){
 
         int matched_index_up = matched_index;
         void *data2 = catalog_search_in_array(catalog, matched_index_up);
-        while (strcasecmp(origin_name, get_flight_origin((Flight*)data2)) == 0 && matched_index_up<catalog_get_item_count(catalog)) {
+        while (strcasecmp(origin_name, get_flight_origin((Flight*)data2)) == 0 && matched_index_up<catalog_get_item_count(catalog)-1) {
             data2 = catalog_search_in_array(catalog, ++matched_index_up);
         };
         if(strcasecmp(origin_name, get_flight_origin((Flight*)data1)) != 0) matched_index_up--;
@@ -174,6 +160,43 @@ int calculate_flight_delay_median(Catalog *catalog, char *origin_name){
         } else {
             return ((arr[mediana-1]+arr[mediana])/2);
         }
+    } else {
+        printf("Flight with that origin not found");
+        return -1;
+    }
+}
+
+
+// TODO Still a prototype... i need to add the input for the year
+int calculate_aeroport_n_passengers(Catalog *flight_catalog, Catalog *passenger_catalog, char *origin_name){
+    guint matched_index = 0;
+    gboolean exists = catalog_exists_in_array(flight_catalog, origin_name, &flight_origin_compare_func, &matched_index);
+    void *data1, *data2;
+    if(exists){
+        int matched_index_down = matched_index;
+        void *data1 = catalog_search_in_array(flight_catalog, matched_index_down);
+        while (strcasecmp(origin_name, get_flight_origin((Flight*)data1)) == 0 && matched_index_down > 0) {
+            data1 = catalog_search_in_array(flight_catalog, --matched_index_down);
+        };
+        if(strcasecmp(origin_name, get_flight_origin((Flight*)data1)) != 0) matched_index_down++;
+
+        int matched_index_up = matched_index;
+        void *data2 = catalog_search_in_array(flight_catalog, matched_index_up);
+        while (strcasecmp(origin_name, get_flight_origin((Flight*)data2)) == 0 && matched_index_up<catalog_get_item_count(flight_catalog)-1) {
+            data2 = catalog_search_in_array(flight_catalog, ++matched_index_up);
+        };
+        if(strcasecmp(origin_name, get_flight_origin((Flight*)data1)) != 0) matched_index_up--;
+        
+        int i = matched_index_down;
+        int n_passengers = 0;
+        int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
+        while ( 0 < quantidade_a_percorrer) {
+            const Flight flight_temp = (const Flight)(catalog_search_in_array(flight_catalog,i));
+            n_passengers += calculate_flight_total_passengers(passenger_catalog, get_flight_id(flight_temp));
+            i++;
+            quantidade_a_percorrer--;
+        };
+        return n_passengers;
     } else {
         printf("Flight with that origin not found");
         return -1;

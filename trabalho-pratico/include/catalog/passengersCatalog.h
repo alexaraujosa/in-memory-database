@@ -18,6 +18,8 @@
  */
 gint passengersCatalog_full_compare_func(gconstpointer a, gconstpointer b);
 
+gint passenger_flightID_compare_func(gconstpointer a, gconstpointer b);
+
 /**
  * @brief Prints the Passengers Catalog array.
  *

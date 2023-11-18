@@ -35,7 +35,7 @@ void query3(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
 
         int matched_index_up = matched_index;
         void *data2 = catalog_search_in_array(catalogues[3], matched_index_up);
-        while (get_reservation_hotelID((Reservation*)data2)==hotel_id && matched_index_up<catalog_get_item_count(catalogues[3])) {
+        while (get_reservation_hotelID((Reservation*)data2)==hotel_id && matched_index_up<catalog_get_item_count(catalogues[3])-1) {
             data2 = catalog_search_in_array(catalogues[3], ++matched_index_up);
         };
         if(get_reservation_hotelID((Reservation*)data2)!=hotel_id) matched_index_up--;
