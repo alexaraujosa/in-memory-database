@@ -6,8 +6,8 @@ gint flightsCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
     const Flight flight1 = *(const Flight*)a;
     const Flight flight2 = *(const Flight*)b;
 
-    const char *origin1 = get_flight_origin(flight1);
-    const char *origin2 = get_flight_origin(flight2);
+    char *origin1 = get_flight_origin(flight1);
+    char *origin2 = get_flight_origin(flight2);
 
     int origin_comparison = strcasecmp(origin1, origin2);
     if (origin_comparison != 0) {
@@ -39,9 +39,9 @@ gint flightsCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
 
 gint flight_origin_compare_func(gconstpointer a, gconstpointer b) {
     const Flight *user1 = (const Flight*)a;
-    const char* user_NAME2 = (const char*) b;
+    char* user_NAME2 = (const char*) b;
 
-    const char* user_NAME1 = get_flight_origin(*user1);   // TODO: falta dar free
+    char* user_NAME1 = get_flight_origin(*user1);   // TODO: falta dar free
     if(strcasecmp(user_NAME1, user_NAME2) > 0) {
         free(user_NAME1);
         return 1;
@@ -59,7 +59,7 @@ gint flight_origin_compare_func(gconstpointer a, gconstpointer b) {
 //FIXME THis fucntion is not well implemented
 void flightsCatalog_print_array(gpointer data, gpointer flight_data) {
     const FLIGHT* flight = (const FLIGHT*)flight_data;
-    const char *origin = get_flight_origin(flight);
+    char *origin = get_flight_origin(flight);
     int schedule_departure_date = get_flight_schedule_departure_date(flight);
     g_print("flight_origin: %s; schedule_departure_date: %d\n", origin, schedule_departure_date);
     free(origin);

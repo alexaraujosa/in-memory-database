@@ -11,8 +11,8 @@ gint passengersCatalog_full_compare_func(gconstpointer a, gconstpointer b){
     if(id1 < id2) return -1;
     if(id1 > id2) return 1;
 
-    const char *userId1 = get_passenger_userdID(passenger1);
-    const char *userId2 = get_passenger_userdID(passenger2);
+    char *userId1 = get_passenger_userdID(passenger1);
+    char *userId2 = get_passenger_userdID(passenger2);
 
     int name_comparison = strcasecmp(userId1, userId2);
     free(userId1);
@@ -35,7 +35,7 @@ gint passenger_flightID_compare_func(gconstpointer a, gconstpointer b){
 void passengersCatalog_print_array(gpointer data, gpointer passenger_data) {
     const Passenger passenger = (Passenger)passenger_data;
     int flightID = get_passenger_flightID(passenger);
-    const char* userID = get_passenger_userdID(passenger);
+    char* userID = get_passenger_userdID(passenger);
     g_print("flightID: %d; userID: %s\n", flightID, userID);
     free(userID);
 }

@@ -49,7 +49,7 @@ void catalog_add_int_to_catalog(Catalog *catalog, gpointer hashKey, gpointer val
 }
 
 void catalog_remove_from_catalog(Catalog *catalog, gpointer key) {
-    guint i;
+    int i;
     for (i = 0; i < catalog->itemCount; i++) {
         if (g_array_index(catalog->array, gpointer, i) == key) {
             _remove_from_hashtable(catalog->hashTable, key);
@@ -90,7 +90,7 @@ void catalog_print_hash_table(Catalog *catalog, void (*printFunction)(gpointer, 
 }
 
 void catalog_print_array(Catalog *catalog, void (*printFunction)(gpointer)) {
-    guint i;
+    int i;
     for (i = 0; i < catalog->itemCount; i++) {
         printFunction(g_array_index(catalog->array, gpointer, i));
     }

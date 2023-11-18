@@ -9,8 +9,8 @@ gint users_full_compare_func(gconstpointer a, gconstpointer b) {
     const User user1 = *(const User *)a;
     const User user2 = *(const User *)b;
 
-    const char *name1 = get_user_name(user1);
-    const char *name2 = get_user_name(user2);
+    char *name1 = get_user_name(user1);
+    char *name2 = get_user_name(user2);
 
     int name_comparison = strcoll(name1, name2);
     if (name_comparison != 0) {
@@ -19,8 +19,8 @@ gint users_full_compare_func(gconstpointer a, gconstpointer b) {
         return name_comparison;
     }
 
-    const char *id1 = get_user_id(user1);
-    const char *id2 = get_user_id(user2);
+    char *id1 = get_user_id(user1);
+    char *id2 = get_user_id(user2);
     int id_comparison = strcoll(id1, id2);
 
     free(name1);
@@ -33,19 +33,22 @@ gint users_full_compare_func(gconstpointer a, gconstpointer b) {
 gint user_username_compare_func(gconstpointer a, gconstpointer b) {
     const User *user1 = (const User*)a;
     const char* user_NAME2 = (const char*) b;
-    const char* user_NAME1 = get_user_name(*user1);   // TODO: falta dar free
+    char* user_NAME1 = get_user_name(*user1);   // TODO: falta dar free
     int length = strlen(user_NAME2);
-    if(strncasecmp(user_NAME1, user_NAME2, length) > 0) return 1;
-    if(strncasecmp(user_NAME1, user_NAME2, length) < 0) return -1;
-    return 0;
+    
+    int name_comparison = strncasecmp(user_NAME1, user_NAME2, length);
+    if (name_comparison != 0) {
+        free(user_NAME1);
+        return name_comparison;
+    }
 }
 
 gint usersCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
     const User user1 = *(const User *)a;
     const User user2 = *(const User *)b;
 
-    const char *name1 = get_user_name(user1);
-    const char *name2 = get_user_name(user2);
+    char *name1 = get_user_name(user1);
+    char *name2 = get_user_name(user2);
 
     int name_comparison = strcasecmp(name1, name2);
     if (name_comparison != 0) {
@@ -54,8 +57,8 @@ gint usersCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
         return name_comparison;
     }
 
-    const char *id1 = get_user_id(user1);
-    const char *id2 = get_user_id(user2);
+    char *id1 = get_user_id(user1);
+    char *id2 = get_user_id(user2);
     int id_comparison = strcasecmp(id1, id2);
 
     free(name1);
@@ -67,7 +70,7 @@ gint usersCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
 
 void usersCatalog_print_array(gpointer data, gpointer user_data) {
     const User user = (const User)user_data;
-    const char *name = get_user_name(user);
+    char *name = get_user_name(user);
     g_print("Value: %s\n", name);
     free(name);
 }
