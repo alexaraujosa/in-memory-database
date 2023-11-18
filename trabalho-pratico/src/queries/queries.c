@@ -12,12 +12,101 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE** outpu
     if(strncmp("Book", argv[0], 4)==0){
         void *reservation = catalog_search_in_int_hashtable(catalogues[3], atoi(argv[0]+4));
         if(reservation == NULL) return; 
-        //print_reservation(reservation);
+        if(flag == 'F'){
+            int nights = (get_reservation_end_date(reservation) - get_reservation_begin_date(reservation))/(60*60*24);
+            double total_price = (double)get_reservation_price_per_night(reservation)*(double)nights+(((double)get_reservation_price_per_night(reservation)*(double)nights)/100)*(double)get_reservation_city_tax(reservation);
+            int parameter = get_reservation_begin_date(reservation);
+            parameter = parameter + TIME_T_SYSTEM;
+            time_t converted_time = (time_t)parameter;
+
+            struct tm *timeinfo;
+            timeinfo = localtime(&converted_time);
+            fprintf(output_file, "--- 1 ---\n");
+            fprintf(output_file, "hotel_id: HTL%d\n", get_reservation_hotelID(reservation));
+            fprintf(output_file, "hotel_name: %s\n", get_reservation_hotel_name(reservation));
+            fprintf(output_file, "hotel_stars: %d\n", get_reservation_hotel_stars(reservation));
+            fprintf(output_file, "begin_date: %.4d/%.2d/%.2d\n", timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday);
+            
+            parameter = get_reservation_end_date(reservation);
+            parameter = parameter + TIME_T_SYSTEM;
+            converted_time = (time_t)parameter;
+            timeinfo = localtime(&converted_time);
+            fprintf(output_file, "end_date: %.4d/%.2d/%.2d\n", timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday);
+            fprintf(output_file, "inclues_breakfast: %s\n", get_reservation_includes_breakfast(reservation) ? "True" : "False");
+            fprintf(output_file, "nights: %d\n", nights);
+            fprintf(output_file, "total_price: %0.3f\n", total_price);
+        } else {
+            int nights = (get_reservation_end_date(reservation) - get_reservation_begin_date(reservation))/(60*60*24);
+            double total_price = (double)get_reservation_price_per_night(reservation)*(double)nights+(((double)get_reservation_price_per_night(reservation)*(double)nights)/100)*(double)get_reservation_city_tax(reservation);
+            int parameter = get_reservation_begin_date(reservation);
+            parameter = parameter + TIME_T_SYSTEM;
+            time_t converted_time = (time_t)parameter;
+
+            struct tm *timeinfo;
+            timeinfo = localtime(&converted_time);
+            fprintf(output_file, "HTL%d;%s;%d;%.4d/%.2d/%.2d;",     get_reservation_hotelID(reservation),
+                                                                    get_reservation_hotel_name(reservation),
+                                                                    get_reservation_hotel_stars(reservation),
+                                                                    timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday
+                                                                );
+            parameter = get_reservation_end_date(reservation);
+            parameter = parameter + TIME_T_SYSTEM;
+            converted_time = (time_t)parameter;
+            timeinfo = localtime(&converted_time);                                             
+            fprintf(output_file, "%.4d/%.2d/%.2d;%s;%d;%0.3f\n", 
+                timeinfo->tm_year+1900, 
+                timeinfo->tm_mon+1, 
+                timeinfo->tm_mday, 
+                get_reservation_includes_breakfast(reservation) ? "True" : "False",
+                nights,
+                total_price 
+            );
+        }
     }
     if(atoi(argv[0]) > 0){
         void *flight = catalog_search_in_int_hashtable(catalogues[1], atoi(argv[0]));
         if(flight == NULL) return; 
-        //print_flight(flight);
+        if(flag == 'F'){
+            int parameter = get_flight_schedule_departure_date(flight);
+            parameter = parameter + TIME_T_SYSTEM;
+            time_t converted_time = (time_t)parameter;
+
+            struct tm *timeinfo;
+            timeinfo = localtime(&converted_time);
+            fprintf(output_file, "--- 1 ---\n");
+            fprintf(output_file, "airline: %s\n", get_flight_airline(flight));
+            fprintf(output_file, "plane_model: %s\n", get_flight_plane_model(flight));
+            fprintf(output_file, "origin: %s\n", get_flight_origin(flight));
+            fprintf(output_file, "destination: %s\n", get_flight_destination(flight));
+            fprintf(output_file, "schedule_departure_date: %.4d/%.2d/%.2d %.2d:%.2d:%.2d\n", timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+            
+            parameter = get_flight_schedule_arrival_date(flight);
+            parameter = parameter + TIME_T_SYSTEM;
+            converted_time = (time_t)parameter;
+            timeinfo = localtime(&converted_time);
+            fprintf(output_file, "schedule_arrival_date: %.4d/%.2d/%.2d %.2d:%.2d:%.2d\n", timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+            fprintf(output_file, "passengers: %d\n",calculate_flight_total_passengers(catalogues[2], get_flight_id(flight)));
+            fprintf(output_file, "delay: %d\n", get_flight_real_departure_date(flight) - get_flight_schedule_departure_date(flight));
+        } else {
+            int parameter = get_flight_schedule_departure_date(flight);
+            parameter = parameter + TIME_T_SYSTEM;
+            time_t converted_time = (time_t)parameter;
+
+            struct tm *timeinfo;
+            timeinfo = localtime(&converted_time);
+            fprintf(output_file, "%s;%s;%s;%s;%.4d/%.2d/%.2d %.2d:%.2d%.2d;", get_flight_airline(flight),
+                                                                                get_flight_plane_model(flight),
+                                                                                get_flight_origin(flight),
+                                                                                get_flight_destination(flight),
+                                                                timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec
+                                                                );
+            parameter = get_flight_schedule_arrival_date(flight);
+            parameter = parameter + TIME_T_SYSTEM;
+            converted_time = (time_t)parameter;
+            timeinfo = localtime(&converted_time);                                             
+            fprintf(output_file, "%.4d/%.2d/%.2d %.2d:%.2d:%.2d;%d;%d\n", timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, calculate_flight_total_passengers(catalogues[2], get_flight_id(flight)), get_flight_real_departure_date(flight) - get_flight_schedule_departure_date(flight) 
+            );
+        }
     }
     else{
         void *user = catalog_search_in_str_hashtable(catalogues[0], argv[0]);
