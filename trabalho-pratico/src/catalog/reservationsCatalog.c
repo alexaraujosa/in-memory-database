@@ -53,7 +53,9 @@ gint reservation_date_compare_func(gconstpointer a, gconstpointer b) {
     return 0;
 }
 
-void reservationsCatalog_write_to_catalog(RESERVATION *reservation, ParserStore store) {
+void reservationsCatalog_write_to_catalog(void* _reservation, ParserStore store) {
+    RESERVATION* reservation = (RESERVATION*)_reservation;
+    
     int id = get_reservation_id(reservation);
     Catalog* reservation_catalog = g_array_index(store, Catalog*, 3);
     catalog_add_int_to_catalog(reservation_catalog, GINT_TO_POINTER(id), reservation);

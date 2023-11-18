@@ -66,7 +66,9 @@ gint usersCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
     return id_comparison;
 }
 
-void usersCatalog_write_to_catalog(User user, ParserStore store) {
+void usersCatalog_write_to_catalog(void* _user, ParserStore store) {
+    User user = (User)_user;
+
     char *id = get_user_id(user);
     Catalog *user_catalog = g_array_index(store, Catalog *, 2);
     catalog_add_str_to_catalog(user_catalog, id, user);

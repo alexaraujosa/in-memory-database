@@ -36,7 +36,7 @@ void reservationsCatalog_print_array(gpointer data, gpointer reservation_data);
  * @param reservation The reservation to be added.
  * @param store The parser store.
  */
-void reservationsCatalog_write_to_catalog(RESERVATION *reservation, ParserStore store);
+void reservationsCatalog_write_to_catalog(void* _reservation, ParserStore store);
 
 /**
  * @brief Prints key-value pairs of the Reservation Catalog.

@@ -85,7 +85,9 @@ void set_flight_real_departure_date(Flight flight, int real_departure_date){
 }
 
 
-int verify_flight_tokens(Tokens tokens) {
+int verify_flight_tokens(Tokens tokens, ParserStore store) {
+    IGNORE_ARG(store);
+
     char** parameter = tokens->data;
 
     // Whitespace verifier
@@ -143,7 +145,7 @@ Flight make_flight(
     return flight;
 }
 
-Flight parse_flight(Tokens tokens) {
+void* parse_flight(Tokens tokens) {
     char** parameter = tokens->data;    //TODO: Converter os valores do id char* para id int
 
     int id = atoi(parameter[0]);

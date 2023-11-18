@@ -56,7 +56,9 @@ gint flight_origin_compare_func(gconstpointer a, gconstpointer b) {
     return 0;
 }
 
-void flightsCatalog_write_to_catalog(FLIGHT* flight, ParserStore store) {
+void flightsCatalog_write_to_catalog(void* _flight, ParserStore store) {
+    Flight flight = (Flight)_flight;
+
     int id = get_flight_id(flight);
     Catalog *flight_catalog = g_array_index(store, Catalog*, 2);
     catalog_add_int_to_catalog(flight_catalog, GINT_TO_POINTER(id), flight);

@@ -34,7 +34,7 @@ typedef struct user USER, *User;
  * 
  * @return 1 if all the tokens are valid. Otherwise, 0.
 */
-int verify_user_tokens(Tokens tokens);
+int verify_user_tokens(Tokens tokens, ParserStore store);
 
 /**
  * @brief Creates an user using dynamic memory.
@@ -85,7 +85,7 @@ void set_user_age(User user, int age);
  * 
  * @return Pointer to the User struct.
 */
-User parse_user(Tokens tokens);
+void* parse_user(Tokens tokens);
 
 /**
  * @brief Creates the users_errors file and writes the lines with invalid data.

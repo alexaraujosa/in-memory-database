@@ -31,7 +31,9 @@ gint passenger_flightID_compare_func(gconstpointer a, gconstpointer b){
     return 0;
 }
 
-void passengersCatalog_write_to_catalog(Passenger passenger, ParserStore store) {
+void passengersCatalog_write_to_catalog(void* _passenger, ParserStore store) {
+    Passenger passenger = (Passenger)_passenger;
+    
     Catalog* passenger_catalog = g_array_index(store, Catalog*, 4);
     catalog_add_int_to_catalog(passenger_catalog, NULL, passenger);
 }

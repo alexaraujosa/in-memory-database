@@ -22,7 +22,7 @@ typedef struct flights FLIGHT, *Flight;
  * 
  * @return 1 if all the tokens are valid. Otherwise, 0.
 */
-int verify_flight_tokens(Tokens tokens);
+int verify_flight_tokens(Tokens tokens, ParserStore store);
 
 /**
  * @brief Creates a flight using dynamic memory.
@@ -73,7 +73,7 @@ void set_flight_real_departure_date(Flight flight, int real_departure_date);
  * 
  * @return Pointer to the Flight struct.
 */
-Flight parse_flight(Tokens tokens);
+void* parse_flight(Tokens tokens);
 
 /**
  * @brief Creates the flight_errors file and writes the lines with invalid data.

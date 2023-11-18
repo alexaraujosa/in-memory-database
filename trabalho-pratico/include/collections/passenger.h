@@ -41,7 +41,7 @@ void set_passenger_userID(Passenger passenger, const char *user_id);
  * 
  * @return Pointer to the Passenger struct.
 */
-Passenger parse_passenger(Tokens tokens);
+void* parse_passenger(Tokens tokens);
 
 /**
  * @brief Creates the passengers_errors file and writes the lines with invalid data.

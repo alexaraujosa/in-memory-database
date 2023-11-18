@@ -52,7 +52,7 @@ Passenger make_passenger(
     return passenger;
 }
 
-Passenger parse_passenger(Tokens tokens) {
+void* parse_passenger(Tokens tokens) {
     char** parameter = tokens->data;
 
     int flight_id = atoi(parameter[0]);

@@ -179,7 +179,7 @@ Reservation make_reservation(
     return reservation;
 }
 
-Reservation parse_reservation(Tokens tokens) {
+void* parse_reservation(Tokens tokens) {
     char** parameter = tokens->data;
     
     int id = atoi(parameter[0]+RESERVATION_ID_OFFSET);

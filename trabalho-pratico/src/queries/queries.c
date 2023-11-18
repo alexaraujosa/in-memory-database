@@ -138,7 +138,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             fprintf(
                 output_file, 
                 "passengers: %d\n",
-                calculate_flight_total_passengers(catalogues[2], get_flight_id(flight))
+                calculate_flight_total_passengers(catalogues[2], GINT_TO_POINTER((flight)))
             );
             fprintf(
                 output_file, 
@@ -244,6 +244,8 @@ void query2(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
+    IGNORE_ARG(catalogues);
+    IGNORE_ARG(output_file);
     fputs("2", output_file);
 }
 
@@ -427,7 +429,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     GArray *arrTemp = g_array_new(FALSE, FALSE, sizeof(gpointer));
     guint matched_index = 0;
     gboolean exists = catalog_exists_in_array(catalogues[1], argv[0], &flight_origin_compare_func, &matched_index);
-    void *data1, *data2;
+    // void *data1, *data2;
     char* orig;
 
     if (exists) {
@@ -451,7 +453,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             data1 = catalog_search_in_array(catalogues[1], matched_index_down);
 
             free(orig);
-            orig = get_flight_origin((Flight*)data1);
+            orig = get_flight_origin((Flight)data1);
             
         };
         free(orig);
@@ -466,7 +468,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             data2 = catalog_search_in_array(catalogues[1], matched_index_up);
 
             free(orig);
-            orig = get_flight_origin((Flight*)data2);
+            orig = get_flight_origin((Flight)data2);
         };
         free(orig);
 
@@ -607,6 +609,8 @@ void query6(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
+    IGNORE_ARG(catalogues);
+    IGNORE_ARG(output_file);
     fputs("6", output_file);
 }
 
@@ -615,6 +619,8 @@ struct q7_index {
     int median;
 };
 gint compare_q7_indices(gconstpointer a, gconstpointer b, gpointer user_data) {
+    IGNORE_ARG(user_data);
+    
     const struct q7_index *index_a = (const struct q7_index *)a;
     const struct q7_index *index_b = (const struct q7_index *)b;
 
@@ -622,6 +628,8 @@ gint compare_q7_indices(gconstpointer a, gconstpointer b, gpointer user_data) {
 }
 
 void query7(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file) {
+    IGNORE_ARG(argc);
+
     Catalog* flights = catalogues[1];
     int size = catalog_get_item_count(flights);
 
@@ -697,6 +705,8 @@ void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
+    IGNORE_ARG(catalogues);
+    IGNORE_ARG(output_file);
     fputs("8", output_file);
 }
 
@@ -709,7 +719,7 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     guint matched_index = 0;
     gboolean exists = catalog_exists_in_array(catalogues[0], *argv, &user_username_compare_func, &matched_index);
     
-    void *data1, *data2;
+    // void *data1, *data2;
     char* user_name;
 
     if (exists) {
@@ -726,7 +736,7 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             data1 = catalog_search_in_array(catalogues[0], matched_index_down--);
 
             free(user_name);
-            user_name = get_user_name((User*)data1);
+            user_name = get_user_name((User)data1);
         };
         free(user_name);
 
@@ -736,7 +746,7 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             data2 = catalog_search_in_array(catalogues[0], matched_index_up++);
 
             free(user_name);
-            user_name = get_user_name((User*)data2);
+            user_name = get_user_name((User)data2);
         };
         free(user_name);
 
@@ -787,5 +797,7 @@ void query10(char flag, int argc, char** argv, Catalog** catalogues, FILE* outpu
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
+    IGNORE_ARG(catalogues);
+    IGNORE_ARG(output_file);
     fputs("10", output_file);
 }

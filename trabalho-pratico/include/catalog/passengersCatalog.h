@@ -34,6 +34,6 @@ void passengersCatalog_print_array(gpointer data, gpointer passenger_data);
  * @param passenger The passenger to be added.
  * @param store The parser store.
  */
-void passengersCatalog_write_to_catalog(Passenger passenger, ParserStore store);
+void passengersCatalog_write_to_catalog(void* _passenger, ParserStore store);
 
 #endif /* PASSENGERS_CATALOG */

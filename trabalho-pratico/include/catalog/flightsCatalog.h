@@ -34,7 +34,7 @@ void flightsCatalog_print_array(gpointer data, gpointer flight_data);
  * @param flight The flight to be added.
  * @param store The parser store.
  */
-void flightsCatalog_write_to_catalog(FLIGHT *flight, ParserStore store);
+void flightsCatalog_write_to_catalog(void* _flight, ParserStore store);
 
 /**
  * @brief Prints key-value pairs of the Flights Catalog.

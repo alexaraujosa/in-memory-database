@@ -35,7 +35,7 @@ void usersCatalog_print_array(gpointer data, gpointer user_data);
  * @param user The user to be added.
  * @param store The parser store.
  */
-void usersCatalog_write_to_catalog(User user, ParserStore store);
+void usersCatalog_write_to_catalog(void* _user, ParserStore store);
 
 /**
  * @brief Prints key-value pairs of the User Catalog.

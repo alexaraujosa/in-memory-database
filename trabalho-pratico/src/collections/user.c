@@ -89,7 +89,9 @@ void set_user_age(User user, int age){
     user->age = age;
 }
 
-int verify_user_tokens(Tokens tokens) {
+int verify_user_tokens(Tokens tokens, ParserStore store) {
+    IGNORE_ARG(store);
+    
     char** parameter = tokens->data;
 
     // Whitespace verifier
@@ -140,7 +142,7 @@ User make_user(
     return user;
 }
 
-User parse_user(Tokens tokens) {
+void* parse_user(Tokens tokens) {
     char** parameter = tokens->data;
     bool sex = get_sex(parameter[5]);
     bool account_status = get_account_status(parameter[11]);

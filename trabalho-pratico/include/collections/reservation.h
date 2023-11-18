@@ -88,7 +88,7 @@ void set_reservation_rating(Reservation reservation, int rating);
  * 
  * @return Pointer to the Reservation struct.
 */
-Reservation parse_reservation(Tokens tokens);
+void* parse_reservation(Tokens tokens);
 
 /**
  * @brief Creates the reservation_errors file and writes the lines with invalid data.

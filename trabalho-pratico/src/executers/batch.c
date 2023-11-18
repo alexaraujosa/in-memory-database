@@ -41,6 +41,8 @@ void test_preprocessor_passenger(FILE* stream, ParserStore store, va_list args) 
 
 // TODO Stream unused value
 void default_csv_destructor_reservation(FILE* stream, ParserStore store) {
+    IGNORE_ARG(stream);
+
     FILE* discarder = g_array_index(store, FILE*, 0);
     if(discarder != NULL)  CLOSE_FILE(discarder);
 
