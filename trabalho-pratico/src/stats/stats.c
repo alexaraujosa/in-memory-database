@@ -126,39 +126,67 @@ int calculate_flight_delay_median(Catalog *catalog, char *origin_name){
     guint matched_index = 0;
     gboolean exists = catalog_exists_in_array(catalog, origin_name, &flight_origin_compare_func, &matched_index);
     void *data1, *data2;
+    char* orig;
+
     if (exists) {
+        // ------- DATA 1 -------
         int matched_index_down = matched_index;
         void *data1 = catalog_search_in_array(catalog, matched_index_down);
-        while (strcasecmp(origin_name, get_flight_origin((Flight*)data1)) == 0 && matched_index_down > 0) {
-            data1 = catalog_search_in_array(catalog, --matched_index_down);
-        };
-        if(strcasecmp(origin_name, get_flight_origin((Flight*)data1)) != 0) matched_index_down++;
+        orig = get_flight_origin((Flight*)data1);
 
+        // while (strcasecmp(origin_name, get_flight_origin((Flight*)data1)) == 0 && matched_index_down > 0) {
+        while (strcasecmp(origin_name, orig) == 0 && matched_index_down > 0) {
+            data1 = catalog_search_in_array(catalog, --matched_index_down);
+
+            free(orig);
+            orig = get_flight_origin((Flight*)data1);
+        };
+        free(orig);
+
+        orig = get_flight_origin((Flight*)data1);
+        if(strcasecmp(origin_name, orig) != 0) matched_index_down++;
+        free(orig);
+
+        // ------- DATA 2 -------
         int matched_index_up = matched_index;
         void *data2 = catalog_search_in_array(catalog, matched_index_up);
-        while (strcasecmp(origin_name, get_flight_origin((Flight*)data2)) == 0 && matched_index_up<catalog_get_item_count(catalog)-1) {
+        orig = get_flight_origin((Flight*)data2);
+
+        // while (strcasecmp(origin_name, get_flight_origin((Flight*)data2)) == 0 && matched_index_up < (catalog_get_item_count(catalog) - 1)) {
+        while (strcasecmp(origin_name, orig) == 0 && matched_index_up < (catalog_get_item_count(catalog) - 1)) {
             data2 = catalog_search_in_array(catalog, ++matched_index_up);
+
+            free(orig);
+            orig = get_flight_origin((Flight*)data2);
         };
-        if(strcasecmp(origin_name, get_flight_origin((Flight*)data1)) != 0) matched_index_up--;
+        free(orig);
+
+        orig = get_flight_origin((Flight*)data1);
+        if(strcasecmp(origin_name, orig) != 0) matched_index_up--;
+        free(orig);
         
         int i = matched_index_down;
         int delay = 0;
         int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
         int len = quantidade_a_percorrer;
         int arr[len];
-        while ( 0 < quantidade_a_percorrer) {
+
+        while (0 < quantidade_a_percorrer) {
             const Flight flight_temp = (const Flight)(catalog_search_in_array(catalog,i));
-            //delay += calculate_flight_delay(flight_temp);
-            arr[quantidade_a_percorrer-1] = calculate_flight_delay(flight_temp)*(-1);
+
+            arr[quantidade_a_percorrer-1] = calculate_flight_delay(flight_temp) * (-1);
+
             i++;
             quantidade_a_percorrer--;
         };
+
         qsort(arr, len, sizeof(arr[0]), &compareIntegers);
-        int mediana = len/2;
-        if((len%2)!=0){
+        int mediana = len / 2;
+
+        if((len%2) != 0){
             return arr[mediana];
         } else {
-            return ((arr[mediana-1]+arr[mediana])/2);
+            return ((arr[mediana-1] + arr[mediana]) / 2);
         }
     } else {
         printf("Flight with that origin not found");
