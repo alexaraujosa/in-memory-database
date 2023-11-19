@@ -4,6 +4,7 @@
 #include "debug.h"
 #include "user.h"
 #include "parser/parser.h"
+#include "time.h"
 
 typedef struct passenger PASSENGER, *Passenger;
 

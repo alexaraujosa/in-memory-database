@@ -1,7 +1,5 @@
 #include "collections/user.h"
 
-#include "catalog/catalogManager.h"
-
 typedef struct user {
     UserId(id);
     char name[MAX_NAME_LEN + 1];
