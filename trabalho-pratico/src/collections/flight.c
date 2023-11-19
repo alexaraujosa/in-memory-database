@@ -105,7 +105,6 @@ int verify_flight_tokens(Tokens tokens, ParserStore store) {
     }
     // Total_seats first verifier (Syntax)
     if(!is_integer_positive(parameter[3]))  return 0;
-    // TODO: total_seats verifier
 
     // Dates with time verifier (Syntax)
     for(int i = 6 ; i < 10 ; i++) {
@@ -139,14 +138,14 @@ Flight make_flight(
     strcpy(flight->origin, to_upper_string(origin));
     strcpy(flight->destination, to_upper_string(destination));
     flight->schedule_departure_date = schedule_departure_date;
-    flight->schedule_arrival_date = schedule_arrival_date;      //TODO: Date offset
+    flight->schedule_arrival_date = schedule_arrival_date;
     flight->real_departure_date = real_departure_date;
 
     return flight;
 }
 
 void* parse_flight(Tokens tokens) {
-    char** parameter = tokens->data;    //TODO: Converter os valores do id char* para id int
+    char** parameter = tokens->data;
 
     int id = atoi(parameter[0]);
     int schedule_departure_date = date_with_time_string_to_int(parameter[6]);

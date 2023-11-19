@@ -118,7 +118,6 @@ int verify_reservation_tokens(Tokens tokens, ParserStore store) {
 
     // Whitespace verifier
     if(have_whitespace(parameter, 10) == 0)  return 0;
-    //if(IS_STRING_NULL(parameter[11]) || IS_STRING_NULL(parameter[13]))  return 0; //BUG: Acredito que isto n seja necessario
 
     // User verifier
     Catalog* user_catalog = g_array_index(store, Catalog*, 2);
@@ -167,11 +166,11 @@ Reservation make_reservation(
     reservation->id = id;
     strncpy(reservation->user_id, user_id, MAX_USER_ID_LEN);
     reservation->hotel_id = hotel_id;
-    strcpy(reservation->hotel_name, hotel_name);    //TODO: Verify if theres any problem using strcpy instead strncpy
+    strcpy(reservation->hotel_name, hotel_name);
     reservation->hotel_stars = hotel_stars;
     reservation->city_tax = city_tax;
-    reservation->begin_date = begin_date;   //TODO: Date offset
-    reservation->end_date = end_date;       //TODO: Date offset
+    reservation->begin_date = begin_date;
+    reservation->end_date = end_date;
     reservation->price_per_night = price_per_night;
     reservation->includes_breakfast = includes_breakfast;
     reservation->rating = rating;

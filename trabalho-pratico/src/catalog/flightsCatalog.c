@@ -41,7 +41,7 @@ gint flight_origin_compare_func(gconstpointer a, gconstpointer b) {
     const Flight *user1 = (const Flight*)a;
     char* user_NAME2 = (char*) b;
 
-    char* user_NAME1 = get_flight_origin(*user1);   // TODO: falta dar free
+    char* user_NAME1 = get_flight_origin(*user1);
     if(strcasecmp(user_NAME1, user_NAME2) > 0) {
         free(user_NAME1);
         return 1;

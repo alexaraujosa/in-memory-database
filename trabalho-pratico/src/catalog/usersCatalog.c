@@ -33,7 +33,7 @@ gint users_full_compare_func(gconstpointer a, gconstpointer b) {
 gint user_username_compare_func(gconstpointer a, gconstpointer b) {
     const User *user1 = (const User*)a;
     const char* user_NAME2 = (const char*) b;
-    char* user_NAME1 = get_user_name(*user1);   // TODO: falta dar free
+    char* user_NAME1 = get_user_name(*user1);
     int length = strlen(user_NAME2);
     
     int name_comparison = strncasecmp(user_NAME1, user_NAME2, length);

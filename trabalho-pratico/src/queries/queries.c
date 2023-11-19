@@ -358,9 +358,9 @@ void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
 
                 timeinfo = localtime(&time_converted);
 
-                float days = difftime(time_converted, converted_time);
+                double days = difftime(time_converted, converted_time);
                 days /= 60*60*24;
-                float res = get_reservation_price_per_night(reservation_temp)*days+((get_reservation_price_per_night(reservation_temp)*days)/100)*get_reservation_city_tax(reservation_temp);
+                double res = get_reservation_price_per_night(reservation_temp)*days+((get_reservation_price_per_night(reservation_temp)*days)/100)*get_reservation_city_tax(reservation_temp);
 
                 char* userId = get_reservation_userID(reservation_temp);
 
@@ -394,9 +394,9 @@ void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
 
                 timeinfo = localtime(&time_converted);
 
-                float days = difftime(time_converted, converted_time);
+                double days = difftime(time_converted, converted_time);
                 days /= 60*60*24;
-                float res = get_reservation_price_per_night(reservation_temp)*days+((get_reservation_price_per_night(reservation_temp)*days)/100)*get_reservation_city_tax(reservation_temp);
+                double res = get_reservation_price_per_night(reservation_temp)*days+((get_reservation_price_per_night(reservation_temp)*days)/100)*get_reservation_city_tax(reservation_temp);
 
                 char* userId = get_reservation_userID(reservation_temp);
 

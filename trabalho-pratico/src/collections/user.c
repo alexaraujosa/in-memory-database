@@ -134,8 +134,8 @@ User make_user(
     strncpy(user->name, name, (size_t)MAX_NAME_LEN);
     user->sex = sex;
     strncpy(user->passport, passport, (size_t)MAX_USER_PASSPORT_LEN);
-    strncpy(user->country_code, country_code, 2);   //TODO: Verify if theres any problem using strcpy instead strncpy
-    user->account_creation = account_creation;  // TODO: Pensar melhor no offset
+    strncpy(user->country_code, country_code, 2);
+    user->account_creation = account_creation;
     user->account_status = account_status;
     user->age = get_age(birth_date);
 
