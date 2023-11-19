@@ -1,6 +1,6 @@
 #include "executers/batch.h"
 
-void test_preprocessor(FILE* stream, ParserStore store, va_list args) {
+void default_preprocessor(FILE* stream, ParserStore store, va_list args) {
     gpointer null_element = NULL;
     g_array_append_vals(store, &null_element, 1); // Discard file
     default_csv_preprocessor(stream, store, args);   // File header
@@ -10,7 +10,7 @@ void test_preprocessor(FILE* stream, ParserStore store, va_list args) {
     g_array_append_vals(store, &catalogo, 1);
 }
 
-void test_preprocessor_reservation(FILE* stream, ParserStore store, va_list args) {
+void preprocessor_reservation(FILE* stream, ParserStore store, va_list args) {
     gpointer null_element = NULL;
     g_array_append_vals(store, &null_element, 1); // Discard file
     default_csv_preprocessor(stream, store, args);   // File header
@@ -23,7 +23,7 @@ void test_preprocessor_reservation(FILE* stream, ParserStore store, va_list args
     g_array_append_vals(store, &catalogo2, 1);
 }
 
-void test_preprocessor_passenger(FILE* stream, ParserStore store, va_list args) {
+void preprocessor_passenger(FILE* stream, ParserStore store, va_list args) {
     gpointer null_element = NULL;
     g_array_append_vals(store, &null_element, 1); // Discard file
     default_csv_preprocessor(stream, store, args);   // File header
@@ -64,7 +64,7 @@ void batch(const char* arg1, const char* arg2) {
     parse_file(
         userdata_path,     
         &tokenize_csv,
-        &test_preprocessor,
+        &default_preprocessor,
         &verify_user_tokens, 
         &parse_user, 
         &usersCatalog_write_to_catalog, 
@@ -80,7 +80,7 @@ void batch(const char* arg1, const char* arg2) {
     parse_file(
         flightsdata_path,
         &tokenize_csv,
-        &test_preprocessor,
+        &default_preprocessor,
         &verify_flight_tokens, 
         &parse_flight, 
         &flightsCatalog_write_to_catalog, 
@@ -96,7 +96,7 @@ void batch(const char* arg1, const char* arg2) {
     parse_file(
         passengersdata_path,
         &tokenize_csv,
-        &test_preprocessor_passenger,
+        &preprocessor_passenger,
         &verify_passenger_tokens,
         &parse_passenger, 
         &passengersCatalog_write_to_catalog, 
@@ -114,7 +114,7 @@ void batch(const char* arg1, const char* arg2) {
     parse_file(
         reservationsdata_path,
         &tokenize_csv,
-        &test_preprocessor_reservation,
+        &preprocessor_reservation,
         &verify_reservation_tokens, 
         &parse_reservation, 
         &reservationsCatalog_write_to_catalog, 
