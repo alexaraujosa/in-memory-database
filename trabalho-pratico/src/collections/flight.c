@@ -111,7 +111,6 @@ int verify_flight_tokens(Tokens tokens, ParserStore store) {
             return 0;
     }
     // Date verifier (Semantic)
-    // TODO: Testar a performance entre o strcmp e a comparacao de inteiros
     if(strcmp(parameter[6], parameter[8]) > 0)  return 0;
     if(strcmp(parameter[8], parameter[9]) >= 0)  return 0;
 
@@ -134,8 +133,8 @@ Flight make_flight(
     strncpy(flight->airline, airline, (size_t)MAX_AIRLINE_NAME_LEN);
     strncpy(flight->plane_model, plane_model, (size_t)MAX_PLANE_NAME_LEN);
     // strcpy(flight->origin, origin);
-    strcpy(flight->origin, to_upper_string(origin));
-    strcpy(flight->destination, to_upper_string(destination));
+    strncpy(flight->origin, to_upper_string(origin), (size_t)LOCATION_LEN);
+    strncpy(flight->destination, to_upper_string(destination), (size_t)LOCATION_LEN);
     flight->schedule_departure_date = schedule_departure_date;
     flight->schedule_arrival_date = schedule_arrival_date;
     flight->real_departure_date = real_departure_date;

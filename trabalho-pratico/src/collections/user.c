@@ -109,7 +109,6 @@ int verify_user_tokens(Tokens tokens, ParserStore store) {
     if(!is_date(parameter[4]) || !is_date_with_time(parameter[9]))  return 0;
 
     // Date verifier (Semantic)
-    // TODO: Testar a performance entre o strcmp e a comparacao de inteiros
     if(strcmp(parameter[4], parameter[9]) >= 0)  return 0;
 
     return 1;

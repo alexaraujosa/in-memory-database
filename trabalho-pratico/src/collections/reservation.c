@@ -142,7 +142,6 @@ int verify_reservation_tokens(Tokens tokens, ParserStore store) {
     if(!is_date(parameter[7]) || !is_date(parameter[8]))  return 0;
 
     // Date verifier (Semantic)
-    // TODO: Testar a performance entre o strcmp e a comparacao de inteiros
     if(strcmp(parameter[7], parameter[8]) >= 0)  return 0;
 
     return 1;
