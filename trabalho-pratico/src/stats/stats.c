@@ -93,17 +93,17 @@ int calculate_flight_total_passengers(Catalog *catalog, int *flightId){
         int matched_index_down = matched_index;
         
         void *data1 = catalog_search_in_array(catalog, matched_index_down);
-        while (get_passenger_flightID((Passenger)data1)==GPOINTER_TO_INT(flightId) && matched_index_down > 0) {
+        while (get_passenger_flightID((Passenger)data1)==*(flightId) && matched_index_down > 0) {
             data1 = catalog_search_in_array(catalog, --matched_index_down);
         };
-        if(get_reservation_hotelID(data1)!=GPOINTER_TO_INT(flightId)) matched_index_down++;
+        if(get_reservation_hotelID(data1)!=*(flightId)) matched_index_down++;
 
         int matched_index_up = matched_index;
         void *data2 = catalog_search_in_array(catalog, matched_index_up);
-        while (get_passenger_flightID((Passenger)data2)==GPOINTER_TO_INT(flightId) && matched_index_up<catalog_get_item_count(catalog)-1) {
+        while (get_passenger_flightID((Passenger)data2)==*(flightId) && matched_index_up<catalog_get_item_count(catalog)-1) {
             data2 = catalog_search_in_array(catalog, ++matched_index_up);
         };
-        if(get_reservation_hotelID(data2)!=GPOINTER_TO_INT(flightId)) matched_index_up--;
+        if(get_reservation_hotelID(data2)!=*(flightId)) matched_index_up--;
         
         return (matched_index_up - matched_index_down + 1);
     } else {
@@ -193,7 +193,7 @@ int calculate_flight_delay_median(Catalog *catalog, char *origin_name){
 
 
 // TODO Still a prototype... i need to add the input for the year
-int calculate_aeroport_n_passengers(Catalog *flight_catalog, Catalog *passenger_catalog, char *origin_name){
+int calculate_aeroport_n_passengers(Catalog *flight_catalog, Catalog *passenger_catalog, char *origin_name, int *year){
     guint matched_index = 0;
     gboolean exists = catalog_exists_in_array(flight_catalog, origin_name, &flight_origin_compare_func, &matched_index);
     if(exists){
@@ -216,6 +216,7 @@ int calculate_aeroport_n_passengers(Catalog *flight_catalog, Catalog *passenger_
         int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
         while ( 0 < quantidade_a_percorrer) {
             const Flight flight_temp = (const Flight)(catalog_search_in_array(flight_catalog,i));
+            printf("%d\n", (get_flight_schedule_departure_date(flight_temp)+TIME_T_SYSTEM)/(365*24*60*60) + 1970);
             int flight_id = get_flight_id(flight_temp);
             n_passengers += calculate_flight_total_passengers(passenger_catalog, &flight_id);
             i++;
@@ -227,3 +228,4 @@ int calculate_aeroport_n_passengers(Catalog *flight_catalog, Catalog *passenger_
         return -1;
     }
 }
+
