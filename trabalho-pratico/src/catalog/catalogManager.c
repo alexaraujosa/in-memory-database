@@ -4,6 +4,9 @@
 
 #include "common.h"
 
+
+//TODO Ponderar a utilização de um modulo para cada container e criar uma instancia de um catalogo para cada tipo.
+
 typedef struct catalog {
     GHashTable *hashTable;
     GArray *array;
