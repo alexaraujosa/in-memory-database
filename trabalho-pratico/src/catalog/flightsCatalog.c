@@ -38,21 +38,21 @@ gint flightsCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
 }
 
 gint flight_origin_compare_func(gconstpointer a, gconstpointer b) {
-    const Flight *flight1 = (const Flight*)a;
-    char* flight_NAME2 = (char*) b;
+    const Flight *user1 = (const Flight*)a;
+    char* user_NAME2 = (char*) b;
 
-    char* flight_NAME1 = get_flight_origin(*flight1);
-    if(strcasecmp(flight_NAME1, flight_NAME2) > 0) {
-        free(flight_NAME1);
+    char* user_NAME1 = get_flight_origin(*user1);
+    if(strcasecmp(user_NAME1, user_NAME2) > 0) {
+        free(user_NAME1);
         return 1;
     }
 
-    if(strcasecmp(flight_NAME1, flight_NAME2) < 0) {
-        free(flight_NAME1);
+    if(strcasecmp(user_NAME1, user_NAME2) < 0) {
+        free(user_NAME1);
         return -1;
     }
 
-    free(flight_NAME1);
+    free(user_NAME1);
     return 0;
 }
 

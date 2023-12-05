@@ -54,4 +54,3 @@ clean:
 	-rm $(BIN)/*
 	-rm -rf $(OBJ)/*
 	-rm -rf Resultados/*.csv
-	-rm -rf Resultados/*.txt

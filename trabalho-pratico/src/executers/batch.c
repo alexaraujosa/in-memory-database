@@ -141,11 +141,10 @@ void batch(const char* arg1, const char* arg2) {
     double total_spent = calculate_user_total_spent(reservation_catalog, "JéssiTavares910", &n_reservations);
     printf("total_spent = %.3f && n_reservations:%d\n", total_spent, n_reservations);
 
-    */
-    int n_passengers = calculate_aeroport_n_passengers(flight_catalog, passengers_catalog, "WAW", 0);
+    int n_passengers = calculate_flight_total_passengers(passengers_catalog, 444);
     printf("n_passengers = %d\n", n_passengers);
+    */
 
-    /*
     // Run queries
     Catalog** catalogues = (Catalog**)malloc(4 * sizeof(Catalog*));
     catalogues[0] = user_catalog;
@@ -154,7 +153,6 @@ void batch(const char* arg1, const char* arg2) {
     catalogues[3] = reservation_catalog;
 
     query_run_bulk((char* )arg2, "Resultados", catalogues);
-    */
 
 
     // Cleanup cwd
