@@ -215,16 +215,58 @@ int calculate_aeroport_n_passengers(Catalog *flight_catalog, Catalog *passenger_
         printf("Quantidade a percorrer = %d", quantidade_a_percorrer);
         while (0 < quantidade_a_percorrer) {
             const Flight flight_temp = (const Flight)(catalog_search_in_array(flight_catalog, i));
-            if (*year == (get_flight_schedule_departure_date(flight_temp) + TIME_T_SYSTEM) / (365 * 24 * 60 * 60) + 1970) {
+            int flight_year = (get_flight_schedule_departure_date(flight_temp) + TIME_T_SYSTEM) / (365 * 24 * 60 * 60) + 1970;
+            if (*year == flight_year) {
                 int flight_id = get_flight_id(flight_temp);
                 n_passengers += calculate_flight_total_passengers(passenger_catalog, GINT_TO_POINTER(flight_id));
-                i++;
             }
+            i++;
             quantidade_a_percorrer--;
         };
         return n_passengers;
     } else {
-        printf("Flight with that origin not found");
+        printf("Flight with that origin not found\n");
+        return -1;
+    }
+}
+
+//esta função calcula o n_passengers que chegam a um aeroporto... mas obriga ao array estar ordenado pelo destino
+int calculate_aeroport_n_passengers2(Catalog *flight_catalog, Catalog *passenger_catalog, char *origin_name, int *year) {
+    guint matched_index = 0;
+    gboolean exists = catalog_exists_in_array(flight_catalog, origin_name, &flight_destination_compare_funcB, &matched_index);
+    if (exists) {
+        int matched_index_down = matched_index;
+        void *data1 = catalog_search_in_array(flight_catalog, matched_index_down);
+        while (strcasecmp(origin_name, get_flight_destination((Flight)data1)) == 0 && matched_index_down > 0) {
+            data1 = catalog_search_in_array(flight_catalog, --matched_index_down);
+        };
+        if (strcasecmp(origin_name, get_flight_destination((Flight)data1)) != 0) matched_index_down++;
+
+        int matched_index_up = matched_index;
+        void *data2 = catalog_search_in_array(flight_catalog, matched_index_up);
+        while (strcasecmp(origin_name, get_flight_destination((Flight)data2)) == 0 && matched_index_up < catalog_get_item_count(flight_catalog) - 1) {
+            data2 = catalog_search_in_array(flight_catalog, ++matched_index_up);
+        };
+        if (strcasecmp(origin_name, get_flight_destination((Flight)data1)) != 0) matched_index_up--;
+
+        int i = matched_index_down;
+        int n_passengers = 0;
+        int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
+        printf("Quantidade a percorrer = %d", quantidade_a_percorrer);
+        while (0 < quantidade_a_percorrer) {
+            const Flight flight_temp = (const Flight)(catalog_search_in_array(flight_catalog, i));
+            int flight_year = (get_flight_schedule_arrival_date(flight_temp) + TIME_T_SYSTEM) / (365 * 24 * 60 * 60) + 1970;
+            if (*year == flight_year) {
+                int flight_id = get_flight_id(flight_temp);
+                n_passengers += calculate_flight_total_passengers(passenger_catalog, GINT_TO_POINTER(flight_id));
+                printf("passageiros=%d\n", calculate_flight_total_passengers(passenger_catalog, GINT_TO_POINTER(flight_id)));
+            }
+            i++;
+            quantidade_a_percorrer--;
+        };
+        return n_passengers;
+    } else {
+        printf("Flight with that destination not found");
         return -1;
     }
 }

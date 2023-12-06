@@ -29,5 +29,6 @@ int calculate_flight_total_passengers(Catalog *catalog, int *flightId);
 int calculate_flight_delay_median(Catalog *catalog, char *origin_name);
 
 int calculate_aeroport_n_passengers(Catalog *flights_catalog, Catalog *passenger_catalog, char *origin_name, int *year);
+int calculate_aeroport_n_passengers2(Catalog *flight_catalog, Catalog *passenger_catalog, char *origin_name, int *year);
 
 #endif
