@@ -457,7 +457,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
         free(orig);
 
         orig = get_flight_origin((Flight)data2);
-        while (strcasecmp(argv[0], orig) == 0 && matched_index_up != catalog_get_item_count(catalogues[1])) {
+        while (strcasecmp(argv[0], orig) == 0 && matched_index_up + 1 < catalog_get_item_count(catalogues[1])) {
             data2 = catalog_search_in_array(catalogues[1], matched_index_up);
             g_array_append_val(arrTemp,data2);
 
