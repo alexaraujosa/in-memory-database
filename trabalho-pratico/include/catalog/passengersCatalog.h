@@ -21,14 +21,6 @@ gint passengersCatalog_full_compare_func(gconstpointer a, gconstpointer b);
 gint passenger_flightID_compare_func(gconstpointer a, gconstpointer b);
 
 /**
- * @brief Prints the Passengers Catalog array.
- *
- * @param data The data to be printed.
- * @param passenger_data The passenger data.
- */
-void passengersCatalog_print_array(gpointer data, gpointer passenger_data);
-
-/**
  * @brief Writes a passenger to the Passengers Catalog.
  *
  * @param passenger The passenger to be added.

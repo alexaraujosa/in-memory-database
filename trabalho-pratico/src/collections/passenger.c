@@ -88,6 +88,6 @@ void print_passenger(void* pt) {
 
     printf(
         "{FlightID:%d; "
-        "UserId:%s; "
+        "UserId:%s}\n"
         ,passenger->flight_id, passenger->user_id);
 }
