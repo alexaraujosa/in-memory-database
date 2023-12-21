@@ -659,7 +659,7 @@ void query6(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     int resolution = 0;
     for (int i = 0; i < (int)arrTemp->len; i++) {
         const Reservation reservation_temp = (const Reservation)(g_array_index(arrTemp, gpointer, i));
-        int nights = 
+        int nights = 1;
         resolution += get_reservation_price_per_night(reservation_temp) * nights;
     };
 
