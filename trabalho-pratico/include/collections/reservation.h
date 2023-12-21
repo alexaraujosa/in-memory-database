@@ -5,6 +5,7 @@
 #include "util/error.h"
 #include "util/misc.h"
 #include "util/string.h"
+#include "util/date.h"
 #include "user.h"
 
 #define HOTEL_ID_OFFSET 3

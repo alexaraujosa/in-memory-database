@@ -476,8 +476,8 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
         for (int i = 0; i < (int)arrTemp->len; i++) {
             const Flight flight_temp = (const Flight)(g_array_index(arrTemp, gpointer, i));
             if(
-                date_with_time_string_to_int(argv[1]) <= get_flight_schedule_departure_date(flight_temp) 
-                && get_flight_schedule_departure_date(flight_temp) <= date_with_time_string_to_int(argv[2]) 
+                date_string_withtime_to_int(argv[1]) <= get_flight_schedule_departure_date(flight_temp) 
+                && get_flight_schedule_departure_date(flight_temp) <= date_string_withtime_to_int(argv[2]) 
                 && flag == '\0'
             ) {
                 // int parameter = 
@@ -538,7 +538,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
 
                 count++;
 
-            } else if(date_with_time_string_to_int(argv[1]) <= get_flight_schedule_departure_date(flight_temp) && get_flight_schedule_departure_date(flight_temp) <= date_with_time_string_to_int(argv[2]) && flag == 'F') {
+            } else if(date_string_withtime_to_int(argv[1]) <= get_flight_schedule_departure_date(flight_temp) && get_flight_schedule_departure_date(flight_temp) <= date_string_withtime_to_int(argv[2]) && flag == 'F') {
                 // int parameter = get_flight_schedule_departure_date(flight_temp);
                 // parameter = parameter + TIME_T_SYSTEM;
                 // time_t converted_time = (time_t)parameter;
@@ -609,7 +609,62 @@ void query6(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     IGNORE_ARG(argv);
     IGNORE_ARG(catalogues);
     IGNORE_ARG(output_file);
-    fputs("6", output_file);
+    
+    GArray *arrTemp = g_array_new(FALSE, FALSE, sizeof(gpointer));
+    guint matched_index = 0;
+    int hotel_id = atoi(argv[0] + 3);
+    int begin_date = date_string_notime_to_int(argv[1]);
+    int end_date = date_string_notime_to_int(argv[2]);
+    gboolean exists = catalog_exists_in_array(catalogues[3], GINT_TO_POINTER(hotel_id), &reservation_hotelID_compare_func, &matched_index);
+    if (exists) {
+        void *data = catalog_search_in_array(catalogues[3], matched_index);
+        g_array_append_val(arrTemp,data);
+        int matched_index_down = matched_index - 1;
+        int matched_index_up = matched_index + 1;
+        void *data1 = catalog_search_in_array(catalogues[3], matched_index_down);
+        void *data2 = catalog_search_in_array(catalogues[3], matched_index_up);
+        while (
+                hotel_id == get_reservation_hotelID((Reservation)data1) && 
+                matched_index_down >= 0 && 
+                get_reservation_begin_date((Reservation)data1) >= begin_date &&
+                get_reservation_end_date((Reservation)data1) <= end_date
+            ) {
+                data1 = catalog_search_in_array(catalogues[3], matched_index_down);
+                g_array_append_val(arrTemp,data1);
+                // print_flight(data1);
+                matched_index_down--;
+                if(matched_index_down < 0) break;
+                data1 = catalog_search_in_array(catalogues[3], matched_index_down);
+                // data1 = catalog_search_in_array(catalog, matched_index_down);
+                // print_flight(data1);
+        };
+        while (
+                hotel_id == get_reservation_hotelID((Reservation)data2) && 
+                matched_index_up != catalog_get_item_count(catalogues[3]) &&
+                get_reservation_begin_date((Reservation)data1) >= begin_date &&
+                get_reservation_end_date((Reservation)data1) <= end_date
+            ) {
+            // g_array_append_val(arrTemp,data2);
+            data2 = catalog_search_in_array(catalogues[3], matched_index_up);
+            g_array_append_val(arrTemp,data2);
+            matched_index_up++;
+            // print_flight(data2);
+            data2 = catalog_search_in_array(catalogues[3], matched_index_up);
+        };
+
+        g_array_sort(arrTemp, &reservation_date_compare_func);
+    }
+
+    int count = 1;
+    int resolution = 0;
+    for (int i = 0; i < (int)arrTemp->len; i++) {
+        const Reservation reservation_temp = (const Reservation)(g_array_index(arrTemp, gpointer, i));
+        int nights = 
+        resolution += get_reservation_price_per_night(reservation_temp) * nights;
+    };
+
+
+
 }
 
 struct q7_index {

@@ -184,8 +184,8 @@ void* parse_reservation(Tokens tokens) {
     short int hotel_id = atoi(parameter[2]+HOTEL_ID_OFFSET);
     unsigned int hotel_stars = atoi(parameter[4]);
     unsigned int city_tax = atoi(parameter[5]);
-    int begin_date = date_string_to_int(parameter[7]);
-    int end_date = date_string_to_int(parameter[8]);
+    int begin_date = date_string_notime_to_int(parameter[7]);
+    int end_date = date_string_notime_to_int(parameter[8]);
     unsigned int price_per_night = atoi(parameter[9]);
     bool includes_breakfast = get_boolean(parameter[10]);
     int rating = atoi(parameter[12]);

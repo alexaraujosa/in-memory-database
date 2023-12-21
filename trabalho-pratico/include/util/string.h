@@ -147,33 +147,6 @@ bool get_sex(char* parameter);
 bool get_account_status(char* parameter);
 
 /**
- * @brief Turns a string that represents a date to an int.
- * 
- * @param parameter String containing the date.
- * 
- * @return Date in int.
-*/
-int date_string_to_int(char* parameter);
-
-/**
- * @brief Turns a string that represents a date with time to an int.
- * 
- * @param parameter String containing the date with time.
- * 
- * @return Date with time in int.
-*/
-int date_with_time_string_to_int(char* parameter);
-
-/**
- * @brief Turns an that represents a date with time to a string.
- * 
- * @param parameter Integer containing the date with time.
- * 
- * @return String formatted with the date.
-*/
-char* date_int_to_string(int time);
-
-/**
  * @brief Get the boolean from the string.
  * 
  * @param parameter String containing the boolean.

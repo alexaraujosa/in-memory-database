@@ -9,6 +9,7 @@
 #include "util/collection.h"
 #include "util/error.h"
 #include "util/string.h"
+#include "util/date.h"
 #include "parser/parser.h"
 #include "util/helpers.h"
 

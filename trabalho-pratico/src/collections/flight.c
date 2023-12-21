@@ -146,9 +146,9 @@ void* parse_flight(Tokens tokens) {
     char** parameter = tokens->data;
 
     int id = atoi(parameter[0]);
-    int schedule_departure_date = date_with_time_string_to_int(parameter[6]);
-    int schedule_arrival_date = date_with_time_string_to_int(parameter[7]);
-    int real_departure_date = date_with_time_string_to_int(parameter[8]);
+    int schedule_departure_date = date_string_withtime_to_int(parameter[6]);
+    int schedule_arrival_date = date_string_withtime_to_int(parameter[7]);
+    int real_departure_date = date_string_withtime_to_int(parameter[8]);
     Flight flight = make_flight(id, parameter[1], parameter[2], parameter[4], parameter[5], schedule_departure_date, schedule_arrival_date, real_departure_date);
     return flight;
 }
@@ -178,8 +178,6 @@ void discard_flight(void* raw_data, ParserStore store) {
 
 void print_flight(void* pt) {
     FLIGHT* flight = (FLIGHT*)pt;
-    int parameter = flight->schedule_departure_date;
-    parameter = parameter + TIME_T_SYSTEM;
 
     printf(
         "%.10d;"
@@ -190,9 +188,9 @@ void print_flight(void* pt) {
         "%s;"
         "%s\n",
         flight->id, 
-        date_int_to_string(flight->schedule_departure_date + TIME_T_SYSTEM), 
-        date_int_to_string(flight->schedule_arrival_date + TIME_T_SYSTEM), 
-        date_int_to_string(flight->real_departure_date + TIME_T_SYSTEM),
+        date_int_withtime_to_string(flight->schedule_departure_date), 
+        date_int_withtime_to_string(flight->schedule_arrival_date), 
+        date_int_withtime_to_string(flight->real_departure_date),
         flight->destination, 
         flight->airline, 
         flight->plane_model

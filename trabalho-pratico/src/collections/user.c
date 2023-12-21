@@ -143,8 +143,8 @@ void* parse_user(Tokens tokens) {
     char** parameter = tokens->data;
     bool sex = get_sex(parameter[5]);
     bool account_status = get_account_status(parameter[11]);
-    int account_creation = date_string_to_int(parameter[9]);
-    int birth_date = date_string_to_int(parameter[4]);
+    int account_creation = date_string_notime_to_int(parameter[9]);
+    int birth_date = date_string_notime_to_int(parameter[4]);
     
     User user = make_user(parameter[0], parameter[1], sex, parameter[6], parameter[7], account_creation, account_status, birth_date);
     return user;
