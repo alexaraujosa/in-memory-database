@@ -721,52 +721,52 @@ void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
         void *data2 = catalog_search_in_array(catalogues[3], matched_index_up);
         while (
                 hotel_id == get_reservation_hotelID((Reservation)data1) && 
-                matched_index_down >= 0 && 
-                get_reservation_begin_date((Reservation)data1) >= begin_date &&
-                get_reservation_end_date((Reservation)data1) <= end_date
+                matched_index_down >= 0
             ) {
                 data1 = catalog_search_in_array(catalogues[3], matched_index_down);
                 g_array_append_val(arrTemp,data1);
-                // print_flight(data1);
                 matched_index_down--;
                 if(matched_index_down < 0) break;
                 data1 = catalog_search_in_array(catalogues[3], matched_index_down);
-                // data1 = catalog_search_in_array(catalog, matched_index_down);
-                // print_flight(data1);
         };
         while (
                 hotel_id == get_reservation_hotelID((Reservation)data2) && 
-                matched_index_up != catalog_get_item_count(catalogues[3]) &&
-                get_reservation_begin_date((Reservation)data1) >= begin_date &&
-                get_reservation_end_date((Reservation)data1) <= end_date
+                matched_index_up != catalog_get_item_count(catalogues[3])
             ) {
-            // g_array_append_val(arrTemp,data2);
             data2 = catalog_search_in_array(catalogues[3], matched_index_up);
             g_array_append_val(arrTemp,data2);
             matched_index_up++;
-            // print_flight(data2);
             data2 = catalog_search_in_array(catalogues[3], matched_index_up);
         };
 
-        g_array_sort(arrTemp, &reservation_date_compare_func);
+        // g_array_sort(arrTemp, &reservation_date_compare_func);
     }
 
     int count = 1;
     int resolution = 0;
     for (int i = 0; i < (int)arrTemp->len; i++) {
         const Reservation reservation_temp = (const Reservation)(g_array_index(arrTemp, gpointer, i));
-        int nights = difftime(begin_date + TIME_T_SYSTEM, end_date + TIME_T_SYSTEM);
-        nights /= 3600*24;
-        resolution += get_reservation_price_per_night(reservation_temp) * nights;
-
-        if(flag == 'F') {
-            fprintf(output_file, "--- 1 ---\n");
-            fprintf(output_file, "revenue: %d", resolution);
-        } else if(flag == '\0') {
-            fprintf(output_file, "%d", resolution);
+        // print_reservation(reservation_temp);
+        int start_reservation = get_reservation_begin_date(reservation_temp);
+        int end_reservation = get_reservation_end_date(reservation_temp);
+        if(start_reservation <= end_date && end_reservation >= begin_date) {
+            if(start_reservation <= begin_date)  start_reservation = begin_date;
+            if(end_reservation >= end_date)  end_reservation = end_date;
+            int nights = difftime(end_reservation, start_reservation);
+            nights /= 3600*24;
+            int res = difftime(end_date, begin_date);
+            printf("%d\n", res/(3600*24));
+            if(res/(3600*24) < 31) nights++;
+        print_reservation(reservation_temp);
+            resolution += get_reservation_price_per_night(reservation_temp) * (nights);
         }
-
     };
+    if(flag == 'F') {
+        fprintf(output_file, "--- 1 ---\n");
+        fprintf(output_file, "revenue: %d", resolution);
+    } else if(flag == '\0') {
+        fprintf(output_file, "%d", resolution);
+    }
 }
 
 void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file) {
