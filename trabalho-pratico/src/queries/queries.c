@@ -610,61 +610,6 @@ void query6(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     IGNORE_ARG(catalogues);
     IGNORE_ARG(output_file);
     
-    GArray *arrTemp = g_array_new(FALSE, FALSE, sizeof(gpointer));
-    guint matched_index = 0;
-    int hotel_id = atoi(argv[0] + 3);
-    int begin_date = date_string_notime_to_int(argv[1]);
-    int end_date = date_string_notime_to_int(argv[2]);
-    gboolean exists = catalog_exists_in_array(catalogues[3], GINT_TO_POINTER(hotel_id), &reservation_hotelID_compare_func, &matched_index);
-    if (exists) {
-        void *data = catalog_search_in_array(catalogues[3], matched_index);
-        g_array_append_val(arrTemp,data);
-        int matched_index_down = matched_index - 1;
-        int matched_index_up = matched_index + 1;
-        void *data1 = catalog_search_in_array(catalogues[3], matched_index_down);
-        void *data2 = catalog_search_in_array(catalogues[3], matched_index_up);
-        while (
-                hotel_id == get_reservation_hotelID((Reservation)data1) && 
-                matched_index_down >= 0 && 
-                get_reservation_begin_date((Reservation)data1) >= begin_date &&
-                get_reservation_end_date((Reservation)data1) <= end_date
-            ) {
-                data1 = catalog_search_in_array(catalogues[3], matched_index_down);
-                g_array_append_val(arrTemp,data1);
-                // print_flight(data1);
-                matched_index_down--;
-                if(matched_index_down < 0) break;
-                data1 = catalog_search_in_array(catalogues[3], matched_index_down);
-                // data1 = catalog_search_in_array(catalog, matched_index_down);
-                // print_flight(data1);
-        };
-        while (
-                hotel_id == get_reservation_hotelID((Reservation)data2) && 
-                matched_index_up != catalog_get_item_count(catalogues[3]) &&
-                get_reservation_begin_date((Reservation)data1) >= begin_date &&
-                get_reservation_end_date((Reservation)data1) <= end_date
-            ) {
-            // g_array_append_val(arrTemp,data2);
-            data2 = catalog_search_in_array(catalogues[3], matched_index_up);
-            g_array_append_val(arrTemp,data2);
-            matched_index_up++;
-            // print_flight(data2);
-            data2 = catalog_search_in_array(catalogues[3], matched_index_up);
-        };
-
-        g_array_sort(arrTemp, &reservation_date_compare_func);
-    }
-
-    int count = 1;
-    int resolution = 0;
-    for (int i = 0; i < (int)arrTemp->len; i++) {
-        const Reservation reservation_temp = (const Reservation)(g_array_index(arrTemp, gpointer, i));
-        int nights = 1;
-        resolution += get_reservation_price_per_night(reservation_temp) * nights;
-    };
-
-
-
 }
 
 struct q7_index {
@@ -760,7 +705,68 @@ void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     IGNORE_ARG(argv);
     IGNORE_ARG(catalogues);
     IGNORE_ARG(output_file);
-    fputs("8", output_file);
+    
+    GArray *arrTemp = g_array_new(FALSE, FALSE, sizeof(gpointer));
+    guint matched_index = 0;
+    int hotel_id = atoi(argv[0] + 3);
+    int begin_date = date_string_notime_to_int(argv[1]);
+    int end_date = date_string_notime_to_int(argv[2]);
+    gboolean exists = catalog_exists_in_array(catalogues[3], GINT_TO_POINTER(hotel_id), &reservation_hotelID_compare_func, &matched_index);
+    if (exists) {
+        void *data = catalog_search_in_array(catalogues[3], matched_index);
+        g_array_append_val(arrTemp,data);
+        int matched_index_down = matched_index - 1;
+        int matched_index_up = matched_index + 1;
+        void *data1 = catalog_search_in_array(catalogues[3], matched_index_down);
+        void *data2 = catalog_search_in_array(catalogues[3], matched_index_up);
+        while (
+                hotel_id == get_reservation_hotelID((Reservation)data1) && 
+                matched_index_down >= 0 && 
+                get_reservation_begin_date((Reservation)data1) >= begin_date &&
+                get_reservation_end_date((Reservation)data1) <= end_date
+            ) {
+                data1 = catalog_search_in_array(catalogues[3], matched_index_down);
+                g_array_append_val(arrTemp,data1);
+                // print_flight(data1);
+                matched_index_down--;
+                if(matched_index_down < 0) break;
+                data1 = catalog_search_in_array(catalogues[3], matched_index_down);
+                // data1 = catalog_search_in_array(catalog, matched_index_down);
+                // print_flight(data1);
+        };
+        while (
+                hotel_id == get_reservation_hotelID((Reservation)data2) && 
+                matched_index_up != catalog_get_item_count(catalogues[3]) &&
+                get_reservation_begin_date((Reservation)data1) >= begin_date &&
+                get_reservation_end_date((Reservation)data1) <= end_date
+            ) {
+            // g_array_append_val(arrTemp,data2);
+            data2 = catalog_search_in_array(catalogues[3], matched_index_up);
+            g_array_append_val(arrTemp,data2);
+            matched_index_up++;
+            // print_flight(data2);
+            data2 = catalog_search_in_array(catalogues[3], matched_index_up);
+        };
+
+        g_array_sort(arrTemp, &reservation_date_compare_func);
+    }
+
+    int count = 1;
+    int resolution = 0;
+    for (int i = 0; i < (int)arrTemp->len; i++) {
+        const Reservation reservation_temp = (const Reservation)(g_array_index(arrTemp, gpointer, i));
+        int nights = difftime(begin_date + TIME_T_SYSTEM, end_date + TIME_T_SYSTEM);
+        nights /= 3600*24;
+        resolution += get_reservation_price_per_night(reservation_temp) * nights;
+
+        if(flag == 'F') {
+            fprintf(output_file, "--- 1 ---\n");
+            fprintf(output_file, "revenue: %d", resolution);
+        } else if(flag == '\0') {
+            fprintf(output_file, "%d", resolution);
+        }
+
+    };
 }
 
 void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file) {
