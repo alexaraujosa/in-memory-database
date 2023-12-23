@@ -778,7 +778,6 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     guint matched_index = 0;
     gboolean exists = catalog_exists_in_array(catalogues[0], *argv, &user_username_compare_func, &matched_index);
     
-    // void *data1, *data2;
     char* user_name;
 
     if (exists) {
@@ -805,12 +804,13 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
         if(strncasecmp(*argv, user_name, strlen(*argv)) != 0) matched_index_up--;
         free(user_name);
 
-        int i = matched_index_down;
+        int index = matched_index_down;
+        int i = 0;
         int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
         int count = 1;
 
         while(i < quantidade_a_percorrer){
-            const User user_temp = (const User)(catalog_search_in_array(catalogues[0], i));
+            const User user_temp = (const User)(catalog_search_in_array(catalogues[0], index));
             if(get_user_account_status(user_temp) == TRUE && flag == 'F'){
                 
                 char* user_id = get_user_id(user_temp);
@@ -838,13 +838,14 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
                 // else
                 //     fprintf(output_file, "%s;%s", get_user_id(user_temp), get_user_name(user_temp));
             }
+            index++;
             i++;
         }
         if(quantidade_a_percorrer == 0) fprintf(output_file, "\n");
     }
     else {
         printf("Account with that prefix does not exist\n");
-        return -1;
+        return;
     }
 }
 
