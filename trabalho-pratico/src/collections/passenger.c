@@ -26,6 +26,9 @@ void set_passenger_userID(Passenger passenger, const char *user_id){
 int verify_passenger_tokens(Tokens tokens, ParserStore store) {
     char** parameter = tokens->data;
 
+    // Whitespace verifier
+    if(have_whitespace(parameter, 2) == 0)  return 0;
+
     // User verifier
     Catalog* user_catalog = g_array_index(store, Catalog*, 2);
     if(catalog_search_in_str_hashtable(user_catalog, parameter[1]) == NULL)  return 0;
@@ -34,8 +37,8 @@ int verify_passenger_tokens(Tokens tokens, ParserStore store) {
     Catalog* flight_catalog = g_array_index(store, Catalog*, 3);
     if(catalog_search_in_int_hashtable(flight_catalog, atoi(parameter[0])) == NULL)  return 0;
     
-    // Whitespace verifier
-    if(have_whitespace(parameter, 2) == 0)  return 0;
+    // // Whitespace verifier
+    // if(have_whitespace(parameter, 2) == 0)  return 0;
     
     return 1;
 }

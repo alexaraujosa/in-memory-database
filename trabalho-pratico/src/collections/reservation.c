@@ -119,9 +119,9 @@ int verify_reservation_tokens(Tokens tokens, ParserStore store) {
     // Whitespace verifier
     if(have_whitespace(parameter, 10) == 0)  return 0;
 
-    // User verifier
-    Catalog* user_catalog = g_array_index(store, Catalog*, 2);
-    if(catalog_search_in_str_hashtable(user_catalog, parameter[1]) == NULL)  return 0;
+    // // User verifier
+    // Catalog* user_catalog = g_array_index(store, Catalog*, 2);
+    // if(catalog_search_in_str_hashtable(user_catalog, parameter[1]) == NULL)  return 0;
 
     // Hotel_stars verifier
     if(is_integer_between_one_and_five(parameter[4]) == 0)  return 0;
@@ -143,6 +143,10 @@ int verify_reservation_tokens(Tokens tokens, ParserStore store) {
 
     // Date verifier (Semantic)
     if(strcmp(parameter[7], parameter[8]) >= 0)  return 0;
+
+    // User verifier
+    Catalog* user_catalog = g_array_index(store, Catalog*, 2);
+    if(catalog_search_in_str_hashtable(user_catalog, parameter[1]) == NULL)  return 0;
 
     return 1;
 }
