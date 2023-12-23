@@ -53,7 +53,6 @@ int calculate_user_n_flights(Catalog *catalog, char *userID) {
     return n_flights;
 }
 
-// BUG problema com datas, provavelmente pelos offsets... quanto corresponde a 1 dia?
 double calculate_reservation_total_price(Reservation reservation) {
     double n_nights = (get_reservation_end_date(reservation) - get_reservation_begin_date(reservation)) / 86400.0;
 
@@ -65,8 +64,6 @@ double calculate_reservation_total_price(Reservation reservation) {
     return res;
 }
 
-// TODO Podes aproveitar para saber o numero de reservas
-// TODO retorna o total_gasto e dentro do n_reservation retorna o numero de reservations
 double calculate_user_total_spent(Catalog *catalog, char *userID, int *n_reservations) {
     double total_spent = 0;
     char *name_to_compare = NULL;
@@ -212,7 +209,6 @@ int calculate_aeroport_n_passengers(Catalog *flight_catalog, Catalog *passenger_
         int i = matched_index_down;
         int n_passengers = 0;
         int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
-        printf("Quantidade a percorrer = %d", quantidade_a_percorrer);
         while (0 < quantidade_a_percorrer) {
             const Flight flight_temp = (const Flight)(catalog_search_in_array(flight_catalog, i));
             int flight_year = (get_flight_schedule_departure_date(flight_temp) + TIME_T_SYSTEM) / (365 * 24 * 60 * 60) + 1970;
@@ -252,14 +248,12 @@ int calculate_aeroport_n_passengers2(Catalog *flight_catalog, Catalog *passenger
         int i = matched_index_down;
         int n_passengers = 0;
         int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
-        printf("Quantidade a percorrer = %d", quantidade_a_percorrer);
         while (0 < quantidade_a_percorrer) {
             const Flight flight_temp = (const Flight)(catalog_search_in_array(flight_catalog, i));
             int flight_year = (get_flight_schedule_arrival_date(flight_temp) + TIME_T_SYSTEM) / (365 * 24 * 60 * 60) + 1970;
             if (*year == flight_year) {
                 int flight_id = get_flight_id(flight_temp);
                 n_passengers += calculate_flight_total_passengers(passenger_catalog, GINT_TO_POINTER(flight_id));
-                printf("passageiros=%d\n", calculate_flight_total_passengers(passenger_catalog, GINT_TO_POINTER(flight_id)));
             }
             i++;
             quantidade_a_percorrer--;
