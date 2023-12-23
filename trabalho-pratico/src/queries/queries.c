@@ -705,7 +705,7 @@ void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     IGNORE_ARG(argv);
     IGNORE_ARG(catalogues);
     IGNORE_ARG(output_file);
-    printf("--|--\n");
+    // printf("--|--\n");
     GArray *arrTemp = g_array_new(FALSE, FALSE, sizeof(gpointer));
     guint matched_index = 0;
     int hotel_id = atoi(argv[0] + 3);
