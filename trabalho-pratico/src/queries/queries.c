@@ -705,7 +705,7 @@ void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     IGNORE_ARG(argv);
     IGNORE_ARG(catalogues);
     IGNORE_ARG(output_file);
-    
+    printf("--|--\n");
     GArray *arrTemp = g_array_new(FALSE, FALSE, sizeof(gpointer));
     guint matched_index = 0;
     int hotel_id = atoi(argv[0] + 3);
@@ -742,7 +742,6 @@ void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
         // g_array_sort(arrTemp, &reservation_date_compare_func);
     }
 
-    int count = 1;
     int resolution = 0;
     for (int i = 0; i < (int)arrTemp->len; i++) {
         const Reservation reservation_temp = (const Reservation)(g_array_index(arrTemp, gpointer, i));
@@ -754,18 +753,20 @@ void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             if(end_reservation >= end_date)  end_reservation = end_date;
             int nights = difftime(end_reservation, start_reservation);
             nights /= 3600*24;
-            int res = difftime(end_date, begin_date);
-            printf("%d\n", res/(3600*24));
-            if(res/(3600*24) < 31) nights++;
-        print_reservation(reservation_temp);
+            if(get_reservation_end_date(reservation_temp) - end_date > 0)  nights++;
+            // int res = difftime(end_date + TIME_T_SYSTEM, begin_date + TIME_T_SYSTEM);
+            // printf("%d\n", res/(3600*24));
+            // if(res/(3600*24) < 31) nights++;
+        // print_reservation(reservation_temp);
+            // printf("Nights: %d - Start: %s End: %s , RealStart: %s RealEnd: %s\n", nights, date_int_notime_to_string(start_reservation), date_int_notime_to_string(end_reservation), date_int_notime_to_string(get_reservation_begin_date(reservation_temp)), date_int_notime_to_string(get_reservation_end_date(reservation_temp)));
             resolution += get_reservation_price_per_night(reservation_temp) * (nights);
         }
     };
     if(flag == 'F') {
         fprintf(output_file, "--- 1 ---\n");
-        fprintf(output_file, "revenue: %d", resolution);
+        fprintf(output_file, "revenue: %d\n", resolution);
     } else if(flag == '\0') {
-        fprintf(output_file, "%d", resolution);
+        fprintf(output_file, "%d\n", resolution);
     }
 }
 
