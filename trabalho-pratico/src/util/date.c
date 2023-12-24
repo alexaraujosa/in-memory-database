@@ -50,7 +50,7 @@ int get_day(int date) {
 
 int get_age(int date) {
     time_t difference = difftime(TIME_T_SYSTEM, date);
-    int age = difference/(3600*24*365);
+    int age = difference/(3600*24*365.25);
 
     return age;
 }
