@@ -18,7 +18,6 @@
 #define xstr(s) str(s)
 #define str(s) #s
 
-#define TIME_T_SYSTEM 1696118400
 
 #define IS_NULL(ARG)         (ARG == NULL)
 #define IS_STRING_NULL(ARG)  (IS_NULL(ARG) || *ARG == '\0')

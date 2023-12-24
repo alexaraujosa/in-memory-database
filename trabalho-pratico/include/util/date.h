@@ -9,8 +9,12 @@
 #include <stdbool.h>
 #include "time.h"
 
-/* System date offset 01/10/2023 in time_t */
-#define TIME_T_SYSTEM 1696118400
+/* System date (1/10/2023) in time_t already with DATE_OFFSET */
+#define TIME_T_SYSTEM  1792236800
+
+/* Date Offset in time_t for avoiding the usage of long int (Support dates from 1900- until 2023+) */
+#define DATE_OFFSET 96118400
+
 
 /**
  * @brief Verify if the year of the date is equals to the second arg.
@@ -68,6 +72,15 @@ int get_month(int date);
  * @return Day of the provided date.
 */
 int get_day(int date);
+
+/**
+ * @brief Get the age of the date.
+ * 
+ * @param date Date in integer (Without system offset).
+ * 
+ * @return Age of the provided date.
+*/
+int get_age(int date);
 
 /**
  * @brief Converts the date without time string to an integer with system offset.
