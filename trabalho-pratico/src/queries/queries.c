@@ -16,7 +16,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             double total_price = (double)get_reservation_price_per_night(reservation)*(double)nights+(((double)get_reservation_price_per_night(reservation)*(double)nights)/100)*(double)get_reservation_city_tax(reservation);
             int parameter = get_reservation_begin_date(reservation);
             
-            parameter = parameter + DATE_OFFSET ;
+            parameter = parameter - DATE_OFFSET ;
             time_t converted_time = (time_t)parameter;
 
             struct tm *timeinfo;
@@ -33,7 +33,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             free(hotel_name);
 
             parameter = get_reservation_end_date(reservation);
-            parameter = parameter + DATE_OFFSET ;
+            parameter = parameter - DATE_OFFSET ;
             converted_time = (time_t)parameter;
             timeinfo = localtime(&converted_time);
             fprintf(output_file, "end_date: %.4d/%.2d/%.2d\n", timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday);
@@ -45,7 +45,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             double total_price = (double)get_reservation_price_per_night(reservation)*(double)nights+(((double)get_reservation_price_per_night(reservation)*(double)nights)/100)*(double)get_reservation_city_tax(reservation);
             int parameter = get_reservation_begin_date(reservation);
             
-            parameter = parameter + DATE_OFFSET ;
+            parameter = parameter - DATE_OFFSET ;
             time_t converted_time = (time_t)parameter;
 
             struct tm *timeinfo;
@@ -65,7 +65,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             free(hotel_name);
 
             parameter = get_reservation_end_date(reservation);
-            parameter = parameter + DATE_OFFSET ;
+            parameter = parameter - DATE_OFFSET ;
             converted_time = (time_t)parameter;
             timeinfo = localtime(&converted_time);
 
@@ -86,7 +86,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
         if(flight == NULL) return; 
         if(flag == 'F'){
             int parameter = get_flight_schedule_departure_date(flight);
-            parameter = parameter + DATE_OFFSET ;
+            parameter = parameter - DATE_OFFSET ;
             time_t converted_time = (time_t)parameter;
 
             struct tm *timeinfo;
@@ -119,7 +119,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             free(flight_destination);
             
             parameter = get_flight_schedule_arrival_date(flight);
-            parameter = parameter + DATE_OFFSET ;
+            parameter = parameter - DATE_OFFSET ;
             converted_time = (time_t)parameter;
             timeinfo = localtime(&converted_time);
 
@@ -145,7 +145,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             );
         } else {
             int parameter = get_flight_schedule_departure_date(flight);
-            parameter = parameter + DATE_OFFSET ;
+            parameter = parameter - DATE_OFFSET ;
             time_t converted_time = (time_t)parameter;
 
             struct tm *timeinfo;
@@ -177,7 +177,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             free(flight_destination);
 
             parameter = get_flight_schedule_arrival_date(flight);
-            parameter = parameter + DATE_OFFSET ;
+            parameter = parameter - DATE_OFFSET ;
             converted_time = (time_t)parameter;
             timeinfo = localtime(&converted_time);
 
@@ -335,7 +335,7 @@ void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
         for (int i = 0; i < (int)arrTemp->len; i++) {
             const Reservation reservation_temp = (const Reservation)(g_array_index(arrTemp, gpointer, i));
             int parameter = get_reservation_begin_date(reservation_temp);
-            parameter = parameter + DATE_OFFSET ;
+            parameter = parameter - DATE_OFFSET ;
             time_t converted_time = (time_t)parameter;
 
             struct tm *timeinfo;
@@ -351,7 +351,7 @@ void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
                 );
 
                 int parameter2 = get_reservation_end_date(reservation_temp);
-                parameter2 = parameter2 + DATE_OFFSET ;
+                parameter2 = parameter2 - DATE_OFFSET ;
                 time_t time_converted = (time_t)parameter2;
 
                 timeinfo = localtime(&time_converted);
@@ -387,7 +387,7 @@ void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
                 );
 
                 int parameter2 = get_reservation_end_date(reservation_temp);
-                parameter2 = parameter2 + DATE_OFFSET ;
+                parameter2 = parameter2 - DATE_OFFSET ;
                 time_t time_converted = (time_t)parameter2;
 
                 timeinfo = localtime(&time_converted);
@@ -481,7 +481,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
                 && flag == '\0'
             ) {
                 // int parameter = 
-                // parameter = parameter + DATE_OFFSET ;
+                // parameter = parameter - DATE_OFFSET ;
                 // time_t converted_time = (time_t)parameter;
 
                 // struct tm *timeinfo;
@@ -503,7 +503,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
                 //     get_flight_plane_model(flight_temp)
                 // );
 
-                int schedule_departure_date = get_flight_schedule_departure_date(flight_temp) + DATE_OFFSET ;
+                int schedule_departure_date = get_flight_schedule_departure_date(flight_temp) - DATE_OFFSET ;
                 // char* sched_dep_date_str = date_int_to_string(schedule_departure_date);
                 time_t converted_time = (time_t)schedule_departure_date;
 
@@ -540,7 +540,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
 
             } else if(date_string_withtime_to_int(argv[1]) <= get_flight_schedule_departure_date(flight_temp) && get_flight_schedule_departure_date(flight_temp) <= date_string_withtime_to_int(argv[2]) && flag == 'F') {
                 // int parameter = get_flight_schedule_departure_date(flight_temp);
-                // parameter = parameter + DATE_OFFSET ;
+                // parameter = parameter - DATE_OFFSET ;
                 // time_t converted_time = (time_t)parameter;
 
                 // struct tm *timeinfo;
@@ -560,7 +560,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
                 // get_flight_plane_model(flight_temp)
                 // );
 
-                int schedule_departure_date = get_flight_schedule_departure_date(flight_temp) + DATE_OFFSET ;
+                int schedule_departure_date = get_flight_schedule_departure_date(flight_temp) - DATE_OFFSET ;
                 // char* sched_dep_date_str = date_int_to_string(schedule_departure_date);
                 time_t converted_time = (time_t)schedule_departure_date;
 
@@ -754,7 +754,7 @@ void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             int nights = difftime(end_reservation, start_reservation);
             nights /= 3600*24;
             if(get_reservation_end_date(reservation_temp) - end_date > 0)  nights++;
-            // int res = difftime(end_date + DATE_OFFSET , begin_date + DATE_OFFSET );
+            // int res = difftime(end_date - DATE_OFFSET , begin_date - DATE_OFFSET );
             // printf("%d\n", res/(3600*24));
             // if(res/(3600*24) < 31) nights++;
         // print_reservation(reservation_temp);
