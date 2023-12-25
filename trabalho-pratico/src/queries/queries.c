@@ -471,7 +471,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
         free(orig);
 
         g_array_sort(arrTemp, &flightsCatalog_full_compare_func);
-
+        bool activated = FALSE;
         int count = 1;
         for (int i = 0; i < (int)arrTemp->len; i++) {
             const Flight flight_temp = (const Flight)(g_array_index(arrTemp, gpointer, i));
@@ -480,6 +480,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
                 && get_flight_schedule_departure_date(flight_temp) <= date_string_withtime_to_int(argv[2]) 
                 && flag == '\0'
             ) {
+                activated = TRUE;
                 // int parameter = 
                 // parameter = parameter - DATE_OFFSET ;
                 // time_t converted_time = (time_t)parameter;
@@ -539,6 +540,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
                 count++;
 
             } else if(date_string_withtime_to_int(argv[1]) <= get_flight_schedule_departure_date(flight_temp) && get_flight_schedule_departure_date(flight_temp) <= date_string_withtime_to_int(argv[2]) && flag == 'F') {
+                activated = TRUE;
                 // int parameter = get_flight_schedule_departure_date(flight_temp);
                 // parameter = parameter - DATE_OFFSET ;
                 // time_t converted_time = (time_t)parameter;
@@ -596,7 +598,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
 
                 count++;
             }
-            if(i == (int)arrTemp->len - 1)   fprintf(output_file, "\n");
+            if(i == (int)arrTemp->len - 1 && activated == TRUE)   fprintf(output_file, "\n");
         };
     };
 
