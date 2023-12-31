@@ -31,8 +31,8 @@ GM_Term gm_term_init() {
     term->size = gm_get_tui_size();
     gm_term_make_buffer(&term->buf, term->size.rows, term->size.cols, MAX_UTF8_SEQ);
 
-    term->color_pairs = g_hash_table_new_full(g_direct_hash, g_direct_equal, free, free);
-    term->colors = g_hash_table_new_full(g_direct_hash, g_direct_equal, free, free);
+    term->color_pairs = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, g_free);
+    term->colors = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, g_free);
 
     term->attr_queue = g_array_new(FALSE, FALSE, sizeof(GM_Attr));
 
