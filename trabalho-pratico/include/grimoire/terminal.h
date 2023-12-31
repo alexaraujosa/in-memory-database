@@ -4,7 +4,7 @@
 #include "grimoire/grimoire_public.h"
 
 /* ============== TYPEDEFS ============== */
-// typedef struct gm_term TERM, *GM_Term;
+// typedef struct gm_term GM_TERM, *GM_Term;
 
 // typedef struct gm_term_size {
 //     unsigned short int rows;
@@ -23,6 +23,8 @@ typedef GM_TERM_EVENT_LISTENER(TermEventListener);
 
 #define GM_TERMINAL_RESIZE_LISTENER(name) void(*name)(GM_Term, GM_TERM_SIZE)
 typedef GM_TERMINAL_RESIZE_LISTENER(TermResizeListener);
+
+void gm_refresh(GM_Term term);
 
 void gm_setup_tui_events();
 void gm_close_tui_events();

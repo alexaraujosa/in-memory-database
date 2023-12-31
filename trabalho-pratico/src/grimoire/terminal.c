@@ -1,13 +1,15 @@
 #include "grimoire/terminal.h"
+#include "grimoire/attr.h"
 #include "grimoire/grimoire_priv.h"
 
 #include "common.h"
+#include "util/math.h"
+#include "util/misc.h"
 #include <stdbool.h>
 #include <stdint.h>
 #include <sys/ioctl.h>
 #include <signal.h>
 #include <unistd.h>
-#include "util/math.h"
 
 /* ============== CONSTANTS ============== */
 static GList* gm_terminal_resize_queue = NULL;
@@ -17,63 +19,81 @@ static bool gm_tui_initialized = false;
 // typedef struct gm_term {
 //     GM_TERM_SIZE size;
 //     char** buf;
-// } TERM, *GM_Term;
+// } GM_TERM, *GM_Term;
 
 struct gm_term_event_index {
     GM_Term term;
     GM_TERMINAL_RESIZE_LISTENER(listener);
 };
 
-#define gotoxy(x,y) printf("\033[%d;%dH", (y), (x))
-
 /* ============== FORWARD DECLARATIONS ============== */
-void gm_term_make_buffer(GM_Term term, int rows, int cols);
-void gm_term_free_buffer(GM_Term term);
+void gm_term_make_buffer(GM_Buf* termbuf, int rows, int cols, int charsize);
+void gm_term_free_buffer(GM_Buf* buf);
 void gm_term_flush_buffer(GM_Term term);
 
 /* ============== TERM ============== */
 GM_Term gm_term_init() {
-    GM_Term term = (GM_Term)malloc(sizeof(TERM));
+    GM_Term term = (GM_Term)malloc(sizeof(GM_TERM));
     term->size = gm_get_tui_size();
-    gm_term_make_buffer(term, term->size.rows, term->size.cols);
+    gm_term_make_buffer(&term->buf, term->size.rows, term->size.cols, MAX_UTF8_SEQ);
+    gm_term_make_buffer(&term->print_buf, term->size.rows, term->size.cols, MAX_CHAR_SEQ_BYTES);
+
     term->color_pairs = g_hash_table_new_full(g_direct_hash, g_direct_equal, free, NULL);
+    term->attr_queue = g_array_new(FALSE, FALSE, sizeof(GM_Attr)); // STRUCT_MEMBER_SIZE(GM_TERM, attr)
 
     gm_setup_tui_events();
 
     return term;
 }
 
+void gm_term_end(GM_Term term) {
+    gm_term_free_buffer(&term->buf);
+    gm_term_free_buffer(&term->print_buf);
+
+    g_hash_table_destroy(term->color_pairs);
+    g_array_free(term->attr_queue, TRUE);
+
+    gm_close_tui_events();
+}
+
 /* ------- TERM BUFFER ------- */
-void gm_term_make_buffer(GM_Term term, int rows, int cols) {
+void gm_term_make_buffer(GM_Buf* termbuf, int rows, int cols, int charsize) {
     GM_Buf buf = (GM_Buf)malloc(sizeof(GM_BUF));
     buf->data = (char**)malloc(rows * sizeof(char*));
 
     for (int i = 0; i < rows; i++) {
-        buf->data[i] = (char*)malloc((MAX_CHAR_SEQ_BYTES * cols + 1) * sizeof(char));
-        memset(buf->data[i], 0, (MAX_CHAR_SEQ_BYTES * cols + 1) * sizeof(char));
+        buf->data[i] = (char*)malloc((charsize * cols + 1) * sizeof(char));
+        memset(buf->data[i], 32, (charsize * cols) * sizeof(char));
+        buf->data[i][charsize * cols + 1] = '\0';
     }
 
-    term->buf = buf;
+    buf->charsize = charsize;
+    buf->rows = rows;
+    buf->cols = cols;
+
+    *termbuf = buf;
 }
 
-void gm_term_free_buffer(GM_Term term) {
-    if (term->buf == NULL) return;
+void gm_term_free_buffer(GM_Buf* buf) {
+    if (buf == NULL) return;
 
-    for (int i = 0; i < term->buf->rows; i++) {
-        if (term->buf->data[i] == NULL) free(term->buf->data[i]);
+    for (int i = 0; i < (*buf)->rows; i++) {
+        if ((*buf)->data[i] == NULL) free((*buf)->data[i]);
     }
 
-    free(term->buf->data);
-    free(term->buf);
-    term->buf = NULL;
+    free((*buf)->data);
+    free(*buf);
+    buf = NULL;
 }
 
-void gm_term_clear_buffer(GM_Term term) {
-    if (term->buf == NULL) return;
+// void gm_term_clear_buffer(GM_Buf buf, int charsize) {
+void gm_term_clear_buffer(GM_Buf buf) {
+    if (buf == NULL) return;
 
-    for (int i = 0; i < term->buf->rows; i++) {
-        if (term->buf->data[i] != NULL) {
-            memset(term->buf->data[i], 0, (MAX_CHAR_SEQ_BYTES * term->buf->cols + 1) * sizeof(char));
+    for (int i = 0; i < buf->rows; i++) {
+        if (buf->data[i] != NULL) {
+            // memset(buf->data[i], 32, (charsize * buf->cols + 1) * sizeof(char));
+            memset(buf->data[i], ' ', (buf->charsize * buf->cols + 1) * sizeof(char));
         }
     }
 }
@@ -149,8 +169,30 @@ int gm_term_buf_truepos(GM_Term term, int row, int col) {
     return truelen;
 }
 
-void refresh(GM_Term term) {
-    gm_term_flush_buffer(term);
+void gm_term_canvas_newframe(GM_Term term) {
+    gotoxy(0, 0);
+
+    for (int i = 0; i < term->size.rows; i++) {
+        for (int j = 0; j < term->size.cols; j++) putchar(' ');
+        if (i != term->size.rows - 1) putchar('\n');
+    }
+}
+
+void gm_refresh(GM_Term term) {
+    gm_term_canvas_newframe(term);
+
+    for (int i = 0; i < term->attr_queue->len; i++) {
+        GM_Attr attr = gm_term_attr_get(term, i);
+        gm_attr_resolve(term, attr);
+        #ifdef _DEBUG
+        fflush(stdout);
+        #endif
+    }
+
+    gm_term_attr_reset(term);
+    gm_term_clear_buffer(term->buf);
+    
+    fflush(stdout);
 }
 
 /* ============== TERM SIZE ============== */

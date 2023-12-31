@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "executers/batch.h"
+#include "executers/interactive.h"
 
 #define RESET   "\x1b[0m"
 #define RED     "\x1b[31m"
@@ -14,8 +15,9 @@ int main(int argc, char const *argv[]) {
     if(argc > 2) {
         batch(argv[1], argv[2]);
     } else {
-        printf("Interactive mode not implemented.\n");
-        exit(EXIT_FAILURE);
+        // printf("Interactive mode not implemented.\n");
+        // exit(EXIT_FAILURE);
+        interactive();
     }
     
     clock_t end_time = clock();

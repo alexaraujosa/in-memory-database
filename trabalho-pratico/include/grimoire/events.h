@@ -1,0 +1,6 @@
+#ifndef TP_GRIMOIRE_EVENTS_H
+#define TP_GRIMOIRE_EVENTS_H
+
+#define GM_TERM_RESIZE 1
+
+#endif
