@@ -28,7 +28,7 @@ void gm_attron(GM_Term term, int attr) {
         gm_init_color_defaults(term);
 
         rt_assert(
-            gm_has_color_pair(term, color),
+            gm_has_color_pair(term, color - 1),
             trace_msg(SCOPE, "Attempted to set attribute flag for non-existent color pair.")
         );
         
@@ -123,8 +123,12 @@ inline GM_Attr gm_term_attr_get(GM_Term term, int ind) {
 }
 
 // Is memory even freed here?
+// After running Valgrind: nope, it isn't.
 inline void gm_term_attr_reset(GM_Term term) {
-    for (int i = 0; i <= term->attr_queue->len; i++) g_array_remove_index(term->attr_queue, 0);
+    for (int i = 0; i <= term->attr_queue->len; i++) {
+        free(gm_term_attr_get(term, i));
+        g_array_remove_index(term->attr_queue, 0);
+    }
 }
 // ======= END ATTRIBUTE FACTORY =======
 
@@ -151,6 +155,7 @@ char* gm_attr_int_resolve(GM_Term term, GM_AttrInt attr) {
 
     strcpy(str + ind, color_str);
     ind += strlen(color_str);
+    free(color_str);
 
     if (attr & GM_BOLD)      { strcpy(str + ind, "1;"); ind += 2; }
     if (attr & GM_ITALIC)    { strcpy(str + ind, "3;"); ind += 2; }
@@ -174,6 +179,8 @@ void gm_attr_resolve_line(GM_Term term, GM_Attr attr) {
     char* attr_str = gm_attr_int_resolve(term, attr->data);
     printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
     clear_attr();
+
+    free(attr_str);
 }
 
 inline void gm_attr_resolve(GM_Term term, GM_Attr attr) {

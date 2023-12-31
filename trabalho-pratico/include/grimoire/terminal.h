@@ -7,6 +7,7 @@
 
 /* ============== TERM ============== */
 GM_Term gm_term_init();
+void gm_term_end(GM_Term term);
 
 /* ============== TUI SIZE ============== */
 GM_TERM_SIZE gm_get_tui_size();

@@ -69,6 +69,7 @@ void gm_printf(GM_Term term, int row, int col, const char *format, ...) {
     int vislen = gm_str_visible_len(result);
     
     memcpy(term->buf->data[row] + col, result, length);
+    free(result);
     
     GM_Attr attr = gm_attr_make(
         term, 
