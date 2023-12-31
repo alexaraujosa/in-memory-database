@@ -170,7 +170,7 @@ char* gm_attr_int_resolve(GM_Term term, GM_AttrInt attr) {
 }
 
 void gm_attr_resolve_line(GM_Term term, GM_Attr attr) {
-    gotoxy(attr->row_start + 1, attr->col_start + 1);
+    gotoxy(attr->col_start + 1, attr->row_start + 1);
 
     #ifdef _DEBUG
     fflush(stdout);
