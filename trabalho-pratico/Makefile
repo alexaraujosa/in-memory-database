@@ -1,7 +1,7 @@
 CC        := gcc
 _C_FLAGS := -Wall -Wextra
 C_OPT_FLAGS := -O2
-C_DEBUG_FLAGS := -Og -g -D_DEBUG -fkeep-inline-functions
+C_DEBUG_FLAGS := -Og -g -ggdb3 -D_DEBUG -fkeep-inline-functions
 GLIB_FLAGS := `pkg-config --cflags glib-2.0`
 
 C_FLAGS := $(_C_FLAGS) $(C_OPT_FLAGS) $(GLIB_FLAGS)
@@ -19,6 +19,7 @@ EXEC_PATH := $(EXECUTABLE)
 
 SRC_FILES := $(wildcard $(SRC)/**/*.c $(wildcard $(SRC)/*.c))
 OBJ_FILES := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRC_FILES))
+DEP_FILES := $(patsubst $(SRC)/%.c,$(OBJ)/%.d,$(SRC_FILES))
 SRC_DIRS  := $(wildcard $(SRC)/**/)
 OBJ_DIRS  := $(patsubst $(SRC)/%,$(OBJ)/%,$(SRC_DIRS))
 
@@ -35,9 +36,11 @@ $(EXEC_PATH): $(OBJ_DIRS) $(OBJ_FILES)
 $(OBJ_DIRS): $(SRC_DIRS)
 	mkdir -p $@
 
+-include $(DEP_FILES)
+
 $(OBJ)/%.o: $(SRC)/%.c
 	mkdir -p $(OBJ)
-	$(CC) $(C_FLAGS) -I$(INCLUDE) -c $< -o $@ $(LIBRARIES)
+	$(CC) $(C_FLAGS) -I$(INCLUDE) -MMD -c $< -o $@ $(LIBRARIES)
 
 run: $(EXEC_PATH)
 	./$(EXEC_PATH)
@@ -51,6 +54,6 @@ locate:
 	@echo ./$(EXEC_PATH)
 
 clean:
-	-rm $(BIN)/*
+	-rm -rf $(BIN)/*
 	-rm -rf $(OBJ)/*
 	-rm -rf Resultados/*.csv
