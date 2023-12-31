@@ -24,19 +24,17 @@ struct gm_term_event_index {
 /* ============== FORWARD DECLARATIONS ============== */
 void gm_term_make_buffer(GM_Buf* termbuf, int rows, int cols, int charsize);
 void gm_term_free_buffer(GM_Buf* buf);
-void gm_term_flush_buffer(GM_Term term);
 
 /* ============== TERM ============== */
 GM_Term gm_term_init() {
     GM_Term term = (GM_Term)malloc(sizeof(GM_TERM));
     term->size = gm_get_tui_size();
     gm_term_make_buffer(&term->buf, term->size.rows, term->size.cols, MAX_UTF8_SEQ);
-    gm_term_make_buffer(&term->print_buf, term->size.rows, term->size.cols, MAX_CHAR_SEQ_BYTES);
 
     term->color_pairs = g_hash_table_new_full(g_direct_hash, g_direct_equal, free, NULL);
     term->colors = g_hash_table_new_full(g_direct_hash, g_direct_equal, free, NULL);
 
-    term->attr_queue = g_array_new(FALSE, FALSE, sizeof(GM_Attr)); // STRUCT_MEMBER_SIZE(GM_TERM, attr)
+    term->attr_queue = g_array_new(FALSE, FALSE, sizeof(GM_Attr));
 
     gm_setup_tui_events();
 
@@ -45,7 +43,6 @@ GM_Term gm_term_init() {
 
 void gm_term_end(GM_Term term) {
     gm_term_free_buffer(&term->buf);
-    gm_term_free_buffer(&term->print_buf);
 
     g_hash_table_destroy(term->color_pairs);
     g_array_free(term->attr_queue, TRUE);
@@ -90,42 +87,6 @@ void gm_term_clear_buffer(GM_Buf buf) {
         if (buf->data[i] != NULL) {
             memset(buf->data[i], ' ', (buf->charsize * buf->cols + 1) * sizeof(char));
         }
-    }
-}
-
-void gm_term_flush_buffer(GM_Term term) {
-    if (term->buf == NULL) return;
-
-    int rows = imin(term->size.rows, term->buf->rows);
-    int cols = imin(term->size.cols, term->buf->cols);
-
-    gotoxy(0, 0);
-
-    for (int i = 0; i < rows; i++) {
-        int rcols = 0;
-        int truelen;
-
-        #define max_len MAX_CHAR_SEQ_BYTES * term->buf->cols
-        for (truelen = 0; truelen < max_len; truelen++) {
-            // Check for ANSI escape codes
-            if (term->buf->data[i][truelen] == '\x1B' && truelen + 1 < max_len && term->buf->data[i][truelen + 1] == '[') {
-                // Skip ANSI escape code
-                while (term->buf->data[i][truelen] != 'm' && truelen + 1 < max_len) truelen++;
-                truelen++; // Move past 'm'
-            } else {
-                // Handle UTF-8 multi-byte characters
-                uint8_t byte = (uint8_t)term->buf->data[i][truelen];
-                if ((byte & 0xC0) != 0x80) {
-                    // This is the start of a character
-                    rcols++;
-                    if (rcols == cols) break;
-                }
-
-                truelen++;
-            }
-        }
-
-        printf("%.*s\n", truelen, term->buf->data[i]);
     }
 }
 

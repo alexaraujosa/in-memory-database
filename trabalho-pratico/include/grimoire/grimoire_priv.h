@@ -54,7 +54,6 @@ typedef struct gm_color_pair {
 typedef struct gm_term {
     GM_TERM_SIZE size;
     GM_Buf buf;
-    GM_Buf print_buf;
     GHashTable* color_pairs;
     GHashTable* colors;
     GM_AttrInt attr;
