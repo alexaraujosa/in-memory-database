@@ -1,2 +1,3 @@
 ../datasets/dataset/data
 ../datasets/dataset/input.txt
+../scripts/debug_vscode.gdb
