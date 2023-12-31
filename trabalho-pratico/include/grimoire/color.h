@@ -24,8 +24,4 @@ void gm_init_color_pair(GM_Term term, int id, int fg, int bg);
 void gm_init_color(GM_Term term, int id, uint8_t r, uint8_t g, uint8_t b);
 void gm_init_color_defaults(GM_Term term);
 
-// // ======= FETCHERS =======
-// RGBColor gm_get_color(GM_Term term, int id);
-// GM_ColorPair gm_get_color_pair(GM_Term term, int id);
-
 #endif

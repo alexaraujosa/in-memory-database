@@ -4,12 +4,6 @@
 #include "grimoire/grimoire_public.h"
 
 /* ============== TYPEDEFS ============== */
-// typedef struct gm_term GM_TERM, *GM_Term;
-
-// typedef struct gm_term_size {
-//     unsigned short int rows;
-//     unsigned short int cols;
-// } GM_TERM_SIZE;
 
 /* ============== TERM ============== */
 GM_Term gm_term_init();

@@ -16,11 +16,6 @@ static GList* gm_terminal_resize_queue = NULL;
 static bool gm_tui_initialized = false;
 
 /* ============== TYPEDEFS ============== */
-// typedef struct gm_term {
-//     GM_TERM_SIZE size;
-//     char** buf;
-// } GM_TERM, *GM_Term;
-
 struct gm_term_event_index {
     GM_Term term;
     GM_TERMINAL_RESIZE_LISTENER(listener);
@@ -88,13 +83,11 @@ void gm_term_free_buffer(GM_Buf* buf) {
     buf = NULL;
 }
 
-// void gm_term_clear_buffer(GM_Buf buf, int charsize) {
 void gm_term_clear_buffer(GM_Buf buf) {
     if (buf == NULL) return;
 
     for (int i = 0; i < buf->rows; i++) {
         if (buf->data[i] != NULL) {
-            // memset(buf->data[i], 32, (charsize * buf->cols + 1) * sizeof(char));
             memset(buf->data[i], ' ', (buf->charsize * buf->cols + 1) * sizeof(char));
         }
     }
@@ -109,9 +102,6 @@ void gm_term_flush_buffer(GM_Term term) {
     gotoxy(0, 0);
 
     for (int i = 0; i < rows; i++) {
-        // if (term->buf->data[i] != NULL) puts(term->buf->data[i]);
-        // if (term->buf->data[i] != NULL) printf("%.*s\n", cols, term->buf->data[i]);
-
         int rcols = 0;
         int truelen;
 
@@ -172,14 +162,18 @@ int gm_term_buf_truepos(GM_Term term, int row, int col) {
 }
 
 void gm_term_canvas_newframe(GM_Term term) {
+    clear();
+    gotoxy(0 , 0);
+
+    // The snippet fills the entire screen with spaces.
+    // Can be used if required.
+
     // gotoxy(0, 0);
 
     // for (int i = 0; i < term->size.rows; i++) {
     //     for (int j = 0; j < term->size.cols; j++) putchar(' ');
     //     if (i != term->size.rows - 1) putchar('\n');
     // }
-    clear();
-    gotoxy(0 , 0);
 }
 
 void gm_refresh(GM_Term term) {

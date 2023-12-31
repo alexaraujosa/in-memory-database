@@ -7,18 +7,12 @@
 
 #define ANSI_TRUECOLOR_FG(r, g, b) "\x1B[38;2;" #r ";" #g ";" #b "m"
 #define ANSI_TRUECOLOR_FG_CHAINABLE(r, g, b) "38;2;" #r ";" #g ";" #b ";"
+
 #define ANSI_TRUECOLOR_BG(r, g, b) "\x1B[48;2;" #r ";" #g ";" #b "m"
 #define ANSI_TRUECOLOR_BG_CHAINABLE(r, g, b) "48;2;" #r ";" #g ";" #b ";"
-// #define ANSI_TRUECOLOR_FULL(fr, fg, fb, br, bg, bb) "\x1B[48;2;" #fr ";" #fg ";" #fb ";38;2;" #br ";" #bg ";" #bb "m"
 
 #define ANSI_TRUECOLOR_FULL(fr, fg, fb, br, bg, bb) isnprintf("\x1B[48;2;%d;%d;%d;38;2;%d;%d;%dm", fr, fg, fb, br, bg, bb)
 #define ANSI_TRUECOLOR_FULL_CHAINABLE(fr, fg, fb, br, bg, bb) isnprintf("48;2;%d;%d;%d;38;2;%d;%d;%d;", fr, fg, fb, br, bg, bb)
-
-
-// typedef enum {
-//     GM_ATTR_TYPE_LINE,
-//     GM_ATTR_TYPE_length
-// } GM_AttrTypes;
 
 // ======= ATTRON/OFF =======
 void gm_attron(GM_Term term, int attr) {
@@ -29,21 +23,6 @@ void gm_attron(GM_Term term, int attr) {
     }
 
     uint8_t color = attr >> _GM_COLOR_OFFSET;
-
-    // if (color != 0) {
-        // GM_ColorPair cp = g_hash_table_lookup(term->color_pairs, GINT_TO_POINTER(color));
-        // if (cp == NULL) {
-        //     // TODO: Trace?
-        //     return;
-        // }
-
-        // rt_assert(
-        //     gm_has_color_pair(term, color),
-        //     trace_msg(SCOPE, "Attempted to set attribute flag for non-existent color pair.")
-        // );
-
-        // term->attr |= (color & 0xFF) << _GM_COLOR_OFFSET;
-    // }
 
     if (color > 0) {
         gm_init_color_defaults(term);
@@ -66,16 +45,6 @@ void gm_attron(GM_Term term, int attr) {
 void gm_attroff(GM_Term term, int attr) {
     #define SCOPE "gm_attroff"
     uint8_t color = attr >> _GM_COLOR_OFFSET;
-
-    // if (color != 0) {
-        // GM_ColorPair cp = g_hash_table_lookup(term->color_pairs, GINT_TO_POINTER(color));
-        // if (cp == NULL) {
-        //     // TODO: Trace?
-        //     return;
-        // }
-
-        // term->attr &= ~(0xFF << _GM_COLOR_OFFSET);
-    // }
 
     if (color > 0) {
         term->attr &= ~(0xFF << _GM_COLOR_OFFSET);
