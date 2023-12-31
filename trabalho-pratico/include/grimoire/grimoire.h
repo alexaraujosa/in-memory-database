@@ -8,6 +8,7 @@
 #endif
 
 #include "grimoire/terminal.h"
+#include "grimoire/color.h"
 #include "grimoire/attr.h"
 #include "grimoire/draw.h"
 

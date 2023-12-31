@@ -1,5 +1,6 @@
 #ifndef TP_GRIMOIRE_PRIV_H
 #define TP_GRIMOIRE_PRIV_H
+#define TP_GRIMOIRE_LOCK
 
 #include "grimoire/grimoire_public.h"
 #include <stdint.h>
@@ -17,7 +18,9 @@
 #define MAX_CHAR_SEQ_BYTES MAX_ANSI_SEQ + MAX_UTF8_SEQ // Maximum bytes per character
 
 /* ============== TYPEDEFS ============== */
+// TODO: Make modules opaque
 
+#define clear() printf("\033[H\033[J")
 #define gotoxy(x,y) printf("\e[%d;%dH", (y), (x))
 #define clear_attr() printf("\e[0m");
 
@@ -41,17 +44,19 @@ typedef struct gm_buf {
     int cols;
 } GM_BUF, *GM_Buf;
 
+// Name incompatibility with attr flag macro.
 typedef struct gm_color_pair {
     uint8_t id;
     uint8_t fg_color;
     uint8_t bg_color;
-} GM_COLOR_PAIR, *GM_ColorPair;
+} GM_COLOR_PAIR_STRUCT, *GM_ColorPair;
 
 typedef struct gm_term {
     GM_TERM_SIZE size;
     GM_Buf buf;
     GM_Buf print_buf;
     GHashTable* color_pairs;
+    GHashTable* colors;
     GM_AttrInt attr;
     GArray* attr_queue;
 } GM_TERM, *GM_Term;
@@ -84,5 +89,11 @@ void    gm_term_attr_reset(GM_Term term);
 
 void gm_attr_resolve_line(GM_Term term, GM_Attr attr);
 void gm_attr_resolve(GM_Term term, GM_Attr attr);
+
+// ------- color.c -------
+#include "grimoire/color.h"
+// ==== FETCHERS ====
+RGBColor gm_get_color(GM_Term term, int id);
+GM_ColorPair gm_get_color_pair(GM_Term term, int id);
 
 #endif

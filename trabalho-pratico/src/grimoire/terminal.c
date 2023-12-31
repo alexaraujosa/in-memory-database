@@ -39,6 +39,8 @@ GM_Term gm_term_init() {
     gm_term_make_buffer(&term->print_buf, term->size.rows, term->size.cols, MAX_CHAR_SEQ_BYTES);
 
     term->color_pairs = g_hash_table_new_full(g_direct_hash, g_direct_equal, free, NULL);
+    term->colors = g_hash_table_new_full(g_direct_hash, g_direct_equal, free, NULL);
+
     term->attr_queue = g_array_new(FALSE, FALSE, sizeof(GM_Attr)); // STRUCT_MEMBER_SIZE(GM_TERM, attr)
 
     gm_setup_tui_events();
@@ -170,12 +172,14 @@ int gm_term_buf_truepos(GM_Term term, int row, int col) {
 }
 
 void gm_term_canvas_newframe(GM_Term term) {
-    gotoxy(0, 0);
+    // gotoxy(0, 0);
 
-    for (int i = 0; i < term->size.rows; i++) {
-        for (int j = 0; j < term->size.cols; j++) putchar(' ');
-        if (i != term->size.rows - 1) putchar('\n');
-    }
+    // for (int i = 0; i < term->size.rows; i++) {
+    //     for (int j = 0; j < term->size.cols; j++) putchar(' ');
+    //     if (i != term->size.rows - 1) putchar('\n');
+    // }
+    clear();
+    gotoxy(0 , 0);
 }
 
 void gm_refresh(GM_Term term) {
