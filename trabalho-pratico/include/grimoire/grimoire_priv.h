@@ -57,7 +57,8 @@ typedef struct gm_term {
     GHashTable* color_pairs;
     GHashTable* colors;
     GM_AttrInt attr;
-    GArray* attr_queue;
+    // GArray* attr_queue;
+    GQueue* attr_queue;
 } GM_TERM, *GM_Term;
 
 // ------- terminal.c -------
@@ -83,7 +84,7 @@ void gm_attr_destroy(GM_Attr attr);
 // Defined here as it is related to attributes, but only used by the terminal.
 // TODO: Remove term from name?
 void    gm_term_attr_add(GM_Term term, GM_Attr attr);
-GM_Attr gm_term_attr_get(GM_Term term, int ind);
+GM_Attr gm_term_attr_get(GM_Term term);
 void    gm_term_attr_reset(GM_Term term);
 
 void gm_attr_resolve_line(GM_Term term, GM_Attr attr);

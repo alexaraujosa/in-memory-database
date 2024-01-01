@@ -30,7 +30,7 @@ RGBColor _gm_make_color(uint8_t r, uint8_t g, uint8_t b) {
     return color;
 }
 
-RGBColor _gm_make_color_pair(int id, int fg, int bg) {
+GM_ColorPair _gm_make_color_pair(int id, int fg, int bg) {
     GM_ColorPair pair = (GM_ColorPair)malloc(sizeof(GM_COLOR_PAIR_STRUCT));
     pair->id = id;
     pair->fg_color = fg;
@@ -43,9 +43,9 @@ void gm_init_color(GM_Term term, int id, uint8_t r, uint8_t g, uint8_t b) {
     #define SCOPE "gm_init_color"
     rt_assert(!gm_has_color(term, id), trace_msg(SCOPE, "Attempted to define already existent color."));
     rt_assert((id >= GM_COLOR_ID_MIN && id <= GM_COLOR_ID_MAX), trace_msg(SCOPE, "Color ID out-of-bounds."));
-    rt_assert((r >= 0 && r <= 255), trace_msg(SCOPE, "Red hue out-of-bounds."));
-    rt_assert((g >= 0 && g <= 255), trace_msg(SCOPE, "Green hue out-of-bounds."));
-    rt_assert((b >= 0 && b <= 255), trace_msg(SCOPE, "Blue hue out-of-bounds."));
+    // rt_assert((r >= 0 && r <= 255), trace_msg(SCOPE, "Red hue out-of-bounds."));
+    // rt_assert((g >= 0 && g <= 255), trace_msg(SCOPE, "Green hue out-of-bounds."));
+    // rt_assert((b >= 0 && b <= 255), trace_msg(SCOPE, "Blue hue out-of-bounds."));
 
     RGBColor color = _gm_make_color(r, g, b);
 

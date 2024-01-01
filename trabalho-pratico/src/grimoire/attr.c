@@ -114,21 +114,20 @@ void gm_attr_destroy(GM_Attr attr) {
     free(attr);
 } 
 
+void _gm_attr_destroy_notify(gpointer data) {
+    gm_attr_destroy((GM_Attr)data);
+} 
+
 inline void gm_term_attr_add(GM_Term term, GM_Attr attr) {
-    g_array_append_val(term->attr_queue, attr);
+    g_queue_push_tail(term->attr_queue, attr);
 }
 
-inline GM_Attr gm_term_attr_get(GM_Term term, int ind) {
-    return g_array_index(term->attr_queue, GM_Attr, ind);
+inline GM_Attr gm_term_attr_get(GM_Term term) {
+    return (GM_Attr)g_queue_pop_head(term->attr_queue);
 }
 
-// Is memory even freed here?
-// After running Valgrind: nope, it isn't.
 inline void gm_term_attr_reset(GM_Term term) {
-    for (int i = 0; i <= term->attr_queue->len; i++) {
-        free(gm_term_attr_get(term, i));
-        g_array_remove_index(term->attr_queue, 0);
-    }
+    g_queue_clear_full(term->attr_queue, _gm_attr_destroy_notify);
 }
 // ======= END ATTRIBUTE FACTORY =======
 
