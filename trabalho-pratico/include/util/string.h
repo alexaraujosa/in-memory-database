@@ -23,6 +23,8 @@
 #define IS_NULL(ARG)         (ARG == NULL)
 #define IS_STRING_NULL(ARG)  (IS_NULL(ARG) || *ARG == '\0')
 
+#define STRING_EQUAL(a, b) (strcmp(a, b) == 0)
+
 char* isnprintf(const char *format, ...);
 char* strdup_to(char* dest, char* src);
 
