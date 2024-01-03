@@ -11,27 +11,9 @@
 #include "util/string.h"
 
 #define MAX_KEY_SEQUENCE 5
-// #define IS_FUNCTION_KEY(s) ((s)[0] == 27)
-// #define IS_F1to4_KEY(s) ((s)[1] == 79)
-// #define IS_F5to12_KEY(s) (((s)[1] == 91) && ((s)[4] == 126))
-// #define IS_F5to8_KEY(s) (IS_F5to12_KEY(s) && ((s)[2] == 49))
-// #define IS_F9to12_KEY(s) (IS_F5to12_KEY(s) && ((s)[2] == 50))
-// #define IS_ARROW_KEY(s) ((s)[0] == 27 && s[1] == 91)
 
 #define MEMOIZE_CAP(cache, key) memoize_cache_elem(cache, key, tigetstr(key))
 
-// #define GM_CAP_KEY_F1  "kf1"
-// #define GM_CAP_KEY_F2  "kf2"
-// #define GM_CAP_KEY_F3  "kf3"
-// #define GM_CAP_KEY_F4  "kf4"
-// #define GM_CAP_KEY_F5  "kf5"
-// #define GM_CAP_KEY_F6  "kf6"
-// #define GM_CAP_KEY_F7  "kf7"
-// #define GM_CAP_KEY_F8  "kf8"
-// #define GM_CAP_KEY_F9  "kf9"
-// #define GM_CAP_KEY_F10 "kf10"
-// #define GM_CAP_KEY_F11 "kf11"
-// #define GM_CAP_KEY_F12 "kf12"
 #define GM_CAP_KEY_F1  key_f1  // 27 91 80
 #define GM_CAP_KEY_F2  key_f2  // 27 91 81
 #define GM_CAP_KEY_F3  key_f3  // 27 91 82
@@ -96,48 +78,6 @@ uint16_t get_sequence() {
         if (STRING_EQUAL(sequence, MEMOIZE_CAP(key_caps, GM_CAP_KEY_F11))) return GM_KEY_F11;
         if (STRING_EQUAL(sequence, MEMOIZE_CAP(key_caps, GM_CAP_KEY_F12))) return GM_KEY_F12;
     }
-
-    // if (ind == 1) {
-    //     return sequence[0];
-    // } else if (ind == 3) {
-    //     if (IS_FUNCTION_KEY(sequence) && IS_F1to4_KEY(sequence)) {
-    //         switch (sequence[2]) {
-    //             case 80: return GM_KEY_F1;
-    //             case 81: return GM_KEY_F2;
-    //             case 82: return GM_KEY_F3;
-    //             case 83: return GM_KEY_F4;
-    //         }
-    //     } else if (IS_ARROW_KEY(sequence)) {
-    //         switch (sequence[2]) {
-    //             case 65: return GM_KEY_ARROW_UP;
-    //             case 66: return GM_KEY_ARROW_DOWN;
-    //             case 67: return GM_KEY_ARROW_RIGHT;
-    //             case 68: return GM_KEY_ARROW_LEFT;
-    //             default: return GM_KEY_ARROW_UP;
-    //         }
-    //     }
-    // } else if (ind == 4) {
-    //     if (sequence[0] == 27 && sequence[1] == 91 && sequence[2] == 51 && sequence[3] == 126) return GM_KEY_DELETE;
-    // } else if (ind == 5) {
-    //     if (IS_FUNCTION_KEY(sequence) && IS_F5to8_KEY(sequence)) {
-    //         switch (sequence[3]) {
-    //             case 53: return GM_KEY_F5;
-    //             case 55: return GM_KEY_F6;
-    //             case 56: return GM_KEY_F7;
-    //             case 57: return GM_KEY_F8;
-    //         }
-    //     } else if (IS_FUNCTION_KEY(sequence) && IS_F9to12_KEY(sequence)) {
-    //         switch (sequence[3]) {
-    //             case 48: return GM_KEY_F9;
-    //             case 49: return GM_KEY_F10;
-    //             case 50: return GM_KEY_F11;
-    //             case 52: return GM_KEY_F12;
-    //         }
-    //     }
-    // }
-
-    // printf("%s\n", trace_msg(SCOPE, "Undefined keystroke sequence recieved."));
-    // exit(EXIT_FAILURE);
 
     return GM_KEY_NUL;
     #undef SCOPE

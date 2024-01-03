@@ -64,7 +64,6 @@
 
 #define GM_KEY_IS_ALPHANUMERIC(key) (isalnum(key) || (key) == ' ')
 #define GM_KEY_IS_PRINTABLE(key) (isprint(key) || (key) == ' ')
-// #define GM_KEY_IS_FUNCTION(key) (key > 255 && key < 12)
 #define GM_KEY_IS_FUNCTION(key) ((int)(c) >= GM_KEY_F1 && (int)(c) <= GM_KEY_F12)
 #define GM_KEY_IS_ARROW(key) ((int)(c) >= GM_KEY_ARROW_UP && (int)(c) <= GM_KEY_ARROW_LEFT)
 #define GM_IS_CTRL(key) ((int)(c) >= GM_KEY_CTRL_A && (int)(c) <= GM_KEY_CTRL_Z)
