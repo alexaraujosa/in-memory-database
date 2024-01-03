@@ -1,5 +1,6 @@
 #include "grimoire/terminal.h"
 #include "grimoire/attr.h"
+#include "grimoire/io.h"
 #include "grimoire/grimoire_priv.h"
 
 #include <stdbool.h>
@@ -9,6 +10,7 @@
 #include <unistd.h>
 #include <termios.h>
 #include <fcntl.h>
+#include <term.h>
 
 #include "common.h"
 #include "util/error.h"
@@ -50,6 +52,8 @@ GM_Term gm_term_init() {
 
 void gm_term_end(GM_Term term) {
     clear();
+
+    gm_show_cursor();
 
     gm_term_free_buffer(term->buf);
 
@@ -223,6 +227,8 @@ int gm_term_remove_tui_resize_listener(GM_Term term, GM_TERMINAL_RESIZE_LISTENER
 /* ------- TERMINAL ATTRIBUTES ------- */
 void gm_setup_terminal_attributes() {
     #define SCOPE "gm_setup_terminal_attributes"
+    setupterm(NULL, STDOUT_FILENO, (int*)0);
+
     if (tcgetattr(STDIN_FILENO, &gm_original_terminal) == -1) {
         printf("%s\n", trace_msg(SCOPE, "Error trying to read terminal attributes."));
         perror("tcgetattr");
@@ -247,6 +253,10 @@ void gm_setup_terminal_attributes() {
 
 void gm_restore_terminal_attributes() {
     #define SCOPE "gm_setup_terminal_attributes"
+    // After literal HOURS during New Year's Eve reading man pages, the NCurses source code
+    // and a lot of mental sanity completely obliterated, I found out that THIS FUCKER SOLVES the TERMINFO MEMLEAKS.
+    del_curterm(cur_term);
+
     if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &gm_original_terminal) == -1) {
         perror("tcsetattr");
         exit(EXIT_FAILURE);

@@ -11,5 +11,6 @@
 #include "grimoire/color.h"
 #include "grimoire/attr.h"
 #include "grimoire/draw.h"
+#include "grimoire/io.h"
 
 #endif
