@@ -10,7 +10,7 @@
 #include "util/error.h"
 #include "util/string.h"
 
-#define MAX_KEY_SEQUENCE 5
+#define MAX_KEY_SEQUENCE 10
 
 #define MEMOIZE_CAP(cache, key) memoize_cache_elem(cache, key, tigetstr(key))
 
@@ -27,7 +27,7 @@
 #define GM_CAP_KEY_F11 key_f11 // 27 91 50 50 126
 #define GM_CAP_KEY_F12 key_f12 // 27 91 50 52 126
 
-int kbhit() {
+int gm_kbhit() {
     struct timeval tv = { 0L, 0L };
     fd_set fds;
 
@@ -37,7 +37,7 @@ int kbhit() {
     return select(1, &fds, NULL, NULL, &tv) > 0;
 }
 
-int getch() {
+char gm_getch() {
     int r;
     unsigned char c;
 
@@ -48,8 +48,8 @@ int getch() {
     }
 }
 
-uint16_t get_sequence() {
-    #define SCOPE "get_sequence"
+GM_Key gm_get_key() {
+    #define SCOPE "gm_get_key"
 
     // TODO: Move this out, cannot be freed
     static Cache key_caps = NULL;
@@ -58,11 +58,14 @@ uint16_t get_sequence() {
     char sequence[MAX_KEY_SEQUENCE] = { 0 };
     uint8_t ind = 0;
 
-    while (kbhit()) {
-        sequence[ind++] = getch();
+    while (gm_kbhit()) {
+        sequence[ind++] = gm_getch();
     }
 
     if (ind == 1) {
+        if (isalpha(sequence[0]) && CHAR_IS_UPPER(sequence[0])) return char_tolower(sequence[0]) | GM_MOD_SHIFT;
+        if (GM_IS_CTRL(sequence[0])) return sequence[0] | GM_MOD_CTRL;
+
         return sequence[0];
     } else {
         if (STRING_EQUAL(sequence, MEMOIZE_CAP(key_caps, GM_CAP_KEY_F1)))  return GM_KEY_F1;
@@ -81,6 +84,13 @@ uint16_t get_sequence() {
 
     return GM_KEY_NUL;
     #undef SCOPE
+}
+
+GM_Key gm_get_canonical_key(GM_Key key) {
+    int ckey = GM_CANON_KEY(key);
+    if (isalpha(ckey) && GM_HAS_SHIFT(key)) return char_toupper(ckey);
+    
+    return ckey;
 }
 
 void gm_hide_cursor() {
