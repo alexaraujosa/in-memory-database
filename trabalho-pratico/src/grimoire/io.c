@@ -10,10 +10,13 @@
 #include "util/error.h"
 #include "util/string.h"
 
+// Maximum number of codes per key.
 #define MAX_KEY_SEQUENCE 10
 
+// Cache capabilities to reduce memory usage
 #define MEMOIZE_CAP(cache, key) memoize_cache_elem(cache, key, tigetstr(key))
 
+// Capabilities returned from terminfo
 #define GM_CAP_KEY_F1  key_f1  // 27 91 80
 #define GM_CAP_KEY_F2  key_f2  // 27 91 81
 #define GM_CAP_KEY_F3  key_f3  // 27 91 82

@@ -20,7 +20,7 @@ typedef uint16_t GM_Key;
 #define GM_HAS_SHIFT(key) ((key) & GM_MOD_SHIFT)
 #define GM_HAS_CTRL(key)  ((key) & GM_MOD_CTRL)
 #define GM_HAS_ALT(key)   ((key) & GM_MOD_ALT)
-#define GM_CANON_KEY(key) ((key) & GM_MOD_CLEAR)
+#define GM_CANON_KEY(key) ((key) & GM_MOD_CLEAR) /** @brief Gets the true key, stripped of modifiers. */
 
 // TODO: Add HOME, etc.
 #define GM_KEY_NUL 0
@@ -80,12 +80,39 @@ typedef uint16_t GM_Key;
 #define GM_KEY_IS_ARROW(key) ((int)(GM_CANON_KEY(key)) >= GM_KEY_ARROW_UP && (int)(GM_CANON_KEY(key)) <= GM_KEY_ARROW_LEFT)
 #define GM_IS_CTRL(key) ((int)(GM_CANON_KEY(key)) >= GM_KEY_CTRL_A && (int)(GM_CANON_KEY(key)) <= GM_KEY_CTRL_Z)
 
+/**
+ * @brief Checks whenever input is available on then input stream. 
+ */
 int gm_kbhit();
+
+/**
+ * @brief Fetches a single key from the input stream.
+ */
 char gm_getch();
+
+/**
+ * @brief Fetches the entire input stream and reads.
+ * 
+ * WARN: If @ref gm_kbhit is not constantly called and the key is handled, it might attempt to read multiple keys.
+ * It currently is undefined behavior.
+ */
 GM_Key gm_get_key();
+
+/**
+ * @brief Returns the true key from @ref gm_get_key. Modifiers are attempted to be resolved, otherwise they are stripped.
+ */
 GM_Key gm_get_canonical_key(GM_Key key);
 
+/**
+ * @brief Hides the cursor on the terminal.
+ * TODO: Move to somewhere else better.
+ */
 void gm_hide_cursor();
+
+/**
+ * @brief Shows the cursor on the terminal.
+ * TODO: Move to somewhere else better.
+ */
 void gm_show_cursor();
 
 #endif
