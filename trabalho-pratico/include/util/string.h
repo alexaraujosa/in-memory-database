@@ -25,8 +25,21 @@
 
 #define STRING_EQUAL(a, b) (strcmp(a, b) == 0)
 
+#define CHAR_IS_LOWER(ch) ((ch) >= 97 && (ch) <= 122)
+#define CHAR_IS_UPPER(ch) ((ch) >= 65 && (ch) <= 90)
+
 char* isnprintf(const char *format, ...);
 char* strdup_to(char* dest, char* src);
+
+static inline char_tolower(char ch) {
+    if (CHAR_IS_UPPER(ch)) return ch + ('a' - 'A');
+    else return ch;
+}
+
+static inline char_toupper(char ch) {
+    if (CHAR_IS_LOWER(ch)) return ch + ('A' - 'a');
+    else return ch;
+}
 
 /**
  * @brief Verify if a certain char its a digit.
