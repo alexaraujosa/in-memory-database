@@ -777,60 +777,67 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
 
+    GArray *arrTemp = g_array_new(FALSE, FALSE, sizeof(gpointer));
     guint matched_index = 0;
     gboolean exists = catalog_exists_in_array(catalogues[0], *argv, &user_username_compare_func, &matched_index);
     
+    // void *data1, *data2;
     char* user_name;
 
     if (exists) {
-        int matched_index_down = matched_index;
-        void *data1 = catalog_search_in_array(catalogues[0], matched_index);
-        user_name = get_user_name((User)data1);
+        void *data = catalog_search_in_array(catalogues[0], matched_index);
+        g_array_append_val(arrTemp,data);
+        int matched_index_down = matched_index - 1;
+        int matched_index_up = matched_index + 1;
+        void *data1 = catalog_search_in_array(catalogues[0], matched_index_down--);
+        void *data2 = catalog_search_in_array(catalogues[0], matched_index_up++);
 
+        user_name = get_user_name((User)data1);
         while (strncasecmp(*argv, user_name, strlen(*argv)) == 0 && matched_index_down > 0) {
-            data1 = catalog_search_in_array(catalogues[0], --matched_index_down);
+            g_array_append_val(arrTemp,data1);
+            data1 = catalog_search_in_array(catalogues[0], matched_index_down--);
+
             free(user_name);
             user_name = get_user_name((User)data1);
         };
-        if(strncasecmp(*argv, user_name, strlen(*argv)) != 0) matched_index_down++;
         free(user_name);
 
-        int matched_index_up = matched_index;
-        void *data2 = catalog_search_in_array(catalogues[0], matched_index_up);
         user_name = get_user_name((User)data2);
-        while (strncasecmp(*argv, user_name, strlen(*argv)) == 0 && (int)matched_index_up < catalog_get_item_count(catalogues[0])-1) {
-            data2 = catalog_search_in_array(catalogues[0], ++matched_index_up);
+        while (strncasecmp(*argv, user_name, strlen(*argv)) == 0 && (int)matched_index_up != catalog_get_item_count(catalogues[0])) {
+            g_array_append_val(arrTemp,data2);
+            data2 = catalog_search_in_array(catalogues[0], matched_index_up++);
+
             free(user_name);
             user_name = get_user_name((User)data2);
         };
-        if(strncasecmp(*argv, user_name, strlen(*argv)) != 0) matched_index_up--;
         free(user_name);
 
-        int index = matched_index_down;
-        int i = 0;
-        int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
-        int count = 1;
+        g_array_sort(arrTemp, &users_full_compare_func);
 
-        while(i < quantidade_a_percorrer){
-            const User user_temp = (const User)(catalog_search_in_array(catalogues[0], index));
+        int count = 1;
+        for (int i = 0; i < (int)arrTemp->len; i++) {
+            const User user_temp = (const User)(g_array_index(arrTemp, gpointer, i));
+
             if(get_user_account_status(user_temp) == TRUE && flag == 'F'){
+                if(i != 0) fprintf(output_file, "\n\n");
                 
                 char* user_id = get_user_id(user_temp);
                 user_name = get_user_name(user_temp);
 
                 fprintf(output_file, "--- %d ---\n", count);
-                fprintf(output_file, "id: %s\nname: %s\n\n", user_id, user_name);
+                fprintf(output_file, "id: %s\nname: %s", user_id, user_name);
 
                 free(user_id);
                 free(user_name);
 
                 count++;
             } else if(get_user_account_status(user_temp) == TRUE && flag == '\0') {
+                if(i != 0) fprintf(output_file, "\n");
 
                 char* user_id = get_user_id(user_temp);
                 user_name = get_user_name(user_temp);
 
-                fprintf(output_file, "%s;%s\n", user_id, user_name);
+                fprintf(output_file, "%s;%s", user_id, user_name);
 
                 free(user_id);
                 free(user_name);
@@ -840,15 +847,12 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
                 // else
                 //     fprintf(output_file, "%s;%s", get_user_id(user_temp), get_user_name(user_temp));
             }
-            index++;
-            i++;
-        }
-        if(quantidade_a_percorrer == 0) fprintf(output_file, "\n");
+            
+            if(i == (int)arrTemp->len - 1) fprintf(output_file, "\n");
+        };
     }
-    else {
-        printf("Account with that prefix does not exist\n");
-        return;
-    }
+
+    g_array_free(arrTemp, TRUE);
 }
 
 void query10(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file) {
