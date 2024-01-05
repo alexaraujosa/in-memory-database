@@ -814,11 +814,13 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
 
         g_array_sort(arrTemp, &users_full_compare_func);
 
+        bool activated = FALSE;
         int count = 1;
         for (int i = 0; i < (int)arrTemp->len; i++) {
             const User user_temp = (const User)(g_array_index(arrTemp, gpointer, i));
 
             if(get_user_account_status(user_temp) == TRUE && flag == 'F'){
+                activated = TRUE;
                 if(i != 0) fprintf(output_file, "\n\n");
                 
                 char* user_id = get_user_id(user_temp);
@@ -832,6 +834,7 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
 
                 count++;
             } else if(get_user_account_status(user_temp) == TRUE && flag == '\0') {
+                activated = TRUE;
                 if(i != 0) fprintf(output_file, "\n");
 
                 char* user_id = get_user_id(user_temp);
@@ -848,7 +851,7 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
                 //     fprintf(output_file, "%s;%s", get_user_id(user_temp), get_user_name(user_temp));
             }
             
-            if(i == (int)arrTemp->len - 1) fprintf(output_file, "\n");
+            if(i == (int)arrTemp->len - 1 && activated == TRUE) fprintf(output_file, "\n");
         };
     }
 
