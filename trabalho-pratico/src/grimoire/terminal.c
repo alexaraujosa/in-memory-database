@@ -37,10 +37,54 @@ void gm_term_free_buffer(GM_Buf buf);
 GM_Term gm_term_init() {
     GM_Term term = (GM_Term)malloc(sizeof(GM_TERM));
     term->size = gm_get_tui_size();
-    gm_term_make_buffer(&term->buf, term->size.rows, term->size.cols, MAX_UTF8_SEQ);
+    // gm_term_make_buffer(&term->buf, term->size.rows, term->size.cols, MAX_UTF8_SEQ);
+    gm_term_make_buffer(&term->buf, term->size.rows, term->size.cols, sizeof(GM_Char) * MAX_UTF8_SEQ);
 
     term->color_pairs = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, g_free);
     term->colors = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, g_free);
+
+// #ifdef GM_WIDECHAR
+//     term->box_chars = (GM_BOX_CHARS){ 
+//         .tlc = L'┌', 
+//         .trc = L'┐', 
+//         .blc = L'└', 
+//         .brc = L'┘', 
+//         .hl = L'─', 
+//         .vl = L'│',
+//         .il = L'├',
+//         .ir = L'┤',
+//         .it = L'┬',
+//         .ib = L'┴',
+//         .ic = L'┼'
+//     };
+// #else
+//     term->box_chars = (GM_BOX_CHARS){ 
+//         .tlc = '/', 
+//         .trc = '\\', 
+//         .blc = '\\', 
+//         .brc = '/', 
+//         .hl = '-', 
+//         .vl = '|',
+//         .il = '|',
+//         .ir = '|',
+//         .it = '-',
+//         .ib = '-',
+//         .ic = '+'
+//     };
+// #endif
+    term->box_chars = (GM_BOX_CHARS){ 
+        .tlc = "┌", 
+        .trc = "┐", 
+        .blc = "└", 
+        .brc = "┘", 
+        .hl = "─", 
+        .vl = "│",
+        .il = "├",
+        .ir = "┤",
+        .it = "┬",
+        .ib = "┴",
+        .ic = "┼"
+    };
 
     // term->attr_queue = g_array_new(FALSE, FALSE, sizeof(GM_Attr));
     term->attr_queue = g_queue_new();
@@ -74,8 +118,11 @@ void gm_term_make_buffer(GM_Buf* termbuf, int rows, int cols, int charsize) {
     buf->data = (char**)malloc(rows * sizeof(char*));
 
     for (int i = 0; i < rows; i++) {
-        buf->data[i] = (char*)malloc((charsize * cols + 1) * sizeof(char));
-        memset(buf->data[i], 32, (charsize * cols) * sizeof(char));
+        // buf->data[i] = (char*)malloc((charsize * cols + 1) * sizeof(char));
+        // memset(buf->data[i], 32, (charsize * cols) * sizeof(char));
+        buf->data[i] = (char*)malloc((charsize * cols) + 1);
+        memset(buf->data[i], 32, (charsize * cols) + 1);
+        
         buf->data[i][charsize * cols + 1] = '\0';
     }
 

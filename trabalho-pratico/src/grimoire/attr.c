@@ -57,6 +57,28 @@ void gm_attroff(GM_Term term, int attr) {
 }
 // ======= END ATTRON/OFF =======
 
+// ======= BOX DRAWING CHARS =======
+// void gm_set_box_top_left_corner(GM_Term term, GM_Char ch)     { term->box_chars.tlc = ch; }
+// void gm_set_box_top_right_corner(GM_Term term, GM_Char ch)    { term->box_chars.trc = ch; }
+// void gm_set_box_bottom_left_corner(GM_Term term, GM_Char ch)  { term->box_chars.blc = ch; }
+// void gm_set_box_bottom_right_corner(GM_Term term, GM_Char ch) { term->box_chars.brc = ch; }
+// void gm_set_box_left_intersection(GM_Term term, GM_Char ch)   { term->box_chars.il = ch; }
+// void gm_set_box_right_intersection(GM_Term term, GM_Char ch)  { term->box_chars.ir = ch; }
+// void gm_set_box_top_intersection(GM_Term term, GM_Char ch)    { term->box_chars.it = ch; }
+// void gm_set_box_bottom_intersection(GM_Term term, GM_Char ch) { term->box_chars.ib = ch; }
+// void gm_set_box_center_intersection(GM_Term term, GM_Char ch) { term->box_chars.ic = ch; }
+void gm_set_box_top_left_corner(GM_Term term, char ch[MAX_UTF8_SEQ])     { memcpy(term->box_chars.tlc, ch, MAX_UTF8_SEQ); }
+void gm_set_box_top_right_corner(GM_Term term, char ch[MAX_UTF8_SEQ])    { memcpy(term->box_chars.trc, ch, MAX_UTF8_SEQ); }
+void gm_set_box_bottom_left_corner(GM_Term term, char ch[MAX_UTF8_SEQ])  { memcpy(term->box_chars.blc, ch, MAX_UTF8_SEQ); }
+void gm_set_box_bottom_right_corner(GM_Term term, char ch[MAX_UTF8_SEQ]) { memcpy(term->box_chars.brc, ch, MAX_UTF8_SEQ); }
+void gm_set_box_left_intersection(GM_Term term, char ch[MAX_UTF8_SEQ])   { memcpy(term->box_chars.il, ch, MAX_UTF8_SEQ); }
+void gm_set_box_right_intersection(GM_Term term, char ch[MAX_UTF8_SEQ])  { memcpy(term->box_chars.ir, ch, MAX_UTF8_SEQ); }
+void gm_set_box_top_intersection(GM_Term term, char ch[MAX_UTF8_SEQ])    { memcpy(term->box_chars.it, ch, MAX_UTF8_SEQ); }
+void gm_set_box_bottom_intersection(GM_Term term, char ch[MAX_UTF8_SEQ]) { memcpy(term->box_chars.ib, ch, MAX_UTF8_SEQ); }
+void gm_set_box_center_intersection(GM_Term term, char ch[MAX_UTF8_SEQ]) { memcpy(term->box_chars.ic, ch, MAX_UTF8_SEQ); }
+
+// ======= END BOX DRAWING CHARS =======
+
 // ======= ATTRIBUTE FACTORY =======
 GM_Attr gm_attr_make(
     GM_Term term, 
@@ -176,7 +198,36 @@ void gm_attr_resolve_line(GM_Term term, GM_Attr attr) {
     #endif
 
     char* attr_str = gm_attr_int_resolve(term, attr->data);
-    printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
+    // printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
+    _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
+    clear_attr();
+
+    free(attr_str);
+}
+
+void gm_attr_resolve_box(GM_Term term, GM_Attr attr) {
+    char* attr_str = gm_attr_int_resolve(term, attr->data);
+    // printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
+
+    gotoxy(attr->col_start + 1, attr->row_start + 1);
+    // printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
+
+    _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start + 1, term->buf->data[attr->row_start] + attr->col_start);
+    clear_attr();
+
+    for (int i = attr->row_start + 1; i < attr->row_end; i++) {
+        gotoxy(attr->row_start + 1, i + 1);
+        _gm_printf("%s%c", attr_str, term->buf->data[i][attr->row_start]);
+        clear_attr();
+
+        gotoxy(attr->row_end + 1, i + 1);
+        _gm_printf("%s%c", attr_str, term->buf->data[i][attr->row_end]);
+        clear_attr();
+    }
+
+    gotoxy(attr->col_start + 1, attr->row_end + 1);
+    // printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_end] + attr->col_start);
+    _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start + 1, term->buf->data[attr->row_end] + attr->col_start);
     clear_attr();
 
     free(attr_str);

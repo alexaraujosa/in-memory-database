@@ -19,4 +19,50 @@
 void gm_attron(GM_Term term, int attr);
 void gm_attroff(GM_Term term, int attr);
 
+/**
+ * @brief Sets the top left box drawing character for subsequent draw calls.
+ */
+// void gm_set_box_top_left_corner(GM_Term term, GM_Char ch);
+void gm_set_box_top_left_corner(GM_Term term, GM_Char ch[MAX_UTF8_SEQ]);
+/**
+ * @brief Sets the top right box drawing character for subsequent draw calls.
+ */
+// void gm_set_box_top_right_corner(GM_Term term, GM_Char ch);
+void gm_set_box_top_right_corner(GM_Term term, GM_Char ch[MAX_UTF8_SEQ]);
+/**
+ * @brief Sets the bottom left box drawing character for subsequent draw calls.
+ */
+// void gm_set_box_bottom_left_corner(GM_Term term, GM_Char ch);
+void gm_set_box_bottom_left_corner(GM_Term term, GM_Char ch[MAX_UTF8_SEQ]);
+/**
+ * @brief Sets the bottom right box drawing character for subsequent draw calls.
+ */
+// void gm_set_box_bottom_right_corner(GM_Term term, GM_Char ch);
+void gm_set_box_bottom_right_corner(GM_Term term, GM_Char ch[MAX_UTF8_SEQ]);
+/**
+ * @brief Sets the left intersection box drawing character for subsequent draw calls.
+ */
+// void gm_set_box_left_intersection(GM_Term term, GM_Char ch);
+void gm_set_box_left_intersection(GM_Term term, GM_Char ch[MAX_UTF8_SEQ]);
+/**
+ * @brief Sets the right intersection box drawing character for subsequent draw calls.
+ */
+// void gm_set_box_right_intersection(GM_Term term, GM_Char ch);
+void gm_set_box_right_intersection(GM_Term term, GM_Char ch[MAX_UTF8_SEQ]);
+/**
+ * @brief Sets the top intersection box drawing character for subsequent draw calls.
+ */
+// void gm_set_box_top_intersection(GM_Term term, GM_Char ch);
+void gm_set_box_top_intersection(GM_Term term, GM_Char ch[MAX_UTF8_SEQ]);
+/**
+ * @brief Sets the bottom intersection box drawing character for subsequent draw calls.
+ */
+// void gm_set_box_bottom_intersection(GM_Term term, GM_Char ch);
+void gm_set_box_bottom_intersection(GM_Term term, GM_Char ch[MAX_UTF8_SEQ]);
+/**
+ * @brief Sets the center intersection box drawing character for subsequent draw calls.
+ */
+// void gm_set_box_center_intersection(GM_Term term, GM_Char ch);
+void gm_set_box_center_intersection(GM_Term term, GM_Char ch[MAX_UTF8_SEQ]);
+
 #endif
