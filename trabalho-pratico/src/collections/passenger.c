@@ -35,10 +35,10 @@ int verify_passenger_tokens(Tokens tokens, ParserStore store) {
 
     // Flight verifier
     Catalog* flight_catalog = g_array_index(store, Catalog*, 3);
-    if(catalog_search_in_int_hashtable(flight_catalog, atoi(parameter[0])) == NULL)  return 0;
+    Flight flight = (Flight)catalog_search_in_int_hashtable(flight_catalog, atoi(parameter[0]));
+    if(flight == NULL)  return 0;
     
-    // // Whitespace verifier
-    // if(have_whitespace(parameter, 2) == 0)  return 0;
+    increment_flight_passengers(flight);
     
     return 1;
 }

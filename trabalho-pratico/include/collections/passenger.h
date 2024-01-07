@@ -3,6 +3,7 @@
 
 #include "debug.h"
 #include "user.h"
+#include "flight.h"
 #include "parser/parser.h"
 #include "time.h"
 
@@ -17,18 +18,18 @@ typedef struct passenger PASSENGER, *Passenger;
 */
 int verify_passenger_tokens(Tokens tokens, ParserStore store);
 
-/**
- * @brief Creates a passenger using dynamic memory.
- * 
- * @param flight_id Flight id.
- * @param user_id User id.
- * 
- * @return Pointer to the Passengconst er struct.
-*/
-Passenger make_passenger(
-    int flight_id,
-    UserId(user_id)
-);
+// /**
+//  * @brief Creates a passenger using dynamic memory.
+//  * 
+//  * @param flight_id Flight id.
+//  * @param user_id User id.
+//  * 
+//  * @return Pointer to the Passengconst er struct.
+// */
+// Passenger make_passenger(
+//     int flight_id,
+//     UserId(user_id)
+// );
 
 int get_passenger_flightID(const Passenger passenger);
 void set_passenger_flightID(Passenger passenger, int flight_id);

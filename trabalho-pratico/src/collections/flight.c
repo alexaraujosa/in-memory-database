@@ -9,6 +9,7 @@ typedef struct flights {
     int schedule_departure_date; // Offset from Base Date
     int schedule_arrival_date; // Offset from Base Date
     int real_departure_date; // Offset from Base Date
+    short int passengers;
 } FLIGHT, *Flight;
 
 int get_flight_id(const Flight flight){
@@ -83,6 +84,18 @@ void set_flight_real_departure_date(Flight flight, int real_departure_date){
     flight->real_departure_date = real_departure_date;
 }
 
+int get_flight_passengers(const Flight flight) {
+    int passengers = flight->passengers;
+    return passengers;
+}
+
+void set_flight_passengers(Flight flight, int passengers) {
+    flight->passengers = passengers;
+}
+
+void increment_flight_passengers(Flight flight) {
+    flight->passengers++;
+}
 
 int verify_flight_tokens(Tokens tokens, ParserStore store) {
     IGNORE_ARG(store);
@@ -138,6 +151,7 @@ Flight make_flight(
     flight->schedule_departure_date = schedule_departure_date;
     flight->schedule_arrival_date = schedule_arrival_date;
     flight->real_departure_date = real_departure_date;
+    flight->passengers = 0;
 
     return flight;
 }
@@ -186,13 +200,15 @@ void print_flight(void* pt) {
         "%s;"
         "%s;"
         "%s;"
-        "%s\n",
+        "%s;"
+        "%d\n",
         flight->id, 
         date_int_withtime_to_string(flight->schedule_departure_date), 
         date_int_withtime_to_string(flight->schedule_arrival_date), 
         date_int_withtime_to_string(flight->real_departure_date),
         flight->destination, 
         flight->airline, 
-        flight->plane_model
+        flight->plane_model,
+        flight->passengers
     );
 }
