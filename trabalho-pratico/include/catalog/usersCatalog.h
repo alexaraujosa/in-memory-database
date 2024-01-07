@@ -18,16 +18,9 @@
  */
 gint usersCatalog_full_compare_func(gconstpointer a, gconstpointer b);
 
-gint users_full_compare_func(gconstpointer a, gconstpointer b);
-gint user_username_compare_func(gconstpointer a, gconstpointer b);
+gint user_name_compare_func(gconstpointer a, gconstpointer b);
 
-/**
- * @brief Prints the User Catalog array.
- *
- * @param data The data to be printed.
- * @param user_data The user data.
- */
-void usersCatalog_print_array(gpointer data, gpointer user_data);
+gint usersCatalog_strcoll_compare_func(gconstpointer a, gconstpointer b);
 
 /**
  * @brief Writes a user to the User Catalog.

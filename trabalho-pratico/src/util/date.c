@@ -86,7 +86,7 @@ int date_string_notime_to_int(char* parameter) {
     temp.tm_isdst = 0;
 
     if(strptime(parameter, "%Y/%m/%d", &temp) == NULL) {
-        printf("ERROR! Failed to create a date.\n");
+        printf("ERROR1! Failed to create a date.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -107,7 +107,7 @@ int date_string_withtime_to_int(char* parameter) {
     temp.tm_isdst = 0;
 
     if(strptime(parameter, "%Y/%m/%d %T", &temp) == NULL) {
-        printf("ERROR! Failed to create a date with time.\n");
+        printf("ERROR2! Failed to create a date with time.\n");
         exit(EXIT_FAILURE);
     }
 

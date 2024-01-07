@@ -779,40 +779,42 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
 
     GArray *arrTemp = g_array_new(FALSE, FALSE, sizeof(gpointer));
     guint matched_index = 0;
-    gboolean exists = catalog_exists_in_array(catalogues[0], *argv, &user_username_compare_func, &matched_index);
+    gboolean exists = catalog_exists_in_array(catalogues[0], *argv, &user_name_compare_func, &matched_index);
     
     // void *data1, *data2;
     char* user_name;
 
     if (exists) {
-        void *data = catalog_search_in_array(catalogues[0], matched_index);
-        g_array_append_val(arrTemp,data);
-        int matched_index_down = matched_index - 1;
-        int matched_index_up = matched_index + 1;
-        void *data1 = catalog_search_in_array(catalogues[0], matched_index_down--);
-        void *data2 = catalog_search_in_array(catalogues[0], matched_index_up++);
-
+        int matched_index_down = matched_index;
+        void *data1 = catalog_search_in_array(catalogues[0], matched_index);
         user_name = get_user_name((User)data1);
-        while (strncasecmp(*argv, user_name, strlen(*argv)) == 0 && matched_index_down > 0) {
-            g_array_append_val(arrTemp,data1);
-            data1 = catalog_search_in_array(catalogues[0], matched_index_down--);
 
+        g_array_append_val(arrTemp,data1);
+
+        while (strncasecmp(*argv, user_name, strlen(*argv)) == 0 && matched_index_down > 0) {
+            data1 = catalog_search_in_array(catalogues[0], --matched_index_down);
+            g_array_append_val(arrTemp,data1);
             free(user_name);
             user_name = get_user_name((User)data1);
         };
+        if(strncasecmp(*argv, user_name, strlen(*argv)) != 0) g_array_remove_index(arrTemp,arrTemp->len-1);
         free(user_name);
 
+        
+        int matched_index_up = matched_index;
+        void *data2 = catalog_search_in_array(catalogues[0], matched_index_up);
         user_name = get_user_name((User)data2);
-        while (strncasecmp(*argv, user_name, strlen(*argv)) == 0 && (int)matched_index_up != catalog_get_item_count(catalogues[0])) {
+        while (strncasecmp(*argv, user_name, strlen(*argv)) == 0 && (int)matched_index_up < catalog_get_item_count(catalogues[0])-1) {
+            data2 = catalog_search_in_array(catalogues[0], ++matched_index_up);
             g_array_append_val(arrTemp,data2);
-            data2 = catalog_search_in_array(catalogues[0], matched_index_up++);
 
             free(user_name);
             user_name = get_user_name((User)data2);
         };
+        if(strncasecmp(*argv, user_name, strlen(*argv)) != 0) g_array_remove_index(arrTemp,arrTemp->len-1);
         free(user_name);
 
-        g_array_sort(arrTemp, &users_full_compare_func);
+        g_array_sort(arrTemp, &usersCatalog_strcoll_compare_func);
 
         bool activated = FALSE;
         int count = 1;

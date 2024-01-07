@@ -211,7 +211,7 @@ int calculate_aeroport_n_passengers(Catalog *flight_catalog, Catalog *passenger_
         int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
         while (0 < quantidade_a_percorrer) {
             const Flight flight_temp = (const Flight)(catalog_search_in_array(flight_catalog, i));
-            int flight_year = (get_flight_schedule_departure_date(flight_temp) - DATE_OFFSET ) / (365 * 24 * 60 * 60) + 1970;
+            int flight_year = get_year(get_flight_schedule_departure_date(flight_temp));
             if (*year == flight_year) {
                 int flight_id = get_flight_id(flight_temp);
                 n_passengers += calculate_flight_total_passengers(passenger_catalog, GINT_TO_POINTER(flight_id));
@@ -250,7 +250,7 @@ int calculate_aeroport_n_passengers2(Catalog *flight_catalog, Catalog *passenger
         int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
         while (0 < quantidade_a_percorrer) {
             const Flight flight_temp = (const Flight)(catalog_search_in_array(flight_catalog, i));
-            int flight_year = (get_flight_schedule_arrival_date(flight_temp) - DATE_OFFSET ) / (365 * 24 * 60 * 60) + 1970;
+            int flight_year = get_year(get_flight_schedule_arrival_date(flight_temp));
             if (*year == flight_year) {
                 int flight_id = get_flight_id(flight_temp);
                 n_passengers += calculate_flight_total_passengers(passenger_catalog, GINT_TO_POINTER(flight_id));

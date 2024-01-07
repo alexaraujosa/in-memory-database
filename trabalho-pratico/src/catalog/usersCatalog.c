@@ -4,8 +4,19 @@
 #include "collections/user.h"
 #include "parser/parser.h"
 
+gint user_name_compare_func(gconstpointer a, gconstpointer b) {
+    const User *user1 = (const User*)a;
+    const char* user_NAME2 = (const char*) b;
+    int length = strlen(user_NAME2);
+    
+    char* user_NAME1 = get_user_name(*user1);
 
-gint users_full_compare_func(gconstpointer a, gconstpointer b) {
+    int name_comparison = strncasecmp(user_NAME1, user_NAME2, length);
+    free(user_NAME1);
+    return name_comparison;
+}
+
+gint usersCatalog_strcoll_compare_func(gconstpointer a, gconstpointer b) {
     const User user1 = *(const User *)a;
     const User user2 = *(const User *)b;
 
@@ -30,17 +41,6 @@ gint users_full_compare_func(gconstpointer a, gconstpointer b) {
     return id_comparison;
 }
 
-gint user_username_compare_func(gconstpointer a, gconstpointer b) {
-    const User *user1 = (const User*)a;
-    const char* user_NAME2 = (const char*) b;
-    char* user_NAME1 = get_user_name(*user1);
-    int length = strlen(user_NAME2);
-    
-    int name_comparison = strncasecmp(user_NAME1, user_NAME2, length);
-    free(user_NAME1);
-    return name_comparison;
-}
-
 gint usersCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
     const User user1 = *(const User *)a;
     const User user2 = *(const User *)b;
@@ -48,7 +48,7 @@ gint usersCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
     char *name1 = get_user_name(user1);
     char *name2 = get_user_name(user2);
 
-    int name_comparison = strcasecmp(name1, name2);
+    int name_comparison = strcmp(name1, name2);
     if (name_comparison != 0) {
         free(name1);
         free(name2);
@@ -57,7 +57,7 @@ gint usersCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
 
     char *id1 = get_user_id(user1);
     char *id2 = get_user_id(user2);
-    int id_comparison = strcasecmp(id1, id2);
+    int id_comparison = strcoll(id1, id2);
 
     free(name1);
     free(name2);
