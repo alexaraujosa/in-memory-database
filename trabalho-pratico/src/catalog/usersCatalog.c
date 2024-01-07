@@ -11,7 +11,7 @@ gint user_name_compare_func(gconstpointer a, gconstpointer b) {
     
     char* user_NAME1 = get_user_name(*user1);
 
-    int name_comparison = strncasecmp(user_NAME1, user_NAME2, length);
+    int name_comparison = strncmp(user_NAME1, user_NAME2, length);
     free(user_NAME1);
     return name_comparison;
 }
