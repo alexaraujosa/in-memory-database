@@ -111,7 +111,7 @@ int verify_flight_tokens(Tokens tokens, ParserStore store) {
             return 0;
     }
     // Date verifier (Semantic)
-    if(strcmp(parameter[6], parameter[8]) > 0)  return 0;
+    if(strcmp(parameter[6], parameter[7]) > 0)  return 0;
     if(strcmp(parameter[8], parameter[9]) >= 0)  return 0;
 
     return 1;
