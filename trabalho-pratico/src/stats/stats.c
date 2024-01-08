@@ -66,8 +66,8 @@ int calculate_reservation_total_price(Reservation reservation) {
 
     double res = (double)(price_per_night * n_nights) + ((double)(price_per_night * n_nights) / 100.0) * tax;
     res *= 1000;
-    int ans = (int)res;
-    return ans;
+
+    return (int)res;
 }
 
 // TODO fazer em tempo de parsing

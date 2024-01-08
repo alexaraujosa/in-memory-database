@@ -202,6 +202,6 @@ void print_user(void* pt) {
         "Account_Creation:%d; "
         "Account_status:%s; "
         "Idade:%d; "
-        "Total_Spend:%.3f}\n",
+        "Total_Spend:%d}\n",
         user->id, user->name, sex, user->country_code, user->account_creation, status, user->age, user->total_spend);
 }
