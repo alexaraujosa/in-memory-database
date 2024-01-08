@@ -146,10 +146,8 @@ int verify_reservation_tokens(Tokens tokens, ParserStore store) {
 
     // User verifier
     Catalog* user_catalog = g_array_index(store, Catalog*, 2);
-    User user = catalog_search_in_str_hashtable(user_catalog, parameter[1]);
-    if(user == NULL)  return 0;
+    if(catalog_search_in_str_hashtable(user_catalog, parameter[1]) == NULL)  return 0;
 
-    g_array_insert_vals(store, 4, &user, 1);
 
     return 1;
 }
