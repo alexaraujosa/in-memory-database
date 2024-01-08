@@ -253,7 +253,7 @@ void query3(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     IGNORE_ARG(argv);
     guint matched_index = 0;
     int hotel_id = atoi(argv[0] + 3);
-    gboolean exists = catalog_exists_in_array(catalogues[3], GINT_TO_POINTER(hotel_id), &reservation_hotelID_compare_func, &matched_index);
+    gboolean exists = catalog_exists_in_array(catalogues[3], GINT_TO_POINTER(hotel_id), &reservationsCatalog_hotelID_compare_func, &matched_index);
     if (exists) {
         int matched_index_down = matched_index;
         
@@ -301,7 +301,7 @@ void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     GArray *arrTemp = g_array_new(FALSE, FALSE, sizeof(gpointer));
     guint matched_index = 0;
     int hotel_id = atoi(argv[0] + 3);
-    gboolean exists = catalog_exists_in_array(catalogues[3], GINT_TO_POINTER(hotel_id), &reservation_hotelID_compare_func, &matched_index);
+    gboolean exists = catalog_exists_in_array(catalogues[3], GINT_TO_POINTER(hotel_id), &reservationsCatalog_hotelID_compare_func, &matched_index);
     if (exists) {
         void *data = catalog_search_in_array(catalogues[3], matched_index);
         g_array_append_val(arrTemp,data);
@@ -329,7 +329,7 @@ void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             data2 = catalog_search_in_array(catalogues[3], matched_index_up);
         };
 
-        g_array_sort(arrTemp, &reservation_date_compare_func);
+        g_array_sort(arrTemp, &reservationsCatalog_date_compare_func);
 
         int count = 1;
         for (int i = 0; i < (int)arrTemp->len; i++) {
@@ -426,7 +426,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
 
     GArray *arrTemp = g_array_new(FALSE, FALSE, sizeof(gpointer));
     guint matched_index = 0;
-    gboolean exists = catalog_exists_in_array(catalogues[1], argv[0], &flight_origin_compare_func, &matched_index);
+    gboolean exists = catalog_exists_in_array(catalogues[1], argv[0], &flightsCatalog_origin_compare_func, &matched_index);
     // void *data1, *data2;
     char* orig;
 
@@ -713,7 +713,7 @@ void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     int hotel_id = atoi(argv[0] + 3);
     int begin_date = date_string_notime_to_int(argv[1]);
     int end_date = date_string_notime_to_int(argv[2]);
-    gboolean exists = catalog_exists_in_array(catalogues[3], GINT_TO_POINTER(hotel_id), &reservation_hotelID_compare_func, &matched_index);
+    gboolean exists = catalog_exists_in_array(catalogues[3], GINT_TO_POINTER(hotel_id), &reservationsCatalog_hotelID_compare_func, &matched_index);
     if (exists) {
         void *data = catalog_search_in_array(catalogues[3], matched_index);
         g_array_append_val(arrTemp,data);
@@ -779,7 +779,7 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
 
     GArray *arrTemp = g_array_new(FALSE, FALSE, sizeof(gpointer));
     guint matched_index = 0;
-    gboolean exists = catalog_exists_in_array(catalogues[0], *argv, &user_name_compare_func, &matched_index);
+    gboolean exists = catalog_exists_in_array(catalogues[0], *argv, &usersCatalog_name_compare_func, &matched_index);
     
     // void *data1, *data2;
     char* user_name;
