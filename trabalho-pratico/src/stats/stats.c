@@ -1,9 +1,4 @@
-#include "catalog/catalogManager.h"
-#include "catalog/flightsCatalog.h"
-#include "catalog/passengersCatalog.h"
-#include "catalog/reservationsCatalog.h"
-#include "catalog/usersCatalog.h"
-#include "common.h"
+#include "stats/stats.h"
 
 typedef struct users_stats {
     char *user_id;
@@ -36,21 +31,31 @@ typedef struct aeroport_stats {
     double mediana_delays;
 } AEROPORT_STATS, *Aeroport_stats;
 
-// TODO PRECORRE O ARRAY TODO
+// TODO fazer com array ordenado
 int calculate_user_n_flights(Catalog *catalog, char *userID) {
-    int n_flights = 0;
-    char *name_to_compare = NULL;
-    for (int i = 0; i < catalog_get_item_count(catalog); i++) {
-        const Passenger passenger_temp = (const Passenger)(catalog_search_in_array(catalog, i));
-        name_to_compare = get_passenger_userdID(passenger_temp);
+    guint matched_index = 0;
+    gboolean exists = catalog_exists_in_array(catalog, userID, &passengersCatalog_userID_compare_func, &matched_index);
+    if (exists) {
+        int matched_index_down = matched_index;
 
-        if (strcmp(userID, name_to_compare) == 0) {
-            n_flights++;
-        }
+        void *data1 = catalog_search_in_array(catalog, matched_index_down);
+        while (strcmp(get_passenger_userID((Passenger)data1), userID) == 0 && matched_index_down > 0) {
+            data1 = catalog_search_in_array(catalog, --matched_index_down);
+        };
+        if (strcmp(get_passenger_userID(data1), userID) != 0) matched_index_down++;
 
-        free(name_to_compare);
+        int matched_index_up = matched_index;
+        void *data2 = catalog_search_in_array(catalog, matched_index_up);
+        while (strcmp(get_passenger_userID((Passenger)data2), userID) == 0 && matched_index_up < catalog_get_item_count(catalog) - 1) {
+            data2 = catalog_search_in_array(catalog, ++matched_index_up);
+        };
+        if (strcmp(get_passenger_userID(data2), userID) != 0) matched_index_up--;
+
+        return (matched_index_up - matched_index_down + 1);
+    } else {
+        printf("User with that id(%s) not found in passangers\n", userID);
+        return -1;
     }
-    return n_flights;
 }
 
 double calculate_reservation_total_price(Reservation reservation) {
@@ -64,6 +69,7 @@ double calculate_reservation_total_price(Reservation reservation) {
     return res;
 }
 
+// TODO fazer em tempo de parsing
 double calculate_user_total_spent(Catalog *catalog, char *userID, int *n_reservations) {
     double total_spent = 0;
     char *name_to_compare = NULL;
@@ -82,9 +88,10 @@ double calculate_user_total_spent(Catalog *catalog, char *userID, int *n_reserva
     return total_spent;
 }
 
+// TODO feito em tempo de parsing
 int calculate_flight_total_passengers(Catalog *catalog, int *flightId) {
     guint matched_index = 0;
-    gboolean exists = catalog_exists_in_array(catalog, flightId, &passenger_flightID_compare_func, &matched_index);
+    gboolean exists = catalog_exists_in_array(catalog, flightId, &passengersCatalog_flightID_compare_func, &matched_index);
     if (exists) {
         int matched_index_down = matched_index;
 
@@ -117,9 +124,10 @@ int compareIntegers(const void *a, const void *b) {
     return (*(int *)a - *(int *)b);
 }
 
+// TODO CRIAR UM ARRAY COM ORIGEM-DELAY ORDENADO, PARA FACILITAR QUERY 7
 int calculate_flight_delay_median(Catalog *catalog, char *origin_name) {
     guint matched_index = 0;
-    gboolean exists = catalog_exists_in_array(catalog, origin_name, &flight_origin_compare_func, &matched_index);
+    gboolean exists = catalog_exists_in_array(catalog, origin_name, &flightsCatalog_origin_compare_func, &matched_index);
     char *orig;
 
     if (exists) {
@@ -187,10 +195,9 @@ int calculate_flight_delay_median(Catalog *catalog, char *origin_name) {
     }
 }
 
-// TODO Still a prototype... i need to add the input for the year
 int calculate_aeroport_n_passengers(Catalog *flight_catalog, Catalog *passenger_catalog, char *origin_name, int *year) {
     guint matched_index = 0;
-    gboolean exists = catalog_exists_in_array(flight_catalog, origin_name, &flight_origin_compare_func, &matched_index);
+    gboolean exists = catalog_exists_in_array(flight_catalog, origin_name, &flightsCatalog_origin_compare_func, &matched_index);
     if (exists) {
         int matched_index_down = matched_index;
         void *data1 = catalog_search_in_array(flight_catalog, matched_index_down);
@@ -226,10 +233,9 @@ int calculate_aeroport_n_passengers(Catalog *flight_catalog, Catalog *passenger_
     }
 }
 
-//esta função calcula o n_passengers que chegam a um aeroporto... mas obriga ao array estar ordenado pelo destino
 int calculate_aeroport_n_passengers2(Catalog *flight_catalog, Catalog *passenger_catalog, char *origin_name, int *year) {
     guint matched_index = 0;
-    gboolean exists = catalog_exists_in_array(flight_catalog, origin_name, &flight_destination_compare_funcB, &matched_index);
+    gboolean exists = catalog_exists_in_array(flight_catalog, origin_name, &flightsCatalog_destination_compare_funcB, &matched_index);
     if (exists) {
         int matched_index_down = matched_index;
         void *data1 = catalog_search_in_array(flight_catalog, matched_index_down);
