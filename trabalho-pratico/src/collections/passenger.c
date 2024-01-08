@@ -14,7 +14,7 @@ void set_passenger_flightID(Passenger passenger, int flight_id){
     passenger->flight_id = flight_id;
 }
 
-char *get_passenger_userdID(const Passenger passenger){
+char *get_passenger_userID(const Passenger passenger){
     return strdup(passenger->user_id);
 }
 
