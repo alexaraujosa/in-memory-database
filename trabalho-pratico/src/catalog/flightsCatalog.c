@@ -1,13 +1,11 @@
-#include "catalog/catalogManager.h"
-#include "collections/flight.h"
+#include "catalog/flightsCatalog.h"
 
+gint flightsCatalog_full_compare_func(gconstpointer flight_A, gconstpointer flight_B) {
+    const Flight flight1 = *(const Flight*)flight_A;
+    const Flight flight2 = *(const Flight*)flight_B;
 
-gint flightsCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
-    const Flight flight1 = *(const Flight*)a;
-    const Flight flight2 = *(const Flight*)b;
-
-    char *origin1 = get_flight_origin(flight1);
-    char *origin2 = get_flight_origin(flight2);
+    char* origin1 = get_flight_origin(flight1);
+    char* origin2 = get_flight_origin(flight2);
 
     int origin_comparison = strcasecmp(origin1, origin2);
     if (origin_comparison != 0) {
@@ -17,14 +15,14 @@ gint flightsCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
     }
     free(origin1);
     free(origin2);
-    
+
     int schedule_departure_date1 = get_flight_schedule_departure_date(flight1);
     int schedule_departure_date2 = get_flight_schedule_departure_date(flight2);
     int schedule_arrival_date1 = get_flight_schedule_arrival_date(flight1);
     int schedule_arrival_date2 = get_flight_schedule_arrival_date(flight2);
     int id1 = get_flight_id(flight1);
     int id2 = get_flight_id(flight2);
-    
+
     if (schedule_departure_date1 < schedule_departure_date2) return 1;
     if (schedule_departure_date1 > schedule_departure_date2) return -1;
 
@@ -37,68 +35,52 @@ gint flightsCatalog_full_compare_func(gconstpointer a, gconstpointer b) {
     return 0;
 }
 
-gint flight_destination_compare_func(gconstpointer a, gconstpointer b) {
-    const Flight flight1 = *(const Flight*)a;
-    const Flight flight2 = *(const Flight*)b;
+gint flightsCatalog_destination_compare_func(gconstpointer flight_A, gconstpointer flight_B) {
+    const Flight flight1 = *(const Flight*)flight_A;
+    const Flight flight2 = *(const Flight*)flight_B;
 
-    char *destination1 = get_flight_destination(flight1);
-    char *destination2 = get_flight_destination(flight2);
+    char* destination1 = get_flight_destination(flight1);
+    char* destination2 = get_flight_destination(flight2);
 
     int destination_comparison = strcasecmp(destination1, destination2);
-    if (destination_comparison != 0) {
-        free(destination1);
-        free(destination2);
-        return destination_comparison;
-    }
+
     free(destination1);
     free(destination2);
-    return 0;
+
+    return destination_comparison;
 }
 
-gint flight_destination_compare_funcB(gconstpointer a, gconstpointer b) {
-    const Flight *flight1 = (const Flight*)a;
-    char* flight_NAME2 = (char*) b;
+gint flightsCatalog_destination_compare_funcB(gconstpointer flight_A, gconstpointer flight_destination) {
+    const Flight* flight1 = (const Flight*)flight_A;
+    char* flight_destination2 = (char*)flight_destination;
 
-    char* flight_NAME1 = get_flight_destination(*flight1);
-    if(strcasecmp(flight_NAME1, flight_NAME2) > 0) {
-        free(flight_NAME1);
-        return 1;
-    }
+    char* flight_destination1 = get_flight_destination(*flight1);
 
-    if(strcasecmp(flight_NAME1, flight_NAME2) < 0) {
-        free(flight_NAME1);
-        return -1;
-    }
+    int destination_comparison = strcasecmp(flight_destination1, flight_destination2);
 
-    free(flight_NAME1);
-    return 0;
+    free(flight_destination1);
+
+    return destination_comparison;
 }
 
-gint flight_origin_compare_func(gconstpointer a, gconstpointer b) {
-    const Flight *flight1 = (const Flight*)a;
-    char* flight_NAME2 = (char*) b;
+gint flightsCatalog_origin_compare_func(gconstpointer flight_A, gconstpointer flight_origin) {
+    const Flight* flight1 = (const Flight*)flight_A;
+    char* flight_origin2 = (char*)flight_origin;
 
-    char* flight_NAME1 = get_flight_origin(*flight1);
-    if(strcasecmp(flight_NAME1, flight_NAME2) > 0) {
-        free(flight_NAME1);
-        return 1;
-    }
+    char* flight_origin1 = get_flight_origin(*flight1);
 
-    if(strcasecmp(flight_NAME1, flight_NAME2) < 0) {
-        free(flight_NAME1);
-        return -1;
-    }
+    int origin_comparison = strcasecmp(flight_origin1, flight_origin2);
 
-    free(flight_NAME1);
-    return 0;
+    free(flight_origin1);
+
+    return origin_comparison;
 }
-
 
 void flightsCatalog_write_to_catalog(void* _flight, ParserStore store) {
     Flight flight = (Flight)_flight;
 
     int id = get_flight_id(flight);
-    Catalog *flight_catalog = g_array_index(store, Catalog*, 2);
+    Catalog* flight_catalog = g_array_index(store, Catalog*, 2);
     catalog_add_int_to_catalog(flight_catalog, GINT_TO_POINTER(id), flight);
 }
 

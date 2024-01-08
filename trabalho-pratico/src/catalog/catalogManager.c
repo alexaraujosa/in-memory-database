@@ -1,9 +1,5 @@
 #include "catalog/catalogManager.h"
 
-#include <glib.h>
-
-#include "common.h"
-
 typedef struct catalog {
     GHashTable *hashTable;
     GArray *array;

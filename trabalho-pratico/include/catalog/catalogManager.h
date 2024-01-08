@@ -1,12 +1,13 @@
-#ifndef CATALOG_MANAGER_H
-#define CATALOG_MANAGER_H
-
-#include "glib.h"
-
 /**
  * @file catalog_manager.h
  * @brief Header file for Catalog Manager.
  */
+
+#ifndef CATALOG_MANAGER_H
+#define CATALOG_MANAGER_H
+
+#include "glib.h"
+#include "common.h"
 
 /**
  * @struct catalog
