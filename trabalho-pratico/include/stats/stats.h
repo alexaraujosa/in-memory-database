@@ -1,14 +1,18 @@
 #ifndef STATS_H
 #define STATS_H
 
+#include "collections/flight.h"
+#include "collections/passenger.h"
+#include "collections/reservation.h"
+#include "collections/user.h"
 #include "catalog/catalogManager.h"
+#include "catalog/flightsCatalog.h"
+#include "catalog/passengersCatalog.h"
 #include "catalog/reservationsCatalog.h"
 #include "catalog/usersCatalog.h"
-#include "catalog/passengersCatalog.h"
-#include "catalog/flightsCatalog.h"
 #include "common.h"
 
-gint reservation_hotelID_compare_func(gconstpointer a, gconstpointer b);
+gint reservationsCatalog_hotelID_compare_func(gconstpointer a, gconstpointer b);
 
 typedef struct users_stats USERS_STATS, *Users_stats;
 
