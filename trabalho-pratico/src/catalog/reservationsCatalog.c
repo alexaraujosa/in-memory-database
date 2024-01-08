@@ -1,5 +1,6 @@
 #include "catalog/catalogManager.h"
 #include "collections/reservation.h"
+#include "stats/stats.h"
 
 
 gint reservationsCatalog_full_compare_func(gconstpointer* a, gconstpointer* b) {
@@ -58,6 +59,10 @@ void reservationsCatalog_write_to_catalog(void* _reservation, ParserStore store)
     
     int id = get_reservation_id(reservation);
     Catalog* reservation_catalog = g_array_index(store, Catalog*, 3);
+    User user = g_array_index(store, User, 4);
+
+    add_user_total_spend(user, calculate_reservation_total_price(reservation));
+
     catalog_add_int_to_catalog(reservation_catalog, GINT_TO_POINTER(id), reservation);
 }
 
