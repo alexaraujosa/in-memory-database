@@ -28,7 +28,7 @@ int calculate_user_n_flights(Catalog *catalog, char *userID);
 
 double calculate_user_total_spent(Catalog *catalog, char *userID, int *n_reservations);
 
-double calculate_reservation_total_price(Reservation reservation);
+int calculate_reservation_total_price(Reservation reservation);
 
 int calculate_flight_total_passengers(Catalog *catalog, int *flightId);
 

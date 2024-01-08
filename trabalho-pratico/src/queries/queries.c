@@ -204,7 +204,8 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
         char* country_code = get_user_country_code(user);
         int n_reservas = 0;
         double total_spent = calculate_user_total_spent(catalogues[3], argv[0], &n_reservas);
-
+        double gasto = get_user_total_spend(user);
+        gasto /= 1000;
         char* user_passport = get_user_passport(user);
 
         if(flag == 'F'){
@@ -216,7 +217,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             fprintf(output_file, "passport: %s\n", user_passport);
             fprintf(output_file, "number_of_flights: %d\n", calculate_user_n_flights(catalogues[2], argv[0]));
             fprintf(output_file, "number_of_reservations: %d\n", n_reservas);
-            fprintf(output_file, "total_spent: %.3f\n", total_spent);
+            fprintf(output_file, "total_spent: %.3f\n", gasto);
         } else {
             fprintf(
                 output_file, 
@@ -228,7 +229,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
                 user_passport,
                 calculate_user_n_flights(catalogues[2], argv[0]),
                 n_reservas,
-                total_spent
+                gasto
             );
         }
 

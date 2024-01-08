@@ -58,15 +58,16 @@ int calculate_user_n_flights(Catalog *catalog, char *userID) {
     }
 }
 
-double calculate_reservation_total_price(Reservation reservation) {
+int calculate_reservation_total_price(Reservation reservation) {
     double n_nights = (get_reservation_end_date(reservation) - get_reservation_begin_date(reservation)) / 86400.0;
 
     unsigned int price_per_night = get_reservation_price_per_night(reservation);
     unsigned int tax = get_reservation_city_tax(reservation);
 
     double res = (double)(price_per_night * n_nights) + ((double)(price_per_night * n_nights) / 100.0) * tax;
-
-    return res;
+    res *= 1000;
+    int ans = (int)res;
+    return ans;
 }
 
 // TODO fazer em tempo de parsing

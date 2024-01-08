@@ -9,7 +9,7 @@ typedef struct user {
     CountryCode(country_code);
     int account_creation;  // Offset from Base Date
     bool account_status;
-    double total_spend;
+    int total_spend;
 
     // Statistics
     uint8_t age;
@@ -88,15 +88,15 @@ void set_user_age(User user, int age){
     user->age = age;
 }
 
-double get_user_total_spend(const User user) {
+int get_user_total_spend(const User user) {
     return user->total_spend;
 }
 
-void set_user_total_spend(User user, double total_spend) {
+void set_user_total_spend(User user, int total_spend) {
     user->total_spend = total_spend;
 }
 
-void add_user_total_spend(User user, double spend) {
+void add_user_total_spend(User user, int spend) {
     user->total_spend += spend;
 }
 
