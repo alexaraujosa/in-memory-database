@@ -33,7 +33,7 @@ int verify_passenger_tokens(Tokens tokens, ParserStore store);
 
 int get_passenger_flightID(const Passenger passenger);
 void set_passenger_flightID(Passenger passenger, int flight_id);
-char *get_passenger_userdID(const Passenger passenger);
+char *get_passenger_userID(const Passenger passenger);
 void set_passenger_userID(Passenger passenger, const char *user_id);
 
 /**
