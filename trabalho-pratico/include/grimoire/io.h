@@ -96,7 +96,7 @@ char gm_getch();
  * WARN: If @ref gm_kbhit is not constantly called and the key is handled, it might attempt to read multiple keys.
  * It currently is undefined behavior.
  */
-GM_Key gm_get_key();
+GM_Key gm_get_key(GM_Term term);
 
 /**
  * @brief Returns the true key from @ref gm_get_key. Modifiers are attempted to be resolved, otherwise they are stripped.
@@ -107,12 +107,35 @@ GM_Key gm_get_canonical_key(GM_Key key);
  * @brief Hides the cursor on the terminal.
  * TODO: Move to somewhere else better.
  */
-void gm_hide_cursor();
+void gm_hide_cursor(GM_Term term);
 
 /**
  * @brief Shows the cursor on the terminal.
  * TODO: Move to somewhere else better.
  */
-void gm_show_cursor();
+void gm_show_cursor(GM_Term term);
+
+/**
+ * @brief Clears the screen.
+ * 
+ * @param flush If enabled, stdout will be flushed.
+ */
+void gm_clear(int flush);
+
+/**
+ * @brief Sets the cursor at it's corresponding X and Y position on the terminal.
+ * 
+ * @param x The column of the terminal.
+ * @param y The row of the terminal.
+ * @param flush If enabled, stdout will be flushed.
+ */
+void gm_gotoxy(int x, int y, int flush);
+
+/**
+ * @brief Resets all current ANSI attributes.
+ * 
+ * @param flush If enabled, stdout will be flushed.
+ */
+void gm_reset_attr(int flush);
 
 #endif

@@ -1,4 +1,5 @@
 #include "grimoire/io.h"
+// #include "grimoire/terminal.h"
 #include "cache/cache.h"
 
 #include <unistd.h>
@@ -14,7 +15,7 @@
 #define MAX_KEY_SEQUENCE 10
 
 // Cache capabilities to reduce memory usage
-#define MEMOIZE_CAP(cache, key) memoize_cache_elem(cache, key, tigetstr(key))
+// #define MEMOIZE_CAP(cache, key) memoize_cache_elem(cache, key, tigetstr(key))
 
 // Capabilities returned from terminfo
 #define GM_CAP_KEY_F1  key_f1  // 27 91 80
@@ -51,12 +52,12 @@ char gm_getch() {
     }
 }
 
-GM_Key gm_get_key() {
+GM_Key gm_get_key(GM_Term term) {
     #define SCOPE "gm_get_key"
 
     // TODO: Move this out, cannot be freed
-    static Cache key_caps = NULL;
-    if (key_caps == NULL) key_caps = make_cache(free);
+    // static Cache key_caps = NULL;
+    // if (key_caps == NULL) key_caps = make_cache(free);
 
     char sequence[MAX_KEY_SEQUENCE] = { 0 };
     uint8_t ind = 0;
@@ -71,18 +72,43 @@ GM_Key gm_get_key() {
 
         return sequence[0];
     } else {
-        if (STRING_EQUAL(sequence, MEMOIZE_CAP(key_caps, GM_CAP_KEY_F1)))  return GM_KEY_F1;
-        if (STRING_EQUAL(sequence, MEMOIZE_CAP(key_caps, GM_CAP_KEY_F2)))  return GM_KEY_F2;
-        if (STRING_EQUAL(sequence, MEMOIZE_CAP(key_caps, GM_CAP_KEY_F3)))  return GM_KEY_F3;
-        if (STRING_EQUAL(sequence, MEMOIZE_CAP(key_caps, GM_CAP_KEY_F4)))  return GM_KEY_F4;
-        if (STRING_EQUAL(sequence, MEMOIZE_CAP(key_caps, GM_CAP_KEY_F5)))  return GM_KEY_F5;
-        if (STRING_EQUAL(sequence, MEMOIZE_CAP(key_caps, GM_CAP_KEY_F6)))  return GM_KEY_F6;
-        if (STRING_EQUAL(sequence, MEMOIZE_CAP(key_caps, GM_CAP_KEY_F7)))  return GM_KEY_F7;
-        if (STRING_EQUAL(sequence, MEMOIZE_CAP(key_caps, GM_CAP_KEY_F8)))  return GM_KEY_F8;
-        if (STRING_EQUAL(sequence, MEMOIZE_CAP(key_caps, GM_CAP_KEY_F9)))  return GM_KEY_F9;
-        if (STRING_EQUAL(sequence, MEMOIZE_CAP(key_caps, GM_CAP_KEY_F10))) return GM_KEY_F10;
-        if (STRING_EQUAL(sequence, MEMOIZE_CAP(key_caps, GM_CAP_KEY_F11))) return GM_KEY_F11;
-        if (STRING_EQUAL(sequence, MEMOIZE_CAP(key_caps, GM_CAP_KEY_F12))) return GM_KEY_F12;
+        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F1)))  return GM_KEY_F1;
+        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F2)))  return GM_KEY_F2;
+        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F3)))  return GM_KEY_F3;
+        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F4)))  return GM_KEY_F4;
+        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F5)))  return GM_KEY_F5;
+        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F6)))  return GM_KEY_F6;
+        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F7)))  return GM_KEY_F7;
+        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F8)))  return GM_KEY_F8;
+        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F9)))  return GM_KEY_F9;
+        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F10))) return GM_KEY_F10;
+        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F11))) return GM_KEY_F11;
+        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F12))) return GM_KEY_F12;
+
+        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F1)))  return GM_KEY_F1;
+        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F2)))  return GM_KEY_F2;
+        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F3)))  return GM_KEY_F3;
+        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F4)))  return GM_KEY_F4;
+        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F5)))  return GM_KEY_F5;
+        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F6)))  return GM_KEY_F6;
+        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F7)))  return GM_KEY_F7;
+        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F8)))  return GM_KEY_F8;
+        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F9)))  return GM_KEY_F9;
+        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F10))) return GM_KEY_F10;
+        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F11))) return GM_KEY_F11;
+        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F12))) return GM_KEY_F12;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_F1))  return GM_KEY_F1;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_F2))  return GM_KEY_F2;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_F3))  return GM_KEY_F3;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_F4))  return GM_KEY_F4;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_F5))  return GM_KEY_F5;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_F6))  return GM_KEY_F6;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_F7))  return GM_KEY_F7;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_F8))  return GM_KEY_F8;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_F9))  return GM_KEY_F9;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_F10)) return GM_KEY_F10;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_F11)) return GM_KEY_F11;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_F12)) return GM_KEY_F12;
     }
 
     return GM_KEY_NUL;
@@ -96,18 +122,38 @@ GM_Key gm_get_canonical_key(GM_Key key) {
     return ckey;
 }
 
-void gm_hide_cursor() {
-    static char* civis = NULL;
-    if (!civis) civis = tigetstr("civis");
+/* 
+ * The man page for terminfo says: 
+ *   "All terminfo strings [including the output of tparm] should be printed with tputs or putp."
+ * 
+ * I say they can drive off a cliff.
+ */
 
-    printf(civis);
+void gm_hide_cursor(GM_Term term) {
+    // char* civis = gm_term_get_key_cap(term, "civis");
+
+    printf(cursor_invisible);
     fflush(stdout);
 }
 
-void gm_show_cursor() {
-    static char* cnorm = NULL;
-    if (!cnorm) cnorm = tigetstr("cnorm");
+void gm_show_cursor(GM_Term term) {
+    // char* cnorm = gm_term_get_key_cap(term, "cnorm");
 
-    printf(cnorm);
+    printf(cursor_normal);
     fflush(stdout);
+}
+
+void gm_clear(int flush) {
+    printf(clear_screen);
+    if (flush) fflush(stdout);
+}
+
+void gm_gotoxy(int x, int y, int flush) {
+    printf("\e[%d;%dH", y, x); // TODO: Use terminfo's cursor_address?
+    if (flush) fflush(stdout);
+}
+
+void gm_reset_attr(int flush) {
+    printf("\e[0m");
+    if (flush) fflush(stdout);
 }
