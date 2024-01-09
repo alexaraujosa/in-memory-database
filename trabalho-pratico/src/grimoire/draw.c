@@ -64,13 +64,19 @@ void gm_printf(GM_Term term, int row, int col, const char *format, ...) {
 
     // TODO: Trace?
 
-    int truepos = gm_term_buf_truepos(term, row, col);
+    // int truepos = gm_term_buf_truepos(term, row, col);
 
     // Determine the length of the formatted string
     int length = _gm_vsnprintf(NULL, 0, format, args);
     va_end(args);
 
     if (length < 0) return;
+    if (row > term->size.rows) {
+        return;
+    }
+    if (col + length > term->size.cols) {
+        return;
+    }
 
     va_start(args, format);
 
@@ -84,17 +90,16 @@ void gm_printf(GM_Term term, int row, int col, const char *format, ...) {
     _gm_vsnprintf(result, length + 1, format, args);
     va_end(args);
 
-    if (row > term->buf->rows) {
-        return;
-    }
-    if (col + length > term->buf->cols * MAX_CHAR_SEQ_BYTES) {
-        return;
-    }
+    // if (row > term->buf->rows) {
+    //     return;
+    // }
+    // if (col + length > term->buf->cols * MAX_CHAR_SEQ_BYTES) {
+    //     return;
+    // }
 
     int vislen = gm_str_visible_len(result);
     
-    memcpy(term->buf->data[row] + col, result, length);
-    free(result);
+    // memcpy(term->buf->data[row] + col, result, length);
     
     GM_Attr attr = gm_attr_make(
         term, 
@@ -103,13 +108,61 @@ void gm_printf(GM_Term term, int row, int col, const char *format, ...) {
         col, 
         row,
         col + vislen, 
-        &gm_attr_resolve_line
+        &gm_attr_resolve_line,
+        strdup(result)
     );
     gm_term_attr_add(term, attr);
+
+    free(result);
     #undef SCOPE
 }
 
 void gm_box(GM_Term term, int row_start, int col_start, int row_end, int col_end) {
+    // #define SCOPE "gm_box"
+    // rt_assert(
+    //     _gm_is_area_inbounds(term, row_start, col_start, row_end, col_end),
+    //     trace_msg(SCOPE, "Area is out of bounds.")
+    // );
+
+    // rt_assert(
+    //     (row_end - row_start > 2 && col_end - col_start > 2),
+    //     trace_msg(SCOPE, "Box is not big enough.")
+    // );
+
+    // // term->buf->data[row_start][col_start] = term->box_chars.tlc;
+    // // term->buf->data[row_start][col_end] = term->box_chars.trc;
+    // // term->buf->data[row_end][col_start] = term->box_chars.blc;
+    // // term->buf->data[row_end][col_end] = term->box_chars.brc;
+    // memcpy(term->buf->data[row_start] + col_start, term->box_chars.tlc, MAX_UTF8_SEQ_CORE);
+    // memcpy(term->buf->data[row_start] + col_end, term->box_chars.trc, MAX_UTF8_SEQ_CORE);
+    // memcpy(term->buf->data[row_end] + col_start, term->box_chars.blc, MAX_UTF8_SEQ_CORE);
+    // memcpy(term->buf->data[row_end] + col_end, term->box_chars.brc, MAX_UTF8_SEQ_CORE);
+
+    // // TODO: Fill vertical and horizontal lines
+    // for (int i = col_start + 1; i < col_end; i++) {
+    //     memcpy(term->buf->data[row_start] + i, term->box_chars.hl, MAX_UTF8_SEQ_CORE);
+    //     memcpy(term->buf->data[row_end] + i, term->box_chars.hl, MAX_UTF8_SEQ_CORE);
+    // }
+
+    // for (int i = row_start + 1; i < row_end; i++) {
+    //     memcpy(term->buf->data[i] + row_start, term->box_chars.vl, MAX_UTF8_SEQ_CORE);
+    //     memcpy(term->buf->data[i] + row_end, term->box_chars.vl, MAX_UTF8_SEQ_CORE);
+    // }
+
+    // // TODO: Add line resolver
+    // GM_Attr attr = gm_attr_make(
+    //     term, 
+    //     GM_ATTR_TYPE_BOX, 
+    //     row_start, 
+    //     col_start, 
+    //     row_end,
+    //     col_end, 
+    //     &gm_attr_resolve_box
+    // );
+    // gm_term_attr_add(term, attr);
+    
+    // #undef SCOPE
+
     #define SCOPE "gm_box"
     rt_assert(
         _gm_is_area_inbounds(term, row_start, col_start, row_end, col_end),
@@ -121,27 +174,6 @@ void gm_box(GM_Term term, int row_start, int col_start, int row_end, int col_end
         trace_msg(SCOPE, "Box is not big enough.")
     );
 
-    // term->buf->data[row_start][col_start] = term->box_chars.tlc;
-    // term->buf->data[row_start][col_end] = term->box_chars.trc;
-    // term->buf->data[row_end][col_start] = term->box_chars.blc;
-    // term->buf->data[row_end][col_end] = term->box_chars.brc;
-    memcpy(term->buf->data[row_start] + col_start, term->box_chars.tlc, MAX_UTF8_SEQ_CORE);
-    memcpy(term->buf->data[row_start] + col_end, term->box_chars.trc, MAX_UTF8_SEQ_CORE);
-    memcpy(term->buf->data[row_end] + col_start, term->box_chars.blc, MAX_UTF8_SEQ_CORE);
-    memcpy(term->buf->data[row_end] + col_end, term->box_chars.brc, MAX_UTF8_SEQ_CORE);
-
-    // TODO: Fill vertical and horizontal lines
-    for (int i = col_start + 1; i < col_end; i++) {
-        memcpy(term->buf->data[row_start] + i, term->box_chars.hl, MAX_UTF8_SEQ_CORE);
-        memcpy(term->buf->data[row_end] + i, term->box_chars.hl, MAX_UTF8_SEQ_CORE);
-    }
-
-    for (int i = row_start + 1; i < row_end; i++) {
-        memcpy(term->buf->data[i] + row_start, term->box_chars.vl, MAX_UTF8_SEQ_CORE);
-        memcpy(term->buf->data[i] + row_end, term->box_chars.vl, MAX_UTF8_SEQ_CORE);
-    }
-
-    // TODO: Add line resolver
     GM_Attr attr = gm_attr_make(
         term, 
         GM_ATTR_TYPE_BOX, 
@@ -149,10 +181,11 @@ void gm_box(GM_Term term, int row_start, int col_start, int row_end, int col_end
         col_start, 
         row_end,
         col_end, 
-        &gm_attr_resolve_box
+        &gm_attr_resolve_box,
+        NULL
     );
     gm_term_attr_add(term, attr);
-    
+
     #undef SCOPE
 }
 // ======= END DRAWING FUNCTIONS =======

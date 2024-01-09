@@ -1,6 +1,7 @@
 #include "grimoire/attr.h"
 #include "grimoire/grimoire_priv.h"
 #include "grimoire/color.h"
+#include "grimoire/io.h"
 
 #include "common.h"
 #include "util/error.h"
@@ -87,7 +88,8 @@ GM_Attr gm_attr_make(
     int col_start,
     int row_end,
     int col_end,
-    GM_ATTR_RESOLVER(resolver)
+    GM_ATTR_RESOLVER(resolver),
+    void* print_data
 ) {
     GM_Attr attr = (GM_Attr)malloc(sizeof(GM_ATTR));
     
@@ -128,6 +130,7 @@ GM_Attr gm_attr_make(
     attr->resolver = resolver;
 
     attr->data = term->attr;
+    attr->print_data = print_data;
 
     return attr;
 }
@@ -191,44 +194,76 @@ char* gm_attr_int_resolve(GM_Term term, GM_AttrInt attr) {
 }
 
 void gm_attr_resolve_line(GM_Term term, GM_Attr attr) {
-    gotoxy(attr->col_start + 1, attr->row_start + 1);
+    gm_gotoxy(attr->col_start + 1, attr->row_start + 1, FALSE);
 
     #ifdef _DEBUG
     fflush(stdout);
     #endif
 
     char* attr_str = gm_attr_int_resolve(term, attr->data);
+    char* print_data = attr->print_data;
     // printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
-    _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
-    clear_attr();
+    // _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
+    _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start, print_data);
+    // gm_clear_attr();
+    gm_reset_attr(FALSE);
 
     free(attr_str);
+    free(print_data);
 }
 
 void gm_attr_resolve_box(GM_Term term, GM_Attr attr) {
+    // char* attr_str = gm_attr_int_resolve(term, attr->data);
+    // // printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
+
+    // gm_gotoxy(attr->col_start + 1, attr->row_start + 1);
+    // // printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
+
+    // _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start + 1, term->buf->data[attr->row_start] + attr->col_start);
+    // gm_clear_attr();
+
+    // for (int i = attr->row_start + 1; i < attr->row_end; i++) {
+    //     gm_gotoxy(attr->row_start + 1, i + 1);
+    //     _gm_printf("%s%c", attr_str, term->buf->data[i][attr->row_start]);
+    //     gm_clear_attr();
+
+    //     gm_gotoxy(attr->row_end + 1, i + 1);
+    //     _gm_printf("%s%c", attr_str, term->buf->data[i][attr->row_end]);
+    //     gm_clear_attr();
+    // }
+
+    // gm_gotoxy(attr->col_start + 1, attr->row_end + 1);
+    // // printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_end] + attr->col_start);
+    // _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start + 1, term->buf->data[attr->row_end] + attr->col_start);
+    // gm_clear_attr();
+
+    // free(attr_str);
+
     char* attr_str = gm_attr_int_resolve(term, attr->data);
-    // printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
 
-    gotoxy(attr->col_start + 1, attr->row_start + 1);
-    // printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
-
-    _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start + 1, term->buf->data[attr->row_start] + attr->col_start);
-    clear_attr();
+    gm_gotoxy(attr->col_start + 1, attr->row_start + 1, FALSE);
+    _gm_printf("%s", attr_str);
+    _gm_printf("%s", term->box_chars.tlc);
+    for (int i = attr->col_start + 1; i < attr->col_end; i++) _gm_printf("%s", term->box_chars.hl);
+    _gm_printf("%s", term->box_chars.trc);
 
     for (int i = attr->row_start + 1; i < attr->row_end; i++) {
-        gotoxy(attr->row_start + 1, i + 1);
-        _gm_printf("%s%c", attr_str, term->buf->data[i][attr->row_start]);
-        clear_attr();
+        gm_gotoxy(attr->row_start + 1, i + 1, FALSE);
+        _gm_printf("%s%s", attr_str, term->box_chars.vl);
+        // gm_clear_attr();
+        gm_reset_attr(FALSE);
 
-        gotoxy(attr->row_end + 1, i + 1);
-        _gm_printf("%s%c", attr_str, term->buf->data[i][attr->row_end]);
-        clear_attr();
+        gm_gotoxy(attr->row_end + 1, i + 1, FALSE);
+        _gm_printf("%s%s", attr_str, term->box_chars.vl);
+        // gm_clear_attr();
+        gm_reset_attr(FALSE);
     }
 
-    gotoxy(attr->col_start + 1, attr->row_end + 1);
-    // printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_end] + attr->col_start);
-    _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start + 1, term->buf->data[attr->row_end] + attr->col_start);
-    clear_attr();
+    gm_gotoxy(attr->col_start + 1, attr->row_end + 1, FALSE);
+    _gm_printf("%s", attr_str);
+    _gm_printf("%s", term->box_chars.blc);
+    for (int i = attr->col_start + 1; i < attr->col_end; i++) _gm_printf("%s", term->box_chars.hl);
+    _gm_printf("%s", term->box_chars.brc);
 
     free(attr_str);
 }
