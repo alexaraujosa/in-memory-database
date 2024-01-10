@@ -5,6 +5,7 @@
 
 #include "common.h"
 #include "util/error.h"
+#include "util/string.h"
 
 #define ANSI_TRUECOLOR_FG(r, g, b) "\x1B[38;2;" #r ";" #g ";" #b "m"
 #define ANSI_TRUECOLOR_FG_CHAINABLE(r, g, b) "38;2;" #r ";" #g ";" #b ";"
@@ -45,6 +46,11 @@ void gm_attron(GM_Term term, int attr) {
 
 void gm_attroff(GM_Term term, int attr) {
     #define SCOPE "gm_attroff"
+    if (attr == GM_RESET) {
+        term->attr = GM_RESET;
+        return;
+    }
+
     uint8_t color = attr >> _GM_COLOR_OFFSET;
 
     if (color > 0) {
@@ -201,15 +207,21 @@ void gm_attr_resolve_line(GM_Term term, GM_Attr attr) {
     #endif
 
     char* attr_str = gm_attr_int_resolve(term, attr->data);
-    char* print_data = attr->print_data;
-    // printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
-    // _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
-    _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start, print_data);
-    // gm_clear_attr();
-    gm_reset_attr(FALSE);
+
+    // char* print_data = attr->print_data;
+    // _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start, print_data);
+    // gm_reset_attr(FALSE);
+    
+    Tokens print_data = attr->print_data;
+    for (int i = 0; i < print_data->len; i++) {
+        gm_gotoxy(attr->col_start + 1, attr->row_start + i + 1, FALSE);
+        _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start, print_data->data[i]);
+        gm_reset_attr(FALSE);
+    }
 
     free(attr_str);
-    free(print_data);
+    // free(print_data);
+    destroy_tokens(print_data);
 }
 
 void gm_attr_resolve_box(GM_Term term, GM_Attr attr) {

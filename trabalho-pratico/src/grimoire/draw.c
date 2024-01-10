@@ -4,6 +4,7 @@
 
 #include "common.h"
 #include "util/error.h"
+#include "util/string.h"
 
 #ifdef GM_WIDECHAR
     #include <wchar.h>
@@ -56,7 +57,7 @@ void gm_printf(GM_Term term, int row, int col, const char *format, ...) {
     #define SCOPE "gm_printf"
     rt_assert(
         _gm_is_area_inbounds(term, row, col, row, col),
-        trace_msg(SCOPE, "Area is out of bounds.")
+        trace_msg(SCOPE, "Initial position is out of bounds.")
     );
 
     va_list args;
@@ -89,27 +90,32 @@ void gm_printf(GM_Term term, int row, int col, const char *format, ...) {
     // Format the string into the allocated memory
     _gm_vsnprintf(result, length + 1, format, args);
     va_end(args);
-
-    // if (row > term->buf->rows) {
-    //     return;
-    // }
-    // if (col + length > term->buf->cols * MAX_CHAR_SEQ_BYTES) {
-    //     return;
-    // }
-
-    int vislen = gm_str_visible_len(result);
     
-    // memcpy(term->buf->data[row] + col, result, length);
+    // int vislen = gm_str_visible_len(result);
+
+    Tokens lines = get_lines(result, length);
+
+    int max_col = 0;
+    for (int i = 0; i < lines->len; i++) {
+        int len = strlen(lines->data[i]);
+        if (max_col < len) max_col = len; 
+    }
+
+    rt_assert(
+        _gm_is_area_inbounds(term, row, col, row + lines->len, col + max_col),
+        trace_msg(SCOPE, "Area is out of bounds.")
+    );
     
     GM_Attr attr = gm_attr_make(
         term, 
         GM_ATTR_TYPE_LINE, 
         row, 
         col, 
-        row,
-        col + vislen, 
+        row + lines->len,
+        col + max_col, 
         &gm_attr_resolve_line,
-        strdup(result)
+        // strdup(result)
+        lines
     );
     gm_term_attr_add(term, attr);
 
