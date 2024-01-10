@@ -74,6 +74,33 @@ int get_month(int date);
 int get_day(int date);
 
 /**
+ * @brief Get the hour of the date.
+ * 
+ * @param date Date in integer (Without system offset).
+ * 
+ * @return hour of the provided date.
+*/
+int get_hour(int date);
+
+/**
+ * @brief Get the minute of the date.
+ * 
+ * @param date Date in integer (Without system offset).
+ * 
+ * @return minute of the provided date.
+*/
+int get_minute(int date);
+
+/**
+ * @brief Get the second of the date.
+ * 
+ * @param date Date in integer (Without system offset).
+ * 
+ * @return second of the provided date.
+*/
+int get_second(int date);
+
+/**
  * @brief Get the age of the date.
  * 
  * @param date Date in integer (Without system offset).

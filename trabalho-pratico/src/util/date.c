@@ -48,6 +48,30 @@ int get_day(int date) {
     return temporary->tm_mday;
 }
 
+int get_hour(int date) {
+    time_t param = (time_t)date;
+    param -= DATE_OFFSET;
+    struct tm *temporary = localtime(&param);
+
+    return temporary->tm_hour;
+}
+
+int get_minute(int date) {
+    time_t param = (time_t)date;
+    param -= DATE_OFFSET;
+    struct tm *temporary = localtime(&param);
+
+    return temporary->tm_min;
+}
+
+int get_second(int date) {
+    time_t param = (time_t)date;
+    param -= DATE_OFFSET;
+    struct tm *temporary = localtime(&param);
+
+    return temporary->tm_sec;
+}
+
 int get_age(int date) {
     time_t difference = difftime(TIME_T_SYSTEM, date);
     int age = difference/(3600*24*365.25);
