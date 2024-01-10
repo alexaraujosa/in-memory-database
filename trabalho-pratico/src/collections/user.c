@@ -79,12 +79,12 @@ void set_user_account_status(User user, bool account_status){
     user->account_status = account_status;
 }
 
-int get_user_age(const User user){
-    int age = user->age;
+uint8_t get_user_age(const User user){
+    uint8_t age = user->age;
     return age;
 }
 
-void set_user_age(User user, int age){
+void set_user_age(User user, uint8_t age){
     user->age = age;
 }
 
