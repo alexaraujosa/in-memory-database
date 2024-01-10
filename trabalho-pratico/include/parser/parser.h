@@ -31,6 +31,8 @@ typedef struct tokens {
  */
 Tokens tokenize_csv(char* line, ssize_t len);
 
+void destroy_tokens(Tokens tokens);
+
 /*
  * Generates a store for a parser.
  */

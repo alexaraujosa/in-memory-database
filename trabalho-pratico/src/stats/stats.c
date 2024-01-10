@@ -4,7 +4,7 @@ typedef struct users_stats {
     char *user_id;
     int user_age;
     int n_flights;
-    int total_spent;
+    int total_spend;
 } USERS_STATS, *Users_stats;
 
 typedef struct reservations_stats {
@@ -71,8 +71,8 @@ int calculate_reservation_total_price(Reservation reservation) {
 }
 
 // TODO fazer em tempo de parsing
-double calculate_user_total_spent(Catalog *catalog, char *userID, int *n_reservations) {
-    double total_spent = 0;
+double calculate_user_total_spend(Catalog *catalog, char *userID, int *n_reservations) {
+    double total_spend = 0;
     char *name_to_compare = NULL;
     *n_reservations = 0;
     for (int i = 0; i < catalog_get_item_count(catalog); i++) {
@@ -80,13 +80,13 @@ double calculate_user_total_spent(Catalog *catalog, char *userID, int *n_reserva
         name_to_compare = get_reservation_userID(reservation_temp);
 
         if (strcmp(userID, name_to_compare) == 0) {
-            total_spent += calculate_reservation_total_price(reservation_temp);
+            total_spend += calculate_reservation_total_price(reservation_temp);
             *n_reservations = *n_reservations + 1;
         }
 
         free(name_to_compare);
     }
-    return total_spent;
+    return total_spend;
 }
 
 // TODO feito em tempo de parsing

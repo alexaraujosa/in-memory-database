@@ -1,15 +1,15 @@
 #ifndef STATS_H
 #define STATS_H
 
-#include "collections/flight.h"
-#include "collections/passenger.h"
-#include "collections/reservation.h"
-#include "collections/user.h"
 #include "catalog/catalogManager.h"
 #include "catalog/flightsCatalog.h"
 #include "catalog/passengersCatalog.h"
 #include "catalog/reservationsCatalog.h"
 #include "catalog/usersCatalog.h"
+#include "collections/flight.h"
+#include "collections/passenger.h"
+#include "collections/reservation.h"
+#include "collections/user.h"
 #include "common.h"
 
 gint reservationsCatalog_hotelID_compare_func(gconstpointer a, gconstpointer b);
@@ -26,7 +26,7 @@ typedef struct aeroport_stats AEROPORT_STATS, *Aeroport_stats;
 
 int calculate_user_n_flights(Catalog *catalog, char *userID);
 
-double calculate_user_total_spent(Catalog *catalog, char *userID, int *n_reservations);
+double calculate_user_total_spend(Catalog *catalog, char *userID, int *n_reservations);
 
 int calculate_reservation_total_price(Reservation reservation);
 
