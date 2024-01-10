@@ -25,21 +25,77 @@ char* isnprintf(const char *format, ...) {
     return result;
 }
 
-char* strdup_to(char* dest, char* src) {
-    char* str;
-    char* p;
-    int len = 0;
+// wchar_t* char_str_to_wchar(char** str) {
+//     #define SCOPE "char_str_to_wchar"
+//     size_t size = mbstowcs(NULL, str, 0);
+//     if (size == -1) {
+//         perror(trace_msg(SCOPE, "Could not determine size of wchar string."));
+//         exit(EXIT_FAILURE);
+//     }
 
-    while (src[len]) len++;
-    str = malloc(len + 1);
-    p = str;
+//     wchar_t* wstr = (wchar_t*)malloc((size + 1) * sizeof(wchar_t));
+//     if (wstr == NULL) {
+//         perror(trace_msg(SCOPE, "Could not allocate wchar string."));
+//         exit(EXIT_FAILURE);
+//     }
 
-    while (*src) *p++ = *src++;
-    *p = '\0';
+//     if (mbstowcs(wstr, str, size + 1) == (size_t)-1) {
+//         perror(trace_msg(SCOPE, "Could not convert char string to wchar string."));
+//         free(wstr);
+//         exit(EXIT_FAILURE);
+//     }
 
-    *dest = *str;
+//     wstr[size] = L'\0';
 
-    return str;
+//     return wstr;
+//     #undef SCOPE
+// }
+
+// TODO: Uniformize tokenizers into one single function?
+Tokens get_lines(char* line, size_t len) {
+    char* ptr = strdup(line);
+    char* ptr_root = ptr;
+
+    if (ptr == NULL) exit(EXIT_FAILURE);
+
+    if (ptr[len - 1] == '\n') {
+        ptr[len - 1] = '\0';
+    }
+
+    int seps = 1;
+    for (int i = 0; line[i]; i++) seps += (line[i] == '\n');
+
+    // Early return, avoid unnecessary work.
+    if (seps == 1) {
+        char** arr = (char**)malloc(1 * sizeof(char*));
+        arr[0] = strdup(line);
+
+        free(ptr_root);
+
+        Tokens ret = (Tokens)malloc(sizeof(TOKENS));
+        ret->data = arr;
+        ret->len = 1;
+
+        return ret;
+    }
+
+    char** arr = (char**)malloc(seps * sizeof(char*));
+    memset(arr, 0, seps * sizeof(char*));
+
+    char* token;
+    int i = 0;
+    while ((token = strsep(&ptr, "\n")) != NULL) {
+        char* tokenData = strdup(token);
+
+        arr[i++] = tokenData;
+    }
+
+    Tokens ret = (Tokens)malloc(sizeof(TOKENS));
+    ret->data = arr;
+    ret->len = seps;
+
+    free(ptr_root);
+    return ret;
 }
 
 int is_digit(char c) {

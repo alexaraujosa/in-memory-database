@@ -11,9 +11,10 @@
 #include <stdarg.h>
 #include <ctype.h>
 #include <stdbool.h>
+// #include <wchar.h>
+#include <time.h>
 
-
-#include "time.h"
+#include "parser/parser.h"
 
 #define xstr(s) str(s)
 #define str(s) #s
@@ -28,18 +29,34 @@
 #define CHAR_IS_LOWER(ch) ((ch) >= 97 && (ch) <= 122)
 #define CHAR_IS_UPPER(ch) ((ch) >= 65 && (ch) <= 90)
 
-char* isnprintf(const char *format, ...);
-char* strdup_to(char* dest, char* src);
-
-static inline char_tolower(char ch) {
+static inline char char_tolower(char ch) {
     if (CHAR_IS_UPPER(ch)) return ch + ('a' - 'A');
     else return ch;
 }
 
-static inline char_toupper(char ch) {
+static inline char char_toupper(char ch) {
     if (CHAR_IS_LOWER(ch)) return ch + ('A' - 'a');
     else return ch;
 }
+
+
+char* isnprintf(const char *format, ...);
+
+// /**
+//  * @brief Converts a char string to a widechar string.
+//  * 
+//  * @param str The char array to be converted.
+//  */
+// wchar_t* char_str_to_wchar(char** str);
+
+/**
+ * @brief Splits a string into it's composing lines.
+ * 
+ * @param line The string.
+ * @param len The length of the string.
+ * @return A Tokens struct containing the lines within the string.
+*/
+Tokens get_lines(char* line, size_t len);
 
 /**
  * @brief Verify if a certain char its a digit.
