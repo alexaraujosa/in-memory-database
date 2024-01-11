@@ -5,31 +5,16 @@
 #include "grimoire/grimoire_public.h"
 #include <stdint.h>
 #include "common.h"
-#include "cache/cache.h"
 
 /* ============== CONSTANTS ============== */
 
-/**
- * Max supported ANSI Sequence
- * \\e[BBB;FFF;B;U;Bm
- * \\e[BG_COLOR;FG_COLOR;BOLD;UNDERLINE;BLINKm
- */
-// #define MAX_ANSI_SEQ 17
-// #define MAX_UTF8_SEQ 4 // Max UTF8 char sequence
-// #define MAX_CHAR_SEQ_BYTES MAX_ANSI_SEQ + MAX_UTF8_SEQ // Maximum bytes per character
-
 /* ============== TYPEDEFS ============== */
-// TODO: Make modules opaque
 
 #ifdef GM_WIDECHAR
     #define _gm_printf wprintf
 #else
     #define _gm_printf printf
 #endif
-
-// #define gm_clear() printf("\033[H\033[J")
-// #define gm_gotoxy(x,y) printf("\e[%d;%dH", (y), (x))
-// #define gm_clear_attr() printf("\e[0m")
 
 #define GM_ATTR_RESOLVER(name) void(*name)(GM_Term, struct gm_attr*)
 typedef uint16_t GM_AttrInt;
@@ -45,7 +30,6 @@ typedef struct gm_attr {
 } GM_ATTR, *GM_Attr;
 
 typedef struct gm_buf {
-    // char** data;
     GM_Char** data;
     int charsize;
     int rows;
@@ -59,17 +43,6 @@ typedef struct gm_color_pair {
 } GM_COLOR_PAIR_STRUCT, *GM_ColorPair;
 
 typedef struct gm_box_chars {
-    // GM_Char tlc; // Top Left Corner
-    // GM_Char trc; // Top Right Corner
-    // GM_Char blc; // Right Left Corner
-    // GM_Char brc; // Right Right Corner
-    // GM_Char hl;  // Horizontal Line
-    // GM_Char vl;  // Verfical Line
-    // GM_Char il;  // Intersection Left
-    // GM_Char ir;  // Intersection Right
-    // GM_Char it;  // Intersection Top
-    // GM_Char ib;  // Intersection Bottom
-    // GM_Char ic;  // Intersection Center
     char tlc[MAX_UTF8_SEQ]; // Top Left Corner
     char trc[MAX_UTF8_SEQ]; // Top Right Corner
     char blc[MAX_UTF8_SEQ]; // Right Left Corner
@@ -85,14 +58,11 @@ typedef struct gm_box_chars {
 
 typedef struct gm_term {
     GM_TERM_SIZE size;
-    // GM_Buf buf;
     GHashTable* color_pairs;
     GHashTable* colors;
     GM_BOX_CHARS box_chars;
     GM_AttrInt attr;
-    // GArray* attr_queue;
     GQueue* attr_queue;
-    Cache key_caps;
     char* term_name;
 } GM_TERM, *GM_Term;
 
