@@ -1,0 +1,13 @@
+#ifndef TP_EXECUTERS_INTERACTIVE_SCREEN_EXAMPLE_H
+#define TP_EXECUTERS_INTERACTIVE_SCREEN_EXAMPLE_H
+
+#include "executers/interactive/interactive_common.h"
+
+/**
+ * @brief Draws the example screen.
+ * 
+ * @param term The current GM_Term.
+ */
+void draw_example(GM_Term term);
+
+#endif
