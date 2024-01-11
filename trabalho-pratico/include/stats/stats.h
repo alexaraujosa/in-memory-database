@@ -12,6 +12,12 @@
 #include "collections/user.h"
 #include "common.h"
 
+typedef struct stats_info{
+    //Acrescentar mais se necessaio
+    GArray *origin_delay;
+} STATS_INFO, *Stats_info;
+
+
 gint reservationsCatalog_hotelID_compare_func(gconstpointer a, gconstpointer b);
 
 typedef struct users_stats USERS_STATS, *Users_stats;
@@ -34,8 +40,10 @@ int calculate_flight_total_passengers(Catalog *catalog, int *flightId);
 
 int calculate_flight_delay_median(Catalog *catalog, char *origin_name);
 
-int calculate_aeroport_n_passengers(Catalog *flights_catalog, Catalog *passenger_catalog, char *origin_name, int *year);
+int calculate_aeroport_n_passengers(Catalog *flights_catalog, char *origin_name, int *year);
 
-int calculate_aeroport_n_passengers2(Catalog *flight_catalog, Catalog *passenger_catalog, char *origin_name, int *year);
+int calculate_aeroport_n_passengers2(Catalog *flight_catalog, char *origin_name, int *year);
+
+Stats_info create_stats_info(Catalog *flights_catalog);
 
 #endif

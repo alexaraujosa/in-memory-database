@@ -279,7 +279,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
                 information.airline = get_flight_airline(flight_temp);
                 information.plane_model = get_flight_plane_model(flight_temp);
 
-                output_query_info(4, flag, &information, output_file, count);
+                output_query_info(5, flag, &information, output_file, count);
 
                 free(information.destination);
                 free(information.airline);
