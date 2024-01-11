@@ -18,6 +18,13 @@ void gm_term_end(GM_Term term);
  */
 int gm_term_is_xterm(GM_Term term);
 
+/**
+ * Returns the display size of the terminal.
+ * 
+ * @param term The current terminal.
+ */
+GM_TERM_SIZE gm_term_get_size(GM_Term term);
+
 /* ============== TUI SIZE ============== */
 GM_TERM_SIZE gm_get_tui_size();
 

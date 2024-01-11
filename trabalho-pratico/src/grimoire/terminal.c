@@ -37,41 +37,10 @@ struct gm_term_event_index {
 GM_Term gm_term_init() {
     GM_Term term = (GM_Term)malloc(sizeof(GM_TERM));
     term->size = gm_get_tui_size();
-    // gm_term_make_buffer(&term->buf, term->size.rows, term->size.cols, MAX_UTF8_SEQ);
-    // gm_term_make_buffer(&term->buf, term->size.rows, term->size.cols, sizeof(GM_Char) * MAX_UTF8_SEQ);
 
     term->color_pairs = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, g_free);
     term->colors = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, g_free);
 
-// #ifdef GM_WIDECHAR
-//     term->box_chars = (GM_BOX_CHARS){ 
-//         .tlc = L'┌', 
-//         .trc = L'┐', 
-//         .blc = L'└', 
-//         .brc = L'┘', 
-//         .hl = L'─', 
-//         .vl = L'│',
-//         .il = L'├',
-//         .ir = L'┤',
-//         .it = L'┬',
-//         .ib = L'┴',
-//         .ic = L'┼'
-//     };
-// #else
-//     term->box_chars = (GM_BOX_CHARS){ 
-//         .tlc = '/', 
-//         .trc = '\\', 
-//         .blc = '\\', 
-//         .brc = '/', 
-//         .hl = '-', 
-//         .vl = '|',
-//         .il = '|',
-//         .ir = '|',
-//         .it = '-',
-//         .ib = '-',
-//         .ic = '+'
-//     };
-// #endif
     term->box_chars = (GM_BOX_CHARS){ 
         .tlc = "┌", 
         .trc = "┐", 
@@ -86,7 +55,6 @@ GM_Term gm_term_init() {
         .ic = "┼"
     };
 
-    // term->attr_queue = g_array_new(FALSE, FALSE, sizeof(GM_Attr));
     term->attr_queue = g_queue_new();
 
     term->key_caps = make_cache(free);
@@ -128,6 +96,10 @@ void gm_term_end(GM_Term term) {
 
 int gm_term_is_xterm(GM_Term term) {
     return strncmp(term->term_name, "xterm", 5) == 0;
+}
+
+GM_TERM_SIZE gm_term_get_size(GM_Term term) {
+    return term->size;
 }
 
 /* ------- TERM BUFFER ------- */
