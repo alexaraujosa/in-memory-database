@@ -7,11 +7,11 @@
 #include "util/error.h"
 #include "util/string.h"
 
-#define ANSI_TRUECOLOR_FG(r, g, b) "\x1B[38;2;" #r ";" #g ";" #b "m"
-#define ANSI_TRUECOLOR_FG_CHAINABLE(r, g, b) "38;2;" #r ";" #g ";" #b ";"
+#define ANSI_TRUECOLOR_FG(r, g, b) isnprintf("38;2;%d;%d;%d;", r, g, b)
+#define ANSI_TRUECOLOR_FG_CHAINABLE(r, g, b) isnprintf("\x1B[38;2;%d;%d;%d;m", r, g, b)
 
-#define ANSI_TRUECOLOR_BG(r, g, b) "\x1B[48;2;" #r ";" #g ";" #b "m"
-#define ANSI_TRUECOLOR_BG_CHAINABLE(r, g, b) "48;2;" #r ";" #g ";" #b ";"
+#define ANSI_TRUECOLOR_BG(r, g, b) isnprintf("\x1B[48;2;%d;%d;%d;m", r, g, b)
+#define ANSI_TRUECOLOR_BG_CHAINABLE(r, g, b) isnprintf("48;2;%d;%d;%d;", r, g, b)
 
 #define ANSI_TRUECOLOR_FULL(fr, fg, fb, br, bg, bb) isnprintf("\x1B[48;2;%d;%d;%d;38;2;%d;%d;%dm", fr, fg, fb, br, bg, bb)
 #define ANSI_TRUECOLOR_FULL_CHAINABLE(fr, fg, fb, br, bg, bb) isnprintf("48;2;%d;%d;%d;38;2;%d;%d;%d;", fr, fg, fb, br, bg, bb)
@@ -170,7 +170,22 @@ char* gm_attr_int_resolve(GM_Term term, GM_AttrInt attr) {
     GM_ColorPair pair = gm_get_color_pair(term, color_int);
     RGBColor fg = gm_get_color(term, pair->fg_color);
     RGBColor bg = gm_get_color(term, pair->bg_color);
-    char* color_str = ANSI_TRUECOLOR_FULL_CHAINABLE(fg->red, fg->green, fg->blue, bg->red, bg->green, bg->blue);
+    // char* color_str = ANSI_TRUECOLOR_FULL_CHAINABLE(fg->red, fg->green, fg->blue, bg->red, bg->green, bg->blue);
+
+    char* color_str;
+    if (fg->mod == GM_CMOD_RESET_FG && bg->mod == GM_CMOD_RESET_BG) {
+        color_str = isnprintf("%s", "39;49;"); // Add literal to heap to be freed below
+    } else if (fg->mod == GM_CMOD_RESET_FG) {
+        char* bg_str = ANSI_TRUECOLOR_BG_CHAINABLE(bg->red, bg->green, bg->blue);
+        color_str = isnprintf("39;%s", bg_str);
+        free(bg_str);
+    } else if (bg->mod == GM_CMOD_RESET_BG) {
+        char* fg_str = ANSI_TRUECOLOR_FG_CHAINABLE(bg->red, bg->green, bg->blue);
+        color_str = isnprintf("%s49", fg_str);
+        free(fg_str);
+    } else {
+        color_str = ANSI_TRUECOLOR_FULL_CHAINABLE(fg->red, fg->green, fg->blue, bg->red, bg->green, bg->blue);
+    }
 
     uint8_t chars = 
         strlen(color_str)
@@ -225,32 +240,6 @@ void gm_attr_resolve_line(GM_Term term, GM_Attr attr) {
 }
 
 void gm_attr_resolve_box(GM_Term term, GM_Attr attr) {
-    // char* attr_str = gm_attr_int_resolve(term, attr->data);
-    // // printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
-
-    // gm_gotoxy(attr->col_start + 1, attr->row_start + 1);
-    // // printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_start] + attr->col_start);
-
-    // _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start + 1, term->buf->data[attr->row_start] + attr->col_start);
-    // gm_clear_attr();
-
-    // for (int i = attr->row_start + 1; i < attr->row_end; i++) {
-    //     gm_gotoxy(attr->row_start + 1, i + 1);
-    //     _gm_printf("%s%c", attr_str, term->buf->data[i][attr->row_start]);
-    //     gm_clear_attr();
-
-    //     gm_gotoxy(attr->row_end + 1, i + 1);
-    //     _gm_printf("%s%c", attr_str, term->buf->data[i][attr->row_end]);
-    //     gm_clear_attr();
-    // }
-
-    // gm_gotoxy(attr->col_start + 1, attr->row_end + 1);
-    // // printf("%s%.*s", attr_str, attr->col_end - attr->col_start, term->buf->data[attr->row_end] + attr->col_start);
-    // _gm_printf("%s%.*s", attr_str, attr->col_end - attr->col_start + 1, term->buf->data[attr->row_end] + attr->col_start);
-    // gm_clear_attr();
-
-    // free(attr_str);
-
     char* attr_str = gm_attr_int_resolve(term, attr->data);
 
     gm_gotoxy(attr->col_start + 1, attr->row_start + 1, FALSE);
@@ -260,12 +249,12 @@ void gm_attr_resolve_box(GM_Term term, GM_Attr attr) {
     _gm_printf("%s", term->box_chars.trc);
 
     for (int i = attr->row_start + 1; i < attr->row_end; i++) {
-        gm_gotoxy(attr->row_start + 1, i + 1, FALSE);
+        gm_gotoxy(attr->col_start + 1, i + 1, FALSE);
         _gm_printf("%s%s", attr_str, term->box_chars.vl);
         // gm_clear_attr();
         gm_reset_attr(FALSE);
 
-        gm_gotoxy(attr->row_end + 1, i + 1, FALSE);
+        gm_gotoxy(attr->col_end + 1, i + 1, FALSE);
         _gm_printf("%s%s", attr_str, term->box_chars.vl);
         // gm_clear_attr();
         gm_reset_attr(FALSE);
@@ -276,6 +265,8 @@ void gm_attr_resolve_box(GM_Term term, GM_Attr attr) {
     _gm_printf("%s", term->box_chars.blc);
     for (int i = attr->col_start + 1; i < attr->col_end; i++) _gm_printf("%s", term->box_chars.hl);
     _gm_printf("%s", term->box_chars.brc);
+
+    gm_reset_attr(FALSE);
 
     free(attr_str);
 }
