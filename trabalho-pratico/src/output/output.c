@@ -190,6 +190,7 @@ void output_to_file(char flag, char* line, FILE* output_file, int n_element) {
     char** parameter = tokens->data;
     int i = 0;
     if (flag == 'F') {
+        if(n_element > 1) fprintf(output_file, "\n");
         fprintf(output_file, "--- %d ---\n", n_element);
         while (i < tokens->len) {
             fprintf(output_file, "%s\n", parameter[i]);
