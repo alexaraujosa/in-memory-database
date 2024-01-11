@@ -4,7 +4,7 @@ typedef struct users_stats {
     char *user_id;
     int user_age;
     int n_flights;
-    int total_spend;
+    int total_spent;
 } USERS_STATS, *Users_stats;
 
 typedef struct reservations_stats {
@@ -71,8 +71,8 @@ int calculate_reservation_total_price(Reservation reservation) {
 }
 
 // TODO fazer em tempo de parsing
-double calculate_user_total_spend(Catalog *catalog, char *userID, int *n_reservations) {
-    double total_spend = 0;
+double calculate_user_total_spent(Catalog *catalog, char *userID, int *n_reservations) {
+    double total_spent = 0;
     char *name_to_compare = NULL;
     *n_reservations = 0;
     for (int i = 0; i < catalog_get_item_count(catalog); i++) {
@@ -80,13 +80,13 @@ double calculate_user_total_spend(Catalog *catalog, char *userID, int *n_reserva
         name_to_compare = get_reservation_userID(reservation_temp);
 
         if (strcmp(userID, name_to_compare) == 0) {
-            total_spend += calculate_reservation_total_price(reservation_temp);
+            total_spent += calculate_reservation_total_price(reservation_temp);
             *n_reservations = *n_reservations + 1;
         }
 
         free(name_to_compare);
     }
-    return total_spend;
+    return total_spent;
 }
 
 // TODO feito em tempo de parsing
@@ -116,8 +116,8 @@ int calculate_flight_total_passengers(Catalog *catalog, int *flightId) {
     }
 }
 
-int calculate_flight_delay(Flight flight) {
-    int delay = (get_flight_schedule_departure_date(flight) - get_flight_real_departure_date(flight));
+short int calculate_flight_delay(Flight flight) {
+    short int delay = (get_flight_schedule_departure_date(flight) - get_flight_real_departure_date(flight));
     return delay;
 }
 

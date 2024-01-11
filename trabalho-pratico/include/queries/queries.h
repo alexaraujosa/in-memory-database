@@ -40,7 +40,7 @@ typedef struct {
     char* passport;
     int n_flights;
     int n_reservas;
-    double total_spend;
+    double total_spent;
 } Query1_user;
 
 typedef struct {
@@ -51,7 +51,7 @@ typedef struct {
     int schedule_departure_date;
     int schedule_arrival_date;
     int passangers;
-    double delay;
+    short int delay;
 } Query1_flight;
 
 typedef struct {

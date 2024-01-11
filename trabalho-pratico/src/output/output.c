@@ -36,7 +36,7 @@ char* build_query_buffer(int query, void* query_info, char* output_buffer) {
                 snprintf(
                     output_buffer,
                     MAX_BUFFER_SIZE,
-                    "airline: %s;plane_model: %s;origin: %s;destination: %s;schedule_departure_date: %.4d/%.2d/%.2d %.2d:%.2d:%.2d;schedule_arrival_date: %.4d/%.2d/%.2d %.2d:%.2d:%.2d;passengers: %d;delay: %.3f",
+                    "airline: %s;plane_model: %s;origin: %s;destination: %s;schedule_departure_date: %.4d/%.2d/%.2d %.2d:%.2d:%.2d;schedule_arrival_date: %.4d/%.2d/%.2d %.2d:%.2d:%.2d;passengers: %d;delay: %d",
                     q_info->flight_info->airline,
                     q_info->flight_info->airplane_model,
                     q_info->flight_info->origin,
@@ -59,7 +59,7 @@ char* build_query_buffer(int query, void* query_info, char* output_buffer) {
                 snprintf(
                     output_buffer,
                     MAX_BUFFER_SIZE,
-                    "name: %s;sex: %c;age: %d;country_code: %s;passport: %s;number_of_flights: %d;number_of_reservations: %d;total_spend: %.3f",
+                    "name: %s;sex: %c;age: %d;country_code: %s;passport: %s;number_of_flights: %d;number_of_reservations: %d;total_spent: %.3f",
                     q_info->user_info->name,
                     q_info->user_info->sex ? 'M' : 'F',
                     q_info->user_info->age,
@@ -67,7 +67,7 @@ char* build_query_buffer(int query, void* query_info, char* output_buffer) {
                     q_info->user_info->passport,
                     q_info->user_info->n_flights,
                     q_info->user_info->n_reservas,
-                    q_info->user_info->total_spend);
+                    q_info->user_info->total_spent);
             } else {
                 snprintf(
                     output_buffer,
@@ -77,7 +77,7 @@ char* build_query_buffer(int query, void* query_info, char* output_buffer) {
             break;
         }
         case 2: {
-            //Q_info2 q_info = (Q_info2)query_info;
+            // Q_info2 q_info = (Q_info2)query_info;
             snprintf(output_buffer, MAX_BUFFER_SIZE, "2");
             break;
         }
@@ -124,21 +124,21 @@ char* build_query_buffer(int query, void* query_info, char* output_buffer) {
                 q_info->destination,
                 q_info->airline,
                 q_info->plane_model);
-        break;
+            break;
         }
         case 6: {
-            //Q_info6 q_info = (Q_info6)query_info;
+            // Q_info6 q_info = (Q_info6)query_info;
             snprintf(
-                output_buffer, 
-                MAX_BUFFER_SIZE, 
+                output_buffer,
+                MAX_BUFFER_SIZE,
                 "6");
             break;
         }
         case 7: {
             Q_info7 q_info = (Q_info7)query_info;
             snprintf(
-                output_buffer, 
-                MAX_BUFFER_SIZE, 
+                output_buffer,
+                MAX_BUFFER_SIZE,
                 "name: %s;median: %d",
                 q_info->origin,
                 q_info->median);
@@ -147,27 +147,27 @@ char* build_query_buffer(int query, void* query_info, char* output_buffer) {
         case 8: {
             Q_info8 q_info = (Q_info8)query_info;
             snprintf(
-                output_buffer, 
-                MAX_BUFFER_SIZE, 
-                "revenue: %d", 
+                output_buffer,
+                MAX_BUFFER_SIZE,
+                "revenue: %d",
                 q_info->revenue);
             break;
         }
         case 9: {
             Q_info9 q_info = (Q_info9)query_info;
             snprintf(
-                output_buffer, 
-                MAX_BUFFER_SIZE, 
-                "id: %s;name: %s", 
-                q_info->userID, 
+                output_buffer,
+                MAX_BUFFER_SIZE,
+                "id: %s;name: %s",
+                q_info->userID,
                 q_info->user_name);
             break;
         }
         case 10: {
-            //Q_info10 q_info = (Q_info10)query_info;
+            // Q_info10 q_info = (Q_info10)query_info;
             snprintf(
-                output_buffer, 
-                MAX_BUFFER_SIZE, 
+                output_buffer,
+                MAX_BUFFER_SIZE,
                 "10");
             break;
         }

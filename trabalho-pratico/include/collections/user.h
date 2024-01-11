@@ -77,9 +77,9 @@ bool get_user_account_status(const User user);
 void set_user_account_status(User user, bool account_status);
 uint8_t get_user_age(const User user);
 void set_user_age(User user, uint8_t age);
-int get_user_total_spend(const User user);
-void set_user_total_spend(User user, int total_spend);
-void add_user_total_spend(User user, int spend);
+int get_user_total_spent(const User user);
+void set_user_total_spent(User user, int total_spent);
+void add_user_total_spent(User user, int spent);
 
 /**
  * @brief Creates an user, transforming data.

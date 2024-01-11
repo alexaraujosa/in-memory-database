@@ -9,7 +9,7 @@ typedef struct user {
     CountryCode(country_code);
     int account_creation;  // Offset from Base Date
     bool account_status;
-    int total_spend;
+    int total_spent;
 
     // Statistics
     uint8_t age;
@@ -88,16 +88,16 @@ void set_user_age(User user, uint8_t age){
     user->age = age;
 }
 
-int get_user_total_spend(const User user) {
-    return user->total_spend;
+int get_user_total_spent(const User user) {
+    return user->total_spent;
 }
 
-void set_user_total_spend(User user, int total_spend) {
-    user->total_spend = total_spend;
+void set_user_total_spent(User user, int total_spent) {
+    user->total_spent = total_spent;
 }
 
-void add_user_total_spend(User user, int spend) {
-    user->total_spend += spend;
+void add_user_total_spent(User user, int spent) {
+    user->total_spent += spent;
 }
 
 int verify_user_tokens(Tokens tokens, ParserStore store) {
@@ -148,7 +148,7 @@ User make_user(
     user->account_creation = account_creation;
     user->account_status = account_status;
     user->age = get_age(birth_date);
-    user->total_spend = 0;
+    user->total_spent = 0;
 
     return user;
 }
@@ -202,6 +202,6 @@ void print_user(void* pt) {
         "Account_Creation:%d; "
         "Account_status:%s; "
         "Idade:%d; "
-        "Total_Spend:%d}\n",
-        user->id, user->name, sex, user->country_code, user->account_creation, status, user->age, user->total_spend);
+        "Total_spent:%d}\n",
+        user->id, user->name, sex, user->country_code, user->account_creation, status, user->age, user->total_spent);
 }

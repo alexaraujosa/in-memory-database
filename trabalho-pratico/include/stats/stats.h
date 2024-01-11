@@ -26,7 +26,7 @@ typedef struct aeroport_stats AEROPORT_STATS, *Aeroport_stats;
 
 int calculate_user_n_flights(Catalog *catalog, char *userID);
 
-double calculate_user_total_spend(Catalog *catalog, char *userID, int *n_reservations);
+double calculate_user_total_spent(Catalog *catalog, char *userID, int *n_reservations);
 
 int calculate_reservation_total_price(Reservation reservation);
 
