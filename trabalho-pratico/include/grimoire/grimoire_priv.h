@@ -130,7 +130,13 @@ void gm_attr_resolve(GM_Term term, GM_Attr attr);
 
 // ------- color.c -------
 #include "grimoire/color.h"
-// ==== FETCHERS ====
+
+typedef enum color_mod {
+    GM_CMOD_NONE,
+    GM_CMOD_RESET_BG,
+    GM_CMOD_RESET_FG
+} GM_ColorMod;
+
 RGBColor gm_get_color(GM_Term term, int id);
 GM_ColorPair gm_get_color_pair(GM_Term term, int id);
 
