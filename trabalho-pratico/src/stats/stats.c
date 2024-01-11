@@ -1,37 +1,10 @@
 #include "stats/stats.h"
 
-typedef struct users_stats {
-    char *user_id;
-    int user_age;
-    int n_flights;
-    int total_spent;
-} USERS_STATS, *Users_stats;
+typedef struct origin_delay {
+    char origin[4];
+    short int delay;
+} ORIGIN_DELAY, *Origin_delay;
 
-typedef struct reservations_stats {
-    int reservation_id;
-    int n_nights;
-    int total_price;
-} RESERVATIONS_STATS, *Reservations_stats;
-
-typedef struct flights_stats {
-    int flight_id;
-    int delay;
-    int n_passengers;
-} FLIGHTS_STATS, *Flights_stats;
-
-typedef struct hotels_stats {
-    int hotel_id;
-    double average_rating;
-    double revenue;
-} HOTELS_STATS, *Hotels_stats;
-
-typedef struct aeroport_stats {
-    char *aeroport_name;
-    int n_passengers;
-    double mediana_delays;
-} AEROPORT_STATS, *Aeroport_stats;
-
-// TODO fazer com array ordenado
 int calculate_user_n_flights(Catalog *catalog, char *userID) {
     guint matched_index = 0;
     gboolean exists = catalog_exists_in_array(catalog, userID, &passengersCatalog_userID_compare_func, &matched_index);
@@ -196,78 +169,95 @@ int calculate_flight_delay_median(Catalog *catalog, char *origin_name) {
     }
 }
 
-int calculate_aeroport_n_passengers(Catalog *flight_catalog, Catalog *passenger_catalog, char *origin_name, int *year) {
-    guint matched_index = 0;
-    gboolean exists = catalog_exists_in_array(flight_catalog, origin_name, &flightsCatalog_origin_compare_func, &matched_index);
-    if (exists) {
-        int matched_index_down = matched_index;
-        void *data1 = catalog_search_in_array(flight_catalog, matched_index_down);
-        while (strcasecmp(origin_name, get_flight_origin((Flight)data1)) == 0 && matched_index_down > 0) {
-            data1 = catalog_search_in_array(flight_catalog, --matched_index_down);
-        };
-        if (strcasecmp(origin_name, get_flight_origin((Flight)data1)) != 0) matched_index_down++;
-
-        int matched_index_up = matched_index;
-        void *data2 = catalog_search_in_array(flight_catalog, matched_index_up);
-        while (strcasecmp(origin_name, get_flight_origin((Flight)data2)) == 0 && matched_index_up < catalog_get_item_count(flight_catalog) - 1) {
-            data2 = catalog_search_in_array(flight_catalog, ++matched_index_up);
-        };
-        if (strcasecmp(origin_name, get_flight_origin((Flight)data1)) != 0) matched_index_up--;
-
-        int i = matched_index_down;
-        int n_passengers = 0;
-        int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
-        while (0 < quantidade_a_percorrer) {
-            const Flight flight_temp = (const Flight)(catalog_search_in_array(flight_catalog, i));
-            int flight_year = get_year(get_flight_schedule_departure_date(flight_temp));
-            if (*year == flight_year) {
-                int flight_id = get_flight_id(flight_temp);
-                n_passengers += calculate_flight_total_passengers(passenger_catalog, GINT_TO_POINTER(flight_id));
-            }
-            i++;
-            quantidade_a_percorrer--;
-        };
-        return n_passengers;
-    } else {
-        printf("Flight with that origin not found\n");
-        return -1;
+int calculate_aeroport_n_passengers(Catalog *flight_catalog, char *aeroport_name, int *year) {
+    int n_passengers = 0;
+    
+    for(int i = 0; i < catalog_get_item_count(flight_catalog); i++){
+        const Flight flight_temp = (const Flight)catalog_search_in_array(flight_catalog, i);
+        char *origin = get_flight_origin(flight_temp);
+        char *destination = get_flight_destination(flight_temp);
+        int arrival = get_flight_schedule_arrival_date(flight_temp);
+        int departure = get_flight_schedule_departure_date(flight_temp);
+        if (strcasecmp(aeroport_name, origin)==0 && *year == get_year(departure)){
+            n_passengers += get_flight_passengers(flight_temp);
+        }
+        if (strcasecmp(aeroport_name, destination)==0 && *year == get_year(arrival)){
+            n_passengers += get_flight_passengers(flight_temp);
+        }
+        free(origin);
+        free(destination);
     }
+    return n_passengers;
 }
 
-int calculate_aeroport_n_passengers2(Catalog *flight_catalog, Catalog *passenger_catalog, char *origin_name, int *year) {
-    guint matched_index = 0;
-    gboolean exists = catalog_exists_in_array(flight_catalog, origin_name, &flightsCatalog_destination_compare_funcB, &matched_index);
-    if (exists) {
-        int matched_index_down = matched_index;
-        void *data1 = catalog_search_in_array(flight_catalog, matched_index_down);
-        while (strcasecmp(origin_name, get_flight_destination((Flight)data1)) == 0 && matched_index_down > 0) {
-            data1 = catalog_search_in_array(flight_catalog, --matched_index_down);
-        };
-        if (strcasecmp(origin_name, get_flight_destination((Flight)data1)) != 0) matched_index_down++;
 
-        int matched_index_up = matched_index;
-        void *data2 = catalog_search_in_array(flight_catalog, matched_index_up);
-        while (strcasecmp(origin_name, get_flight_destination((Flight)data2)) == 0 && matched_index_up < catalog_get_item_count(flight_catalog) - 1) {
-            data2 = catalog_search_in_array(flight_catalog, ++matched_index_up);
-        };
-        if (strcasecmp(origin_name, get_flight_destination((Flight)data1)) != 0) matched_index_up--;
+gint sort_origin_delay(gconstpointer a, gconstpointer b){
+    Origin_delay value1 = *(Origin_delay*)a;
+    Origin_delay value2 = *(Origin_delay*)b;
 
-        int i = matched_index_down;
-        int n_passengers = 0;
-        int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
-        while (0 < quantidade_a_percorrer) {
-            const Flight flight_temp = (const Flight)(catalog_search_in_array(flight_catalog, i));
-            int flight_year = get_year(get_flight_schedule_arrival_date(flight_temp));
-            if (*year == flight_year) {
-                int flight_id = get_flight_id(flight_temp);
-                n_passengers += calculate_flight_total_passengers(passenger_catalog, GINT_TO_POINTER(flight_id));
-            }
-            i++;
-            quantidade_a_percorrer--;
-        };
-        return n_passengers;
-    } else {
-        printf("Flight with that destination not found");
-        return -1;
-    }
+    if(value1->delay > value2->delay) return -1;
+    if(value1->delay < value2->delay) return 1;
+    return 0;
 }
+
+
+GArray *create_origin_delay_struct(Catalog *flights_catalog, GHashTable *origins){
+    GArray *arr_origin_delay = g_array_new(FALSE, FALSE, sizeof(Origin_delay));
+    
+    GHashTableIter iter;
+    gpointer key, value;
+
+    g_hash_table_iter_init(&iter, origins);
+
+    while (g_hash_table_iter_next(&iter, &key, &value)) {
+        Origin_delay new_value = (Origin_delay)malloc(sizeof(ORIGIN_DELAY));
+        int delay_median = calculate_flight_delay_median(flights_catalog, key);
+        new_value->delay = delay_median;
+        strcpy(new_value->origin, key);
+        g_array_append_val(arr_origin_delay, new_value);
+    }
+    g_array_sort(arr_origin_delay, (GCompareFunc) sort_origin_delay);
+    return arr_origin_delay;
+}
+
+Stats_info create_stats_info(Catalog *flights_catalog){
+    Stats_info stats = (Stats_info)malloc(sizeof(STATS_INFO));
+    GHashTable *origins = g_hash_table_new_full(g_str_hash, g_str_equal, free, NULL);
+    for(int i = 0; i < catalog_get_item_count(flights_catalog); i++){
+        const Flight flight_temp = (const Flight)catalog_search_in_array(flights_catalog, i);
+        char *origin = get_flight_origin(flight_temp);
+        
+        if(g_hash_table_lookup(origins, origin) == NULL){
+            g_hash_table_add(origins, origin);
+        } else {
+            free(origin);
+        }
+    }
+    stats->origin_delay = create_origin_delay_struct(flights_catalog, origins);
+    for(int i = 0; i < (int)stats->origin_delay->len; i++){
+        Origin_delay value = g_array_index(stats->origin_delay, Origin_delay, i);
+        printf("A origem e: %s\nA mediana e:%d\n", value->origin, value->delay);
+    }
+    g_hash_table_destroy(origins);
+    return stats;
+}
+
+
+//Passengers
+/* 
+- Já sabemos o numero de passageiros por voo
+- está ordenado por nomes
+*/
+//Users
+/* 
+- Esta ordenado pelo nome e depois id 
+ */
+//Reservations
+/* 
+- Esta ordenado por hotelID, beginDate, id;
+ */
+//Flights
+/* 
+- Esta ordenado por origin, departure, arrival e id
+- temos um array com todas as origens
+ */
