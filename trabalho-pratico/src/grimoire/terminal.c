@@ -29,10 +29,6 @@ struct gm_term_event_index {
     GM_TERMINAL_RESIZE_LISTENER(listener);
 };
 
-/* ============== FORWARD DECLARATIONS ============== */
-// void gm_term_make_buffer(GM_Buf* termbuf, int rows, int cols, int charsize);
-// void gm_term_free_buffer(GM_Buf buf);
-
 /* ============== TERM ============== */
 GM_Term gm_term_init() {
     GM_Term term = (GM_Term)malloc(sizeof(GM_TERM));
@@ -57,8 +53,6 @@ GM_Term gm_term_init() {
 
     term->attr_queue = g_queue_new();
 
-    term->key_caps = make_cache(free);
-
     term->term_name = getenv("TERM");
 
     gm_setup_tui_events();
@@ -71,29 +65,17 @@ void gm_term_end(GM_Term term) {
 
     gm_show_cursor(term);
 
-    // gm_term_free_buffer(term->buf);
-
     g_hash_table_destroy(term->color_pairs);
     g_hash_table_destroy(term->colors);
 
     gm_term_attr_reset(term);
-    // g_array_free(term->attr_queue, FALSE);
     g_queue_free(term->attr_queue);
-    destroy_cache(term->key_caps);
 
     gm_close_tui_events();
     free(term);
 }
 
 /* ------- TERM ACCESSORS ------- */
-// char* gm_term_get_key_cap(GM_Term term, char* key) {
-//     // char* fml = tigetstr(key);
-//     // return memoize_cache_elem(term->key_caps, key, strdup(key));
-//     // return "";
-
-//     return key;
-// }
-
 int gm_term_is_xterm(GM_Term term) {
     return strncmp(term->term_name, "xterm", 5) == 0;
 }
@@ -101,81 +83,6 @@ int gm_term_is_xterm(GM_Term term) {
 GM_TERM_SIZE gm_term_get_size(GM_Term term) {
     return term->size;
 }
-
-/* ------- TERM BUFFER ------- */
-// void gm_term_make_buffer(GM_Buf* termbuf, int rows, int cols, int charsize) {
-//     GM_Buf buf = (GM_Buf)malloc(sizeof(GM_BUF));
-//     buf->data = (char**)malloc(rows * sizeof(char*));
-
-//     for (int i = 0; i < rows; i++) {
-//         // buf->data[i] = (char*)malloc((charsize * cols + 1) * sizeof(char));
-//         // memset(buf->data[i], 32, (charsize * cols) * sizeof(char));
-//         buf->data[i] = (char*)malloc((charsize * cols) + 1);
-//         memset(buf->data[i], 32, (charsize * cols) + 1);
-        
-//         buf->data[i][charsize * cols + 1] = '\0';
-//     }
-
-//     buf->charsize = charsize;
-//     buf->rows = rows;
-//     buf->cols = cols;
-
-//     *termbuf = buf;
-// }
-
-// void gm_term_free_buffer(GM_Buf buf) {
-//     if (buf == NULL) return;
-
-//     for (int i = 0; i < buf->rows; i++) {
-//         if (buf->data[i] != NULL) free(buf->data[i]);
-//     }
-
-//     free(buf->data);
-//     free(buf);
-//     buf = NULL;
-// }
-
-// void gm_term_clear_buffer(GM_Buf buf) {
-//     if (buf == NULL) return;
-
-//     for (int i = 0; i < buf->rows; i++) {
-//         if (buf->data[i] != NULL) {
-//             memset(buf->data[i], ' ', (buf->charsize * buf->cols + 1) * sizeof(char));
-//         }
-//     }
-// }
-
-// int gm_term_buf_truepos(GM_Term term, int row, int col) {
-//     if (term->buf == NULL) return -1;
-
-//     if (row > term->buf->rows) return -1;
-//     if (col > term->buf->cols) return -1;
-
-//     int rcols = 0;
-//     int truelen;
-
-//     #define max_len MAX_CHAR_SEQ_BYTES * term->buf->cols
-//     for (truelen = 0; truelen < max_len; truelen++) {
-//         // Check for ANSI escape codes
-//         if (term->buf->data[row][truelen] == '\x1B' && truelen + 1 < max_len && term->buf->data[row][truelen + 1] == '[') {
-//             // Skip ANSI escape code
-//             while (term->buf->data[row][truelen] != 'm' && truelen + 1 < max_len) truelen++;
-//             truelen++; // Move past 'm'
-//         } else {
-//             // Handle UTF-8 multi-byte characters
-//             uint8_t byte = (uint8_t)term->buf->data[row][truelen];
-//             if ((byte & 0xC0) != 0x80) {
-//                 // This is the start of a character
-//                 rcols++;
-//                 if (rcols == col) break;
-//             }
-
-//             truelen++;
-//         }
-//     }
-
-//     return truelen;
-// }
 
 void gm_term_canvas_newframe(GM_Term term) {
     gm_clear(FALSE);
@@ -195,19 +102,13 @@ void gm_term_canvas_newframe(GM_Term term) {
 void gm_refresh(GM_Term term) {
     gm_term_canvas_newframe(term);
 
-    // for (guint i = 0; i < term->attr_queue->len; i++) {
     while (!g_queue_is_empty(term->attr_queue)) {
         GM_Attr attr = gm_term_attr_get(term);
         gm_attr_resolve(term, attr);
         gm_attr_destroy(attr);
-
-        // #ifdef _DEBUG
-        // fflush(stdout);
-        // #endif
     }
 
     gm_term_attr_reset(term);
-    // gm_term_clear_buffer(term->buf);
     
     gm_gotoxy(term->size.rows, term->size.cols, FALSE);
 
