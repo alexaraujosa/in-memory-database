@@ -71,13 +71,14 @@ void gm_printf(GM_Term term, int row, int col, const char *format, ...) {
     int length = _gm_vsnprintf(NULL, 0, format, args);
     va_end(args);
 
+    // Row and col can no longer be calculated preemptively, due to multiline support.
     if (length < 0) return;
-    if (row > term->size.rows) {
-        return;
-    }
-    if (col + length > term->size.cols) {
-        return;
-    }
+    // if (row > term->size.rows) {
+    //     return;
+    // }
+    // if (col + length > term->size.cols) {
+    //     return;
+    // }
 
     va_start(args, format);
 
