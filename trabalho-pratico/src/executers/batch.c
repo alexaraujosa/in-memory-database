@@ -1,5 +1,6 @@
 #include "locale.h"
 #include "executers/batch.h"
+#include "tests/test.h"
 
 void default_preprocessor(FILE* stream, ParserStore store, va_list args) {
     gpointer null_element = NULL;
@@ -56,8 +57,12 @@ void default_csv_destructor_reservation(FILE* stream, ParserStore store) {
 void batch(const char* arg1, const char* arg2) {
     setlocale(LC_COLLATE, "en_US.UTF-8");
     //setenv("TZ", "", 1);
-
-    clock_t start_time = clock();
+    #ifdef MAKE_TEST
+        double sorting_time = 0;
+        double parsing_time = 0;
+        printf("\n----===[  CATALOGS SETUP METRICS  ]===----\n\n");
+        clock_t start_time = clock();
+    #endif
 
     Catalog* user_catalog = catalog_init(g_str_hash, g_str_equal, free);
     char* userdata_path = join_paths(2, arg1, "users.csv");
@@ -72,18 +77,25 @@ void batch(const char* arg1, const char* arg2) {
         &default_csv_destructor,
         user_catalog
     );  
-    clock_t end_time = clock();
-    double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-    printf("Execution Time(parsing users): %f seconds\n", elapsed_time);
+    
+    #ifdef MAKE_TEST
+        clock_t end_time = clock();
+        double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+        parsing_time += elapsed_time;
+        printf(" - Execution time for parsing users: %.4f seconds\n", elapsed_time);
+    #endif
     free(userdata_path);
     
-    start_time = clock();
+    TEST_EXPR(start_time = clock();)
     catalog_sort(user_catalog, (GCompareFunc)&usersCatalog_full_compare_func);
-    end_time = clock();
-    elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-    printf("Execution Time(sorting users): %f seconds\n\n", elapsed_time);
+    #ifdef MAKE_TEST
+        end_time = clock();
+        elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+        sorting_time += elapsed_time;
+        printf(" - Execution time for sorting users: %.4f seconds\n\n", elapsed_time);
 
-    start_time = clock();
+        start_time = clock();
+    #endif
 
     Catalog* flight_catalog = catalog_init(g_direct_hash, g_direct_equal, NULL);
     char* flightsdata_path = join_paths(2, arg1, "flights.csv");
@@ -98,18 +110,26 @@ void batch(const char* arg1, const char* arg2) {
         &default_csv_destructor,
         flight_catalog
     );
-    end_time = clock();
-    elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-    printf("\n\nExecution Time(parsing flights): %f seconds\n", elapsed_time);
+    
+    #ifdef MAKE_TEST
+        end_time = clock();
+        elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+        parsing_time += elapsed_time;
+        printf(" - Execution time for parsing flights: %.4f seconds\n", elapsed_time);
+    #endif
     free(flightsdata_path);
 
-    start_time = clock();
+    TEST_EXPR(start_time = clock();)
     catalog_sort(flight_catalog, (GCompareFunc)&flightsCatalog_full_compare_func);
-    end_time = clock();
-    elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-    printf("Execution Time(sorting flights): %f seconds\n\n", elapsed_time);
+    
+    #ifdef MAKE_TEST
+        end_time = clock();
+        elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+        sorting_time += elapsed_time;
+        printf(" - Execution time for sorting flights: %.4f seconds\n\n", elapsed_time);
 
-    start_time = clock();
+        start_time = clock();
+    #endif
 
     Catalog* passengers_catalog = catalog_init(NULL, NULL, NULL);
     char* passengersdata_path = join_paths(2, arg1, "passengers.csv");
@@ -126,18 +146,26 @@ void batch(const char* arg1, const char* arg2) {
         flight_catalog,
         passengers_catalog
     );
-    end_time = clock();
-    elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-    printf("\n\nExecution Time(parsing passengers): %f seconds\n", elapsed_time);
+    
+    #ifdef MAKE_TEST
+        end_time = clock();
+        elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+        parsing_time += elapsed_time;
+        printf(" - Execution time for parsing passengers: %.4f seconds\n", elapsed_time);
+    #endif
     free(passengersdata_path);
 
-    start_time = clock();
+    TEST_EXPR(start_time = clock();)
     catalog_sort(passengers_catalog, (GCompareFunc)&passengersCatalog_full_compare_func);
-    end_time = clock();
-    elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-    printf("Execution Time(sorting passengers): %f seconds\n\n", elapsed_time);
+    
+    #ifdef MAKE_TEST
+        end_time = clock();
+        elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+        sorting_time += elapsed_time;
+        printf(" - Execution time for sorting passengers: %.4f seconds\n\n", elapsed_time);
 
-    start_time = clock();
+        start_time = clock();
+    #endif
 
     Catalog* reservation_catalog = catalog_init(g_direct_hash, g_direct_equal, NULL);
     char* reservationsdata_path = join_paths(2, arg1, "reservations.csv");
@@ -153,17 +181,24 @@ void batch(const char* arg1, const char* arg2) {
         user_catalog,
         reservation_catalog
     );
-    end_time = clock();
-    elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-    printf("\n\nExecution Time(parsing reservations): %f seconds\n", elapsed_time);
+    
+    #ifdef MAKE_TEST
+        end_time = clock();
+        elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+        parsing_time += elapsed_time;
+        printf(" - Execution time for parsing reservations: %.4f seconds\n", elapsed_time);
+    #endif
     free(reservationsdata_path);
     
-    start_time = clock();
+    TEST_EXPR(start_time = clock();)
     catalog_sort(reservation_catalog, (GCompareFunc)&reservationsCatalog_full_compare_func);
-    end_time = clock();
-    elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-    printf("Execution Time(sorting reservations): %f seconds\n\n", elapsed_time);
     
+    #ifdef MAKE_TEST
+        end_time = clock();
+        elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+        sorting_time += elapsed_time;
+        printf(" - Execution time for sorting reservations: %.4f seconds\n", elapsed_time);
+    #endif
     //catalog_print_array(user_catalog, &print_user);
     //catalog_print_array(passengers_catalog, &print_passenger);
     
@@ -203,17 +238,18 @@ void batch(const char* arg1, const char* arg2) {
     catalogues[1] = flight_catalog;
     catalogues[2] = passengers_catalog;
     catalogues[3] = reservation_catalog;
+    
+    TEST_EXPR(printf("\n----===[  QUERY EXECUTION METRICS  ]===----\n\n");)
 
-    start_time = clock();
     query_run_bulk((char* )arg2, "Resultados", catalogues);
-    end_time = clock();
-    elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-    printf("Execution Time(QUERIES): %f seconds\n\n", elapsed_time);
+
+    TEST_EXPR(printf(" -> Execution time for parsing all collections datasets: %.4f seconds.\n", parsing_time);)
+    TEST_EXPR(printf(" -> Execution time for sorting all collections datasets: %.4f seconds.\n", sorting_time);)
 
 
     // Cleanup cwd
-    g_free(get_cwd()->str);
-    g_free(get_cwd());
+    // g_free(get_cwd()->str);
+    // g_free(get_cwd());
 
     catalog_destroy(user_catalog);
     catalog_destroy(flight_catalog);

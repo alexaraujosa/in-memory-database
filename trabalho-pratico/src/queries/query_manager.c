@@ -6,6 +6,7 @@
 
 #include "queries/queries.h"
 #include "util/string.h"
+#include "tests/test.h"
 
 Tokens tokenize_query(char* line, ssize_t len) {
     char* ptr = strdup(line);
@@ -75,6 +76,13 @@ void query_preprocessor(FILE* stream, ParserStore store, va_list args) {
     *s_catalogues = catalogues;
 
     *s_catalogues = catalogues;
+
+    // ------- TIMERS -------
+    #ifdef MAKE_TEST
+        double* timers = (double*)malloc(sizeof(double) * 10);  //TODO: CONVERTER ESSE 10 PARA UM DEFINE DO GENERO, NUM_QUERIES. esse define no test.h
+        memset(timers, 0, sizeof(double) * 10);
+        g_array_append_vals(store, &timers, 1);
+    #endif
 }
 
 int query_verifier(Tokens tokens, ParserStore store) {
@@ -159,6 +167,7 @@ void query_writer(void* raw_data, ParserStore store) {
     char** s_output_dir = (char**)&g_array_index(store, void*, 0);
     int* s_query_num = g_array_index(store, void*, 1);
     Catalog** catalogues = ((Catalog**)g_array_index(store, void*, 2));
+    TEST_EXPR(double* timers = (double*)g_array_index(store, double*, 3);)
     
     // ------- Process required variables -------
     char* output_file = isnprintf("command%d_output.txt", *s_query_num);
@@ -168,7 +177,11 @@ void query_writer(void* raw_data, ParserStore store) {
     FILE* retFile = OPEN_FILE(path, "w");
 
     // void* ret = query_execute(data, catalogues, retFile);
+    TEST_EXPR(clock_t start_time = clock();)
     query_execute(data, catalogues, retFile);
+    TEST_EXPR(clock_t end_time = clock();)
+    TEST_EXPR(double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;)
+    TEST_EXPR(timers[atoi(data->id) - 1] += elapsed_time;)
 
     CLOSE_FILE(retFile);
 
@@ -200,6 +213,19 @@ void query_discarder(void* raw_data, ParserStore store) {
 void query_destructor(FILE* stream, ParserStore store) {
     IGNORE_ARG(stream);
 
+    // ------- Fetch store timers for display -------
+    #ifdef MAKE_TEST
+        double* timers = g_array_index(store, double*, 3);
+        double total_time = 0;
+        for(int i = 0; i < 10 ; i++) {
+            test_trace(" - Execution time for query %2d: %.4f seconds.\n", i+1, timers[i]);
+            total_time += timers[i];
+        }
+        test_trace("\n----===[  GENERAL PROGRAM METRICS  ]===----\n\n");
+        test_trace(" -> Execution time for solving all queries: %.4f seconds.\n", total_time);
+    #endif
+
+    // ------- Free Memory -------
     for (guint i = 0; i < store->len; ++i) {
         void* element = g_array_index(store, void*, i);
         free(element);
