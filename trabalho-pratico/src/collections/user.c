@@ -9,7 +9,7 @@ typedef struct user {
     CountryCode(country_code);
     int account_creation;  // Offset from Base Date
     bool account_status;
-    int total_spent;
+    unsigned int information;   // 100000 offset for number of reservations |||| 1000 offset for total spent
 
     // Statistics
     uint8_t age;
@@ -88,16 +88,23 @@ void set_user_age(User user, uint8_t age){
     user->age = age;
 }
 
-int get_user_total_spent(const User user) {
-    return user->total_spent;
+int get_user_information(const User user) {
+    return user->information;
 }
 
-void set_user_total_spent(User user, int total_spent) {
-    user->total_spent = total_spent;
+void set_user_information(User user, int information) {
+    user->information = information;
 }
 
-void add_user_total_spent(User user, int spent) {
-    user->total_spent += spent;
+void add_user_information(User user, int information) {
+    user->information +=information;
+}
+
+double get_user_total_spent(const User user) {
+    return (double)(user->information%100000000)/1000;    // TODO: FALTA OS SHIFTS
+}
+int get_user_reservations_counter(const User user) {
+    return (user->information/100000000);
 }
 
 int verify_user_tokens(Tokens tokens, ParserStore store) {
@@ -148,7 +155,7 @@ User make_user(
     user->account_creation = account_creation;
     user->account_status = account_status;
     user->age = get_age(birth_date);
-    user->total_spent = 0;
+    user->information = 0;
 
     return user;
 }
@@ -202,6 +209,6 @@ void print_user(void* pt) {
         "Account_Creation:%d; "
         "Account_status:%s; "
         "Idade:%d; "
-        "Total_spent:%d}\n",
-        user->id, user->name, sex, user->country_code, user->account_creation, status, user->age, user->total_spent);
+        "Information:%d}\n",
+        user->id, user->name, sex, user->country_code, user->account_creation, status, user->age, user->information);
 }

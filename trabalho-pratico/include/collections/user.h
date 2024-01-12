@@ -77,9 +77,11 @@ bool get_user_account_status(const User user);
 void set_user_account_status(User user, bool account_status);
 uint8_t get_user_age(const User user);
 void set_user_age(User user, uint8_t age);
-int get_user_total_spent(const User user);
-void set_user_total_spent(User user, int total_spent);
-void add_user_total_spent(User user, int spent);
+int get_user_information(const User user);
+void set_user_information(User user, int information);
+void add_user_information(User user, int information);
+double get_user_total_spent(const User user);
+int get_user_reservations_counter(const User user);
 
 /**
  * @brief Creates an user, transforming data.
