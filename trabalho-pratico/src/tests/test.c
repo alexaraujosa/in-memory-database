@@ -3,7 +3,9 @@
 void tests_validation(const char* correct_output_path) {
     char* filename_results = "Resultados";
     char* path_results = resolve_to_cwd(filename_results);
-    
+    char* output_path = join_paths(2, path_results, "test_report.txt");
+    FILE* test_report = OPEN_FILE(output_path, "a");
+
     char* line = NULL;
     char* line2 = NULL;
     size_t len = 0, len2 = 0;
@@ -21,13 +23,21 @@ void tests_validation(const char* correct_output_path) {
         while (((read = getline(&line, &len, stream)) != -1) && ((read2 = getline(&line2, &len2, stream2)) != -1)) {
             if(strcmp(line, line2) != 0) {
                 printf("\n ! Command output invalid detected. --=[ File: %s | Line Number: %d ==--\n", output_file, line_counter);
+                fprintf(test_report, "\n ! Command output invalid detected. --=[ File: %s | Line Number: %d ==--\n", output_file, line_counter);
                 printf(GREEN "Expected output: %s" RESET, line);
+                fprintf(test_report, "Expected output: %s", line);
                 printf(RED "Obtained output: %s" RESET, line2);
+                fprintf(test_report, "Obtained output: %s", line2);
                 break;
             }
             line_counter++;
         }
 
+        CLOSE_FILE(stream);
+        CLOSE_FILE(stream2);
+
         index++;
     }
+
+    CLOSE_FILE(test_report);
 }

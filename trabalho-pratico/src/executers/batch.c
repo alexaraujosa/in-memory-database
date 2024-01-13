@@ -58,9 +58,12 @@ void batch(const char* arg1, const char* arg2) {
     setlocale(LC_COLLATE, "en_US.UTF-8");
     //setenv("TZ", "", 1);
     #ifdef MAKE_TEST
+        char* output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
+        FILE* test_report = OPEN_FILE(output_path, "w");
         double sorting_time = 0;
         double parsing_time = 0;
         printf("\n----===[  CATALOGS SETUP METRICS  ]===----\n\n");
+        fprintf(test_report, "\n----===[  CATALOGS SETUP METRICS  ]===----\n\n");
         clock_t start_time = clock();
     #endif
 
@@ -83,6 +86,7 @@ void batch(const char* arg1, const char* arg2) {
         double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
         parsing_time += elapsed_time;
         printf(" - Execution time for parsing users: %.4f seconds\n", elapsed_time);
+        fprintf(test_report, " - Execution time for parsing users: %.4f seconds\n", elapsed_time);
     #endif
     free(userdata_path);
     
@@ -93,6 +97,7 @@ void batch(const char* arg1, const char* arg2) {
         elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
         sorting_time += elapsed_time;
         printf(" - Execution time for sorting users: %.4f seconds\n\n", elapsed_time);
+        fprintf(test_report, " - Execution time for sorting users: %.4f seconds\n\n", elapsed_time);
 
         start_time = clock();
     #endif
@@ -116,6 +121,7 @@ void batch(const char* arg1, const char* arg2) {
         elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
         parsing_time += elapsed_time;
         printf(" - Execution time for parsing flights: %.4f seconds\n", elapsed_time);
+        fprintf(test_report, " - Execution time for parsing flights: %.4f seconds\n", elapsed_time);
     #endif
     free(flightsdata_path);
 
@@ -127,6 +133,7 @@ void batch(const char* arg1, const char* arg2) {
         elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
         sorting_time += elapsed_time;
         printf(" - Execution time for sorting flights: %.4f seconds\n\n", elapsed_time);
+        fprintf(test_report, " - Execution time for sorting flights: %.4f seconds\n\n", elapsed_time);
 
         start_time = clock();
     #endif
@@ -152,6 +159,7 @@ void batch(const char* arg1, const char* arg2) {
         elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
         parsing_time += elapsed_time;
         printf(" - Execution time for parsing passengers: %.4f seconds\n", elapsed_time);
+        fprintf(test_report, " - Execution time for parsing passengers: %.4f seconds\n", elapsed_time);
     #endif
     free(passengersdata_path);
 
@@ -163,6 +171,7 @@ void batch(const char* arg1, const char* arg2) {
         elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
         sorting_time += elapsed_time;
         printf(" - Execution time for sorting passengers: %.4f seconds\n\n", elapsed_time);
+        fprintf(test_report, " - Execution time for sorting passengers: %.4f seconds\n\n", elapsed_time);
 
         start_time = clock();
     #endif
@@ -187,6 +196,7 @@ void batch(const char* arg1, const char* arg2) {
         elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
         parsing_time += elapsed_time;
         printf(" - Execution time for parsing reservations: %.4f seconds\n", elapsed_time);
+        fprintf(test_report, " - Execution time for parsing reservations: %.4f seconds\n", elapsed_time);
     #endif
     free(reservationsdata_path);
     
@@ -198,6 +208,7 @@ void batch(const char* arg1, const char* arg2) {
         elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
         sorting_time += elapsed_time;
         printf(" - Execution time for sorting reservations: %.4f seconds\n", elapsed_time);
+        fprintf(test_report, " - Execution time for sorting reservations: %.4f seconds\n", elapsed_time);
     #endif
     //catalog_print_array(user_catalog, &print_user);
     //catalog_print_array(passengers_catalog, &print_passenger);
@@ -240,11 +251,16 @@ void batch(const char* arg1, const char* arg2) {
     catalogues[3] = reservation_catalog;
     
     TEST_EXPR(printf("\n----===[  QUERY EXECUTION METRICS  ]===----\n\n");)
-
+    TEST_EXPR(fprintf(test_report, "\n----===[  QUERY EXECUTION METRICS  ]===----\n\n");)
+    TEST_EXPR(CLOSE_FILE(test_report);)
     query_run_bulk((char* )arg2, "Resultados", catalogues);
 
+    TEST_EXPR(test_report = OPEN_FILE(output_path, "a");)
     TEST_EXPR(printf(" -> Execution time for parsing all collections datasets: %.4f seconds.\n", parsing_time);)
+    TEST_EXPR(fprintf(test_report, " -> Execution time for parsing all collections datasets: %.4f seconds.\n", parsing_time);)
     TEST_EXPR(printf(" -> Execution time for sorting all collections datasets: %.4f seconds.\n", sorting_time);)
+    TEST_EXPR(fprintf(test_report, " -> Execution time for sorting all collections datasets: %.4f seconds.\n", sorting_time);)
+    TEST_EXPR(CLOSE_FILE(test_report);)
 
 
     // Cleanup cwd

@@ -215,14 +215,20 @@ void query_destructor(FILE* stream, ParserStore store) {
 
     // ------- Fetch store timers for display -------
     #ifdef MAKE_TEST
+        char* output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
+        FILE* test_report = OPEN_FILE(output_path, "a");
         double* timers = g_array_index(store, double*, 3);
         double total_time = 0;
         for(int i = 0; i < 10 ; i++) {
             test_trace(" - Execution time for query %2d: %.4f seconds.\n", i+1, timers[i]);
+            fprintf(test_report, " - Execution time for query %2d: %.4f seconds.\n", i+1, timers[i]);
             total_time += timers[i];
         }
         test_trace("\n----===[  GENERAL PROGRAM METRICS  ]===----\n\n");
+        fprintf(test_report, "\n----===[  GENERAL PROGRAM METRICS  ]===----\n\n");
         test_trace(" -> Execution time for solving all queries: %.4f seconds.\n", total_time);
+        fprintf(test_report, " -> Execution time for solving all queries: %.4f seconds.\n", total_time);
+        CLOSE_FILE(test_report);
     #endif
 
     // ------- Free Memory -------

@@ -18,12 +18,19 @@
 
             clock_t end_time = clock();
             double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+            char* output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
+            FILE* test_report = OPEN_FILE(output_path, "a");
             printf(" -> Execution time of the program: %.4f seconds.\n", elapsed_time);
+            fprintf(test_report, " -> Execution time of the program: %.4f seconds.\n", elapsed_time);
             struct rusage r_usage;
             getrusage(RUSAGE_SELF, &r_usage);
             printf(" -> Memory usage of the program: %ld MB.\n", r_usage.ru_maxrss/1000);
+            fprintf(test_report, " -> Memory usage of the program: %ld MB.\n", r_usage.ru_maxrss/1000);
             printf("\n----===[  OUTPUT VALIDATION  ]===----\n\n");
+            fprintf(test_report, "\n----===[  OUTPUT VALIDATION  ]===----\n\n");
+            CLOSE_FILE(test_report);
             tests_validation(argv[3]);
+
             g_free(get_cwd()->str);
             g_free(get_cwd());
         }
