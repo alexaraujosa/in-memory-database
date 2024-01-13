@@ -8,6 +8,8 @@
 #include "util/string.h"
 #include "tests/test.h"
 
+#define NUM_QUERIES 10
+
 Tokens tokenize_query(char* line, ssize_t len) {
     char* ptr = strdup(line);
     char* ptr_root = ptr;
@@ -79,8 +81,8 @@ void query_preprocessor(FILE* stream, ParserStore store, va_list args) {
 
     // ------- TIMERS -------
     #ifdef MAKE_TEST
-        double* timers = (double*)malloc(sizeof(double) * 10);  //TODO: CONVERTER ESSE 10 PARA UM DEFINE DO GENERO, NUM_QUERIES. esse define no test.h
-        memset(timers, 0, sizeof(double) * 10);
+        double* timers = (double*)malloc(sizeof(double) * NUM_QUERIES);
+        memset(timers, 0, sizeof(double) * NUM_QUERIES);
         g_array_append_vals(store, &timers, 1);
     #endif
 }
@@ -219,7 +221,7 @@ void query_destructor(FILE* stream, ParserStore store) {
         FILE* test_report = OPEN_FILE(output_path, "a");
         double* timers = g_array_index(store, double*, 3);
         double total_time = 0;
-        for(int i = 0; i < 10 ; i++) {
+        for(int i = 0; i < NUM_QUERIES ; i++) {
             test_trace(" - Execution time for query %2d: %.4f seconds.\n", i+1, timers[i]);
             fprintf(test_report, " - Execution time for query %2d: %.4f seconds.\n", i+1, timers[i]);
             total_time += timers[i];
