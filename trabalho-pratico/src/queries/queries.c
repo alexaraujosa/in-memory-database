@@ -67,8 +67,8 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
         if (user == NULL) return;
         if (!get_user_account_status(user)) return;
 
-        int n_reservas;
-        double valor = calculate_user_total_spent(catalogues[3], argv[0], &n_reservas);
+        // int n_reservas;
+        // double valor = calculate_user_total_spent(catalogues[3], argv[0], &n_reservas);
 
         information.user_info->name = get_user_name(user);
         information.user_info->sex = get_user_sex(user);
@@ -76,8 +76,8 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
         information.user_info->country_code = get_user_country_code(user);
         information.user_info->passport = get_user_passport(user);
         information.user_info->n_flights = calculate_user_n_flights(catalogues[2], argv[0]);
-        information.user_info->n_reservas = n_reservas;
-        information.user_info->total_spent = valor / 1000;
+        information.user_info->n_reservas = get_user_reservations_counter(user);
+        information.user_info->total_spent = get_user_total_spent(user);
 
         output_query_info(1, flag, &information, output_file, 1);
 
