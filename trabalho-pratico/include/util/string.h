@@ -13,6 +13,7 @@
 #include <stdbool.h>
 // #include <wchar.h>
 #include <time.h>
+#include <math.h>
 
 #include "parser/parser.h"
 
@@ -21,10 +22,10 @@
 
 #define TIME_T_SYSTEM 1696118400
 
-#define IS_NULL(ARG)         (ARG == NULL)
-#define IS_STRING_NULL(ARG)  (IS_NULL(ARG) || *ARG == '\0')
+#define IS_NULL(ARG)         ((ARG) == NULL)
+#define IS_STRING_NULL(ARG)  (IS_NULL((ARG)) || *(ARG) == '\0')
 
-#define STRING_EQUAL(a, b) (strcmp(a, b) == 0)
+#define STRING_EQUAL(a, b) (strcmp((a), (b)) == 0)
 
 #define CHAR_IS_LOWER(ch) ((ch) >= 97 && (ch) <= 122)
 #define CHAR_IS_UPPER(ch) ((ch) >= 65 && (ch) <= 90)
@@ -215,5 +216,24 @@ char* date_int_to_string(int time);
 bool get_boolean(char* parameter);
 
 char* to_upper_string(char* parameter);
+
+/**
+ * @brief Converts a string to int.
+ *
+ * @param input The input string to be converted.
+ *
+ *     The following are inconvertible:
+ *
+ *     - empty string
+ *     - leading whitespace
+ *     - any trailing characters that are not part of the number
+ *
+ *     Cannot be NULL.
+ *
+ * @param base The base to interpret the string in. Same range as strtol (2 to 36).
+ *
+ * @return The int corresponding to the given string.
+ */
+int string_to_based_int(char* input, int base);
 
 #endif

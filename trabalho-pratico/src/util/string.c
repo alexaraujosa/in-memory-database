@@ -52,50 +52,53 @@ char* isnprintf(const char *format, ...) {
 // }
 
 // TODO: Uniformize tokenizers into one single function?
+// Tokens get_lines(char* line, size_t len) {
+//     char* ptr = strdup(line);
+//     char* ptr_root = ptr;
+
+//     if (ptr == NULL) exit(EXIT_FAILURE);
+
+//     if (ptr[len - 1] == '\n') {
+//         ptr[len - 1] = '\0';
+//     }
+
+//     int seps = 1;
+//     for (int i = 0; line[i]; i++) seps += (line[i] == '\n');
+
+//     // Early return, avoid unnecessary work.
+//     if (seps == 1) {
+//         char** arr = (char**)malloc(1 * sizeof(char*));
+//         arr[0] = strdup(line);
+
+//         free(ptr_root);
+
+//         Tokens ret = (Tokens)malloc(sizeof(TOKENS));
+//         ret->data = arr;
+//         ret->len = 1;
+
+//         return ret;
+//     }
+
+//     char** arr = (char**)malloc(seps * sizeof(char*));
+//     memset(arr, 0, seps * sizeof(char*));
+
+//     char* token;
+//     int i = 0;
+//     while ((token = strsep(&ptr, "\n")) != NULL) {
+//         char* tokenData = strdup(token);
+
+//         arr[i++] = tokenData;
+//     }
+
+//     Tokens ret = (Tokens)malloc(sizeof(TOKENS));
+//     ret->data = arr;
+//     ret->len = seps;
+
+//     free(ptr_root);
+//     return ret;
+// }
 Tokens get_lines(char* line, size_t len) {
-    char* ptr = strdup(line);
-    char* ptr_root = ptr;
-
-    if (ptr == NULL) exit(EXIT_FAILURE);
-
-    if (ptr[len - 1] == '\n') {
-        ptr[len - 1] = '\0';
-    }
-
-    int seps = 1;
-    for (int i = 0; line[i]; i++) seps += (line[i] == '\n');
-
-    // Early return, avoid unnecessary work.
-    if (seps == 1) {
-        char** arr = (char**)malloc(1 * sizeof(char*));
-        arr[0] = strdup(line);
-
-        free(ptr_root);
-
-        Tokens ret = (Tokens)malloc(sizeof(TOKENS));
-        ret->data = arr;
-        ret->len = 1;
-
-        return ret;
-    }
-
-    char** arr = (char**)malloc(seps * sizeof(char*));
-    memset(arr, 0, seps * sizeof(char*));
-
-    char* token;
-    int i = 0;
-    while ((token = strsep(&ptr, "\n")) != NULL) {
-        char* tokenData = strdup(token);
-
-        arr[i++] = tokenData;
-    }
-
-    Tokens ret = (Tokens)malloc(sizeof(TOKENS));
-    ret->data = arr;
-    ret->len = seps;
-
-    free(ptr_root);
-    return ret;
+    return tokenize_char_delim(line, len, "\n");
 }
 
 int is_digit(char c) {
@@ -323,4 +326,19 @@ char* to_upper_string(char* parameter) {
         parameter[i] = toupper(parameter[i]);
 
     return parameter;
+}
+
+int string_to_based_int(char* input, int base) {
+    if (input[0] == '\0' || isspace(input[0])) return NAN;
+    errno = 0;
+
+    char *end;
+    long l = strtol(input, &end, base);
+
+    /* Both checks are needed because INT_MAX == LONG_MAX is possible. */
+    if (l > INT_MAX || (errno == ERANGE && l == LONG_MAX)) return NAN;
+    if (l < INT_MIN || (errno == ERANGE && l == LONG_MIN)) return NAN;
+    if (*end != '\0') return NAN;
+    
+    return l;
 }
