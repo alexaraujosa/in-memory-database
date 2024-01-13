@@ -404,5 +404,7 @@ char* get_localized_string_formatted(DataLocale locale, char* key, ...) {
     vsnprintf(result, length + 1, format, args);
     va_end(args);
 
+    free(format);
+
     return result;
 }
