@@ -69,4 +69,25 @@ int skip_n_lines(FILE* file, int lines);
  */
 int is_path_absolute(char* path);
 
+typedef enum path_exists_stat {
+    PATH_DOES_NOT_EXIST,
+    PATH_EXISTS,
+    PATH_PROTECTED,
+    PATH_ERROR
+} PathExistsStat;
+/**
+ * @brief Checkes whether a path exists in the filesystem.
+ * 
+ * @return PATH_EXISTS if the path exists, PATH_DOES_NOT_EXIST otherwise.
+ * If an error occurs, PATH_ERROR or PATH_PROTECTED is returned.
+ */
+PathExistsStat path_exists(char* path);
+
+typedef enum path_type {
+    PATH_TYPE_UNKNOWN,
+    PATH_TYPE_FILE,
+    PATH_TYPE_DIR
+} PathType;
+PathType path_type(char* path);
+
 #endif

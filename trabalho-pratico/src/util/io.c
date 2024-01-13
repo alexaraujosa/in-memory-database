@@ -53,7 +53,8 @@ GArray* get_files(char* path) {
         if(strcmp(dp->d_name, ".") == 0 || strcmp(dp->d_name, "..") == 0) continue;
         if (dp->d_type != DT_REG) continue;
 
-        char* full_path = join_paths(2, get_cwd()->str, dp->d_name);
+        // char* full_path = join_paths(2, get_cwd()->str, dp->d_name);
+        char* full_path = join_paths(2, path, dp->d_name);
         g_array_append_vals(paths, &full_path, 1);
     }
     closedir(dirptr);
@@ -155,4 +156,38 @@ int skip_n_lines(FILE* file, int lines) {
     }
 
     return 0;
+}
+
+PathExistsStat _path_exists(char* path, struct stat* info_out) {
+    struct stat info;
+
+    if(lstat(path, (&info)) != 0) {
+        if(errno == ENOENT) {
+            return PATH_DOES_NOT_EXIST;
+        } else if(errno == EACCES) {
+            // we don't have permission to know if the path/file exists.
+            return PATH_PROTECTED;
+        } else {
+            // Error
+            return PATH_ERROR;
+        }
+        return;
+    }
+
+    *info_out = info;
+
+    return PATH_EXISTS;
+}
+
+PathExistsStat path_exists(char* path) {
+    struct stat info;
+    return _path_exists(path, &info);
+}
+
+PathType path_type(char* path) {
+    struct stat info;
+    if (_path_exists(path, &info) != PATH_EXISTS) return PATH_TYPE_UNKNOWN;
+
+    if (S_ISDIR(info.st_mode)) return PATH_TYPE_DIR;
+    else if (S_ISREG(info.st_mode)) return PATH_TYPE_FILE;
 }
