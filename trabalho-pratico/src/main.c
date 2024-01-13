@@ -7,11 +7,12 @@
 #ifdef MAKE_TEST
 
     int main(int argc, char const *argv[]) {
-
         if(argc < 4) {
             printf("For testing the program it's needed 3 inputs. Fuck off and come back later. <datasets> <input> <outputs>\n");
             exit(EXIT_FAILURE);
         } else {
+            setlocale(LC_COLLATE, "en_US.UTF-8");
+            setenv("TZ", "", 1);
             clock_t start_time = clock();
             
             batch(argv[1], argv[2]);
@@ -41,7 +42,8 @@
 #else
 
     int main(int argc, char const *argv[]) {
-
+        setlocale(LC_COLLATE, "en_US.UTF-8");
+        setenv("TZ", "", 1);
         if(argc > 2) {
             batch(argv[1], argv[2]);
         } else {
