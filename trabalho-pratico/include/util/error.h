@@ -13,9 +13,17 @@
     #define m_assert(expr, msg) ;
 #endif
 
-void rt_assert(int condition, const char *message);
-// char* trace_msg(const char* scope, const char* message);
+// TODO: Turn into function
+#define rt_assert_dyn(cond, msg, dstr) {\
+    if (!(cond)) {\
+        void* dat = (msg);\
+        (dstr(dat));\
+        exit(EXIT_FAILURE);\
+    }\
+}
 
 #define trace_msg(scope, message) "ERROR [" scope "] " message
+
+void rt_assert(int condition, const char *message);
 
 #endif
