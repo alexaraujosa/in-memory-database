@@ -79,6 +79,23 @@ int get_age(int date) {
     return age;
 }
 
+time_t time_to_epoch(const struct tm *ltm) {
+    const int mon_days [] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    long tyears, tdays, leaps, utc_hrs;
+    int i;
+
+    tyears = ltm->tm_year - 70;
+    leaps = (tyears + 2) / 4;
+    tdays = 0;
+    for (i=0; i < ltm->tm_mon; i++) tdays += mon_days[i];
+
+    tdays += ltm->tm_mday - 1;
+    tdays = tdays + (tyears * 365) + leaps;
+
+    utc_hrs = ltm->tm_hour;
+    return (tdays * 86400) + (utc_hrs * 3600) + (ltm->tm_min * 60) + ltm->tm_sec;
+}
+
 // int year_string_to_int(char* parameter) {
 //     struct tm temp;
 //     temp.tm_sec = 0;
@@ -114,7 +131,7 @@ int date_string_notime_to_int(char* parameter) {
         exit(EXIT_FAILURE);
     }
 
-    time_t date = mktime(&temp);
+    time_t date = time_to_epoch(&temp);
     time_t system = DATE_OFFSET ;
     int res = date+system;
 
@@ -135,7 +152,7 @@ int date_string_withtime_to_int(char* parameter) {
         exit(EXIT_FAILURE);
     }
 
-    time_t date = mktime(&temp);
+    time_t date = time_to_epoch(&temp);
     time_t system = DATE_OFFSET ;
     int res = date + system;
 
