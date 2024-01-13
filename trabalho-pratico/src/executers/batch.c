@@ -56,7 +56,7 @@ void default_csv_destructor_reservation(FILE* stream, ParserStore store) {
 
 void batch(const char* arg1, const char* arg2) {
     setlocale(LC_COLLATE, "en_US.UTF-8");
-    //setenv("TZ", "", 1);
+    setenv("TZ", "", 1);
     #ifdef MAKE_TEST
         char* output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
         FILE* test_report = OPEN_FILE(output_path, "w");
