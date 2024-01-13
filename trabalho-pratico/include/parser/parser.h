@@ -21,6 +21,17 @@ typedef struct tokens {
 #define DestructFunction(name) void(*name)(FILE*, ParserStore)
 
 /**
+ * @brief Tokenizes a string given a one-character delimiter.
+ * 
+ * @param line A string.
+ * @param len The length of the line.
+ * @param delim The delimiter to split the line.
+ * 
+ * @return The tokens extracted from the line.
+ */
+Tokens tokenize_char_delim(char* line, ssize_t len, char delim[1]);
+
+/**
  * @brief Tokenizes a CSV line.
  * 
  * @param line A CSV line.
