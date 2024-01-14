@@ -218,7 +218,12 @@ void* _ll_parse(Tokens tokens) {
         data->name = tokens->data[0];
     }
 
-    data->value = tokens->data[1];
+    GString* value = g_string_new(tokens->data[1]);
+    g_string_replace(value, "\\n", "\n", 0);
+
+    data->value = strdup(value->str);
+
+    g_string_free(value, TRUE);
 
     return (void*)data;
 }
@@ -403,8 +408,6 @@ char* get_localized_string_formatted(DataLocale locale, char* key, ...) {
 
     vsnprintf(result, length + 1, format, args);
     va_end(args);
-
-    free(format);
 
     return result;
 }
