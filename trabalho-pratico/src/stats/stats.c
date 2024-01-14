@@ -1,10 +1,5 @@
 #include "stats/stats.h"
 
-typedef struct origin_delay {
-    char origin[4];
-    short int delay;
-} ORIGIN_DELAY, *Origin_delay;
-
 int calculate_user_n_flights(Catalog *catalog, char *userID) {
     guint matched_index = 0;
     gboolean exists = catalog_exists_in_array(catalog, userID, &passengersCatalog_userID_compare_func, &matched_index);
@@ -228,29 +223,48 @@ GArray *create_origin_delay_struct(Catalog *flights_catalog, GHashTable *origins
     return arr_origin_delay;
 }
 
-Stats_info create_stats_info(Catalog *flights_catalog){
-    Stats_info stats = (Stats_info)malloc(sizeof(STATS_INFO));
+void create_info_tables(Stats_info stats, Catalog *flights_catalog){
+    GHashTable *aeroports = g_hash_table_new_full(g_str_hash, g_str_equal, free, NULL);
     GHashTable *origins = g_hash_table_new_full(g_str_hash, g_str_equal, free, NULL);
     for(int i = 0; i < catalog_get_item_count(flights_catalog); i++){
         const Flight flight_temp = (const Flight)catalog_search_in_array(flights_catalog, i);
         char *origin = get_flight_origin(flight_temp);
+        char *origin2 = get_flight_origin(flight_temp);
+        char *destination = get_flight_destination(flight_temp);
         
         if(g_hash_table_lookup(origins, origin) == NULL){
             g_hash_table_add(origins, origin);
         } else {
             free(origin);
         }
+        if(g_hash_table_lookup(aeroports, origin2) == NULL){
+            g_hash_table_add(aeroports, origin2);
+        } else {
+            free(origin2);
+        }
+        if(g_hash_table_lookup(aeroports, destination) == NULL){
+            g_hash_table_add(aeroports, destination);
+        } else {
+            free(destination);
+        }
     }
-    stats->origin_delay = create_origin_delay_struct(flights_catalog, origins);
-    for(int i = 0; i < (int)stats->origin_delay->len; i++){
-        Origin_delay value = g_array_index(stats->origin_delay, Origin_delay, i);
-        printf("A origem e: %s\nA mediana e:%d\n", value->origin, value->delay);
-    }
-    g_hash_table_destroy(origins);
+    stats->origins = origins;
+    stats->aeroports = aeroports;
+}
+
+Stats_info create_stats_info(Catalog *flights_catalog){
+    Stats_info stats = (Stats_info)malloc(sizeof(STATS_INFO));
+    create_info_tables(stats, flights_catalog);
+    stats->origin_delay = create_origin_delay_struct(flights_catalog, stats->origins);
     return stats;
 }
 
-
+void stats_destroy(Stats_info stats){
+    g_hash_table_destroy(stats->origins);
+    g_hash_table_destroy(stats->aeroports);
+    g_array_free(stats->origin_delay, TRUE);
+    free(stats);
+}
 //Passengers
 /* 
 - Já sabemos o numero de passageiros por voo

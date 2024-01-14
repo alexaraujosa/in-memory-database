@@ -2,7 +2,7 @@
 
 // Queries: 1, 3, 4, 7, 8, 9
 
-void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file) {
+void query1(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
@@ -32,7 +32,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
         reservation_info.nights = nights;
         reservation_info.total_price = (double)get_reservation_price_per_night(reservation) * (double)nights + (((double)get_reservation_price_per_night(reservation) * (double)nights) / 100) * (double)get_reservation_city_tax(reservation);
 
-        //output_query_info(1, flag, &information, output_file, 1);
+        output_query_info(1, flag, &information, output_file, 1);
         free(reservation_info.hotel_name);
     }
     if (atoi(argv[0]) > 0) {
@@ -52,7 +52,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
         flight_info.schedule_arrival_date = get_flight_schedule_arrival_date(flight);
         flight_info.passangers = get_flight_passengers(flight);
         flight_info.delay = get_flight_real_departure_date(flight) - information.flight_info->schedule_departure_date;
-        
+
         output_query_info(1, flag, &information, output_file, 1);
 
         free(flight_info.airline);
@@ -88,7 +88,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     }
 }
 
-void query2(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file) {
+void query2(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
@@ -99,7 +99,7 @@ void query2(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     output_query_info(2, flag, &information, output_file, 1);
 }
 
-void query3(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file) {
+void query3(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
@@ -135,9 +135,9 @@ void query3(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
             quantidade_a_percorrer--;
         };
         rating /= (matched_index_up - matched_index_down + 1);
-        
+
         information.rating = rating;
-        
+
         output_query_info(3, flag, &information, output_file, 1);
 
     } else {
@@ -145,7 +145,7 @@ void query3(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     }
 }
 
-void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file) {
+void query4(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
@@ -190,7 +190,7 @@ void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
 
             int first_day = get_reservation_begin_date(reservation_temp);
             int last_day = get_reservation_end_date(reservation_temp);
-            
+
             double days = (last_day - first_day);
             days /= 60 * 60 * 24;
 
@@ -213,7 +213,7 @@ void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     g_array_free(arrTemp, TRUE);
 }
 
-void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file) {
+void query5(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
@@ -270,8 +270,7 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
         int count = 1;
         for (int i = 0; i < (int)arrTemp->len; i++) {
             const Flight flight_temp = (const Flight)(g_array_index(arrTemp, gpointer, i));
-            if (date_string_withtime_to_int(argv[1]) <= get_flight_schedule_departure_date(flight_temp)
-                && get_flight_schedule_departure_date(flight_temp) <= date_string_withtime_to_int(argv[2])) {
+            if (date_string_withtime_to_int(argv[1]) <= get_flight_schedule_departure_date(flight_temp) && get_flight_schedule_departure_date(flight_temp) <= date_string_withtime_to_int(argv[2])) {
                 // activated = TRUE;
 
                 information.flight_id = get_flight_id(flight_temp);
@@ -296,15 +295,52 @@ void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     g_array_free(arrTemp, TRUE);
 }
 
-void query6(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file) {
-    IGNORE_ARG(flag);
+/*
+6 <year> <N>
+nome;passageiros
+*/
+gint sort_Q6(gconstpointer a, gconstpointer b){
+    Q_info6 value1 = (Q_info6)a;
+    Q_info6 value2 = (Q_info6)b;
+
+    if(value1->passangers > value2->passangers) return -1;
+    if(value1->passangers < value2->passangers) return 1;
+    return 0;
+}
+
+void query6(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
+    //IGNORE_ARG(flag);
     IGNORE_ARG(argc);
-    IGNORE_ARG(argv);
-    IGNORE_ARG(catalogues);
-    IGNORE_ARG(output_file);
+    //IGNORE_ARG(argv);
+    //IGNORE_ARG(catalogues);
+    //IGNORE_ARG(output_file);
 
     Q_INFO6 information;
-    output_query_info(6, flag, &information, output_file, 1);
+    GArray* arr_temp = g_array_new(FALSE, FALSE, sizeof(Q_INFO6));
+
+    GHashTableIter iter;
+    gpointer key, value;
+
+    Stats_info stats = catalogues[4];
+    int year = atoi(argv[0]);
+    g_hash_table_iter_init(&iter, stats->aeroports);
+
+    while (g_hash_table_iter_next(&iter, &key, &value)) {
+        strcpy(information.origin, key);
+        information.passangers = calculate_aeroport_n_passengers(catalogues[1], information.origin, &year);
+        g_array_append_val(arr_temp, information);
+    }
+    g_array_sort(arr_temp, (GCompareFunc) sort_Q6);
+    //arr_temp tem o numero de passageiros por aeroporto no array
+    // colocar ano e todos os origins na função...
+    
+    // dar append do valor retornado a um array com origin
+    // ordenar o valor retornado por ordem crescente
+    // enviar a informação para o modulo de outputs
+    for(int i = 0; i < (int)arr_temp->len && i < (atoi(argv[1])); i++){
+        information = g_array_index(arr_temp, Q_INFO6, i);
+        output_query_info(6, flag, &information, output_file, 1);
+    }
 }
 
 struct q7_index {
@@ -321,11 +357,11 @@ gint compare_q7_indices(gconstpointer a, gconstpointer b, gpointer user_data) {
     return index_b->median - index_a->median;
 }
 
-void query7(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file) {
+void query7(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
     IGNORE_ARG(argc);
 
     Q_INFO7 information;
-    
+
     Catalog* flights = catalogues[1];
     int size = catalog_get_item_count(flights);
 
@@ -372,8 +408,8 @@ void query7(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
 
         information.origin = ind->origin;
         information.median = ind->median;
-        
-        output_query_info(7, flag, &information, output_file, count+1);
+
+        output_query_info(7, flag, &information, output_file, count + 1);
 
         iter = g_sequence_iter_next(iter);
         count++;
@@ -390,7 +426,7 @@ void query7(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     g_sequence_free(sequence);
 }
 
-void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file) {
+void query8(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
@@ -460,7 +496,7 @@ void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     g_array_free(arrTemp, TRUE);
 }
 
-void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file) {
+void query9(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
@@ -531,13 +567,13 @@ void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     g_array_free(arrTemp, TRUE);
 }
 
-void query10(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file) {
+void query10(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
     IGNORE_ARG(argv);
     IGNORE_ARG(catalogues);
     IGNORE_ARG(output_file);
-    
+
     Q_INFO10 information;
     output_query_info(10, flag, &information, output_file, 1);
 }

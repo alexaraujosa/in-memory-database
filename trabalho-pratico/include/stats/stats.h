@@ -12,8 +12,14 @@
 #include "collections/user.h"
 #include "common.h"
 
+typedef struct origin_delay {
+    char origin[4];
+    short int delay;
+} ORIGIN_DELAY, *Origin_delay;
+
 typedef struct stats_info{
-    //Acrescentar mais se necessaio
+    GHashTable *aeroports;
+    GHashTable *origins;
     GArray *origin_delay;
 } STATS_INFO, *Stats_info;
 
@@ -42,8 +48,8 @@ int calculate_flight_delay_median(Catalog *catalog, char *origin_name);
 
 int calculate_aeroport_n_passengers(Catalog *flights_catalog, char *origin_name, int *year);
 
-int calculate_aeroport_n_passengers2(Catalog *flight_catalog, char *origin_name, int *year);
-
 Stats_info create_stats_info(Catalog *flights_catalog);
+
+void stats_destroy(Stats_info stats);
 
 #endif

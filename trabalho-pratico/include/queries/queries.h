@@ -41,7 +41,7 @@ typedef struct {
     int n_flights;
     int n_reservas;
     double total_spent;
-}QUERY1_USER, *Query1_user;
+} QUERY1_USER, *Query1_user;
 
 typedef struct {
     char* airline;
@@ -52,7 +52,7 @@ typedef struct {
     int schedule_arrival_date;
     int passangers;
     short int delay;
-}QUERY1_FLIGHT, *Query1_flight;
+} QUERY1_FLIGHT, *Query1_flight;
 
 typedef struct {
     short int hotelID;
@@ -63,7 +63,7 @@ typedef struct {
     bool breakfast;
     int nights;
     double total_price;
-}QUERY1_RESERVATION, *Query1_reservation;
+} QUERY1_RESERVATION, *Query1_reservation;
 
 typedef struct query1_info {
     short int type;  // 1 = user, 2 = flight, 3 = reservation
@@ -98,7 +98,8 @@ typedef struct query5_info {
 } Q_INFO5, *Q_info5;
 
 typedef struct query6_info {
-    // TO DEFINE
+    char origin[4];
+    int passangers;
 } Q_INFO6, *Q_info6;
 typedef struct query7_info {
     char* origin;
@@ -125,19 +126,19 @@ typedef struct {
     char* argv[QUERIES_MAX_ARGS];
 } QUERY, *Query;
 
-void query_execute(Query query, Catalog** catalogues, FILE* output_file);
-void query_run_bulk(char* input_file, char* output_filer, Catalog** catalogues);
+void query_execute(Query query, void** catalogues, FILE* output_file);
+void query_run_bulk(char* input_file, char* output_filer, void** catalogues);
 void query_run_single(char* query, ssize_t len);
 
-void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
-void query2(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
-void query3(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
-void query4(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
-void query5(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
-void query6(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
-void query7(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
-void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
-void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
-void query10(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file);
+void query1(char flag, int argc, char** argv, void** catalogues, FILE* output_file);
+void query2(char flag, int argc, char** argv, void** catalogues, FILE* output_file);
+void query3(char flag, int argc, char** argv, void** catalogues, FILE* output_file);
+void query4(char flag, int argc, char** argv, void** catalogues, FILE* output_file);
+void query5(char flag, int argc, char** argv, void** catalogues, FILE* output_file);
+void query6(char flag, int argc, char** argv, void** catalogues, FILE* output_file);
+void query7(char flag, int argc, char** argv, void** catalogues, FILE* output_file);
+void query8(char flag, int argc, char** argv, void** catalogues, FILE* output_file);
+void query9(char flag, int argc, char** argv, void** catalogues, FILE* output_file);
+void query10(char flag, int argc, char** argv, void** catalogues, FILE* output_file);
 
 #endif

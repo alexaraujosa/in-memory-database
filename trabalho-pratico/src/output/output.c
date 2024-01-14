@@ -127,11 +127,13 @@ char* build_query_buffer(int query, void* query_info, char* output_buffer) {
             break;
         }
         case 6: {
-            // Q_info6 q_info = (Q_info6)query_info;
+            Q_info6 q_info = (Q_info6)query_info;
             snprintf(
                 output_buffer,
                 MAX_BUFFER_SIZE,
-                "6");
+                "name: %s;passengers: %d",
+                q_info->origin,
+                q_info->passangers);
             break;
         }
         case 7: {
