@@ -1,5 +1,13 @@
 #include "data/locale.h"
 
+#define DATA_LOCALE_DIR "lang"
+#define DATA_LOCALE_FILE_EXT "lang"
+#define DATA_LOCALE_VERSION 1
+
+#define DATA_LOCALE_METAPROP_VERSION "version"
+#define DATA_LOCALE_METAPROP_LOC     "loc"
+#define DATA_LOCALE_METAPROP_LOCNAME "locname"
+
 typedef struct data_locale {
     char* id;
     char* name;
