@@ -205,7 +205,7 @@ void print_user(void* pt) {
         "{Id:%s; "
         "Nome:%s; "
         "Sex:%c; "
-        "CountryCode:%s; "
+        "CountryCode:%.2s; "
         "Account_Creation:%d; "
         "Account_status:%s; "
         "Idade:%d; "

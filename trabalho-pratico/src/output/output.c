@@ -59,7 +59,7 @@ char* build_query_buffer(int query, void* query_info, char* output_buffer) {
                 snprintf(
                     output_buffer,
                     MAX_BUFFER_SIZE,
-                    "name: %s;sex: %c;age: %d;country_code: %s;passport: %s;number_of_flights: %d;number_of_reservations: %d;total_spent: %.3f",
+                    "name: %s;sex: %c;age: %d;country_code: %.2s;passport: %.8s;number_of_flights: %d;number_of_reservations: %d;total_spent: %.3f",
                     q_info->user_info->name,
                     q_info->user_info->sex ? 'M' : 'F',
                     q_info->user_info->age,
