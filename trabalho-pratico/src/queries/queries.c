@@ -339,7 +339,7 @@ void query6(char flag, int argc, char** argv, void** catalogues, FILE* output_fi
     // enviar a informação para o modulo de outputs
     for(int i = 0; i < (int)arr_temp->len && i < (atoi(argv[1])); i++){
         information = g_array_index(arr_temp, Q_INFO6, i);
-        output_query_info(6, flag, &information, output_file, 1);
+        output_query_info(6, flag, &information, output_file, i+1);
     }
 }
 
