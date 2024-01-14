@@ -1,20 +1,14 @@
 #include "executers/interactive/interactive.h"
-#include "grimoire/grimoire.h"
+#include "executers/interactive/screens/screens.h"
+
 #include <time.h>
 #include <stdlib.h>
 
-// ============================ SCREEN INCLUDES ===========================
-#include "executers/interactive/screens/xterm_warn.h"
+// // ============================ SCREEN INCLUDES ===========================
+// #include "executers/interactive/screens/xterm_warn.h"
 
 #pragma GCC push_options
 #pragma GCC optimize ("O0")
-
-typedef enum xterm_state {
-    UNINITIALIZED = 0,
-    IS_XTERM,
-    NOT_XTERM_UNCONFIRMED,
-    NOT_XTERM_CONFIRMED
-} XTerm_State;
 
 typedef enum keypress_code {
     KEY_SKIP,
@@ -22,17 +16,12 @@ typedef enum keypress_code {
     KEY_ABORT
 } Keypress_Code;
 
-typedef struct frame_store {
-    int awaiting_keypress;
-    XTerm_State is_XTerm; // 0 - Uninitialized | 1 - Is XTerm | 2 - Not XTerm & Not confirmed | 3- Not XTerm & confirmed
-} FRAME_STORE, *FrameStore;
-
 int make_frame(GM_Term term, FrameStore store);
 int build_frame(GM_Term term, FrameStore store);
 
 // ============================ ENTRY POINT ===========================
 
-void interactive() {
+void interactive(DataLocales locales) {
     // ======= Set Locale =======
     setlocale(LC_ALL, "en_US.UTF-8");
     setenv("TZ", "", 1);
@@ -60,12 +49,17 @@ void interactive() {
         .is_XTerm = 0
     };
 
-    if (gm_term_is_xterm(term)) store.is_XTerm = IS_XTERM;
-    else {
-        store.is_XTerm = NOT_XTERM_UNCONFIRMED;
-        store.awaiting_keypress = 1;
-    }
-    // store.is_XTerm = NOT_XTERM_UNCONFIRMED;
+    // if (gm_term_is_xterm(term)) store.is_XTerm = IS_XTERM;
+    // else {
+    //     store.is_XTerm = NOT_XTERM_UNCONFIRMED;
+    //     store.awaiting_keypress = 1;
+    // }
+    store.is_XTerm = NOT_XTERM_UNCONFIRMED;
+
+    store.locales = locales;
+    store.current_locale = get_locale(locales, "en_US"); // TODO: Load from settings
+
+    store.screen_caches = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, NULL);
 
     // ======= Frame Loop =======
     int stop = 0;
@@ -101,6 +95,7 @@ void interactive() {
     }
 
     // ======= Destroy Terminal =======
+    destroy_screens(term, &store);
     gm_term_end(term);
 }
 
@@ -108,7 +103,8 @@ void interactive() {
 
 int make_frame(GM_Term term, FrameStore store) {
     if (store->is_XTerm == NOT_XTERM_UNCONFIRMED) {
-        draw_xterm_warn(term);
+        // draw_xterm_warn(term, store);
+        manage_screen(SCREEN_XTERM_WARN, term, store);
         return 0;
     }
 
