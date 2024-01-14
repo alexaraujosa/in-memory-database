@@ -14,7 +14,7 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     information.type = -1;
 
     if (strncmp("Book", argv[0], 4) == 0) {
-        Query1_reservation reservation_info;
+        QUERY1_RESERVATION reservation_info;
         information.reservation_info = &reservation_info;
         information.type = 2;
         void* reservation = catalog_search_in_int_hashtable(catalogues[3], atoi(argv[0] + 4));
@@ -23,43 +23,44 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
 
         int nights = (get_reservation_end_date(reservation) - get_reservation_begin_date(reservation)) / (60 * 60 * 24);
 
-        information.reservation_info->hotelID = get_reservation_hotelID(reservation);
-        information.reservation_info->hotel_name = get_reservation_hotel_name(reservation);
-        information.reservation_info->hotel_stars = get_reservation_hotel_stars(reservation);
-        information.reservation_info->reservation_begin_date = get_reservation_begin_date(reservation);
-        information.reservation_info->reservation_end_date = get_reservation_end_date(reservation);
-        information.reservation_info->breakfast = get_reservation_includes_breakfast(reservation);
-        information.reservation_info->nights = nights;
-        information.reservation_info->total_price = (double)get_reservation_price_per_night(reservation) * (double)nights + (((double)get_reservation_price_per_night(reservation) * (double)nights) / 100) * (double)get_reservation_city_tax(reservation);
+        reservation_info.hotelID = get_reservation_hotelID(reservation);
+        reservation_info.hotel_name = get_reservation_hotel_name(reservation);
+        reservation_info.hotel_stars = get_reservation_hotel_stars(reservation);
+        reservation_info.reservation_begin_date = get_reservation_begin_date(reservation);
+        reservation_info.reservation_end_date = get_reservation_end_date(reservation);
+        reservation_info.breakfast = get_reservation_includes_breakfast(reservation);
+        reservation_info.nights = nights;
+        reservation_info.total_price = (double)get_reservation_price_per_night(reservation) * (double)nights + (((double)get_reservation_price_per_night(reservation) * (double)nights) / 100) * (double)get_reservation_city_tax(reservation);
 
-        output_query_info(1, flag, &information, output_file, 1);
-        free(information.reservation_info->hotel_name);
+        //output_query_info(1, flag, &information, output_file, 1);
+        free(reservation_info.hotel_name);
     }
     if (atoi(argv[0]) > 0) {
-        Query1_flight flight_info;
+        QUERY1_FLIGHT flight_info;
         information.flight_info = &flight_info;
         information.type = 1;
+
         void* flight = catalog_search_in_int_hashtable(catalogues[1], atoi(argv[0]));
 
         if (flight == NULL) return;
 
-        information.flight_info->airline = get_flight_airline(flight);
-        information.flight_info->airplane_model = get_flight_plane_model(flight);
-        information.flight_info->origin = get_flight_origin(flight);
-        information.flight_info->destination = get_flight_destination(flight);
-        information.flight_info->schedule_departure_date = get_flight_schedule_departure_date(flight);
-        information.flight_info->schedule_arrival_date = get_flight_schedule_arrival_date(flight);
-        information.flight_info->passangers = get_flight_passengers(flight);
-        information.flight_info->delay = get_flight_real_departure_date(flight) - information.flight_info->schedule_departure_date;
-
+        flight_info.airline = get_flight_airline(flight);
+        flight_info.airplane_model = get_flight_plane_model(flight);
+        flight_info.origin = get_flight_origin(flight);
+        flight_info.destination = get_flight_destination(flight);
+        flight_info.schedule_departure_date = get_flight_schedule_departure_date(flight);
+        flight_info.schedule_arrival_date = get_flight_schedule_arrival_date(flight);
+        flight_info.passangers = get_flight_passengers(flight);
+        flight_info.delay = get_flight_real_departure_date(flight) - information.flight_info->schedule_departure_date;
+        
         output_query_info(1, flag, &information, output_file, 1);
 
-        free(information.flight_info->airline);
-        free(information.flight_info->airplane_model);
-        free(information.flight_info->origin);
-        free(information.flight_info->destination);
+        free(flight_info.airline);
+        free(flight_info.airplane_model);
+        free(flight_info.origin);
+        free(flight_info.destination);
     } else {
-        Query1_user user_info;
+        QUERY1_USER user_info;
         information.user_info = &user_info;
         information.type = 0;
         void* user = catalog_search_in_str_hashtable(catalogues[0], argv[0]);
@@ -70,20 +71,20 @@ void query1(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
         // int n_reservas;
         // double valor = calculate_user_total_spent(catalogues[3], argv[0], &n_reservas);
 
-        information.user_info->name = get_user_name(user);
-        information.user_info->sex = get_user_sex(user);
-        information.user_info->age = get_user_age(user);
-        information.user_info->country_code = get_user_country_code(user);
-        information.user_info->passport = get_user_passport(user);
-        information.user_info->n_flights = calculate_user_n_flights(catalogues[2], argv[0]);
-        information.user_info->n_reservas = get_user_reservations_counter(user);
-        information.user_info->total_spent = get_user_total_spent(user);
+        user_info.name = get_user_name(user);
+        user_info.sex = get_user_sex(user);
+        user_info.age = get_user_age(user);
+        user_info.country_code = get_user_country_code(user);
+        user_info.passport = get_user_passport(user);
+        user_info.n_flights = calculate_user_n_flights(catalogues[2], argv[0]);
+        user_info.n_reservas = get_user_reservations_counter(user);
+        user_info.total_spent = get_user_total_spent(user);
 
         output_query_info(1, flag, &information, output_file, 1);
 
-        free(information.user_info->name);
-        free(information.user_info->country_code);
-        free(information.user_info->passport);
+        free(user_info.name);
+        free(user_info.country_code);
+        free(user_info.passport);
     }
 }
 
@@ -456,6 +457,7 @@ void query8(char flag, int argc, char** argv, Catalog** catalogues, FILE* output
     information.revenue = resolution;
 
     output_query_info(8, flag, &information, output_file, 1);
+    g_array_free(arrTemp, TRUE);
 }
 
 void query9(char flag, int argc, char** argv, Catalog** catalogues, FILE* output_file) {

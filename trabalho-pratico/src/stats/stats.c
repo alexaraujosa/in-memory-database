@@ -12,17 +12,25 @@ int calculate_user_n_flights(Catalog *catalog, char *userID) {
         int matched_index_down = matched_index;
 
         void *data1 = catalog_search_in_array(catalog, matched_index_down);
-        while (strcmp(get_passenger_userID((Passenger)data1), userID) == 0 && matched_index_down > 0) {
+        char *data1_id = get_passenger_userID((Passenger)data1);
+        while (strcmp(data1_id, userID) == 0 && matched_index_down > 0) {
             data1 = catalog_search_in_array(catalog, --matched_index_down);
+            free(data1_id);
+            data1_id = get_passenger_userID((Passenger)data1);
         };
-        if (strcmp(get_passenger_userID(data1), userID) != 0) matched_index_down++;
+        if (strcmp(data1_id, userID) != 0) matched_index_down++;
+        free(data1_id);
 
         int matched_index_up = matched_index;
         void *data2 = catalog_search_in_array(catalog, matched_index_up);
-        while (strcmp(get_passenger_userID((Passenger)data2), userID) == 0 && matched_index_up < catalog_get_item_count(catalog) - 1) {
+        char *data2_id = get_passenger_userID((Passenger)data2);
+        while (strcmp(data2_id, userID) == 0 && matched_index_up < catalog_get_item_count(catalog) - 1) {
             data2 = catalog_search_in_array(catalog, ++matched_index_up);
-        };
-        if (strcmp(get_passenger_userID(data2), userID) != 0) matched_index_up--;
+            free(data2_id);
+            data2_id = get_passenger_userID((Passenger)data2);
+        }
+        if (strcmp(data2_id, userID) != 0) matched_index_up--;
+        free(data2_id);
 
         return (matched_index_up - matched_index_down + 1);
     } else {

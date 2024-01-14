@@ -55,10 +55,12 @@ void reservationsCatalog_write_to_catalog(void* _reservation, ParserStore store)
     RESERVATION* reservation = (RESERVATION*)_reservation;
 
     int id = get_reservation_id(reservation);
+    char *userID = get_reservation_userID(reservation);
     Catalog* reservation_catalog = g_array_index(store, Catalog*, 3);
     Catalog* user_catalog = g_array_index(store, Catalog*, 2);
-    User user = catalog_search_in_str_hashtable(user_catalog, get_reservation_userID(reservation));
-
+    
+    User user = catalog_search_in_str_hashtable(user_catalog, userID);
+    free(userID);
 
     add_user_information(user, calculate_reservation_total_price(reservation)); 
 

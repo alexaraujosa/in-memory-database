@@ -38,7 +38,7 @@ gint passengersCatalog_userID_compare_func(gconstpointer passenger_A, gconstpoin
     const Passenger* passenger = (const Passenger*)passenger_A;
     char* userID2 = (char*)passenger_userID;
 
-    char* userID1 = strdup(get_passenger_userID(*passenger));
+    char* userID1 = get_passenger_userID(*passenger);
     int result = strcmp(userID1, userID2);
 
     free(userID1);

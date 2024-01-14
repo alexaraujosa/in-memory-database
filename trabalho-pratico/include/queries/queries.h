@@ -41,7 +41,7 @@ typedef struct {
     int n_flights;
     int n_reservas;
     double total_spent;
-} Query1_user;
+}QUERY1_USER, *Query1_user;
 
 typedef struct {
     char* airline;
@@ -52,7 +52,7 @@ typedef struct {
     int schedule_arrival_date;
     int passangers;
     short int delay;
-} Query1_flight;
+}QUERY1_FLIGHT, *Query1_flight;
 
 typedef struct {
     short int hotelID;
@@ -63,13 +63,13 @@ typedef struct {
     bool breakfast;
     int nights;
     double total_price;
-} Query1_reservation;
+}QUERY1_RESERVATION, *Query1_reservation;
 
-typedef union query1_info {
+typedef struct query1_info {
     short int type;  // 1 = user, 2 = flight, 3 = reservation
-    Query1_user* user_info;
-    Query1_flight* flight_info;
-    Query1_reservation* reservation_info;
+    Query1_user user_info;
+    Query1_flight flight_info;
+    Query1_reservation reservation_info;
 } Q_INFO1, *Q_info1;
 
 typedef struct query2_info {
