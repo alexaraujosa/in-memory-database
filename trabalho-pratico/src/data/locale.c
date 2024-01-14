@@ -379,6 +379,14 @@ DataLocale get_locale(DataLocales locales, char* id) {
     return g_hash_table_lookup(locales->locales, id);
 }
 
+char* get_locale_id(DataLocale locale) {
+    return strdup(locale->id);
+}
+
+char* get_locale_name(DataLocale locale) {
+    return strdup(locale->name);
+}
+
 // ============== LOCALIZED STRINGS ==============
 inline int has_localized_string(DataLocale locale, char* key) {
     return g_hash_table_contains(locale->translations, key);

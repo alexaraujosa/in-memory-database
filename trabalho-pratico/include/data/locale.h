@@ -40,6 +40,20 @@ int has_locale(DataLocales locales, char* id);
 DataLocale get_locale(DataLocales locales, char* id);
 
 /**
+ * @brief Returns the id of a locale.
+ * 
+ * @param locale The locale.
+ */
+char* get_locale_id(DataLocale locale);
+
+/**
+ * @brief Returns the name of a locale.
+ * 
+ * @param locale The locale.
+ */
+char* get_locale_name(DataLocale locale);
+
+/**
  * @brief Checks whether a localized string is present in a locale.
  * 
  * @param locale The Locale to search.
