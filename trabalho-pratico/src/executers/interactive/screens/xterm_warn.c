@@ -20,7 +20,7 @@ Cache make_cache_xterm_warn(GM_Term term, FrameStore store) {
 
     destroy_tokens(lines);
     
-    DrawText dt = make_draw_text(text, len, x, y);
+    DrawText dt = make_draw_text(text, len, x, y, lines->len, max_col);
     // memoize_cache_elem(cache, LOCALE_SCREEN_XTERM_NOT_SUPPORTED, dt);
     add_cache_elem(cache, LOCALE_SCREEN_XTERM_NOT_SUPPORTED, dt);
 
