@@ -26,9 +26,11 @@ typedef struct draw_text {
     int len;
     int x;
     int y;
+    int rows;
+    int cols;
 } DRAW_TEXT, *DrawText;
 
-DrawText make_draw_text(char* text, int len, int x, int y);
+DrawText make_draw_text(char* text, int len, int x, int y, int rows, int cols);
 void destroy_draw_text(DrawText dt);
 
 #endif
