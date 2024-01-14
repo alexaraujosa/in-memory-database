@@ -12,12 +12,9 @@
 #include "util/date.h"
 #include "parser/parser.h"
 
-#define MAX_USER_ID_LEN 60
+#define MAX_USER_ID_LEN 35
 
-// Lenght of the largest portuguese proper noun:
-// "Manuel Maria Filipe Carlos Amélio Luís Miguel Rafael Gabriel Gonzaga Xavier "
-// "Francisco de Assis Eugénio de Bragança Orleães Sabóia e Saxe-Coburgo-Gotha"
-#define MAX_NAME_LEN 156
+#define MAX_NAME_LEN 35
 
 #define MAX_USER_PASSPORT_LEN 8
 

@@ -8,9 +8,9 @@
 #include "util/date.h"
 #include "user.h"
 
-#define MAX_PLANE_NAME_LEN 60
+#define MAX_PLANE_NAME_LEN 15
 
-#define MAX_AIRLINE_NAME_LEN 60
+#define MAX_AIRLINE_NAME_LEN 35
 
 #define LOCATION_LEN 3
 
