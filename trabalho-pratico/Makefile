@@ -1,5 +1,5 @@
 CC        := gcc
-_C_FLAGS := -Wall -Wextra
+_C_FLAGS := -Wall -Wextra #-DGM_WIDECHAR
 C_OPT_FLAGS := -O2
 C_DEBUG_FLAGS := -Og -g -ggdb3 -D_DEBUG -fkeep-inline-functions
 GLIB_FLAGS := `pkg-config --cflags glib-2.0`
@@ -13,18 +13,17 @@ INCLUDE	:= include
 LIB		:= lib
 EXECUTABLE	:= programa-principal
 
-LIBRARIES	:=`pkg-config --libs glib-2.0` -lm 
+LIBRARIES	:=`pkg-config --libs glib-2.0` -lm -lncurses
 # EXEC_PATH := $(BIN)/$(EXECUTABLE)
 EXEC_PATH := $(EXECUTABLE)
 
-SRC_FILES := $(wildcard $(SRC)/**/*.c $(wildcard $(SRC)/*.c))
+SRC_FILES := $(shell find $(SRC) -name "*.c")
 OBJ_FILES := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRC_FILES))
 DEP_FILES := $(patsubst $(SRC)/%.c,$(OBJ)/%.d,$(SRC_FILES))
-SRC_DIRS  := $(wildcard $(SRC)/**/)
+SRC_DIRS  := $(shell find $(SRC) -mindepth 1 -type d)
 OBJ_DIRS  := $(patsubst $(SRC)/%,$(OBJ)/%,$(SRC_DIRS))
 
 all: $(EXEC_PATH)
-
 
 debug: C_FLAGS = $(_C_FLAGS) $(C_DEBUG_FLAGS) $(GLIB_FLAGS)
 debug: $(EXEC_PATH)
