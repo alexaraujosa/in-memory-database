@@ -61,6 +61,8 @@ Tokens _ll_tokenize(char *line, ssize_t len) {
 }
 
 void _ll_preprocess(FILE* stream, ParserStore store, va_list args) {
+    IGNORE_ARG(stream);
+
     // ------- Line Number -------
     int* line = (int*)malloc(sizeof(int));
     *line = -1;
@@ -70,26 +72,15 @@ void _ll_preprocess(FILE* stream, ParserStore store, va_list args) {
     // ------- Locale struct -------
     DataLocale** locale = va_arg(args, DataLocale**);
     DataLocale _loc = (DataLocale)malloc(sizeof(DATA_LOCALE));
-    _loc->id = 0x1;
+    _loc->id = NULL;
     _loc->translations = g_hash_table_new_full(g_str_hash, g_str_equal, free, free);
     **locale = _loc;
-
-    // *locale = (DataLocale)malloc(sizeof(DATA_LOCALE));
-    // (*locale)->id = 0x1;
-    // (*locale)->translations = g_hash_table_new_full(g_str_hash, g_str_equal, free, free);
-    // locale = (DataLocale)malloc(sizeof(DATA_LOCALE));
-    // locale->id = 0x1;
-    // locale->translations = g_hash_table_new_full(g_str_hash, g_str_equal, free, free);
-
-    // g_array_append_vals(store, locale, 1);
     g_array_append_vals(store, &_loc, 1);
 
     // ------- Locale Path -------
     char* path = va_arg(args, char*);
     char* _path = strdup(path);
     g_array_append_vals(store, &_path, 1);
-
-    int aaa = NULL;
 }
 
 int _ll_verify(Tokens tokens, ParserStore store) {
@@ -255,23 +246,29 @@ void _ll_write(void* _data, ParserStore store) {
                 locale->name = strdup(data->value);
                 break;
             }
+            default:
+                // If you reach this part, you fucked up real bad.
         }
     } else {
         g_hash_table_insert(locale->translations, strdup(data->name), strdup(data->value));
     }
 
+    free(data->value);
     free(_data);
 }
 
 void _ll_discard(void* data, ParserStore store) {
+    IGNORE_ARG(data);
+    IGNORE_ARG(store);
     // Do fuck all
 }
 
 void _ll_destruct(FILE* stream, ParserStore store) {
+    IGNORE_ARG(stream);
+
     int* line = g_array_index(store, int*, 0);
     free(line);
 
-    DataLocale locale = g_array_index(store, DataLocale, 1);
     g_array_remove_index(store, 1);
     
     char* path = g_array_index(store, char*, 2);
@@ -334,7 +331,7 @@ DataLocales load_locales() {
     locales->len = 0;
 
     GArray* files = get_files(locale_dir);
-    for (int i = 0; i < files->len; i++) {
+    for (ssize_t i = 0; i < files->len; i++) {
         char* file = g_array_index(files, char*, i);
 
         Tokens fname = tokenize_char_delim(file, strlen(file), ".");
@@ -359,6 +356,9 @@ DataLocales load_locales() {
 }
 
 void _destroy_locale_ghr(gpointer key, gpointer value, gpointer user_data) {
+    IGNORE_ARG(key);
+    IGNORE_ARG(user_data);
+
     destroy_locale((DataLocale)value);
 }
 
@@ -374,7 +374,7 @@ inline int has_locale(DataLocales locales, char* id) {
 }
 
 DataLocale get_locale(DataLocales locales, char* id) {
-    if (!has_locale(locales, id)) return NULL;
+    if (!has_locale(locales, id)) return NULL; // TODO: Fucking crash?
 
     return g_hash_table_lookup(locales->locales, id);
 }
@@ -399,14 +399,14 @@ char* get_localized_string_formatted(DataLocale locale, char* key, ...) {
     char* format = get_localized_string(locale, key);
 
     va_list args;
-    va_start(args, format);
+    va_start(args, key);
 
     int length = vsnprintf(NULL, 0, format, args);
     va_end(args);
 
     if (length < 0) return NULL;
 
-    va_start(args, format);
+    va_start(args, key);
 
     char *result = (char *)malloc(length + 1);
     if (result == NULL) {
