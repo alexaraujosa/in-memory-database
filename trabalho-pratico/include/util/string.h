@@ -17,9 +17,6 @@
 
 #include "parser/parser.h"
 
-#define xstr(s) str(s)
-#define str(s) #s
-
 #define TIME_T_SYSTEM 1696118400
 
 #define IS_NULL(ARG)         ((ARG) == NULL)
