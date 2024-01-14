@@ -233,4 +233,10 @@ char* to_upper_string(char* parameter);
  */
 int string_to_based_int(char* input, int base);
 
+typedef struct max_cols_and_rows {
+    int cols;
+    int rows;
+} MAX_COLS_AND_ROWS;
+MAX_COLS_AND_ROWS get_max_rows_and_cols(char* line, ssize_t len);
+
 #endif

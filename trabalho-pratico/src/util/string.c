@@ -342,3 +342,22 @@ int string_to_based_int(char* input, int base) {
     
     return l;
 }
+
+MAX_COLS_AND_ROWS get_max_rows_and_cols(char* line, ssize_t len) {
+    Tokens lines = get_lines(line, len);
+
+    int max_col = 0;
+    for (int i = 0; i < lines->len; i++) {
+        int len = strlen(lines->data[i]);
+        if (max_col < len) max_col = len; 
+    }
+
+    MAX_COLS_AND_ROWS mcar = (MAX_COLS_AND_ROWS){
+        .cols = max_col,
+        .rows = lines->len
+    };
+
+    destroy_tokens(lines);
+
+    return mcar;
+}
