@@ -305,7 +305,7 @@ gint sort_Q6(gconstpointer a, gconstpointer b){
 
     if(value1->passangers > value2->passangers) return -1;
     if(value1->passangers < value2->passangers) return 1;
-    return 0;
+    return(strcmp(value1->origin, value2->origin));
 }
 
 void query6(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
@@ -442,29 +442,28 @@ void query8(char flag, int argc, char** argv, void** catalogues, FILE* output_fi
     int end_date = date_string_notime_to_int(argv[2]);
     gboolean exists = catalog_exists_in_array(catalogues[3], GINT_TO_POINTER(hotel_id), &reservationsCatalog_hotelID_compare_func, &matched_index);
     if (exists) {
-        void* data = catalog_search_in_array(catalogues[3], matched_index);
-        g_array_append_val(arrTemp, data);
-        int matched_index_down = matched_index - 1;
-        int matched_index_up = matched_index + 1;
+        int matched_index_down = matched_index;
         void* data1 = catalog_search_in_array(catalogues[3], matched_index_down);
-        void* data2 = catalog_search_in_array(catalogues[3], matched_index_up);
+
+        g_array_append_val(arrTemp, data1);
+
         while (
             hotel_id == get_reservation_hotelID((Reservation)data1) &&
-            matched_index_down >= 0) {
-            data1 = catalog_search_in_array(catalogues[3], matched_index_down);
+            matched_index_down > 0) {
+            data1 = catalog_search_in_array(catalogues[3], --matched_index_down);
             g_array_append_val(arrTemp, data1);
-            matched_index_down--;
-            if (matched_index_down < 0) break;
-            data1 = catalog_search_in_array(catalogues[3], matched_index_down);
         };
+        if(hotel_id != get_reservation_hotelID((Reservation)data1)) g_array_remove_index(arrTemp, arrTemp->len - 1);
+
+        int matched_index_up = matched_index;
+        void* data2 = catalog_search_in_array(catalogues[3], matched_index_up);
         while (
             hotel_id == get_reservation_hotelID((Reservation)data2) &&
-            matched_index_up != catalog_get_item_count(catalogues[3])) {
-            data2 = catalog_search_in_array(catalogues[3], matched_index_up);
+            (int)matched_index_up < catalog_get_item_count(catalogues[3])-1) {
+            data2 = catalog_search_in_array(catalogues[3], ++matched_index_up);
             g_array_append_val(arrTemp, data2);
-            matched_index_up++;
-            data2 = catalog_search_in_array(catalogues[3], matched_index_up);
         };
+        if(hotel_id != get_reservation_hotelID((Reservation)data2)) g_array_remove_index(arrTemp, arrTemp->len - 1);
 
         // g_array_sort(arrTemp, &reservation_date_compare_func);
     }

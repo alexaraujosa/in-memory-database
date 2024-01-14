@@ -37,8 +37,8 @@ typedef struct {
     bool sex;
     uint8_t age;
     char* country_code;
-    char* passport;
     int n_flights;
+    char* passport;
     int n_reservas;
     double total_spent;
 } QUERY1_USER, *Query1_user;
