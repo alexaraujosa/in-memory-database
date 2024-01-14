@@ -6,7 +6,8 @@
 typedef void(*ScreenDrawFunction)(GM_Term, FrameStore);
 
 typedef enum screen_id {
-    SCREEN_XTERM_WARN
+    SCREEN_XTERM_WARN,
+    SCREEN_SETTINGS
 } ScreenId;
 
 ScreenDrawFunction manage_screen(ScreenId id, GM_Term term, FrameStore store);
