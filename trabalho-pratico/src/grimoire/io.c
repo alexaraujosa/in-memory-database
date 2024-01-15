@@ -31,6 +31,14 @@
 #define GM_CAP_KEY_F11 key_f11 // 27 91 50 50 126
 #define GM_CAP_KEY_F12 key_f12 // 27 91 50 52 126
 
+#define GM_CAP_KEY_ARROW_UP    key_up
+#define GM_CAP_KEY_ARROW_DOWN  key_down
+#define GM_CAP_KEY_ARROW_LEFT  key_left
+#define GM_CAP_KEY_ARROW_RIGHT key_right
+#define GM_CAP_KEY_ARROW_LEFT_SHIFT  key_sleft
+#define GM_CAP_KEY_ARROW_RIGHT_SHIFT key_sright
+
+
 int gm_kbhit() {
     struct timeval tv = { 0L, 0L };
     fd_set fds;
@@ -55,15 +63,20 @@ char gm_getch() {
 GM_Key gm_get_key(GM_Term term) {
     #define SCOPE "gm_get_key"
 
-    // TODO: Move this out, cannot be freed
-    // static Cache key_caps = NULL;
-    // if (key_caps == NULL) key_caps = make_cache(free);
-
     char sequence[MAX_KEY_SEQUENCE] = { 0 };
     uint8_t ind = 0;
 
+    int flush = 0;
     while (gm_kbhit()) {
-        sequence[ind++] = gm_getch();
+        char part = gm_getch();
+        
+        if (flush) continue;
+        if (part == '\033' && ind > 2) {
+            flush = 1;
+            continue;
+        }
+
+        sequence[ind++] = part;
     }
 
     if (ind == 1) {
@@ -72,31 +85,6 @@ GM_Key gm_get_key(GM_Term term) {
 
         return sequence[0];
     } else {
-        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F1)))  return GM_KEY_F1;
-        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F2)))  return GM_KEY_F2;
-        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F3)))  return GM_KEY_F3;
-        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F4)))  return GM_KEY_F4;
-        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F5)))  return GM_KEY_F5;
-        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F6)))  return GM_KEY_F6;
-        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F7)))  return GM_KEY_F7;
-        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F8)))  return GM_KEY_F8;
-        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F9)))  return GM_KEY_F9;
-        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F10))) return GM_KEY_F10;
-        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F11))) return GM_KEY_F11;
-        // if (STRING_EQUAL(sequence, MEMOIZE_CAP(term->key_caps, GM_CAP_KEY_F12))) return GM_KEY_F12;
-
-        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F1)))  return GM_KEY_F1;
-        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F2)))  return GM_KEY_F2;
-        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F3)))  return GM_KEY_F3;
-        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F4)))  return GM_KEY_F4;
-        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F5)))  return GM_KEY_F5;
-        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F6)))  return GM_KEY_F6;
-        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F7)))  return GM_KEY_F7;
-        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F8)))  return GM_KEY_F8;
-        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F9)))  return GM_KEY_F9;
-        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F10))) return GM_KEY_F10;
-        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F11))) return GM_KEY_F11;
-        // if (STRING_EQUAL(sequence, gm_term_get_key_cap(term, GM_CAP_KEY_F12))) return GM_KEY_F12;
         if (STRING_EQUAL(sequence, GM_CAP_KEY_F1))  return GM_KEY_F1;
         if (STRING_EQUAL(sequence, GM_CAP_KEY_F2))  return GM_KEY_F2;
         if (STRING_EQUAL(sequence, GM_CAP_KEY_F3))  return GM_KEY_F3;
@@ -109,6 +97,14 @@ GM_Key gm_get_key(GM_Term term) {
         if (STRING_EQUAL(sequence, GM_CAP_KEY_F10)) return GM_KEY_F10;
         if (STRING_EQUAL(sequence, GM_CAP_KEY_F11)) return GM_KEY_F11;
         if (STRING_EQUAL(sequence, GM_CAP_KEY_F12)) return GM_KEY_F12;
+
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_UP))    return GM_KEY_ARROW_UP;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_DOWN))  return GM_KEY_ARROW_DOWN;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_LEFT))  return GM_KEY_ARROW_LEFT;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_RIGHT)) return GM_KEY_ARROW_RIGHT;
+
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_LEFT_SHIFT))  return GM_KEY_ARROW_LEFT | GM_MOD_SHIFT;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_RIGHT_SHIFT)) return GM_KEY_ARROW_RIGHT | GM_MOD_SHIFT;
     }
 
     return GM_KEY_NUL;

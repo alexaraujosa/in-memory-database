@@ -166,6 +166,7 @@ int gm_term_remove_tui_resize_listener(GM_Term term, GM_TERMINAL_RESIZE_LISTENER
 void gm_setup_terminal_attributes() {
     #define SCOPE "gm_setup_terminal_attributes"
     setupterm(NULL, STDOUT_FILENO, (int*)0);
+    printf(keypad_xmit);
 
     if (tcgetattr(STDIN_FILENO, &gm_original_terminal) == -1) {
         printf("%s\n", trace_msg(SCOPE, "Error trying to read terminal attributes."));
@@ -191,6 +192,8 @@ void gm_setup_terminal_attributes() {
 
 void gm_restore_terminal_attributes() {
     #define SCOPE "gm_setup_terminal_attributes"
+    
+    printf(keypad_local);
     // After literal HOURS during New Year's Eve reading man pages, the NCurses source code
     // and a lot of mental sanity completely obliterated, I found out that THIS FUCKER SOLVES the TERMINFO MEMLEAKS.
     del_curterm(cur_term);
