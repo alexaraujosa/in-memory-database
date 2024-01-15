@@ -24,29 +24,32 @@ typedef uint16_t GM_Key;
 
 // TODO: Add HOME, etc.
 #define GM_KEY_NUL 0
-#define GM_KEY_ENTER 10
-#define GM_KEY_ESCAPE 27
-#define GM_KEY_SPACE 32
+// #define GM_KEY_ENTER 10
+#define GM_KEY_ESCAPE '\033' // 27
+#define GM_KEY_SPACE ' ' // 32
 #define GM_KEY_BACKSPACE 127
 #define GM_KEY_DELETE 177
 
-#define GM_KEY_F1  (0xFF + 1) 
-#define GM_KEY_F2  (0xFF + 2) 
-#define GM_KEY_F3  (0xFF + 3) 
-#define GM_KEY_F4  (0xFF + 4) 
-#define GM_KEY_F5  (0xFF + 5) 
-#define GM_KEY_F6  (0xFF + 6) 
-#define GM_KEY_F7  (0xFF + 7) 
-#define GM_KEY_F8  (0xFF + 8) 
-#define GM_KEY_F9  (0xFF + 9) 
-#define GM_KEY_F10 (0xFF + 10)
-#define GM_KEY_F11 (0xFF + 11)
-#define GM_KEY_F12 (0xFF + 12)
 
-#define GM_KEY_ARROW_UP    0xFF + 13
-#define GM_KEY_ARROW_DOWN  0xFF + 14
-#define GM_KEY_ARROW_RIGHT 0xFF + 15
-#define GM_KEY_ARROW_LEFT  0xFF + 16
+#define GM_KEY_ENTER (0xFF + 1)
+
+#define GM_KEY_F1  (0xFF + 11) 
+#define GM_KEY_F2  (0xFF + 12) 
+#define GM_KEY_F3  (0xFF + 13) 
+#define GM_KEY_F4  (0xFF + 14) 
+#define GM_KEY_F5  (0xFF + 15) 
+#define GM_KEY_F6  (0xFF + 16) 
+#define GM_KEY_F7  (0xFF + 17) 
+#define GM_KEY_F8  (0xFF + 18) 
+#define GM_KEY_F9  (0xFF + 19) 
+#define GM_KEY_F10 (0xFF + 20)
+#define GM_KEY_F11 (0xFF + 21)
+#define GM_KEY_F12 (0xFF + 22)
+
+#define GM_KEY_ARROW_UP    (0xFF + 23)
+#define GM_KEY_ARROW_DOWN  (0xFF + 24)
+#define GM_KEY_ARROW_RIGHT (0xFF + 25)
+#define GM_KEY_ARROW_LEFT  (0xFF + 26)
 #define GM_KEY_CTRL_A 1
 #define GM_KEY_CTRL_B 2
 #define GM_KEY_CTRL_C 3

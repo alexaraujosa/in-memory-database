@@ -14,10 +14,9 @@
 // Maximum number of codes per key.
 #define MAX_KEY_SEQUENCE 10
 
-// Cache capabilities to reduce memory usage
-// #define MEMOIZE_CAP(cache, key) memoize_cache_elem(cache, key, tigetstr(key))
-
 // Capabilities returned from terminfo
+// #define GM_CAP_KEY_ENTER key_enter
+
 #define GM_CAP_KEY_F1  key_f1  // 27 91 80
 #define GM_CAP_KEY_F2  key_f2  // 27 91 81
 #define GM_CAP_KEY_F3  key_f3  // 27 91 82
@@ -79,7 +78,13 @@ GM_Key gm_get_key(GM_Term term) {
         sequence[ind++] = part;
     }
 
+    // Ambiguous sequences
+    // if (STRING_EQUAL(sequence, GM_CAP_KEY_ENTER)) return GM_KEY_ENTER;
+
     if (ind == 1) {
+        // For some fucking reason, enter is not the same sequence returned by terminfo. Fuck it ig.
+        if (sequence[0] == '\r') return GM_KEY_ENTER;
+
         if (isalpha(sequence[0]) && CHAR_IS_UPPER(sequence[0])) return char_tolower(sequence[0]) | GM_MOD_SHIFT;
         if (GM_IS_CTRL(sequence[0])) return sequence[0] | GM_MOD_CTRL;
 
