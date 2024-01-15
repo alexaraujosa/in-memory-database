@@ -4,6 +4,7 @@
 #include "grimoire/grimoire.h"
 #include "data/locale.h"
 #include "data/locale_keys.h"
+#include "data/settings.h"
 #include "cache/cache.h"
 
 enum color_ids {
@@ -37,6 +38,7 @@ typedef struct frame_store {
     DataLocales locales;
     DataLocale current_locale;
     GHashTable* screen_caches;
+    DataSettings settings;
 } FRAME_STORE, *FrameStore;
 
 typedef struct draw_text {

@@ -55,8 +55,15 @@ void interactive(DataLocales locales) {
     }
     // store.is_XTerm = NOT_XTERM_UNCONFIRMED;
 
+    // ------ Read settings file -------
+    store.settings = read_data_settings();
+
+    // ------ Load locales -------
     store.locales = locales;
-    store.current_locale = get_locale(locales, "en_US"); // TODO: Load from settings
+    // store.current_locale = get_locale(locales, "en_US"); // TODO: Load from settings
+    char* cur_loc_id = ds_get_locale(store.settings);
+    store.current_locale = get_locale(locales, cur_loc_id);
+    free(cur_loc_id);
 
     store.screen_caches = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, NULL);
 
@@ -93,8 +100,11 @@ void interactive(DataLocales locales) {
         }
     }
 
-    // ======= Destroy Terminal =======
+    // ======= Destroy FrameStore =======
     destroy_screens(term, &store);
+    destroy_data_settings(store.settings);
+
+    // ======= Destroy Terminal =======
     gm_term_end(term);
 }
 
