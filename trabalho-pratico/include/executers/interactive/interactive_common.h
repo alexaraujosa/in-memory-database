@@ -6,6 +6,24 @@
 #include "data/locale_keys.h"
 #include "cache/cache.h"
 
+enum color_ids {
+    COLOR_DEFAULT_BG = 0,
+    COLOR_DEFAULT_FG = 1,
+    COLOR_WHITE = 2,
+    COLOR_BLACK
+};
+
+enum color_pair_ids {
+    COLORPAIR_DEFAULT = 0,
+    COLORPAIR_SELECTED = 1
+};
+
+typedef enum keypress_code {
+    KEY_SKIP,
+    KEY_RECIEVED,
+    KEY_ABORT
+} Keypress_Code;
+
 typedef enum xterm_state {
     UNINITIALIZED = 0,
     IS_XTERM,

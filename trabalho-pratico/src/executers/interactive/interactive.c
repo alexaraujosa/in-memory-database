@@ -10,12 +10,6 @@
 #pragma GCC push_options
 #pragma GCC optimize ("O0")
 
-typedef enum keypress_code {
-    KEY_SKIP,
-    KEY_RECIEVED,
-    KEY_ABORT
-} Keypress_Code;
-
 int make_frame(GM_Term term, FrameStore store);
 int build_frame(GM_Term term, FrameStore store);
 
@@ -32,13 +26,18 @@ void interactive(DataLocales locales) {
     // ------- Initialize Color Pairs -------
     gm_init_color_defaults(term);
 
-    gm_init_color(term, 2, 255, 0 , 0);
-    gm_init_color(term, 3, 0, 255 , 0);
-    gm_init_color(term, 4, 0, 0 , 255);
+    // gm_init_color(term, 2, 255, 0 , 0);
+    // gm_init_color(term, 3, 0, 255 , 0);
+    // gm_init_color(term, 4, 0, 0 , 255);
 
-    gm_init_color_pair(term, 1, 2, 3);
-    gm_init_color_pair(term, 2, 2, 4);
-    gm_init_color_pair(term, 3, 3, 4);
+    // gm_init_color_pair(term, 1, 2, 3);
+    // gm_init_color_pair(term, 2, 2, 4);
+    // gm_init_color_pair(term, 3, 3, 4);
+
+    gm_init_color(term, COLOR_WHITE, 255, 255, 255);
+    gm_init_color(term, COLOR_BLACK, 0, 0, 0);
+
+    gm_init_color_pair(term, COLORPAIR_SELECTED, COLOR_WHITE, COLOR_BLACK);
 
     // ------- Initialize Screen -------
     gm_hide_cursor(term);
@@ -49,12 +48,12 @@ void interactive(DataLocales locales) {
         .is_XTerm = 0
     };
 
-    // if (gm_term_is_xterm(term)) store.is_XTerm = IS_XTERM;
-    // else {
-    //     store.is_XTerm = NOT_XTERM_UNCONFIRMED;
-    //     store.awaiting_keypress = 1;
-    // }
-    store.is_XTerm = NOT_XTERM_UNCONFIRMED;
+    if (gm_term_is_xterm(term)) store.is_XTerm = IS_XTERM;
+    else {
+        store.is_XTerm = NOT_XTERM_UNCONFIRMED;
+        store.awaiting_keypress = 1;
+    }
+    // store.is_XTerm = NOT_XTERM_UNCONFIRMED;
 
     store.locales = locales;
     store.current_locale = get_locale(locales, "en_US"); // TODO: Load from settings
@@ -108,7 +107,9 @@ int make_frame(GM_Term term, FrameStore store) {
         return 0;
     }
 
-    gm_printf(term, 0, 0, "Hello there.");
+    manage_screen(SCREEN_SETTINGS, term, store);
+
+    // gm_printf(term, 0, 0, "Hello there.");
 
     return 0;
 }
@@ -129,6 +130,8 @@ Keypress_Code handle_keypresses(GM_Term term, FrameStore store) {
     if (store->is_XTerm == NOT_XTERM_UNCONFIRMED) {
         store->is_XTerm = NOT_XTERM_CONFIRMED;
     }
+
+    keypress_screen(SCREEN_SETTINGS, term, store, key);
 
     return KEY_RECIEVED;
 }
