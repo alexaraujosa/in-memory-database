@@ -60,6 +60,8 @@ char gm_getch() {
 }
 
 GM_Key gm_get_key(GM_Term term) {
+    IGNORE_ARG(term);
+
     #define SCOPE "gm_get_key"
 
     char sequence[MAX_KEY_SEQUENCE] = { 0 };
@@ -131,21 +133,21 @@ GM_Key gm_get_canonical_key(GM_Key key) {
  */
 
 void gm_hide_cursor(GM_Term term) {
-    // char* civis = gm_term_get_key_cap(term, "civis");
+    IGNORE_ARG(term);
 
-    printf(cursor_invisible);
+    printf("%s", cursor_invisible);
     fflush(stdout);
 }
 
 void gm_show_cursor(GM_Term term) {
-    // char* cnorm = gm_term_get_key_cap(term, "cnorm");
+    IGNORE_ARG(term);
 
-    printf(cursor_normal);
+    printf("%s", cursor_normal);
     fflush(stdout);
 }
 
 void gm_clear(int flush) {
-    printf(clear_screen);
+    printf("%s", clear_screen);
     if (flush) fflush(stdout);
 }
 

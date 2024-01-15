@@ -329,16 +329,16 @@ char* to_upper_string(char* parameter) {
 }
 
 int string_to_based_int(char* input, int base) {
-    if (input[0] == '\0' || isspace(input[0])) return NAN;
+    if (input[0] == '\0' || isspace(input[0])) return -0x7fffffff;
     errno = 0;
 
     char *end;
     long l = strtol(input, &end, base);
 
     /* Both checks are needed because INT_MAX == LONG_MAX is possible. */
-    if (l > INT_MAX || (errno == ERANGE && l == LONG_MAX)) return NAN;
-    if (l < INT_MIN || (errno == ERANGE && l == LONG_MIN)) return NAN;
-    if (*end != '\0') return NAN;
+    if (l > INT_MAX || (errno == ERANGE && l == LONG_MAX)) return -0x7fffffff;
+    if (l < INT_MIN || (errno == ERANGE && l == LONG_MIN)) return -0x7fffffff;
+    if (*end != '\0') return -0x7fffffff;
     
     return l;
 }

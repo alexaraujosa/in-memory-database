@@ -171,7 +171,6 @@ PathExistsStat _path_exists(char* path, struct stat* info_out) {
             // Error
             return PATH_ERROR;
         }
-        return;
     }
 
     *info_out = info;
@@ -190,4 +189,6 @@ PathType path_type(char* path) {
 
     if (S_ISDIR(info.st_mode)) return PATH_TYPE_DIR;
     else if (S_ISREG(info.st_mode)) return PATH_TYPE_FILE;
+
+    return PATH_TYPE_UNKNOWN;
 }

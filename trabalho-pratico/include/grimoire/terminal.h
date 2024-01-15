@@ -37,10 +37,6 @@ typedef GM_TERMINAL_RESIZE_LISTENER(TermResizeListener);
 
 void gm_refresh(GM_Term term);
 
-// void gm_setup_tui_events();
-// void gm_close_tui_events();
-// char* gm_term_get_key_cap(GM_Term term, char* key);
-
 int gm_term_add_tui_resize_listener(GM_Term term, GM_TERMINAL_RESIZE_LISTENER(listener));
 int gm_term_remove_tui_resize_listener(GM_Term term, GM_TERMINAL_RESIZE_LISTENER(listener));
 

@@ -15,8 +15,9 @@ Cache make_cache_xterm_warn(GM_Term term, FrameStore store);
  * @brief Destroys the cache for the XTerm Warn screen.
  * 
  * @param cache The Cache.
+ * @param force Whether to forcefully destroy the cache, if implemented. It frees the cache and sets the pointer to NULL.
  */
-void destroy_cache_xterm_warn(Cache cache);
+void destroy_cache_xterm_warn(Cache cache, int force);
 
 /**
  * @brief Draws the XTerm Warn screen.

@@ -19,7 +19,16 @@ Cache make_cache(GFreeFunc free_func);
  * 
  * @param cache A cache instance.
  */
-void destroy_cache(Cache cache);
+void destroy_cache(Cache cache, int free_cache);
+
+/**
+ * @brief Checks whenever a non-freed cache was destroyed.
+ * 
+ * @warning This is an unsafe method, and it is the caller's responsibility to ensure the cache instance was not freed.
+ * 
+ * @param cache A cache instance.
+ */
+int is_cache_destroyed(Cache cache);
 
 /**
  * @brief Checks if a cache instance contains a key. 

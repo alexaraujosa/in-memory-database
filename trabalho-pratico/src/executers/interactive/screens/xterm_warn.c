@@ -27,12 +27,16 @@ Cache make_cache_xterm_warn(GM_Term term, FrameStore store) {
     return cache;
 }
 
-void destroy_cache_xterm_warn(Cache cache) {
+void destroy_cache_xterm_warn(Cache cache, int force) {
+    IGNORE_ARG(force);
+
     DrawText dt = get_cache_elem(cache, LOCALE_SCREEN_XTERM_NOT_SUPPORTED);
     destroy_draw_text(dt);
 }
 
 void draw_xterm_warn(GM_Term term, FrameStore store, Cache cache) {
+    IGNORE_ARG(store);
+
     GM_TERM_SIZE size = gm_term_get_size(term);
 
     gm_attroff(term, GM_RESET);
@@ -68,5 +72,10 @@ void draw_xterm_warn(GM_Term term, FrameStore store, Cache cache) {
 }
 
 Keypress_Code keypress_xterm_warn(GM_Term term, FrameStore store, Cache cache, GM_Key key) {
+    IGNORE_ARG(term);
+    IGNORE_ARG(store);
+    IGNORE_ARG(cache);
+    IGNORE_ARG(key);
+
     return KEY_SKIP;
 }

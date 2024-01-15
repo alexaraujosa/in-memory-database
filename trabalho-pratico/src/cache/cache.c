@@ -1,4 +1,5 @@
 #include "cache/cache.h"
+#include "debug.h"
 
 #ifdef _DEBUG
 #pragma GCC push_options
@@ -7,20 +8,31 @@
 
 typedef struct cache {
     GHashTable* data;
+    int destroyed;
 } CACHE, *Cache;
 
 Cache make_cache(GFreeFunc free_func) {
     Cache cache = (Cache)malloc(sizeof(CACHE));
     cache->data = g_hash_table_new_full(g_str_hash, g_str_equal, free, free_func);
     // cache->data = g_hash_table_new_full(g_direct_hash, g_direct_equal, free, free_func);
+    cache->destroyed = 0;
 
     return cache;
 }
 
-void destroy_cache(Cache cache) {
+void destroy_cache(Cache cache, int free_cache) {
     clear_cache(cache);
     g_hash_table_destroy(cache->data);
-    free(cache);
+    
+    if (free_cache) free(cache);
+    else {
+        cache->data = NULL;
+        cache->destroyed = 1;
+    }
+}
+
+int is_cache_destroyed(Cache cache) {
+    return cache->destroyed;
 }
 
 inline int has_cache_elem(Cache cache, char* key) {
@@ -64,7 +76,11 @@ int remove_cache_elem(Cache cache, char* key) {
     return 0;
 }
 
-void _clearer(gpointer key, gpointer value, gpointer user_data) {
+int _clearer(gpointer key, gpointer value, gpointer user_data) {
+    IGNORE_ARG(key);
+    IGNORE_ARG(value);
+    IGNORE_ARG(user_data);
+
     return TRUE;
 }
 void clear_cache(Cache cache) {
