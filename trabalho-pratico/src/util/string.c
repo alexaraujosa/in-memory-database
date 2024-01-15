@@ -1,4 +1,5 @@
 #include "util/string.h"
+#include "stdint.h"
 
 char* isnprintf(const char *format, ...) {
     va_list args;
@@ -360,4 +361,46 @@ MAX_COLS_AND_ROWS get_max_rows_and_cols(char* line, ssize_t len) {
     destroy_tokens(lines);
 
     return mcar;
+}
+
+char* join_strings_with_delim(char* delim, int len, ...) {
+    va_list _args;
+    va_start(_args, len);
+
+    char** args = (char**)malloc(len * sizeof(char*));
+    for (int i = 0; i < len; i++) args[i] = va_arg(_args, char*);
+
+    va_end(_args);
+
+    return join_strings_with_delim_list(delim, len, args);
+}
+
+char* join_strings_with_delim_list(char* delim, int len, char** args) {
+    int delim_len = strlen(delim);
+
+    char* parts[len];
+    int totalLen = len * delim_len;
+    for (int i = 0; i < len; i++) {
+        char* part = args[i];
+        parts[i] = part;
+        totalLen += strlen(part);
+    }
+
+    // Some fuckery to shut GCC (https://gcc.gnu.org/bugzilla//show_bug.cgi?id=85783)
+    size_t totalLenBits = totalLen * sizeof(char); 
+    if (totalLenBits >= PTRDIFF_MAX) return NULL;
+
+    char* fullStr = (char*)malloc(totalLenBits);
+    int offset = 0;
+    for (int i = 0; i < len; i++) {
+        int partLen = strlen(parts[i]);
+
+        memcpy(fullStr + offset, parts[i], partLen);
+        offset += partLen + 1;
+        if (i < len - 1) memcpy(fullStr + offset - 1, delim, delim_len);
+    }
+
+    if (fullStr[totalLen - 1] != '\0') fullStr[totalLen - 1] = '\0';
+
+    return fullStr;
 }

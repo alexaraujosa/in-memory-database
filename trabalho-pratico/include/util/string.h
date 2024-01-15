@@ -239,4 +239,8 @@ typedef struct max_cols_and_rows {
 } MAX_COLS_AND_ROWS;
 MAX_COLS_AND_ROWS get_max_rows_and_cols(char* line, ssize_t len);
 
+char* join_strings_with_delim(char* delim, int len, ...);
+
+char* join_strings_with_delim_list(char* delim, int len, char** args);
+
 #endif
