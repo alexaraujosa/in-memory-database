@@ -21,11 +21,21 @@ char* ds_get_locale(DataSettings ds) {
     return strdup(ds->locale);
 }
 
+void ds_set_locale(DataSettings ds, char* locale) {
+    free(ds->locale);
+    ds->locale = strdup(locale);
+}
+
 DataSettings make_data_settings(char* locale) {
     DataSettings ds = (DataSettings)malloc(sizeof(DATA_SETTINGS));
     ds->locale = strdup(locale);
 
     return ds;
+}
+
+void destroy_data_settings(DataSettings ds) {
+    free(ds->locale);
+    free(ds);
 }
 
 DataSettings default_settings() {
@@ -188,13 +198,14 @@ DataSettings read_data_settings() {
             );
             free(category);
         } else if (step == 5) {
-            struct _ds_str_prop prop = _ds_read_str_prop(line, read);
+            volatile struct _ds_str_prop prop = _ds_read_str_prop(line, read);
             rt_assert(
                 STRING_EQUAL(prop.key, DS_KEY_GENERAL_LOCALE),
                 trace_msg(SCOPE, "Expected property #1 of "DS_CATEGORY_GENERAL" to be '"DS_KEY_GENERAL_LOCALE"'.")
             );
 
-            if (ds->locale != NULL) ds->locale = strdup(prop.value);
+            // if (prop.value != NULL) ds->locale = strdup(prop.value);
+            if (prop.value != NULL) ds_set_locale(ds, prop.value);
 
             free(prop.key);
             free(prop.value);
@@ -208,6 +219,8 @@ DataSettings read_data_settings() {
     free(line);
 
     CLOSE_FILE(file);
+
+    free(settings_path);
 
     return ds;
     #undef SCOPE

@@ -16,8 +16,12 @@ typedef struct data_settings {
     char* locale;
 } DATA_SETTINGS, *DataSettings;
 
+// ======= DESTRUCTOR =======
+void destroy_data_settings(DataSettings ds);
+
 // ======= ACCESSORS =======
 char* ds_get_locale(DataSettings ds);
+void ds_set_locale(DataSettings ds, char* locale);
 
 // ======= OPERATORS =======
 void save_data_settings(DataSettings settings);
