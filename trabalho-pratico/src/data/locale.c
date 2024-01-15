@@ -379,6 +379,21 @@ DataLocale get_locale(DataLocales locales, char* id) {
     return g_hash_table_lookup(locales->locales, id);
 }
 
+GArray* get_all_locales(DataLocales locales) {
+    GArray* arr = g_array_new(FALSE, FALSE, sizeof(DataLocale)); 
+    GList* locs = g_hash_table_get_values(locales->locales);
+
+    GList* cur = locs;
+    while(cur != NULL) {
+        g_array_append_vals(arr, &(cur->data), 1);
+        cur = cur->next;
+    }
+
+    g_list_free(locs);
+
+    return arr;
+}
+
 char* get_locale_id(DataLocale locale) {
     return strdup(locale->id);
 }

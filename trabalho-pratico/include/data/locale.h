@@ -40,6 +40,13 @@ int has_locale(DataLocales locales, char* id);
 DataLocale get_locale(DataLocales locales, char* id);
 
 /**
+ * @brief Returns a GArray containing all DataLocales within a collection.
+ * 
+ * @param locales The locale collection to search.
+ */
+GArray* get_all_locales(DataLocales locales);
+
+/**
  * @brief Returns the id of a locale.
  * 
  * @param locale The locale.
