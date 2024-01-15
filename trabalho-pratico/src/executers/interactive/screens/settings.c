@@ -1,11 +1,13 @@
 // May God have mercy on my soul, for what I'm about to do lays beyond the limits of hell.
 
 #include "executers/interactive/screens/xterm_warn.h"
+#include "data/settings.h"
 #include "util/math.h"
 
 #define LANGUAGE_NAME_KEY "language_name"
 #define SELECTION_KEY "_selections"
 #define PAGE_SELECTION_KEY "_page"
+#define SETTINGS_KEY "_data_settings"
 #define OPTION_INDEX_KEY "_option_index"
 #define LOCALES_KEY "_locales"
 #define LOCALE_NAMES_KEY "_locale_names"
@@ -43,11 +45,11 @@ Cache make_cache_settings(GM_Term term, FrameStore store) {
     GM_TERM_SIZE size = gm_term_get_size(term);
 
     // ------- Page Selection -------
-    {
-        int* page_selection = (int*)malloc(sizeof(int));
-        *page_selection = 0;
-        add_cache_elem(cache, PAGE_SELECTION_KEY, page_selection);
+    int* page_selection = (int*)malloc(sizeof(int));
+    *page_selection = 0;
+    add_cache_elem(cache, PAGE_SELECTION_KEY, page_selection);
 
+    {
         // ------- MAIN PAGE -------
         // TITLE
         char* title = get_localized_string(store->current_locale, LOCALE_SCREEN_SETTINGS_TITLE);
@@ -216,7 +218,7 @@ void destroy_cache_settings(Cache cache, int force) {
         for (ssize_t i = 0; i < locs->len; i++) destroy_draw_text(selections[i]);
         free(selections);
         
-        g_array_free(locs, FALSE);
+        g_array_free(locs, TRUE);
     }
 
     if (force) {
@@ -292,6 +294,13 @@ Keypress_Code keypress_settings(GM_Term term, FrameStore store, Cache cache, GM_
                 }
 
                 store->current_locale = g_array_index(locs, DataLocale, *option_index);
+
+                char* loc_id = get_locale_id(store->current_locale);
+                ds_set_locale(store->settings, loc_id);
+                free(loc_id);
+
+                save_data_settings(store->settings);
+
                 destroy_cache_settings(cache, TRUE);
                 return KEY_ABORT;
             }
