@@ -14,4 +14,6 @@ ScreenDrawFunction manage_screen(ScreenId id, GM_Term term, FrameStore store);
 
 void destroy_screens(GM_Term term, FrameStore store);
 
+void keypress_screen(ScreenId id, GM_Term term, FrameStore store, GM_Key key);
+
 #endif

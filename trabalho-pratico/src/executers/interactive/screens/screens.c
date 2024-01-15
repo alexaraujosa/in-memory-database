@@ -2,12 +2,9 @@
 #include "executers/interactive/screens/xterm_warn.h"
 #include "executers/interactive/screens/settings.h"
 
-
-ScreenDrawFunction manage_screen(ScreenId id, GM_Term term, FrameStore store) {
-    static volatile int calls = 0;
-    calls++;
-
+Cache _ensure_screen_cache(ScreenId id, GM_Term term, FrameStore store) {
     Cache cache = NULL;
+
     if (!g_hash_table_contains(store->screen_caches, GINT_TO_POINTER(id))) {
         switch (id) {
             case SCREEN_XTERM_WARN: { cache = make_cache_xterm_warn(term, store); break; }
@@ -19,9 +16,27 @@ ScreenDrawFunction manage_screen(ScreenId id, GM_Term term, FrameStore store) {
         cache = g_hash_table_lookup(store->screen_caches, GINT_TO_POINTER(id));
     }
 
+    return cache;
+}
+
+ScreenDrawFunction manage_screen(ScreenId id, GM_Term term, FrameStore store) {
+    Cache cache = _ensure_screen_cache(id, term, store);
+
     switch (id) {
         case SCREEN_XTERM_WARN: { draw_xterm_warn(term, store, cache); break; }
         case SCREEN_SETTINGS:   { draw_settings(term, store, cache); break; }
+        default: {
+            // Do fuck all
+        }
+    }
+}
+
+void keypress_screen(ScreenId id, GM_Term term, FrameStore store, GM_Key key) {
+    Cache cache = _ensure_screen_cache(id, term, store);
+
+    switch (id) {
+        case SCREEN_XTERM_WARN: { keypress_xterm_warn(term, store, cache, key); break; }
+        case SCREEN_SETTINGS:   { keypress_settings(term, store, cache, key); break; }
         default: {
             // Do fuck all
         }
