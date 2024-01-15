@@ -27,6 +27,8 @@ void _draw_loc_sel(GM_Term term, FrameStore store, Cache cache);
 #pragma GCC push_options
 #pragma GCC optimize ("O0")
 DrawText make_dt_from_str(char* text, GM_TERM_SIZE size, int offsetX, int offsetY) {
+    IGNORE_ARG(size);
+
     ssize_t text_len = strlen(text);
     MAX_COLS_AND_ROWS text_mcar = get_max_rows_and_cols(text, text_len);
     int x = offsetX;
@@ -131,11 +133,11 @@ Cache make_cache_settings(GM_Term term, FrameStore store) {
         add_cache_elem(cache, LOCALES_KEY, locales);
 
         char** locnames = (char**)malloc(locales->len * sizeof(char*));
-        for (int i = 0; i < locales->len; i++) locnames[i] = get_locale_name(g_array_index(locales, DataLocale, i));
+        for (ssize_t i = 0; i < locales->len; i++) locnames[i] = get_locale_name(g_array_index(locales, DataLocale, i));
         add_cache_elem(cache, LOCALE_NAMES_KEY, locnames);
 
         int max_col = 0;
-        for (int i = 0; i < locales->len; i++) {
+        for (ssize_t i = 0; i < locales->len; i++) {
             int len = strlen(locnames[i]);
             if (max_col < len) max_col = len;
         }
@@ -146,9 +148,9 @@ Cache make_cache_settings(GM_Term term, FrameStore store) {
         DrawText* selections = (DrawText*)malloc(locales->len * sizeof(DrawText));
         int sel_ind = 0;
 
-        for (int i = 0; i < locales->len; i++) {
+        for (ssize_t i = 0; i < locales->len; i++) {
             int len = strlen(locnames[i]);
-            char* text = (char*)malloc(len * sizeof(char));
+            char* text = (char*)malloc((len + 1) * sizeof(char));
             int text_ind = 0;
             for (int j = 0; j < len; j++) text[text_ind++] = ' ';
 
@@ -160,7 +162,7 @@ Cache make_cache_settings(GM_Term term, FrameStore store) {
         add_cache_elem(cache, LOCALE_SELECTION_KEY, selections);
 
         // Option Select
-        int* loc_sel_option_index = (int*)malloc(sizeof(int));
+        ssize_t* loc_sel_option_index = (ssize_t*)malloc(sizeof(ssize_t));
         *loc_sel_option_index = 0;
         add_cache_elem(cache, LOC_SEL_OPTION_INDEX_KEY, loc_sel_option_index);
     }
@@ -168,7 +170,7 @@ Cache make_cache_settings(GM_Term term, FrameStore store) {
     return cache;
 }
 
-void destroy_cache_settings(Cache cache) {
+void destroy_cache_settings(Cache cache, int force) {
     // ------- Page Selection -------
     int* page_selection = get_cache_elem(cache, PAGE_SELECTION_KEY);
     free(page_selection);
@@ -201,20 +203,24 @@ void destroy_cache_settings(Cache cache) {
     // ------- Language Selection Screen -------
     {
         int* option_index = get_cache_elem(cache, LOC_SEL_OPTION_INDEX_KEY);
-        free(page_selection);
+        free(option_index);
         
         // Not freed immediately because it's len is required.
         GArray* locs = get_cache_elem(cache, LOCALES_KEY);
 
         char** loc_names = get_cache_elem(cache, LOCALE_NAMES_KEY);
-        for (int i = 0; i < locs->len; i++) free(loc_names[i]);
+        for (ssize_t i = 0; i < locs->len; i++) free(loc_names[i]);
         free(loc_names);
 
         DrawText* selections = get_cache_elem(cache, LOCALE_SELECTION_KEY);
-        for (int i = 0; i < locs->len; i++) destroy_draw_text(selections[i]);
+        for (ssize_t i = 0; i < locs->len; i++) destroy_draw_text(selections[i]);
         free(selections);
         
         g_array_free(locs, FALSE);
+    }
+
+    if (force) {
+        destroy_cache(cache, FALSE);
     }
 }
 
@@ -235,6 +241,8 @@ void draw_settings(GM_Term term, FrameStore store, Cache cache) {
 }
 
 Keypress_Code keypress_settings(GM_Term term, FrameStore store, Cache cache, GM_Key key) {
+    IGNORE_ARG(term);
+
     GM_Key ckey = gm_get_canonical_key(key);
 
     int* page_selection = get_cache_elem(cache, PAGE_SELECTION_KEY);
@@ -258,10 +266,12 @@ Keypress_Code keypress_settings(GM_Term term, FrameStore store, Cache cache, GM_
                     }
                 }
             }
+
+            return KEY_RECIEVED;
             break;
         }
         case SETTINGS_PAGE_LOC_SEL: {
-            int* option_index = get_cache_elem(cache, LOC_SEL_OPTION_INDEX_KEY);
+            ssize_t* option_index = get_cache_elem(cache, LOC_SEL_OPTION_INDEX_KEY);
             GArray* locs = get_cache_elem(cache, LOCALES_KEY);
 
             if (ckey == GM_KEY_ESCAPE) {
@@ -275,15 +285,35 @@ Keypress_Code keypress_settings(GM_Term term, FrameStore store, Cache cache, GM_
                 (*option_index)--;
 
                 if (*option_index == -1) *option_index = locs->len - 1;
+            } else if (ckey == GM_KEY_ENTER) {
+                if (store->current_locale == g_array_index(locs, DataLocale, *option_index)) {
+                    *page_selection = SETTINGS_PAGE_MAIN;
+                    break;
+                }
+
+                store->current_locale = g_array_index(locs, DataLocale, *option_index);
+                destroy_cache_settings(cache, TRUE);
+                return KEY_ABORT;
             }
+
+            return KEY_RECIEVED;
             break;
         }
+        default: {
+            // Silently ignore it.
+            return KEY_SKIP;
+        }
     }
+    
+    return KEY_SKIP; // STFU GCC
 }
 
 
 void _draw_main_box(GM_Term term, FrameStore store, Cache cache) {
+    IGNORE_ARG(store);
+
     GM_TERM_SIZE size = gm_term_get_size(term);
+    IGNORE_ARG(size);
 
     int* option_index = get_cache_elem(cache, OPTION_INDEX_KEY);
 
@@ -327,9 +357,12 @@ void _draw_main_box(GM_Term term, FrameStore store, Cache cache) {
 }
 
 void _draw_loc_sel(GM_Term term, FrameStore store, Cache cache) {
-    GM_TERM_SIZE size = gm_term_get_size(term);
+    IGNORE_ARG(store);
 
-    int* option_index = get_cache_elem(cache, LOC_SEL_OPTION_INDEX_KEY);
+    GM_TERM_SIZE size = gm_term_get_size(term);
+    IGNORE_ARG(size);
+
+    ssize_t* option_index = get_cache_elem(cache, LOC_SEL_OPTION_INDEX_KEY);
     GArray* locs = get_cache_elem(cache, LOCALES_KEY);
     char** loc_names = get_cache_elem(cache, LOCALE_NAMES_KEY);
 
@@ -346,7 +379,7 @@ void _draw_loc_sel(GM_Term term, FrameStore store, Cache cache) {
         selections[0]->x + selections[0]->cols
     );
 
-    for (int i = 0; i < locs->len; i++) {
+    for (ssize_t i = 0; i < locs->len; i++) {
         if (*option_index == i) gm_attron(term, GM_COLOR_PAIR(COLORPAIR_SELECTED));
 
         DrawText selection = selections[i];

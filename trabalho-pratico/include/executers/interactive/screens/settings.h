@@ -15,8 +15,9 @@ Cache make_cache_settings(GM_Term term, FrameStore store);
  * @brief Destroys the cache for the settings screen.
  * 
  * @param cache The Cache.
+ * @param force Whether to forcefully destroy the cache, if implemented. It frees the cache and sets the pointer to NULL.
  */
-void destroy_cache_settings(Cache cache);
+void destroy_cache_settings(Cache cache, int force);
 
 /**
  * @brief Draws the settings screen.
