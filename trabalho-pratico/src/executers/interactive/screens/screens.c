@@ -14,6 +14,11 @@ Cache _ensure_screen_cache(ScreenId id, GM_Term term, FrameStore store) {
         g_hash_table_insert(store->screen_caches, GINT_TO_POINTER(id), cache);
     } else {
         cache = g_hash_table_lookup(store->screen_caches, GINT_TO_POINTER(id));
+        if (is_cache_destroyed(cache)) {
+            g_hash_table_remove(store->screen_caches, GINT_TO_POINTER(id));
+            free(cache);
+            return _ensure_screen_cache(id, term, store);
+        }
     }
 
     return cache;
@@ -29,6 +34,8 @@ ScreenDrawFunction manage_screen(ScreenId id, GM_Term term, FrameStore store) {
             // Do fuck all
         }
     }
+
+    return NULL;
 }
 
 void keypress_screen(ScreenId id, GM_Term term, FrameStore store, GM_Key key) {
@@ -48,11 +55,11 @@ void _destroy_screen_caches_ghf(gpointer key, gpointer value, gpointer user_data
     IGNORE_ARG(user_data);
 
     switch ((ScreenId)key) {
-        case SCREEN_XTERM_WARN: { destroy_cache_xterm_warn((Cache)value); break; }
-        case SCREEN_SETTINGS:   { destroy_cache_settings((Cache)value); break; }
+        case SCREEN_XTERM_WARN: { destroy_cache_xterm_warn((Cache)value, FALSE); break; }
+        case SCREEN_SETTINGS:   { destroy_cache_settings((Cache)value, FALSE); break; }
     }
 
-    destroy_cache((Cache)value);
+    destroy_cache((Cache)value, TRUE);
 }
 void destroy_screens(GM_Term term, FrameStore store) {
     IGNORE_ARG(term);
