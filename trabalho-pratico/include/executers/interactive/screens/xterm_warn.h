@@ -26,5 +26,14 @@ void destroy_cache_xterm_warn(Cache cache);
  */
 void draw_xterm_warn(GM_Term term, FrameStore store, Cache cache);
 
+/**
+ * @brief Handles keypresses while on the XTterm Warn screen.
+ * 
+ * @param term The current GM_Term.
+ * @param store The current FrameStore.
+ * @param key The keypress recieved.
+ */
+Keypress_Code keypress_xterm_warn(GM_Term term, FrameStore store, Cache cache, GM_Key key);
+
 
 #endif

@@ -66,3 +66,7 @@ void draw_xterm_warn(GM_Term term, FrameStore store, Cache cache) {
 
     gm_printf(term, dl->y, dl->x, dl->text);
 }
+
+Keypress_Code keypress_xterm_warn(GM_Term term, FrameStore store, Cache cache, GM_Key key) {
+    return KEY_SKIP;
+}
