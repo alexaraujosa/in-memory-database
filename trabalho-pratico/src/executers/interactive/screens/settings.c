@@ -26,9 +26,7 @@ enum settings_pages {
 void _draw_main_box(GM_Term term, FrameStore store, Cache cache);
 void _draw_loc_sel(GM_Term term, FrameStore store, Cache cache);
 
-#pragma GCC push_options
-#pragma GCC optimize ("O0")
-DrawText make_dt_from_str(char* text, GM_TERM_SIZE size, int offsetX, int offsetY) {
+static DrawText make_dt_from_str(char* text, GM_TERM_SIZE size, int offsetX, int offsetY) {
     IGNORE_ARG(size);
 
     ssize_t text_len = strlen(text);
@@ -252,7 +250,9 @@ Keypress_Code keypress_settings(GM_Term term, FrameStore store, Cache cache, GM_
         case SETTINGS_PAGE_MAIN: {
             int* option_index = get_cache_elem(cache, OPTION_INDEX_KEY);
 
-            if (ckey == GM_KEY_ARROW_DOWN) {
+            if (ckey == GM_KEY_ESCAPE) {
+                store->current_screen = SCREEN_MAIN_MENU;
+            } else if (ckey == GM_KEY_ARROW_DOWN) {
                 (*option_index)++;
 
                 if (*option_index == MAX_OPTION_INDEX) *option_index = 0;
@@ -301,8 +301,11 @@ Keypress_Code keypress_settings(GM_Term term, FrameStore store, Cache cache, GM_
 
                 save_data_settings(store->settings);
 
-                destroy_cache_settings(cache, TRUE);
-                return KEY_ABORT;
+                // destroy_cache_settings(cache, TRUE);
+                // return KEY_ABORT;
+
+                // Invalidate every single fucking cache.
+                return KEY_SPECIAL;
             }
 
             return KEY_RECIEVED;
@@ -398,5 +401,3 @@ void _draw_loc_sel(GM_Term term, FrameStore store, Cache cache) {
         if (*option_index == i) gm_attroff(term, GM_COLOR_PAIR(COLORPAIR_SELECTED));
     }
 }
-
-#pragma GCC pop_options
