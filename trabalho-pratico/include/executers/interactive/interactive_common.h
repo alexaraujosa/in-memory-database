@@ -7,6 +7,12 @@
 #include "data/settings.h"
 #include "cache/cache.h"
 
+typedef enum screen_id {
+    SCREEN_XTERM_WARN,
+    SCREEN_SETTINGS,
+    SCREEN_MAIN_MENU
+} ScreenId;
+
 enum color_ids {
     COLOR_DEFAULT_BG = 0,
     COLOR_DEFAULT_FG = 1,
@@ -20,9 +26,10 @@ enum color_pair_ids {
 };
 
 typedef enum keypress_code {
-    KEY_SKIP,
-    KEY_RECIEVED,
-    KEY_ABORT
+    KEY_SKIP,     // Key was ignored.
+    KEY_RECIEVED, // Key was consumed successfully
+    KEY_ABORT,    // Bubble up and graciously terminate the program
+    KEY_SPECIAL   // Caller should interpret the signal, and either bubble up or return another code.
 } Keypress_Code;
 
 typedef enum xterm_state {
@@ -39,6 +46,8 @@ typedef struct frame_store {
     DataLocale current_locale;
     GHashTable* screen_caches;
     DataSettings settings;
+    ScreenId current_screen;
+
 } FRAME_STORE, *FrameStore;
 
 typedef struct draw_text {

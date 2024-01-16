@@ -67,6 +67,8 @@ void interactive(DataLocales locales) {
 
     store.screen_caches = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, NULL);
 
+    store.current_screen = SCREEN_MAIN_MENU;
+
     // ======= Frame Loop =======
     int stop = 0;
     int tickStart, tickEnd, tickDur, tickDelay;
@@ -117,7 +119,10 @@ int make_frame(GM_Term term, FrameStore store) {
         return 0;
     }
 
-    manage_screen(SCREEN_SETTINGS, term, store);
+    // manage_screen(SCREEN_SETTINGS, term, store);
+    // manage_screen(SCREEN_MAIN_MENU, term, store);
+    
+    manage_screen(store->current_screen, term, store);
 
     // gm_printf(term, 0, 0, "Hello there.");
 
@@ -141,7 +146,10 @@ Keypress_Code handle_keypresses(GM_Term term, FrameStore store) {
         store->is_XTerm = NOT_XTERM_CONFIRMED;
     }
 
-    keypress_screen(SCREEN_SETTINGS, term, store, key);
+    // keypress_screen(SCREEN_SETTINGS, term, store, key);
+    // keypress_screen(SCREEN_MAIN_MENU, term, store, key);
+    
+    return keypress_screen(store->current_screen, term, store, key);
 
     return KEY_RECIEVED;
 }
