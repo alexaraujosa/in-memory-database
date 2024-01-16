@@ -2,6 +2,10 @@
 #loc=en_US
 #locname=English (US)
 nil=<untranslated>
+exit=Sair
 screen.xterm.not_supported=          The current terminal is not supported.         \nThere is no guarantee this program will work as expected.\n                Press any key to continue. 
 screen.settings=SETTINGS
+screen.settings.propercase=Settings
 screen.settings.language=Language
+screen.main_menu=MAIN MENU
+screen.main_menu.execute_query=Execute queries

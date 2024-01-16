@@ -2,3 +2,6 @@
 #loc=pt_PT
 #locname=Português
 nil=<não traduzido>
+screen.xterm.not_supported=              O terminal atual não é suportado.             \nNão há garantia de que este programa funcionará corretamente\n          Pressione qualquer tecla para continuar.
+screen.settings=DEFINIÇÕES
+screen.settings.language=Língua
