@@ -160,7 +160,7 @@ void batch(const char* arg1, const char* arg2) {
     free(passengersdata_path);
 
     TEST_EXPR(start_time = clock();)
-    catalog_sort(passengers_catalog, (GCompareFunc)&passengersCatalog_full_compare_func);
+    // catalog_sort(passengers_catalog, (GCompareFunc)&passengersCatalog_full_compare_func);
 
 #ifdef MAKE_TEST
     end_time = clock();
