@@ -12,9 +12,9 @@
 #include "util/date.h"
 #include "parser/parser.h"
 
-#define MAX_USER_ID_LEN 35
+#define MAX_USER_ID_LEN 33
 
-#define MAX_NAME_LEN 35
+#define MAX_NAME_LEN 33
 
 #define MAX_USER_PASSPORT_LEN 8
 

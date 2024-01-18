@@ -9,7 +9,7 @@
 #include "user.h"
 
 #define HOTEL_ID_OFFSET 3
-#define MAX_HOTEL_NAME_LEN 35
+#define MAX_HOTEL_NAME_LEN 30
 
 #define RESERVATION_ID_OFFSET 4
 #define RESERVATION_HOTEL_STARS_BF 3
