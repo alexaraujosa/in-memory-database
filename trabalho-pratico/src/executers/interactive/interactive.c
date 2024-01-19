@@ -41,6 +41,7 @@ void interactive(DataLocales locales) {
 
     // ------- Initialize Screen -------
     gm_hide_cursor(term, TRUE);
+    enable_bracketed_paste(term);
 
     // ------- Initialize Frame Store -------
     FRAME_STORE store = {
@@ -107,6 +108,7 @@ void interactive(DataLocales locales) {
     destroy_data_settings(store.settings);
 
     // ======= Destroy Terminal =======
+    disable_bracketed_paste(term);
     gm_term_end(term);
 }
 

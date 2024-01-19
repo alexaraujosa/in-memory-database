@@ -10,7 +10,8 @@
 typedef enum screen_id {
     SCREEN_XTERM_WARN,
     SCREEN_SETTINGS,
-    SCREEN_MAIN_MENU
+    SCREEN_MAIN_MENU,
+    SCREEN_DATASET_QUESTION
 } ScreenId;
 
 enum color_ids {

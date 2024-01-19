@@ -25,5 +25,8 @@
 #define LOCALE_SCREEN_MAIN_MENU_TITLE "screen.main_menu"
 #define LOCALE_SCREEN_MAIN_EXECUTE_QUERY "screen.main_menu.execute_query"
 
+// ------- Dataset Question -------
+#define LOCALE_SCREEN_DATASET_QUESTION_QUESTION "screen.dataset_question.question"
+
 
 #endif

@@ -2,6 +2,7 @@
 #include "executers/interactive/screens/xterm_warn.h"
 #include "executers/interactive/screens/settings.h"
 #include "executers/interactive/screens/main_menu.h"
+#include "executers/interactive/screens/dataset_question.h"
 
 void _invalidate_screen_caches(GM_Term term, FrameStore store);
 
@@ -10,9 +11,10 @@ Cache _ensure_screen_cache(ScreenId id, GM_Term term, FrameStore store) {
 
     if (!g_hash_table_contains(store->screen_caches, GINT_TO_POINTER(id))) {
         switch (id) {
-            case SCREEN_XTERM_WARN: { cache = make_cache_xterm_warn(term, store); break; }
-            case SCREEN_SETTINGS:   { cache = make_cache_settings(term, store); break; }
-            case SCREEN_MAIN_MENU:  { cache = make_cache_main_menu(term, store); break; }
+            case SCREEN_XTERM_WARN:        { cache = make_cache_xterm_warn(term, store); break; }
+            case SCREEN_SETTINGS:          { cache = make_cache_settings(term, store); break; }
+            case SCREEN_MAIN_MENU:         { cache = make_cache_main_menu(term, store); break; }
+            case SCREEN_DATASET_QUESTION:  { cache = make_cache_dataset_question(term, store); break; }
         }
 
         g_hash_table_insert(store->screen_caches, GINT_TO_POINTER(id), cache);
@@ -32,9 +34,10 @@ ScreenDrawFunction manage_screen(ScreenId id, GM_Term term, FrameStore store) {
     Cache cache = _ensure_screen_cache(id, term, store);
 
     switch (id) {
-        case SCREEN_XTERM_WARN: { draw_xterm_warn(term, store, cache); break; }
-        case SCREEN_SETTINGS:   { draw_settings(term, store, cache); break; }
-        case SCREEN_MAIN_MENU:   { draw_main_menu(term, store, cache); break; }
+        case SCREEN_XTERM_WARN:         { draw_xterm_warn(term, store, cache); break; }
+        case SCREEN_SETTINGS:           { draw_settings(term, store, cache); break; }
+        case SCREEN_MAIN_MENU:          { draw_main_menu(term, store, cache); break; }
+        case SCREEN_DATASET_QUESTION:   { draw_dataset_question(term, store, cache); break; }
         default: {
             // Do fuck all
         }
@@ -58,7 +61,8 @@ Keypress_Code keypress_screen(ScreenId id, GM_Term term, FrameStore store, GM_Ke
             return code;
             break; 
         }
-        case SCREEN_MAIN_MENU:   { return keypress_main_menu(term, store, cache, key); break; }
+        case SCREEN_MAIN_MENU: { return keypress_main_menu(term, store, cache, key); break; }
+        case SCREEN_DATASET_QUESTION: { return keypress_dataset_question(term, store, cache, key); break; }
         default: {
             // Do fuck all
             return KEY_SKIP;
@@ -71,9 +75,10 @@ void _destroy_screen_caches_ghf(gpointer key, gpointer value, gpointer user_data
     IGNORE_ARG(user_data);
 
     switch ((ScreenId)key) {
-        case SCREEN_XTERM_WARN: { destroy_cache_xterm_warn((Cache)value, FALSE); break; }
-        case SCREEN_SETTINGS:   { destroy_cache_settings((Cache)value, FALSE); break; }
-        case SCREEN_MAIN_MENU:   { destroy_cache_main_menu((Cache)value, FALSE); break; }
+        case SCREEN_XTERM_WARN:         { destroy_cache_xterm_warn((Cache)value, FALSE); break; }
+        case SCREEN_SETTINGS:           { destroy_cache_settings((Cache)value, FALSE); break; }
+        case SCREEN_MAIN_MENU:          { destroy_cache_main_menu((Cache)value, FALSE); break; }
+        case SCREEN_DATASET_QUESTION:   { destroy_cache_dataset_question((Cache)value, FALSE); break; }
     }
 
     destroy_cache((Cache)value, TRUE);

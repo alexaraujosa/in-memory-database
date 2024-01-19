@@ -9,3 +9,4 @@ screen.settings.propercase=Settings
 screen.settings.language=Language
 screen.main_menu=MAIN MENU
 screen.main_menu.execute_query=Execute queries
+screen.dataset_question.question=Dataset location:
