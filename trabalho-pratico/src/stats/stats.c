@@ -167,32 +167,30 @@ int calculate_flight_delay_median(Catalog *catalog, char *origin_name) {
             return ((arr[mediana - 1] + arr[mediana]) / 2);
         }
     } else {
-        printf("Flight with that origin not found");
+        printf(" OIIIIIIIIIIIII  Flight with that origin not found");
         return -1;
     }
 }
 
-int calculate_aeroport_n_passengers(Catalog *flight_catalog, char *aeroport_name, int *year) {
-    int n_passengers = 0;
-    
+void calculate_aeroport_n_passengers(GHashTable *origin_passengers, Catalog *flight_catalog, int *year) {
     for(int i = 0; i < catalog_get_item_count(flight_catalog); i++){
         const Flight flight_temp = (const Flight)catalog_search_in_array(flight_catalog, i);
-        char *origin = get_flight_origin(flight_temp);
-        char *destination = get_flight_destination(flight_temp);
         int arrival = get_flight_schedule_arrival_date(flight_temp);
         int departure = get_flight_schedule_departure_date(flight_temp);
-        if (strcasecmp(aeroport_name, origin)==0 && *year == get_year(departure)){
-            n_passengers += get_flight_passengers(flight_temp);
+        if (*year == get_year(departure)){
+            char *origin = get_flight_origin(flight_temp);
+            int *passengers = (int*)g_hash_table_lookup(origin_passengers, origin);
+            *passengers += get_flight_passengers(flight_temp);
+            free(origin);
         }
-        if (strcasecmp(aeroport_name, destination)==0 && *year == get_year(arrival)){
-            n_passengers += get_flight_passengers(flight_temp);
+        if (*year == get_year(arrival)){
+            char *destination = get_flight_destination(flight_temp);
+            int *passengers = (int*)g_hash_table_lookup(origin_passengers, destination);
+            *passengers += get_flight_passengers(flight_temp);
+            free(destination);
         }
-        free(origin);
-        free(destination);
     }
-    return n_passengers;
 }
-
 
 gint sort_origin_delay(gconstpointer a, gconstpointer b){
     Origin_delay value1 = *(Origin_delay*)a;
@@ -200,9 +198,8 @@ gint sort_origin_delay(gconstpointer a, gconstpointer b){
 
     if(value1->delay > value2->delay) return -1;
     if(value1->delay < value2->delay) return 1;
-    return 0;
+    return(strcmp(value1->origin, value2->origin));
 }
-
 
 GArray *create_origin_delay_struct(Catalog *flights_catalog, GHashTable *origins){
     GArray *arr_origin_delay = g_array_new(FALSE, FALSE, sizeof(Origin_delay));
@@ -224,7 +221,7 @@ GArray *create_origin_delay_struct(Catalog *flights_catalog, GHashTable *origins
 }
 
 void create_info_tables(Stats_info stats, Catalog *flights_catalog){
-    GHashTable *aeroports = g_hash_table_new_full(g_str_hash, g_str_equal, free, NULL);
+    GHashTable *aeroports = g_hash_table_new_full(g_str_hash, g_str_equal, free, free);
     GHashTable *origins = g_hash_table_new_full(g_str_hash, g_str_equal, free, NULL);
     for(int i = 0; i < catalog_get_item_count(flights_catalog); i++){
         const Flight flight_temp = (const Flight)catalog_search_in_array(flights_catalog, i);
@@ -238,12 +235,16 @@ void create_info_tables(Stats_info stats, Catalog *flights_catalog){
             free(origin);
         }
         if(g_hash_table_lookup(aeroports, origin2) == NULL){
-            g_hash_table_add(aeroports, origin2);
+            int* passengers = (int*)malloc(sizeof(int));
+            *passengers = 0;
+            g_hash_table_insert(aeroports, origin2, passengers);
         } else {
             free(origin2);
         }
         if(g_hash_table_lookup(aeroports, destination) == NULL){
-            g_hash_table_add(aeroports, destination);
+            int* passengers = (int*)malloc(sizeof(int));
+            *passengers = 0;
+            g_hash_table_insert(aeroports, destination, passengers);
         } else {
             free(destination);
         }
@@ -262,6 +263,9 @@ Stats_info create_stats_info(Catalog *flights_catalog){
 void stats_destroy(Stats_info stats){
     g_hash_table_destroy(stats->origins);
     g_hash_table_destroy(stats->aeroports);
+    for (int i = 0; i < (int)stats->origin_delay->len; i++) {
+        free(g_array_index(stats->origin_delay, Origin_delay, i));
+    }
     g_array_free(stats->origin_delay, TRUE);
     free(stats);
 }

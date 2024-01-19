@@ -241,6 +241,13 @@ void batch(const char* arg1, const char* arg2) {
     // g_free(get_cwd()->str);
     // g_free(get_cwd());
 
+    //TODO Ver melhor maneira de fazer este free
+    for(int i = 0; i < catalog_get_item_count(user_catalog); i++){
+        User user = (User)catalog_search_in_array(user_catalog, i);
+        g_array_free(get_user_reservations(user), TRUE);
+        g_array_free(get_user_flights(user), TRUE);
+    }
+
     catalog_destroy(user_catalog);
     catalog_destroy(flight_catalog);
     catalog_destroy(passengers_catalog);

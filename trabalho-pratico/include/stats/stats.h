@@ -46,7 +46,7 @@ int calculate_flight_total_passengers(Catalog *catalog, int *flightId);
 
 int calculate_flight_delay_median(Catalog *catalog, char *origin_name);
 
-int calculate_aeroport_n_passengers(Catalog *flights_catalog, char *origin_name, int *year);
+void calculate_aeroport_n_passengers(GHashTable *origin_passengers, Catalog *flight_catalog, int *year);
 
 Stats_info create_stats_info(Catalog *flights_catalog);
 

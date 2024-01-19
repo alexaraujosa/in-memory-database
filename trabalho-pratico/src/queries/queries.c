@@ -383,6 +383,19 @@ gint sort_Q6(gconstpointer a, gconstpointer b){
     if(value1->passangers < value2->passangers) return 1;
     return(strcmp(value1->origin, value2->origin));
 }
+/*VER onde encaixa isto*/
+void initialize_aeroport_passengers(GHashTable *original) {
+
+    GHashTableIter iter;
+    gpointer key, value;
+
+    g_hash_table_iter_init(&iter, original);
+
+    while (g_hash_table_iter_next(&iter, &key, &value)) {
+        int *value = g_hash_table_lookup(original, key);
+        *value = 0;
+    }
+}
 
 void query6(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
     //IGNORE_ARG(flag);
@@ -399,107 +412,42 @@ void query6(char flag, int argc, char** argv, void** catalogues, FILE* output_fi
 
     Stats_info stats = catalogues[4];
     int year = atoi(argv[0]);
+
+    initialize_aeroport_passengers(stats->aeroports);
+
+    calculate_aeroport_n_passengers(stats->aeroports, catalogues[1], &year);
+    
     g_hash_table_iter_init(&iter, stats->aeroports);
 
     while (g_hash_table_iter_next(&iter, &key, &value)) {
         strcpy(information.origin, key);
-        information.passangers = calculate_aeroport_n_passengers(catalogues[1], information.origin, &year);
+        //int *value = g_hash_table_lookup(stats->aeroports, key);
+        information.passangers = *(int*)value;
         g_array_append_val(arr_temp, information);
     }
     g_array_sort(arr_temp, (GCompareFunc) sort_Q6);
-    //arr_temp tem o numero de passageiros por aeroporto no array
-    // colocar ano e todos os origins na função...
-    
-    // dar append do valor retornado a um array com origin
-    // ordenar o valor retornado por ordem crescente
-    // enviar a informação para o modulo de outputs
+
     for(int i = 0; i < (int)arr_temp->len && i < (atoi(argv[1])); i++){
         information = g_array_index(arr_temp, Q_INFO6, i);
         output_query_info(6, flag, &information, output_file, i+1);
     }
-}
 
-struct q7_index {
-    char* origin;
-    int median;
-};
-
-gint compare_q7_indices(gconstpointer a, gconstpointer b, gpointer user_data) {
-    IGNORE_ARG(user_data);
-
-    const struct q7_index* index_a = (const struct q7_index*)a;
-    const struct q7_index* index_b = (const struct q7_index*)b;
-
-    return index_b->median - index_a->median;
+    g_array_free(arr_temp, TRUE);
 }
 
 void query7(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
     IGNORE_ARG(argc);
 
     Q_INFO7 information;
+    Stats_info stats = catalogues[4];
 
-    Catalog* flights = catalogues[1];
-    int size = catalog_get_item_count(flights);
+    for(int i = 0; i < atoi(argv[0]) && i < (int)stats->origin_delay->len; i++){
+        Origin_delay info = g_array_index(stats->origin_delay, Origin_delay, i);
+        information.origin = info->origin;
+        information.median = info->delay;
 
-    GSequence* sequence = g_sequence_new(NULL);
-
-    for (int i = 0; i < size; i++) {
-        Flight flight = (Flight)catalog_search_in_array(flights, i);
-        char* flight_origin = get_flight_origin(flight);
-
-        int calculated = 0;
-
-        GSequenceIter* iter = g_sequence_get_begin_iter(sequence);
-        while (!g_sequence_iter_is_end(iter)) {
-            const struct q7_index* ind = g_sequence_get(iter);
-            if (strcmp(ind->origin, flight_origin) == 0) {
-                calculated = 1;
-                break;
-            }
-
-            iter = g_sequence_iter_next(iter);
-        }
-
-        if (calculated) {
-            free(flight_origin);
-            continue;
-        }
-
-        struct q7_index* ind = (struct q7_index*)malloc(sizeof(struct q7_index));
-        ind->origin = flight_origin;
-
-        // This function does the heavy lifting. It has cost both me and Paulo most of our sanities.
-        ind->median = calculate_flight_delay_median(flights, flight_origin);
-
-        g_sequence_insert_sorted(sequence, ind, compare_q7_indices, NULL);
+        output_query_info(7, flag, &information, output_file, i + 1);
     }
-
-    GSequenceIter* iter = g_sequence_get_begin_iter(sequence);
-    GSequenceIter* iter_root = iter;
-
-    int count = 0;
-
-    while (!g_sequence_iter_is_end(iter) && count < atoi(argv[0])) {
-        struct q7_index* ind = g_sequence_get(iter);
-
-        information.origin = ind->origin;
-        information.median = ind->median;
-
-        output_query_info(7, flag, &information, output_file, count + 1);
-
-        iter = g_sequence_iter_next(iter);
-        count++;
-    }
-
-    iter = iter_root;
-    while (!g_sequence_iter_is_end(iter)) {
-        struct q7_index* ind = g_sequence_get(iter);
-        free(ind->origin);
-        free(ind);
-        iter = g_sequence_iter_next(iter);
-    }
-
-    g_sequence_free(sequence);
 }
 
 void query8(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
