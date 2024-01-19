@@ -17,6 +17,15 @@
 // Capabilities returned from terminfo
 // #define GM_CAP_KEY_ENTER key_enter
 
+// XTerm modifiers from https://invisible-island.net/ncurses/terminfo.src.html#tic-xterm_pcfkeys
+#define XTERM_MOD_SHIFT           "2"
+#define XTERM_MOD_ALT             "3"
+#define XTERM_MOD_SHIFTALT        "4"
+#define XTERM_MOD_CTRL            "5"
+#define XTERM_MOD_SHIFTCTRL       "6"
+#define XTERM_MOD_ALTCTRL         "7"
+#define XTERM_MOD_SHIFTALTCTRL    "8"
+
 #define GM_CAP_KEY_F1  key_f1  // 27 91 80
 #define GM_CAP_KEY_F2  key_f2  // 27 91 81
 #define GM_CAP_KEY_F3  key_f3  // 27 91 82
@@ -30,12 +39,31 @@
 #define GM_CAP_KEY_F11 key_f11 // 27 91 50 50 126
 #define GM_CAP_KEY_F12 key_f12 // 27 91 50 52 126
 
+#define GM_CAP_ARROW_HEADER "\033[1;"
+#define GM_CAP_ARROW_UP_TAIL    "A"
+#define GM_CAP_ARROW_DOWN_TAIL  "B"
+#define GM_CAP_ARROW_RIGHT_TAIL "C"
+#define GM_CAP_ARROW_LEFT_TAIL  "D"
+
 #define GM_CAP_KEY_ARROW_UP    key_up
 #define GM_CAP_KEY_ARROW_DOWN  key_down
 #define GM_CAP_KEY_ARROW_LEFT  key_left
 #define GM_CAP_KEY_ARROW_RIGHT key_right
 #define GM_CAP_KEY_ARROW_LEFT_SHIFT  key_sleft
 #define GM_CAP_KEY_ARROW_RIGHT_SHIFT key_sright
+
+#define GM_CAP_KEY_ARROW_UP_CTRL    GM_CAP_ARROW_HEADER XTERM_MOD_CTRL GM_CAP_ARROW_UP_TAIL
+#define GM_CAP_KEY_ARROW_DOWN_CTRL  GM_CAP_ARROW_HEADER XTERM_MOD_CTRL GM_CAP_ARROW_DOWN_TAIL
+#define GM_CAP_KEY_ARROW_LEFT_CTRL  GM_CAP_ARROW_HEADER XTERM_MOD_CTRL GM_CAP_ARROW_LEFT_TAIL
+#define GM_CAP_KEY_ARROW_RIGHT_CTRL GM_CAP_ARROW_HEADER XTERM_MOD_CTRL GM_CAP_ARROW_RIGHT_TAIL
+
+#define GM_CAP_KEY_ARROW_UP_SHIFT_CTRL    GM_CAP_ARROW_HEADER XTERM_MOD_SHIFTCTRL GM_CAP_ARROW_UP_TAIL
+#define GM_CAP_KEY_ARROW_DOWN_SHIFT_CTRL  GM_CAP_ARROW_HEADER XTERM_MOD_SHIFTCTRL GM_CAP_ARROW_DOWN_TAIL
+#define GM_CAP_KEY_ARROW_LEFT_SHIFT_CTRL  GM_CAP_ARROW_HEADER XTERM_MOD_SHIFTCTRL GM_CAP_ARROW_LEFT_TAIL
+#define GM_CAP_KEY_ARROW_RIGHT_SHIFT_CTRL GM_CAP_ARROW_HEADER XTERM_MOD_SHIFTCTRL GM_CAP_ARROW_RIGHT_TAIL
+
+#define GM_CAP_BRACKETED_PASTE_START "\e[200~"
+#define GM_CAP_BRACKETED_PASTE_END   "\e[201~"
 
 
 int gm_kbhit() {
@@ -78,6 +106,10 @@ GM_Key gm_get_key(GM_Term term) {
         }
 
         sequence[ind++] = part;
+
+        // Add preemptive exits for bracketed paste headers.
+        if (STRING_EQUAL(sequence, GM_CAP_BRACKETED_PASTE_START)) return GM_KEY_PASTE_START;
+        if (STRING_EQUAL(sequence, GM_CAP_BRACKETED_PASTE_END))   return GM_KEY_PASTE_END;
     }
 
     // Ambiguous sequences
@@ -112,6 +144,16 @@ GM_Key gm_get_key(GM_Term term) {
 
         if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_LEFT_SHIFT))  return GM_KEY_ARROW_LEFT | GM_MOD_SHIFT;
         if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_RIGHT_SHIFT)) return GM_KEY_ARROW_RIGHT | GM_MOD_SHIFT;
+
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_UP_CTRL))    return GM_KEY_ARROW_UP | GM_MOD_CTRL;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_DOWN_CTRL))  return GM_KEY_ARROW_DOWN | GM_MOD_CTRL;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_LEFT_CTRL))  return GM_KEY_ARROW_LEFT | GM_MOD_CTRL;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_RIGHT_CTRL)) return GM_KEY_ARROW_RIGHT | GM_MOD_CTRL;
+
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_UP_SHIFT_CTRL))    return GM_KEY_ARROW_UP | GM_MOD_SHIFT;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_DOWN_SHIFT_CTRL))  return GM_KEY_ARROW_DOWN | GM_MOD_SHIFT;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_LEFT_SHIFT_CTRL))  return GM_KEY_ARROW_LEFT | GM_MOD_SHIFT;
+        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_RIGHT_SHIFT_CTRL)) return GM_KEY_ARROW_RIGHT | GM_MOD_SHIFT;
     }
 
     return GM_KEY_NUL;
@@ -132,18 +174,18 @@ GM_Key gm_get_canonical_key(GM_Key key) {
  * I say they can drive off a cliff.
  */
 
-void gm_hide_cursor(GM_Term term) {
+void gm_hide_cursor(GM_Term term, int flush) {
     IGNORE_ARG(term);
 
     printf("%s", cursor_invisible);
-    fflush(stdout);
+    if (flush) fflush(stdout);
 }
 
-void gm_show_cursor(GM_Term term) {
+void gm_show_cursor(GM_Term term, int flush) {
     IGNORE_ARG(term);
 
     printf("%s", cursor_normal);
-    fflush(stdout);
+    if (flush) fflush(stdout);
 }
 
 void gm_clear(int flush) {
@@ -159,4 +201,14 @@ void gm_gotoxy(int x, int y, int flush) {
 void gm_reset_attr(int flush) {
     printf("\e[0m");
     if (flush) fflush(stdout);
+}
+
+void enable_bracketed_paste(GM_Term term) {
+    printf("\e[?2004h");
+    fflush(stdout);
+}
+
+void disable_bracketed_paste(GM_Term term) {
+    printf("\e[?2004l");
+    fflush(stdout);
 }

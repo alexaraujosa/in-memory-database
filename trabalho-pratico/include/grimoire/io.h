@@ -17,9 +17,9 @@ typedef uint16_t GM_Key;
 #define GM_MOD_CTRL   0x1000 // 0b01000000000000
 #define GM_MOD_ALT    0x2000 // 0b10000000000000
 
-#define GM_HAS_SHIFT(key) ((key) & GM_MOD_SHIFT)
-#define GM_HAS_CTRL(key)  ((key) & GM_MOD_CTRL)
-#define GM_HAS_ALT(key)   ((key) & GM_MOD_ALT)
+#define GM_HAS_SHIFT(key) (!!((key) & GM_MOD_SHIFT))
+#define GM_HAS_CTRL(key)  (!!((key) & GM_MOD_CTRL))
+#define GM_HAS_ALT(key)   (!!((key) & GM_MOD_ALT))
 #define GM_CANON_KEY(key) ((key) & GM_MOD_CLEAR) /** @brief Gets the true key, stripped of modifiers. */
 
 // TODO: Add HOME, etc.
@@ -32,6 +32,8 @@ typedef uint16_t GM_Key;
 
 
 #define GM_KEY_ENTER (0xFF + 1)
+#define GM_KEY_PASTE_START (0xFF + 2)
+#define GM_KEY_PASTE_END (0xFF + 3)
 
 #define GM_KEY_F1  (0xFF + 11) 
 #define GM_KEY_F2  (0xFF + 12) 
@@ -50,6 +52,8 @@ typedef uint16_t GM_Key;
 #define GM_KEY_ARROW_DOWN  (0xFF + 24)
 #define GM_KEY_ARROW_RIGHT (0xFF + 25)
 #define GM_KEY_ARROW_LEFT  (0xFF + 26)
+
+
 #define GM_KEY_CTRL_A 1
 #define GM_KEY_CTRL_B 2
 #define GM_KEY_CTRL_C 3
@@ -110,13 +114,13 @@ GM_Key gm_get_canonical_key(GM_Key key);
  * @brief Hides the cursor on the terminal.
  * TODO: Move to somewhere else better.
  */
-void gm_hide_cursor(GM_Term term);
+void gm_hide_cursor(GM_Term term, int flush);
 
 /**
  * @brief Shows the cursor on the terminal.
  * TODO: Move to somewhere else better.
  */
-void gm_show_cursor(GM_Term term);
+void gm_show_cursor(GM_Term term, int flush);
 
 /**
  * @brief Clears the screen.
@@ -140,5 +144,15 @@ void gm_gotoxy(int x, int y, int flush);
  * @param flush If enabled, stdout will be flushed.
  */
 void gm_reset_attr(int flush);
+
+/**
+ * @brief Enables bracketed paste mode (https://cirw.in/blog/bracketed-paste).
+ */
+void enable_bracketed_paste(GM_Term term);
+
+/**
+ * @brief Disables bracketed paste mode (https://cirw.in/blog/bracketed-paste).
+ */
+void disable_bracketed_paste(GM_Term term);
 
 #endif

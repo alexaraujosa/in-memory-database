@@ -40,7 +40,7 @@ void interactive(DataLocales locales) {
     gm_init_color_pair(term, COLORPAIR_SELECTED, COLOR_WHITE, COLOR_BLACK);
 
     // ------- Initialize Screen -------
-    gm_hide_cursor(term);
+    gm_hide_cursor(term, TRUE);
 
     // ------- Initialize Frame Store -------
     FRAME_STORE store = {

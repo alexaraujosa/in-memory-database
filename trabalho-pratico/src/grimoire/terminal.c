@@ -67,7 +67,7 @@ GM_Term gm_term_init() {
 void gm_term_end(GM_Term term) {
     gm_clear(FALSE);
 
-    gm_show_cursor(term);
+    gm_show_cursor(term, TRUE);
 
     g_hash_table_destroy(term->color_pairs);
     g_hash_table_destroy(term->colors);
