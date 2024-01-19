@@ -103,7 +103,7 @@ void gm_printf(GM_Term term, int row, int col, const char *format, ...) {
     }
 
     rt_assert(
-        _gm_is_area_inbounds(term, row, col, row + lines->len, col + max_col),
+        _gm_is_area_inbounds(term, row, col, row + lines->len - 1, col + max_col),
         trace_msg(SCOPE, "Area is out of bounds.")
     );
     
@@ -177,7 +177,7 @@ void gm_box(GM_Term term, int row_start, int col_start, int row_end, int col_end
     );
 
     rt_assert(
-        (row_end - row_start > 2 && col_end - col_start > 2),
+        (row_end - row_start >= 2 && col_end - col_start > 2),
         trace_msg(SCOPE, "Box is not big enough.")
     );
 
