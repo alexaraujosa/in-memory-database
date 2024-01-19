@@ -77,8 +77,45 @@ char* build_query_buffer(int query, void* query_info, char* output_buffer) {
             break;
         }
         case 2: {
-            // Q_info2 q_info = (Q_info2)query_info;
-            snprintf(output_buffer, MAX_BUFFER_SIZE, "2");
+            Q_info2 q_info = (Q_info2)query_info;
+            if (q_info->type == 0) {
+                snprintf(
+                    output_buffer,
+                    MAX_BUFFER_SIZE,
+                    "id: %.10d;date: %.4d/%.2d/%.2d",
+                    q_info->id,
+                    get_year(q_info->date),
+                    get_month(q_info->date),
+                    get_day(q_info->date)
+                );
+            } else if (q_info->type == 1) {
+                snprintf(
+                    output_buffer,
+                    MAX_BUFFER_SIZE,
+                    "id: Book%.10d;date: %.4d/%.2d/%.2d",
+                    q_info->id,
+                    get_year(q_info->date),
+                    get_month(q_info->date),
+                    get_day(q_info->date)
+                );
+            } else if (q_info->type == 2) {
+                snprintf(
+                    output_buffer,
+                    MAX_BUFFER_SIZE,
+                    "id: %s%.10d;date: %.4d/%.2d/%.2d;type: %s",
+                    (q_info->both_type == 0) ? "" : "Book",
+                    q_info->id,
+                    get_year(q_info->date),
+                    get_month(q_info->date),
+                    get_day(q_info->date),
+                    (q_info->both_type == 0) ? "flight" : "reservation"
+                );
+            } else {
+                snprintf(
+                    output_buffer,
+                    MAX_BUFFER_SIZE,
+                    "ERROR(Q) - Not able to create information struct");
+            };
             break;
         }
         case 3: {

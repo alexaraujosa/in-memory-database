@@ -48,6 +48,18 @@ gint passengersCatalog_userID_compare_func(gconstpointer passenger_A, gconstpoin
 void passengersCatalog_write_to_catalog(void* _passenger, ParserStore store) {
     Passenger passenger = (Passenger)_passenger;
 
+    Catalog* user_catalog = g_array_index(store, Catalog*, 2);
+    Catalog* flight_catalog = g_array_index(store, Catalog*, 3);
     Catalog* passenger_catalog = g_array_index(store, Catalog*, 4);
+
+    char* user_id = get_passenger_userID(passenger);
+    User user = catalog_search_in_str_hashtable(user_catalog, user_id);
+    free(user_id);
+
+    GArray* user_flights = get_user_flights(user);
+    int flight_id = get_passenger_flightID(passenger);
+    Flight flight = catalog_search_in_int_hashtable(flight_catalog, flight_id);
+    g_array_append_val(user_flights, flight);
+
     catalog_add_int_to_catalog(passenger_catalog, NULL, passenger);
 }

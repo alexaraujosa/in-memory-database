@@ -62,7 +62,9 @@ void reservationsCatalog_write_to_catalog(void* _reservation, ParserStore store)
     User user = catalog_search_in_str_hashtable(user_catalog, userID);
     free(userID);
 
-    add_user_information(user, calculate_reservation_total_price(reservation)); 
+    add_user_information(user, calculate_reservation_total_price(reservation));
+    GArray* user_reservations = get_user_reservations(user);
+    g_array_append_val(user_reservations, reservation);
 
     catalog_add_int_to_catalog(reservation_catalog, GINT_TO_POINTER(id), reservation);
 }

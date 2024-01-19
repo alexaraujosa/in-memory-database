@@ -79,6 +79,12 @@ void set_user_information(User user, int information);
 void add_user_information(User user, int information);
 double get_user_total_spent(const User user);
 int get_user_reservations_counter(const User user);
+GArray* get_user_reservations(const User user);
+GArray* get_user_flights(const User user);
+int get_user_reservations_len(const User user);
+int get_user_flights_len(const User user);
+void* get_user_flights_data(const User user, int index);
+void* get_user_reservations_data(const User user, int index);
 
 /**
  * @brief Creates an user, transforming data.

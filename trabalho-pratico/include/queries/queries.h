@@ -73,7 +73,10 @@ typedef struct query1_info {
 } Q_INFO1, *Q_info1;
 
 typedef struct query2_info {
-    // TO DEFINE
+    short int type;  // 0 = flight, 1 = reservation, 2 = both
+    short int both_type;   // 0 = flight, 1 = reservation
+    int id;
+    int date;
 } Q_INFO2, *Q_info2;
 
 typedef struct query3_info {

@@ -10,6 +10,8 @@ typedef struct user {
     int account_creation;  // Offset from Base Date
     bool account_status;
     unsigned int information;   // 100000 offset for number of reservations |||| 1000 offset for total spent
+    GArray* reservations;
+    GArray* flights;
 
     // Statistics
     uint8_t age;
@@ -97,14 +99,47 @@ void set_user_information(User user, int information) {
 }
 
 void add_user_information(User user, int information) {
-    user->information +=information;
+    user->information += information;
 }
 
 double get_user_total_spent(const User user) {
     return (double)(user->information%100000000)/1000;    // TODO: FALTA OS SHIFTS
 }
+
 int get_user_reservations_counter(const User user) {
     return (user->information/100000000);
+}
+
+GArray* get_user_reservations(const User user) {
+    return user->reservations;
+}
+
+GArray* get_user_flights(const User user) {
+    return user->flights;
+}
+
+int get_user_reservations_len(const User user) {
+    GArray* reservations = user->reservations;
+
+    return reservations->len;
+}
+
+int get_user_flights_len(const User user) {
+    GArray* flights = user->flights;
+
+    return flights->len;
+}
+
+void* get_user_flights_data(const User user, int index) {
+    GArray* flights = user->flights;
+
+    return g_array_index(flights, void*, index);
+}
+
+void* get_user_reservations_data(const User user, int index) {
+    GArray* reservations = user->reservations;
+
+    return g_array_index(reservations, void*, index);
 }
 
 int verify_user_tokens(Tokens tokens, ParserStore store) {
@@ -156,6 +191,8 @@ User make_user(
     user->account_status = account_status;
     user->age = get_age(birth_date);
     user->information = 0;
+    user->reservations = g_array_new(FALSE, FALSE, sizeof(void*));
+    user->flights = g_array_new(FALSE, FALSE, sizeof(void*));
 
     return user;
 }

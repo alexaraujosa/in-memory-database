@@ -76,8 +76,8 @@ void query1(char flag, int argc, char** argv, void** catalogues, FILE* output_fi
         user_info.age = get_user_age(user);
         user_info.country_code = get_user_country_code(user);
         user_info.passport = get_user_passport(user);
-        user_info.n_flights = calculate_user_n_flights(catalogues[2], argv[0]);
-        user_info.n_reservas = get_user_reservations_counter(user);
+        user_info.n_flights = get_user_flights_len(user);
+        user_info.n_reservas = get_user_reservations_len(user);
         user_info.total_spent = get_user_total_spent(user);
 
         output_query_info(1, flag, &information, output_file, 1);
@@ -88,6 +88,18 @@ void query1(char flag, int argc, char** argv, void** catalogues, FILE* output_fi
     }
 }
 
+gint sort_Q2(gconstpointer a, gconstpointer b){
+    Q_info2 value1 = (Q_info2)a;
+    Q_info2 value2 = (Q_info2)b;
+    if(value1->date < value2->date) return 1;
+    if(value1->date > value2->date) return -1;
+
+    if(value1->id < value2->id) return 1;
+    if(value1->id > value2->id) return -1;
+
+    return 0;
+}
+
 void query2(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
@@ -96,7 +108,71 @@ void query2(char flag, int argc, char** argv, void** catalogues, FILE* output_fi
     IGNORE_ARG(output_file);
 
     Q_INFO2 information;
-    output_query_info(2, flag, &information, output_file, 1);
+
+    void* user = catalog_search_in_str_hashtable(catalogues[0], argv[0]);
+
+    if (user == NULL) return;
+    if (!get_user_account_status(user)) return;
+    GArray* arrTemp = g_array_new(FALSE, FALSE, sizeof(Q_INFO2));
+
+    if(argv[1] != NULL) {
+        if(*argv[1] == 'f') {    
+            for(int i = 0 ; i < get_user_flights_len(user) ; i++) {
+                void* data = get_user_flights_data(user, i);
+                information.type = 0;
+                information.id = get_flight_id(data);
+                information.date = get_flight_schedule_departure_date(data);
+                g_array_append_val(arrTemp, information);
+            }
+
+            g_array_sort(arrTemp, (GCompareFunc)sort_Q2);
+
+            for(guint i = 0 ; i < arrTemp->len ; i++) {
+                information = g_array_index(arrTemp, Q_INFO2, i);
+                output_query_info(2, flag, &information, output_file, i+1);
+            }
+        } else if(*argv[1] == 'r') {
+            for(int i = 0 ; i < get_user_reservations_len(user) ; i++) {
+                void* data = get_user_reservations_data(user, i);
+                information.type = 1;
+                information.id = get_reservation_id(data);
+                information.date = get_reservation_begin_date(data);
+                g_array_append_val(arrTemp, information);
+            }
+
+            g_array_sort(arrTemp, (GCompareFunc)sort_Q2);
+
+            for(guint i = 0 ; i < arrTemp->len ; i++) {
+                information = g_array_index(arrTemp, Q_INFO2, i);
+                output_query_info(2, flag, &information, output_file, i+1);
+            }
+        }
+    } else {
+        for(int i = 0 ; i < get_user_flights_len(user) ; i++) {
+            void* data = get_user_flights_data(user, i);
+            information.type = 2;
+            information.both_type = 0;
+            information.id = get_flight_id(data);
+            information.date = get_flight_schedule_departure_date(data);
+            g_array_append_val(arrTemp, information);
+        }
+        for(int i = 0 ; i < get_user_reservations_len(user) ; i++) {
+            void* data = get_user_reservations_data(user, i);
+            information.type = 2;
+            information.both_type = 1;
+            information.id = get_reservation_id(data);
+            information.date = get_reservation_begin_date(data);
+            g_array_append_val(arrTemp, information);
+        }
+
+        g_array_sort(arrTemp, (GCompareFunc)sort_Q2);
+
+        for(guint i = 0 ; i < arrTemp->len ; i++) {
+            information = g_array_index(arrTemp, Q_INFO2, i);
+            output_query_info(2, flag, &information, output_file, i+1);
+        }
+    }
+    g_array_free(arrTemp, TRUE);
 }
 
 void query3(char flag, int argc, char** argv, void** catalogues, FILE* output_file) {
