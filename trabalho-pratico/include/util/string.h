@@ -243,4 +243,28 @@ char* join_strings_with_delim(char* delim, int len, ...);
 
 char* join_strings_with_delim_list(char* delim, int len, char** args);
 
+/**
+ * @brief Adds a character to a string at a given index.
+ * 
+ * @note The source string must have enough space for the insertion. It is the responsibility of the caller to ensure
+ * this condition is met.
+ * 
+ * @param source The source string.
+ * @param index The source string index at which to perform the insertion.
+ * @param insert The character to be inserted.
+ */
+void add_char_to_str_at(char* source, int index, char insert);
+
+/**
+ * @brief Adds a substring to a string at a given index.
+ * 
+ * @note The source string must have enough space for the insertion. It is the responsibility of the caller to ensure
+ * this condition is met.
+ * 
+ * @param source The source string.
+ * @param index The source string index at which to perform the insertion.
+ * @param insert The substring to be inserted.
+ * @param insert_len The length of the @p insert.
+ */
+void add_str_to_str_at(char* source, int index, char* insert, int insert_len);
 #endif

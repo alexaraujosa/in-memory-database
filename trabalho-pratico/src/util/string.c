@@ -404,3 +404,45 @@ char* join_strings_with_delim_list(char* delim, int len, char** args) {
 
     return fullStr;
 }
+
+void add_char_to_str_at(char* source, int index, char insert) {
+    #define SCOPE "add_str_to_str_at"
+    int source_len = strlen(source);
+
+    rt_assert(
+        (index >= 0 && index <= source_len),
+        trace_msg(SCOPE, "Index OOB.")
+    );
+
+    // Shift characters to make space for the new character
+    for (int i = source_len; i > index; i--) {
+        source[i] = source[i - 1];
+    }
+
+    // Insert the new character
+    source[index] = insert;
+    #undef SCOPE
+}
+
+
+void add_str_to_str_at(char* source, int index, char* insert, int insert_len) {
+    #define SCOPE "add_str_to_str_at"
+    int source_len = strlen(source);
+
+    rt_assert(
+        // (index < 0 || index > source_len),
+        (index >= 0 && index <= source_len),
+        trace_msg(SCOPE, "Index OOB.")
+    );
+
+    // Shift characters right to fit the insertion substring
+    for (int i = source_len; i >= index; i--) {
+        source[i + insert_len] = source[i];
+    }
+
+    // Insert substring
+    for (int i = 0; i < insert_len; i++) {
+        source[index + i] = insert[i];
+    }
+    #undef SCOPE
+}
