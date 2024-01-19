@@ -4,6 +4,7 @@
 #ifndef TP_GRIMOIRE_IO_H
 #define TP_GRIMOIRE_IO_H
 
+#include "common.h"
 #include <stdint.h>
 #include <ctype.h>
 
@@ -109,6 +110,11 @@ GM_Key gm_get_key(GM_Term term);
  * @brief Returns the true key from @ref gm_get_key. Modifiers are attempted to be resolved, otherwise they are stripped.
  */
 GM_Key gm_get_canonical_key(GM_Key key);
+
+/**
+ * @brief Reads pasted text from the stdin. Caller must determine if a paste sequence has started.
+ */
+GString* get_bracketed_paste();
 
 /**
  * @brief Hides the cursor on the terminal.

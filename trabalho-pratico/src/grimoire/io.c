@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include "grimoire/io.h"
 // #include "grimoire/terminal.h"
 #include "cache/cache.h"
@@ -6,13 +8,14 @@
 #include <sys/select.h>
 #include <termios.h>
 #include <term.h>
+#include <fcntl.h>
 
 #include "common.h"
 #include "util/error.h"
 #include "util/string.h"
 
 // Maximum number of codes per key.
-#define MAX_KEY_SEQUENCE 10
+#define MAX_KEY_SEQUENCE 100
 
 // Capabilities returned from terminfo
 // #define GM_CAP_KEY_ENTER key_enter
@@ -80,11 +83,81 @@ char gm_getch() {
     int r;
     unsigned char c;
 
-    if ((r = read(0, &c, sizeof(c))) < 0) {
+    if ((r = read(STDIN_FILENO, &c, sizeof(c))) < 0) {
         return r;
     } else {
         return c;
     }
+}
+
+/**
+ * @brief Reads and interprets a key sequence from STDIN.
+ * 
+ * @param readEscape Whenever the escape character from the sequence has already been read.
+ */
+GM_Key _gm_get_sequence(int readEscape) {
+    GString* sequence = g_string_new(readEscape ? "\033" : NULL);
+
+    int flush = 0;
+    while (gm_kbhit()) {
+        char part = gm_getch();
+        
+        if (flush) continue;
+        if (part == '\033' && sequence->len > 2) {
+            flush = 1;
+            continue;
+        }
+
+        g_string_append_c(sequence, part);
+
+        // Add preemptive exits for bracketed paste headers.
+        if (STRING_EQUAL(sequence->str, GM_CAP_BRACKETED_PASTE_START)) return GM_KEY_PASTE_START;
+        if (STRING_EQUAL(sequence->str, GM_CAP_BRACKETED_PASTE_END))   return GM_KEY_PASTE_END;
+    }
+
+    if (sequence->len == 1) {
+        // For some fucking reason, enter is not the same sequence returned by terminfo. Fuck it ig.
+        if (sequence->str[0] == '\r') return GM_KEY_ENTER;
+
+        if (isalpha(sequence->str[0]) && CHAR_IS_UPPER(sequence->str[0])) 
+            return char_tolower(sequence->str[0]) | GM_MOD_SHIFT;
+        if (GM_IS_CTRL(sequence->str[0])) return sequence->str[0] | GM_MOD_CTRL;
+
+        return sequence->str[0];
+    } else {
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_F1))  return GM_KEY_F1;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_F2))  return GM_KEY_F2;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_F3))  return GM_KEY_F3;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_F4))  return GM_KEY_F4;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_F5))  return GM_KEY_F5;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_F6))  return GM_KEY_F6;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_F7))  return GM_KEY_F7;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_F8))  return GM_KEY_F8;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_F9))  return GM_KEY_F9;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_F10)) return GM_KEY_F10;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_F11)) return GM_KEY_F11;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_F12)) return GM_KEY_F12;
+
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_ARROW_UP))    return GM_KEY_ARROW_UP;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_ARROW_DOWN))  return GM_KEY_ARROW_DOWN;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_ARROW_LEFT))  return GM_KEY_ARROW_LEFT;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_ARROW_RIGHT)) return GM_KEY_ARROW_RIGHT;
+
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_ARROW_LEFT_SHIFT))  return GM_KEY_ARROW_LEFT | GM_MOD_SHIFT;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_ARROW_RIGHT_SHIFT)) return GM_KEY_ARROW_RIGHT | GM_MOD_SHIFT;
+
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_ARROW_UP_CTRL))    return GM_KEY_ARROW_UP | GM_MOD_CTRL;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_ARROW_DOWN_CTRL))  return GM_KEY_ARROW_DOWN | GM_MOD_CTRL;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_ARROW_LEFT_CTRL))  return GM_KEY_ARROW_LEFT | GM_MOD_CTRL;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_ARROW_RIGHT_CTRL)) return GM_KEY_ARROW_RIGHT | GM_MOD_CTRL;
+
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_ARROW_UP_SHIFT_CTRL))    return GM_KEY_ARROW_UP | GM_MOD_SHIFT;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_ARROW_DOWN_SHIFT_CTRL))  return GM_KEY_ARROW_DOWN | GM_MOD_SHIFT;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_ARROW_LEFT_SHIFT_CTRL))  return GM_KEY_ARROW_LEFT | GM_MOD_SHIFT;
+        if (STRING_EQUAL(sequence->str, GM_CAP_KEY_ARROW_RIGHT_SHIFT_CTRL)) return GM_KEY_ARROW_RIGHT | GM_MOD_SHIFT;
+    }
+
+    return GM_KEY_NUL;
 }
 
 GM_Key gm_get_key(GM_Term term) {
@@ -92,71 +165,73 @@ GM_Key gm_get_key(GM_Term term) {
 
     #define SCOPE "gm_get_key"
 
-    char sequence[MAX_KEY_SEQUENCE] = { 0 };
-    uint8_t ind = 0;
+    return _gm_get_sequence(FALSE);
 
-    int flush = 0;
-    while (gm_kbhit()) {
-        char part = gm_getch();
+    // char sequence[MAX_KEY_SEQUENCE] = { 0 };
+    // uint8_t ind = 0;
+
+    // int flush = 0;
+    // while (gm_kbhit() && ind < MAX_KEY_SEQUENCE) {
+    //     char part = gm_getch();
         
-        if (flush) continue;
-        if (part == '\033' && ind > 2) {
-            flush = 1;
-            continue;
-        }
+    //     if (flush) continue;
+    //     if (part == '\033' && ind > 2) {
+    //         flush = 1;
+    //         continue;
+    //     }
 
-        sequence[ind++] = part;
+    //     sequence[ind++] = part;
 
-        // Add preemptive exits for bracketed paste headers.
-        if (STRING_EQUAL(sequence, GM_CAP_BRACKETED_PASTE_START)) return GM_KEY_PASTE_START;
-        if (STRING_EQUAL(sequence, GM_CAP_BRACKETED_PASTE_END))   return GM_KEY_PASTE_END;
-    }
+    //     // Add preemptive exits for bracketed paste headers.
+    //     if (STRING_EQUAL(sequence, GM_CAP_BRACKETED_PASTE_START)) return GM_KEY_PASTE_START;
+    //     if (STRING_EQUAL(sequence, GM_CAP_BRACKETED_PASTE_END))   return GM_KEY_PASTE_END;
+    // }
 
-    // Ambiguous sequences
-    // if (STRING_EQUAL(sequence, GM_CAP_KEY_ENTER)) return GM_KEY_ENTER;
+    // // Ambiguous sequences
+    // // if (STRING_EQUAL(sequence, GM_CAP_KEY_ENTER)) return GM_KEY_ENTER;
 
-    if (ind == 1) {
-        // For some fucking reason, enter is not the same sequence returned by terminfo. Fuck it ig.
-        if (sequence[0] == '\r') return GM_KEY_ENTER;
+    // if (ind == 1) {
+    //     // For some fucking reason, enter is not the same sequence returned by terminfo. Fuck it ig.
+    //     if (sequence[0] == '\r') return GM_KEY_ENTER;
 
-        if (isalpha(sequence[0]) && CHAR_IS_UPPER(sequence[0])) return char_tolower(sequence[0]) | GM_MOD_SHIFT;
-        if (GM_IS_CTRL(sequence[0])) return sequence[0] | GM_MOD_CTRL;
+    //     if (isalpha(sequence[0]) && CHAR_IS_UPPER(sequence[0])) return char_tolower(sequence[0]) | GM_MOD_SHIFT;
+    //     if (GM_IS_CTRL(sequence[0])) return sequence[0] | GM_MOD_CTRL;
 
-        return sequence[0];
-    } else {
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_F1))  return GM_KEY_F1;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_F2))  return GM_KEY_F2;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_F3))  return GM_KEY_F3;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_F4))  return GM_KEY_F4;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_F5))  return GM_KEY_F5;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_F6))  return GM_KEY_F6;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_F7))  return GM_KEY_F7;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_F8))  return GM_KEY_F8;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_F9))  return GM_KEY_F9;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_F10)) return GM_KEY_F10;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_F11)) return GM_KEY_F11;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_F12)) return GM_KEY_F12;
+    //     return sequence[0];
+    // } else {
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_F1))  return GM_KEY_F1;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_F2))  return GM_KEY_F2;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_F3))  return GM_KEY_F3;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_F4))  return GM_KEY_F4;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_F5))  return GM_KEY_F5;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_F6))  return GM_KEY_F6;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_F7))  return GM_KEY_F7;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_F8))  return GM_KEY_F8;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_F9))  return GM_KEY_F9;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_F10)) return GM_KEY_F10;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_F11)) return GM_KEY_F11;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_F12)) return GM_KEY_F12;
 
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_UP))    return GM_KEY_ARROW_UP;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_DOWN))  return GM_KEY_ARROW_DOWN;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_LEFT))  return GM_KEY_ARROW_LEFT;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_RIGHT)) return GM_KEY_ARROW_RIGHT;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_UP))    return GM_KEY_ARROW_UP;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_DOWN))  return GM_KEY_ARROW_DOWN;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_LEFT))  return GM_KEY_ARROW_LEFT;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_RIGHT)) return GM_KEY_ARROW_RIGHT;
 
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_LEFT_SHIFT))  return GM_KEY_ARROW_LEFT | GM_MOD_SHIFT;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_RIGHT_SHIFT)) return GM_KEY_ARROW_RIGHT | GM_MOD_SHIFT;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_LEFT_SHIFT))  return GM_KEY_ARROW_LEFT | GM_MOD_SHIFT;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_RIGHT_SHIFT)) return GM_KEY_ARROW_RIGHT | GM_MOD_SHIFT;
 
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_UP_CTRL))    return GM_KEY_ARROW_UP | GM_MOD_CTRL;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_DOWN_CTRL))  return GM_KEY_ARROW_DOWN | GM_MOD_CTRL;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_LEFT_CTRL))  return GM_KEY_ARROW_LEFT | GM_MOD_CTRL;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_RIGHT_CTRL)) return GM_KEY_ARROW_RIGHT | GM_MOD_CTRL;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_UP_CTRL))    return GM_KEY_ARROW_UP | GM_MOD_CTRL;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_DOWN_CTRL))  return GM_KEY_ARROW_DOWN | GM_MOD_CTRL;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_LEFT_CTRL))  return GM_KEY_ARROW_LEFT | GM_MOD_CTRL;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_RIGHT_CTRL)) return GM_KEY_ARROW_RIGHT | GM_MOD_CTRL;
 
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_UP_SHIFT_CTRL))    return GM_KEY_ARROW_UP | GM_MOD_SHIFT;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_DOWN_SHIFT_CTRL))  return GM_KEY_ARROW_DOWN | GM_MOD_SHIFT;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_LEFT_SHIFT_CTRL))  return GM_KEY_ARROW_LEFT | GM_MOD_SHIFT;
-        if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_RIGHT_SHIFT_CTRL)) return GM_KEY_ARROW_RIGHT | GM_MOD_SHIFT;
-    }
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_UP_SHIFT_CTRL))    return GM_KEY_ARROW_UP | GM_MOD_SHIFT;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_DOWN_SHIFT_CTRL))  return GM_KEY_ARROW_DOWN | GM_MOD_SHIFT;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_LEFT_SHIFT_CTRL))  return GM_KEY_ARROW_LEFT | GM_MOD_SHIFT;
+    //     if (STRING_EQUAL(sequence, GM_CAP_KEY_ARROW_RIGHT_SHIFT_CTRL)) return GM_KEY_ARROW_RIGHT | GM_MOD_SHIFT;
+    // }
 
-    return GM_KEY_NUL;
+    // return GM_KEY_NUL;
     #undef SCOPE
 }
 
@@ -165,6 +240,26 @@ GM_Key gm_get_canonical_key(GM_Key key) {
     if (isalpha(ckey) && GM_HAS_SHIFT(key)) return char_toupper(ckey);
     
     return ckey;
+}
+
+GString* get_bracketed_paste() {
+    GString* buf = g_string_new(NULL);
+
+    char ch;
+    GM_Key key;
+    for (;;) {
+        ch = gm_getch();
+
+        if (ch == '\033') {
+            key = _gm_get_sequence(TRUE);
+            if (key == GM_KEY_PASTE_END) break;
+            continue;
+        }
+
+        g_string_append_c(buf, ch);
+    }
+
+    return buf;
 }
 
 /* 
