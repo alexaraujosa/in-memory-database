@@ -94,8 +94,8 @@ gint sort_Q2(gconstpointer a, gconstpointer b){
     if(value1->date < value2->date) return 1;
     if(value1->date > value2->date) return -1;
 
-    if(value1->id < value2->id) return 1;
-    if(value1->id > value2->id) return -1;
+    if(value1->id < value2->id) return -1;
+    if(value1->id > value2->id) return 1;
 
     return 0;
 }
