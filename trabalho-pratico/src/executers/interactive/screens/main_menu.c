@@ -99,6 +99,8 @@ void draw_main_menu(GM_Term term, FrameStore store, Cache cache) {
     DrawText dts[] = { exec_query_dt, settings_dt, exit_dt };
     int dts_len = 3;
 
+    gm_attroff(term, GM_RESET);
+
     gm_printf(term, title_dt->y, title_dt->x, title_dt->text);
 
     // ------- Calculate box width -------
@@ -107,8 +109,6 @@ void draw_main_menu(GM_Term term, FrameStore store, Cache cache) {
         if (max_col < dts[i]->x + dts[i]->len) max_col = dts[i]->x + dts[i]->len;
     }
     if (max_col % 2 == 0) max_col--;
-
-    gm_attroff(term, GM_RESET);
 
     // ------- Draw Border Box -------
     gm_box(term, dts[0]->y - 1, dts[0]->x - 1, dts[0]->y + dts_len, max_col);
@@ -140,6 +140,7 @@ Keypress_Code keypress_main_menu(GM_Term term, FrameStore store, Cache cache, GM
     } else if (ckey == GM_KEY_ENTER) {
         switch (*option_index) {
             case MAIN_MENU_EXEC_QUERIES: {
+                store->current_screen = SCREEN_DATASET_QUESTION;
                 break;
             }
             case MAIN_MENU_SETTINGS: {
