@@ -66,6 +66,21 @@ void batch(const char* arg1, const char* arg2) {
     clock_t start_time = clock();
 #endif
 
+    // TODO Verificar onde vai ficar a inicialização desta estrutura
+    GArray* pointer_to_generic_catalog = generate_genCat();
+
+    genCat_add(2020, pointer_to_generic_catalog);
+    genCat_add(2022, pointer_to_generic_catalog);
+    genCat_add(2019, pointer_to_generic_catalog);
+    genCat_add(2020, pointer_to_generic_catalog);
+
+    Conteudo meu_conteudo = conteudo_by_year(2020, pointer_to_generic_catalog);
+    Conteudo meu_conteudo = conteudo_by_month(2020, 10, pointer_to_generic_catalog);
+    increment_conteudo_flights(meu_conteudo, 20);
+    increment_conteudo_flights(meu_conteudo, 25);
+
+    print_year_info(pointer_to_generic_catalog);
+
     Catalog* user_catalog = catalog_init(g_str_hash, g_str_equal, free);
     char* userdata_path = join_paths(2, arg1, "users.csv");
     parse_file(
@@ -241,8 +256,8 @@ void batch(const char* arg1, const char* arg2) {
     // g_free(get_cwd()->str);
     // g_free(get_cwd());
 
-    //TODO Ver melhor maneira de fazer este free
-    for(int i = 0; i < catalog_get_item_count(user_catalog); i++){
+    // TODO Ver melhor maneira de fazer este free
+    for (int i = 0; i < catalog_get_item_count(user_catalog); i++) {
         User user = (User)catalog_search_in_array(user_catalog, i);
         g_array_free(get_user_reservations(user), TRUE);
         g_array_free(get_user_flights(user), TRUE);
