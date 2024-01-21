@@ -6,6 +6,8 @@
 #include "cache/cache.h"
 
 typedef struct textarea *TextArea;
+typedef void* TextAreaKeypressCallbackUserData;
+typedef Keypress_Code(*TextAreaKeypressCallback)(GM_Term, FrameStore, TextArea, GM_Key, TextAreaKeypressCallbackUserData);
 
 /**
  * @brief Creates a new TextArea component.
@@ -35,6 +37,56 @@ TextArea make_textarea(
 );
 
 /**
+ * @brief Returns the input a TextArea instance currently holds.
+ * 
+ * @param text_area The TextArea instance. 
+ */
+char* get_textarea_input(TextArea text_area);
+
+/**
+ * @brief Returns top left X coordinate of a TextArea instance.
+ * 
+ * @param text_area The TextArea instance.
+ */
+int get_textarea_x(TextArea text_area);
+
+/**
+ * @brief Returns top left Y coordinate of a TextArea instance.
+ * 
+ * @param text_area The TextArea instance.
+ */
+int get_textarea_y(TextArea text_area);
+
+/**
+ * @brief Returns the size in the X axis of a TextArea instance.
+ * 
+ * @param text_area The TextArea instance.
+ */
+int get_textarea_size_cols(TextArea text_area);
+
+/**
+ * @brief Returns the size in the Y axis of a TextArea instance.
+ * 
+ * @param text_area The TextArea instance.
+ */
+int get_textarea_size_rows(TextArea text_area);
+
+/**
+ * @brief Returns whether a TextArea instance is active.
+ * 
+ * @param text_area The TextArea instance.
+ */
+int is_textarea_active(TextArea text_area);
+
+/**
+ * @brief Sets the active state of a TextArea instance.
+ * 
+ * @param text_area The TextArea instance.
+ * @param active Either TRUE or FALSE.
+ */
+void set_textarea_active(TextArea text_area, int active);
+
+/**
  * @brief Destroys a given TextArea component.
  * 
  * @param text_area The TextArea to be destroyed.
@@ -56,6 +108,13 @@ void draw_textarea(GM_Term term, FrameStore store, TextArea text_area);
  * @param text_area The TextArea to be handled.
  * @param key The key to be handled. 
  */
-Keypress_Code keypress_textarea(TextArea text_area, GM_Key key);
+Keypress_Code keypress_textarea(
+    GM_Term term, 
+    FrameStore store, 
+    TextArea text_area, 
+    GM_Key key, 
+    TextAreaKeypressCallback callback,
+    TextAreaKeypressCallbackUserData user_data
+);
 
 #endif

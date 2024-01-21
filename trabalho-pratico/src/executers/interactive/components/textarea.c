@@ -1,3 +1,5 @@
+// NOTE: SO MANY EDGE CASES, WHAT KIND OF DEMON POSSESSED ME TO CREATE THIS SHIT?
+
 #include "executers/interactive/components/textarea.h"
 #include "util/math.h"
 
@@ -25,6 +27,7 @@ typedef struct textarea {
     int inactive_colorpair;
 } TEXT_AREA, *TextArea;
 
+// ============== CONSTRUCTOR ==============
 TextArea make_textarea(
     GM_Term term, 
     FrameStore store, 
@@ -49,14 +52,13 @@ TextArea make_textarea(
 
     text_area->cache = make_textarea_cache(term, store, text_area, header_text);
 
+    text_area->size_rows = 4;
+
     return text_area;
 }
 
-void destroy_textarea(TextArea text_area) {
-    _destroy_textarea_cache(text_area->cache);
-    free(text_area);
-}
 
+// ------- CACHE CONSTRUCTOR -------
 static DrawText make_dt_from_str(char* text, GM_TERM_SIZE size, int x, int y) {
     IGNORE_ARG(size);
     ssize_t text_len = strlen(text);
@@ -66,6 +68,8 @@ static DrawText make_dt_from_str(char* text, GM_TERM_SIZE size, int x, int y) {
     return text_dt;
 }
 Cache make_textarea_cache(GM_Term term, FrameStore store, TextArea text_area, char* header_text) {
+    IGNORE_ARG(store);
+
     GM_TERM_SIZE size = gm_term_get_size(term);
     Cache cache = make_cache(NULL);
 
@@ -122,6 +126,43 @@ Cache make_textarea_cache(GM_Term term, FrameStore store, TextArea text_area, ch
     return cache;
 }
 
+
+// ============== ACCESSORS ==============
+char* get_textarea_input(TextArea text_area) {
+    char* box_input = get_cache_elem(text_area->cache, BOX_INPUT_KEY);
+    return strdup(box_input);
+}
+
+int get_textarea_x(TextArea text_area) {
+    return text_area->x;
+}
+
+int get_textarea_y(TextArea text_area) {
+    return text_area->y;
+}
+
+int get_textarea_size_cols(TextArea text_area) {
+    return text_area->size_cols;
+}
+
+int get_textarea_size_rows(TextArea text_area) {
+    return text_area->size_rows;
+}
+
+int is_textarea_active(TextArea text_area) {
+    return text_area->active;
+}
+
+void set_textarea_active(TextArea text_area, int active) {
+    text_area->active = active;
+}
+
+// ============== DESTRUCTOR ==============
+void destroy_textarea(TextArea text_area) {
+    _destroy_textarea_cache(text_area->cache);
+    free(text_area);
+}
+
 void _destroy_textarea_cache(Cache cache) {
     DrawText header_text_dt = get_cache_elem(cache, LOCALE_SCREEN_DATASET_QUESTION_QUESTION);
     destroy_draw_text(header_text_dt);
@@ -152,11 +193,14 @@ void _destroy_textarea_cache(Cache cache) {
     destroy_cache(cache, TRUE);
 }
 
+// ============== DRAW CALL ==============
 void draw_textarea(GM_Term term, FrameStore store, TextArea text_area) {
+    IGNORE_ARG(store);
+
     GM_TERM_SIZE size = gm_term_get_size(term);
 
     int* box_input_ind = get_cache_elem(text_area->cache, BOX_INPUT_IND_KEY);
-    int* box_input_lower_bound = get_cache_elem(text_area->cache, BOX_INPUT_LOWER_BOUND_KEY);
+    // int* box_input_lower_bound = get_cache_elem(text_area->cache, BOX_INPUT_LOWER_BOUND_KEY);
     int* box_input_size = get_cache_elem(text_area->cache, BOX_INPUT_SIZE_KEY);
 
     DrawText header_text_dt = get_cache_elem(text_area->cache, LOCALE_SCREEN_DATASET_QUESTION_QUESTION);
@@ -197,8 +241,16 @@ void draw_textarea(GM_Term term, FrameStore store, TextArea text_area) {
     gm_attroff(term, GM_COLOR_PAIR(colorpair));
 }
 
+// ============== KEYPRESS HANDLER ==============
 // TODO: Input so slow my wheelchaired grandma runs faster.
-Keypress_Code keypress_textarea(TextArea text_area, GM_Key key) {
+Keypress_Code keypress_textarea(
+    GM_Term term, 
+    FrameStore store, 
+    TextArea text_area, 
+    GM_Key key, 
+    TextAreaKeypressCallback callback,
+    TextAreaKeypressCallbackUserData user_data
+) {
     if (!text_area->active) return KEY_SKIP;
 
     char* box_input = get_cache_elem(text_area->cache, BOX_INPUT_KEY);
@@ -271,6 +323,7 @@ Keypress_Code keypress_textarea(TextArea text_area, GM_Key key) {
         }
         case GM_KEY_ENTER: {
             // Accept input
+            return callback(term, store, text_area, key, user_data);
             break;
         }
         case GM_KEY_BACKSPACE: {
@@ -304,14 +357,15 @@ Keypress_Code keypress_textarea(TextArea text_area, GM_Key key) {
         }
         case GM_KEY_PASTE_START: {
             GString* str = get_bracketed_paste();
+            int len = str->len;
 
             // Clamp pasted
-            if (*box_input_size + str->len >= text_area->max_text_len) str->len = text_area->max_text_len - *box_input_size;
+            if (*box_input_size + len >= text_area->max_text_len) len = text_area->max_text_len - *box_input_size;
 
-            add_str_to_str_at(box_input, *box_input_ind, str->str, str->len);
+            add_str_to_str_at(box_input, *box_input_ind, str->str, len);
 
-            *box_input_ind += str->len;
-            *box_input_size += str->len;
+            *box_input_ind += len;
+            *box_input_size += len;
 
             if (*box_input_ind <= box_input_clamped_dt->len - (TAIL_OFFSET + 1)) {
                 strncpy(
