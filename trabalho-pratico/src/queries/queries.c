@@ -598,5 +598,69 @@ void query10(char flag, int argc, char** argv, void** catalogues, FILE* output_f
     IGNORE_ARG(output_file);
 
     Q_INFO10 information;
+    Stats_info stats = catalogues[4];
+    GArray* flight_array = catalogues[5];
+
+    if(argc == 0) {
+        for(int i = 0 ; i < flight_array->len ; ) {
+            GHashTable* hashtable_unique_passengers = g_hash_table_new_full(g_str_hash, g_str_equal, free, NULL);
+            int left_index = i;
+            int right_index = i;
+            int left_data = get_year(get_flight_schedule_departure_date(g_array_index(flight_array, const Flight, left_index)));
+            int right_data = get_year(get_flight_schedule_departure_date(g_array_index(flight_array, const Flight, right_index)));
+            for( ; left_data == right_data && right_index < flight_array->len ; ) {
+                int flight_id = get_flight_id(g_array_index(flight_array, const Flight, right_index));
+                guint matched_index = 0;
+                gboolean exists = catalog_exists_in_array(catalogues[2], GINT_TO_POINTER(flight_id), &passengersCatalog_flightID_compare_func, &matched_index);
+                if (exists) {
+                    int matched_index_down = matched_index;
+
+                    void* data1 = catalog_search_in_array(catalogues[2], matched_index_down);
+                    while (get_passenger_flightID((Passenger)data1) == flight_id && matched_index_down > 0) {
+                        data1 = catalog_search_in_array(catalogues[2], --matched_index_down);
+                    };
+                    if (get_passenger_flightID(data1) != flight_id) matched_index_down++;
+
+                    int matched_index_up = matched_index;
+                    void* data2 = catalog_search_in_array(catalogues[2], matched_index_up);
+                    while (get_passenger_flightID((Passenger)data2) == flight_id && matched_index_up < catalog_get_item_count(catalogues[2]) - 1) {
+                        data2 = catalog_search_in_array(catalogues[2], ++matched_index_up);
+                    };
+                    if (get_passenger_flightID(data2) != flight_id) matched_index_up--;
+
+                    int j = matched_index_down;
+                    int quantidade_a_percorrer = (matched_index_up - matched_index_down + 1);
+                    while (0 < quantidade_a_percorrer) {
+                        g_hash_table_add(hashtable_unique_passengers, get_passenger_userID(catalog_search_in_array(catalogues[2], j)));
+                        j++;
+                        quantidade_a_percorrer--;
+                    };
+                }
+                if(right_index + 1 != flight_array->len)
+                    right_data = get_year(get_flight_schedule_departure_date(g_array_index(flight_array, const Flight, ++right_index)));
+                else
+                    right_index++;
+            }
+            i = right_index;
+            increment_passenger_conteudo(left_data, 1, 1, g_hash_table_size(hashtable_unique_passengers), stats->query10);
+            printf("%d\n", g_hash_table_size(hashtable_unique_passengers));
+            g_hash_table_destroy(hashtable_unique_passengers);
+        }
+        for(int i = 0 ; i < stats->query10->len ; i++) {
+            Date_value info = g_array_index(stats->query10, Date_value, i);
+            information.date = get_date_value(info);
+            information.unique_passengers = get_conteudo_unique_passengers(info);
+            printf("%d -> %d\n", information.date, information.unique_passengers);
+            output_query_info(10, flag, &information, output_file, 1);
+        }
+    } else if(argc == 1) {
+        // TODO: MESES TODOS
+    } else if(argc == 2) {
+        // TODO: DIAS TODOS
+    }
+
+
+
+
     output_query_info(10, flag, &information, output_file, 1);
 }

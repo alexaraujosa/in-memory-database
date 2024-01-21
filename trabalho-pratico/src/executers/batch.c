@@ -3,6 +3,17 @@
 #include "locale.h"
 #include "tests/test.h"
 
+gint flights2_compare(gconstpointer flight_A, gconstpointer flight_B) {
+    const Flight Flight1 = *(const Flight *)flight_A;
+    const Flight Flight2 = *(const Flight *)flight_B;
+
+    int date1 = get_flight_schedule_departure_date(Flight1);
+    int date2 = get_flight_schedule_departure_date(Flight2);
+    if(date1 > date2) return 1;
+    if(date1 < date2) return -1;
+    return 0;
+}
+
 void batch(const char* arg1, const char* arg2) {
 #ifdef MAKE_TEST
     char* output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
@@ -17,18 +28,6 @@ void batch(const char* arg1, const char* arg2) {
     // TODO Verificar onde vai ficar a inicialização desta estrutura
     GArray* pointer_to_generic_catalog = generate_genCat();
 
-    genCat_add(2020, pointer_to_generic_catalog);
-    genCat_add(2022, pointer_to_generic_catalog);
-    genCat_add(2019, pointer_to_generic_catalog);
-    genCat_add(2020, pointer_to_generic_catalog);
-
-    Conteudo meu_conteudo = conteudo_by_year(2020, pointer_to_generic_catalog);
-    // Conteudo meu_conteudo = conteudo_by_month(2020, 10, pointer_to_generic_catalog);
-    increment_conteudo_flights(meu_conteudo, 20);
-    increment_conteudo_flights(meu_conteudo, 25);
-
-    print_year_info(pointer_to_generic_catalog);
-
     Catalog* user_catalog = catalog_init(g_str_hash, g_str_equal, free);
     char* userdata_path = join_paths(2, arg1, "users.csv");
     parse_file(
@@ -39,8 +38,10 @@ void batch(const char* arg1, const char* arg2) {
         &parse_user,
         &usersCatalog_write_to_catalog,
         &discard_user,
-        &default_csv_destructor,
-        user_catalog);
+        &csv_destructor_passenger_reservation,
+        user_catalog,
+        pointer_to_generic_catalog
+        );
 
 #ifdef MAKE_TEST
     clock_t end_time = clock();
@@ -73,8 +74,16 @@ void batch(const char* arg1, const char* arg2) {
         &parse_flight,
         &flightsCatalog_write_to_catalog,
         &discard_flight,
-        &default_csv_destructor,
-        flight_catalog);
+        &csv_destructor_passenger_reservation,
+        flight_catalog,
+        pointer_to_generic_catalog
+        );
+
+
+    //TODO: COLOCAR O MAKE_TEST E COLOCAR A FUNCAO flights2_compare NO LUGAR CORRETO, SEM SER NO TOPO DA BATCH
+    GArray* flights2_array = catalog_get_array_copy(flight_catalog);
+    g_array_sort(flights2_array, (GCompareFunc)&flights2_compare);
+
 
 #ifdef MAKE_TEST
     end_time = clock();
@@ -111,7 +120,9 @@ void batch(const char* arg1, const char* arg2) {
         &csv_destructor_passenger_reservation,
         user_catalog,
         flight_catalog,
-        passengers_catalog);
+        passengers_catalog,
+        pointer_to_generic_catalog
+        );
 
 #ifdef MAKE_TEST
     end_time = clock();
@@ -147,7 +158,9 @@ void batch(const char* arg1, const char* arg2) {
         &discard_reservation,
         &csv_destructor_passenger_reservation,
         user_catalog,
-        reservation_catalog);
+        reservation_catalog,
+        pointer_to_generic_catalog
+        );
 
 #ifdef MAKE_TEST
     end_time = clock();
@@ -170,7 +183,7 @@ void batch(const char* arg1, const char* arg2) {
 #endif
 
     TEST_EXPR(start_time = clock();)
-    Stats_info stats_info = create_stats_info(flight_catalog);
+    Stats_info stats_info = create_stats_info(flight_catalog, pointer_to_generic_catalog);
 
 #ifdef MAKE_TEST
     end_time = clock();
@@ -181,12 +194,13 @@ void batch(const char* arg1, const char* arg2) {
 #endif
 
     // Run queries
-    void** catalogues = (void**)malloc(5 * sizeof(void*));
+    void** catalogues = (void**)malloc(6 * sizeof(void*));
     catalogues[0] = (Catalog*)user_catalog;
     catalogues[1] = (Catalog*)flight_catalog;
     catalogues[2] = (Catalog*)passengers_catalog;
     catalogues[3] = (Catalog*)reservation_catalog;
     catalogues[4] = (Stats_info)stats_info;
+    catalogues[5] = (GArray*)flights2_array;
 
     TEST_EXPR(printf("\n----===[  QUERY EXECUTION METRICS  ]===----\n\n");)
     TEST_EXPR(fprintf(test_report, "\n----===[  QUERY EXECUTION METRICS  ]===----\n\n");)
@@ -216,6 +230,7 @@ void batch(const char* arg1, const char* arg2) {
     catalog_destroy(passengers_catalog);
     catalog_destroy(reservation_catalog);
     stats_destroy(stats_info);
+    g_array_free(flights2_array, TRUE);
 
     return;
 }

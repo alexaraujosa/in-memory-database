@@ -7,6 +7,7 @@
 #define FLIGHTS_CATALOG_H
 
 #include "catalog/catalogManager.h"
+#include "catalog/genericCatalog.h"
 #include "collections/flight.h"
 #include "common.h"
 

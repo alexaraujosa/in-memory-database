@@ -64,8 +64,8 @@ void set_user_country_code(User user, const char* country_code){
 }
 
 int get_user_account_creation(const User user){
-    int account_status = user->account_status;
-    return account_status;
+    int account_creation = user->account_creation;
+    return account_creation;
 }
 
 void set_user_account_creation(User user, int account_creation){
@@ -216,6 +216,9 @@ void preprocessor_user(FILE* stream, ParserStore store, va_list args) {
 
     Catalog* catalogo = va_arg(args, Catalog*);
     g_array_append_vals(store, &catalogo, 1);
+
+    GArray* generic_catalog = va_arg(args, GArray*);
+    g_array_append_vals(store, &generic_catalog, 1);
 }
 
 void discard_user(void* raw_data, ParserStore store) {

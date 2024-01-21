@@ -210,6 +210,9 @@ void preprocessor_reservation(FILE* stream, ParserStore store, va_list args) {
 
     Catalog* catalogo2 = va_arg(args, Catalog*);
     g_array_append_vals(store, &catalogo2, 1);
+
+    GArray* generic_catalog = va_arg(args, GArray*);
+    g_array_append_vals(store, &generic_catalog, 1);
 }
 
 void discard_reservation(void* raw_data, ParserStore store) {

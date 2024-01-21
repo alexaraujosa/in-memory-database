@@ -6,6 +6,7 @@
 #define RESERVATIONS_CATALOG_H
 
 #include "catalog/catalogManager.h"
+#include "catalog/genericCatalog.h"
 #include "collections/reservation.h"
 #include "stats/stats.h"
 #include "common.h"

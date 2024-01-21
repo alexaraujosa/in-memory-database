@@ -66,6 +66,14 @@ void reservationsCatalog_write_to_catalog(void* _reservation, ParserStore store)
     GArray* user_reservations = get_user_reservations(user);
     g_array_append_val(user_reservations, reservation);
 
+    GArray* generic_catalog = g_array_index(store, GArray*, 4);
+    int reservation_year = get_year(get_reservation_begin_date(reservation));
+    int reservation_month = get_month(get_reservation_begin_date(reservation));
+    int reservation_day = get_day(get_reservation_begin_date(reservation));
+
+    genCat_add(reservation_year, generic_catalog);
+    increment_reservation_conteudo(reservation_year, reservation_month, reservation_day, generic_catalog);
+
     catalog_add_int_to_catalog(reservation_catalog, GINT_TO_POINTER(id), reservation);
 }
 

@@ -7,6 +7,7 @@
 #define USERS_CATALOG_H
 
 #include "catalog/catalogManager.h"
+#include "catalog/genericCatalog.h"
 #include "collections/user.h"
 #include "parser/parser.h"
 #include "common.h"

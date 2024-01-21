@@ -7,6 +7,7 @@
 #define PASSENGERS_CATALOG_H
 
 #include "catalog/catalogManager.h"
+#include "catalog/genericCatalog.h"
 #include "collections/passenger.h"
 #include "common.h"
 

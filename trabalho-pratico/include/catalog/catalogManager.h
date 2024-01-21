@@ -98,6 +98,8 @@ void *catalog_search_in_array(Catalog *catalog, guint index);
  */
 int catalog_get_item_count(Catalog *catalog);
 
+GArray* catalog_get_array_copy(Catalog* catalog);
+
 /**
  * @brief Prints the key-value pair of the GHashTable within the Catalog.
  *

@@ -81,6 +81,15 @@ void flightsCatalog_write_to_catalog(void* _flight, ParserStore store) {
 
     int id = get_flight_id(flight);
     Catalog* flight_catalog = g_array_index(store, Catalog*, 2);
+
+    GArray* generic_catalog = g_array_index(store, GArray*, 3);
+    int flight_year = get_year(get_flight_schedule_departure_date(flight));
+    int flight_month = get_month(get_flight_schedule_departure_date(flight));
+    int flight_day = get_day(get_flight_schedule_departure_date(flight));
+
+    genCat_add(flight_year, generic_catalog);
+    increment_flight_conteudo(flight_year, flight_month, flight_day, generic_catalog);
+
     catalog_add_int_to_catalog(flight_catalog, GINT_TO_POINTER(id), flight);
 }
 

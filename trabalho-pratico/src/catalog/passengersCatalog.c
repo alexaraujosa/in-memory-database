@@ -54,12 +54,19 @@ void passengersCatalog_write_to_catalog(void* _passenger, ParserStore store) {
 
     char* user_id = get_passenger_userID(passenger);
     User user = catalog_search_in_str_hashtable(user_catalog, user_id);
-    free(user_id);
 
     GArray* user_flights = get_user_flights(user);
     int flight_id = get_passenger_flightID(passenger);
     Flight flight = catalog_search_in_int_hashtable(flight_catalog, flight_id);
     g_array_append_val(user_flights, flight);
 
+    GArray* generic_catalog = g_array_index(store, GArray*, 5);
+    int passenger_year = get_year(get_flight_schedule_departure_date(flight));
+    int passenger_month = get_month(get_flight_schedule_departure_date(flight));
+    int passenger_day = get_day(get_flight_schedule_departure_date(flight));
+
+    genCat_add(passenger_year, generic_catalog);
+    increment_passenger_conteudo(passenger_year, passenger_month, passenger_day, user_id, generic_catalog);
+    free(user_id);
     catalog_add_int_to_catalog(passenger_catalog, NULL, passenger);
 }

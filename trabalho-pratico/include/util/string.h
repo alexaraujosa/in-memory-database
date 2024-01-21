@@ -154,6 +154,13 @@ bool get_account_status(char* parameter);
 */
 bool get_boolean(char* parameter);
 
+/**
+ * @brief Transform a string to upper case string.
+ * 
+ * @param parameter String to transform.
+ * 
+ * @return The string with all the upper case characters.
+*/
 char* to_upper_string(char* parameter);
 
 #endif

@@ -63,6 +63,15 @@ void usersCatalog_write_to_catalog(void *_user, ParserStore store) {
 
     char *id = get_user_id(user);
     Catalog *user_catalog = g_array_index(store, Catalog *, 2);
+
+    GArray* generic_catalog = g_array_index(store, GArray*, 3);
+    int user_year = get_year(get_user_account_creation(user));
+    int user_month = get_month(get_user_account_creation(user));
+    int user_day = get_day(get_user_account_creation(user));
+
+    genCat_add(user_year, generic_catalog);
+    increment_user_conteudo(user_year, user_month, user_day, generic_catalog);
+
     catalog_add_str_to_catalog(user_catalog, id, user);
     free(id);
 }
