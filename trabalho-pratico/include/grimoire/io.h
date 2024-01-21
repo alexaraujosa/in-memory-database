@@ -82,11 +82,21 @@ typedef uint16_t GM_Key;
 #define GM_KEY_CTRL_Y 25
 #define GM_KEY_CTRL_Z 26
 
-#define GM_KEY_IS_ALPHANUMERIC(key) (isalnum(GM_CANON_KEY(key)) || (GM_CANON_KEY(key)) == ' ')
-#define GM_KEY_IS_PRINTABLE(key) (isprint(GM_CANON_KEY(key)) || (GM_CANON_KEY(key)) == ' ')
+#define GM_KEY_IS_ASCII(key) ((int)(GM_CANON_KEY(key)) >= 0 && (int)(GM_CANON_KEY(key)) <= 255)
 #define GM_KEY_IS_FUNCTION(key) ((int)(GM_CANON_KEY(key)) >= GM_KEY_F1 && (int)(GM_CANON_KEY(key)) <= GM_KEY_F12)
 #define GM_KEY_IS_ARROW(key) ((int)(GM_CANON_KEY(key)) >= GM_KEY_ARROW_UP && (int)(GM_CANON_KEY(key)) <= GM_KEY_ARROW_LEFT)
-#define GM_IS_CTRL(key) ((int)(GM_CANON_KEY(key)) >= GM_KEY_CTRL_A && (int)(GM_CANON_KEY(key)) <= GM_KEY_CTRL_Z)
+#define GM_KEY_IS_CTRL(key) ((int)(GM_CANON_KEY(key)) >= GM_KEY_CTRL_A && (int)(GM_CANON_KEY(key)) <= GM_KEY_CTRL_Z)
+#define GM_KEY_IS_SPECIAL(key) (GM_KEY_IS_FUNCTION(key) || GM_KEY_IS_ARROW(key) || GM_KEY_IS_CTRL(key))
+#define GM_KEY_IS_ALPHANUMERIC(key) (\
+    GM_KEY_IS_ASCII(key)\
+    && !GM_KEY_IS_SPECIAL(key)\
+    && (isalnum(GM_CANON_KEY(key)) || (GM_CANON_KEY(key)) == ' ')\
+)
+#define GM_KEY_IS_PRINTABLE(key) (\
+    GM_KEY_IS_ASCII(key)\
+    && !GM_KEY_IS_SPECIAL(key)\
+    && (isprint(GM_CANON_KEY(key)) || (GM_CANON_KEY(key)) == ' ')\
+)
 
 /**
  * @brief Checks whenever input is available on then input stream. 
@@ -154,11 +164,11 @@ void gm_reset_attr(int flush);
 /**
  * @brief Enables bracketed paste mode (https://cirw.in/blog/bracketed-paste).
  */
-void enable_bracketed_paste(GM_Term term);
+void enable_bracketed_paste();
 
 /**
  * @brief Disables bracketed paste mode (https://cirw.in/blog/bracketed-paste).
  */
-void disable_bracketed_paste(GM_Term term);
+void disable_bracketed_paste();
 
 #endif
