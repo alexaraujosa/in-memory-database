@@ -96,6 +96,17 @@ void* get_user_reservations_data(const User user, int index);
 void* parse_user(Tokens tokens);
 
 /**
+ * @brief User pre processor for parsing a file.
+ * 
+ * @param stream File to be stored.
+ * @param store Store that connects the outside of the function with the inside.
+ * @param args Variadic arguments.
+ * 
+ * @return void.
+*/
+void preprocessor_user(FILE* stream, ParserStore store, va_list args);
+
+/**
  * @brief Creates the users_errors file and writes the lines with invalid data.
  * 
  * @param raw_data Invalid data contained in the line.

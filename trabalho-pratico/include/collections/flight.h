@@ -80,6 +80,17 @@ void increment_flight_passengers(Flight flight);
 void* parse_flight(Tokens tokens);
 
 /**
+ * @brief Flight pre processor for parsing a file.
+ * 
+ * @param stream File to be stored.
+ * @param store Store that connects the outside of the function with the inside.
+ * @param args Variadic arguments.
+ * 
+ * @return void.
+*/
+void preprocessor_flight(FILE* stream, ParserStore store, va_list args);
+
+/**
  * @brief Creates the flight_errors file and writes the lines with invalid data.
  * 
  * @param raw_data Invalid data contained in the line.

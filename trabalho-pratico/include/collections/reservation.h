@@ -92,6 +92,17 @@ void set_reservation_rating(Reservation reservation, int rating);
 void* parse_reservation(Tokens tokens);
 
 /**
+ * @brief Default pre processor for the reservation catalog.
+ * 
+ * @param stream File to be stored.
+ * @param store Store that connects the outside of the function with the inside.
+ * @param args Variadic arguments.
+ * 
+ * @return void.
+*/
+void preprocessor_reservation(FILE* stream, ParserStore store, va_list args);
+
+/**
  * @brief Creates the reservation_errors file and writes the lines with invalid data.
  * 
  * @param raw_data Invalid data contained in the line.
@@ -109,4 +120,14 @@ void discard_reservation(void* raw_data, ParserStore store);
  * @return void.
 */
 void print_reservation(void* reservation);
+
+/**
+ * @brief Reservation and passenger csv destructor for the respective catalogues.
+ * 
+ * @param stream File to be closed.
+ * @param store Store that contains things to be destructed.
+ * 
+ * @return void.
+*/
+void csv_destructor_passenger_reservation(FILE* stream, ParserStore store);
 #endif

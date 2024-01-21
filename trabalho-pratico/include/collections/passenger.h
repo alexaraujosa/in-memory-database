@@ -46,6 +46,17 @@ void set_passenger_userID(Passenger passenger, const char *user_id);
 void* parse_passenger(Tokens tokens);
 
 /**
+ * @brief Default pre processor for the passenger catalog.
+ * 
+ * @param stream File to be stored.
+ * @param store Store that connects the outside of the function with the inside.
+ * @param args Variadic arguments.
+ * 
+ * @return void.
+*/
+void preprocessor_passenger(FILE* stream, ParserStore store, va_list args);
+
+/**
  * @brief Creates the passengers_errors file and writes the lines with invalid data.
  * 
  * @param raw_data Invalid data contained in the line.

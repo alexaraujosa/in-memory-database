@@ -3,58 +3,6 @@
 #include "locale.h"
 #include "tests/test.h"
 
-void default_preprocessor(FILE* stream, ParserStore store, va_list args) {
-    gpointer null_element = NULL;
-    g_array_append_vals(store, &null_element, 1);   // Discard file
-    default_csv_preprocessor(stream, store, args);  // File header
-    // cvs_preprocessor_helper(stream, store);
-
-    Catalog* catalogo = va_arg(args, Catalog*);
-    g_array_append_vals(store, &catalogo, 1);
-}
-
-void preprocessor_reservation(FILE* stream, ParserStore store, va_list args) {
-    gpointer null_element = NULL;
-    g_array_append_vals(store, &null_element, 1);   // Discard file
-    default_csv_preprocessor(stream, store, args);  // File header
-    // cvs_preprocessor_helper(stream, store);
-
-    Catalog* catalogo = va_arg(args, Catalog*);
-    g_array_append_vals(store, &catalogo, 1);
-
-    Catalog* catalogo2 = va_arg(args, Catalog*);
-    g_array_append_vals(store, &catalogo2, 1);
-}
-
-void preprocessor_passenger(FILE* stream, ParserStore store, va_list args) {
-    gpointer null_element = NULL;
-    g_array_append_vals(store, &null_element, 1);   // Discard file
-    default_csv_preprocessor(stream, store, args);  // File header
-    // cvs_preprocessor_helper(stream, store);
-
-    Catalog* catalogo = va_arg(args, Catalog*);
-    g_array_append_vals(store, &catalogo, 1);
-
-    Catalog* catalogo2 = va_arg(args, Catalog*);
-    g_array_append_vals(store, &catalogo2, 1);
-
-    Catalog* catalogo3 = va_arg(args, Catalog*);
-    g_array_append_vals(store, &catalogo3, 1);
-}
-
-// TODO Stream unused value
-void default_csv_destructor_reservation(FILE* stream, ParserStore store) {
-    IGNORE_ARG(stream);
-
-    FILE* discarder = g_array_index(store, FILE*, 0);
-    if (discarder != NULL) CLOSE_FILE(discarder);
-
-    void** file_header = g_array_index(store, void**, 1);
-    free(file_header);
-
-    g_array_free(store, TRUE);
-}
-
 void batch(const char* arg1, const char* arg2) {
 #ifdef MAKE_TEST
     char* output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
@@ -75,7 +23,7 @@ void batch(const char* arg1, const char* arg2) {
     genCat_add(2020, pointer_to_generic_catalog);
 
     Conteudo meu_conteudo = conteudo_by_year(2020, pointer_to_generic_catalog);
-    Conteudo meu_conteudo = conteudo_by_month(2020, 10, pointer_to_generic_catalog);
+    // Conteudo meu_conteudo = conteudo_by_month(2020, 10, pointer_to_generic_catalog);
     increment_conteudo_flights(meu_conteudo, 20);
     increment_conteudo_flights(meu_conteudo, 25);
 
@@ -86,7 +34,7 @@ void batch(const char* arg1, const char* arg2) {
     parse_file(
         userdata_path,
         &tokenize_csv,
-        &default_preprocessor,
+        &preprocessor_user,
         &verify_user_tokens,
         &parse_user,
         &usersCatalog_write_to_catalog,
@@ -120,7 +68,7 @@ void batch(const char* arg1, const char* arg2) {
     parse_file(
         flightsdata_path,
         &tokenize_csv,
-        &default_preprocessor,
+        &preprocessor_flight,
         &verify_flight_tokens,
         &parse_flight,
         &flightsCatalog_write_to_catalog,
@@ -160,7 +108,7 @@ void batch(const char* arg1, const char* arg2) {
         &parse_passenger,
         &passengersCatalog_write_to_catalog,
         &discard_passenger,
-        &default_csv_destructor_reservation,
+        &csv_destructor_passenger_reservation,
         user_catalog,
         flight_catalog,
         passengers_catalog);
@@ -197,7 +145,7 @@ void batch(const char* arg1, const char* arg2) {
         &parse_reservation,
         &reservationsCatalog_write_to_catalog,
         &discard_reservation,
-        &default_csv_destructor_reservation,
+        &csv_destructor_passenger_reservation,
         user_catalog,
         reservation_catalog);
 

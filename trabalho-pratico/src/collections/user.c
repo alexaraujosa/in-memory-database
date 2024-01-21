@@ -208,6 +208,16 @@ void* parse_user(Tokens tokens) {
     return user;
 }
 
+void preprocessor_user(FILE* stream, ParserStore store, va_list args) {
+    gpointer null_element = NULL;
+    g_array_append_vals(store, &null_element, 1);   // Discard file
+    default_csv_preprocessor(stream, store, args);  // File header
+    // cvs_preprocessor_helper(stream, store);
+
+    Catalog* catalogo = va_arg(args, Catalog*);
+    g_array_append_vals(store, &catalogo, 1);
+}
+
 void discard_user(void* raw_data, ParserStore store) {
     void** discard_file = &g_array_index(store, void*, 0);
     if (*discard_file == NULL) {
