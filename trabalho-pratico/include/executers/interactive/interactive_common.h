@@ -18,12 +18,14 @@ enum color_ids {
     COLOR_DEFAULT_BG = 0,
     COLOR_DEFAULT_FG = 1,
     COLOR_WHITE = 2,
-    COLOR_BLACK
+    COLOR_BLACK,
+    COLOR_RED
 };
 
 enum color_pair_ids {
     COLORPAIR_DEFAULT = 0,
-    COLORPAIR_SELECTED = 1
+    COLORPAIR_SELECTED = 1,
+    COLORPAIR_ERROR
 };
 
 typedef enum keypress_code {

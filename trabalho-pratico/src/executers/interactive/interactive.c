@@ -36,12 +36,14 @@ void interactive(DataLocales locales) {
 
     gm_init_color(term, COLOR_WHITE, 255, 255, 255);
     gm_init_color(term, COLOR_BLACK, 0, 0, 0);
+    gm_init_color(term, COLOR_RED, 255, 0, 0);
 
     gm_init_color_pair(term, COLORPAIR_SELECTED, COLOR_WHITE, COLOR_BLACK);
+    gm_init_color_pair(term, COLORPAIR_ERROR, COLOR_RED, COLOR_DEFAULT_BG);
 
     // ------- Initialize Screen -------
     gm_hide_cursor(term, TRUE);
-    enable_bracketed_paste(term);
+    enable_bracketed_paste();
 
     // ------- Initialize Frame Store -------
     FRAME_STORE store = {
@@ -108,7 +110,7 @@ void interactive(DataLocales locales) {
     destroy_data_settings(store.settings);
 
     // ======= Destroy Terminal =======
-    disable_bracketed_paste(term);
+    disable_bracketed_paste();
     gm_term_end(term);
 }
 
@@ -139,7 +141,7 @@ Keypress_Code handle_keypresses(GM_Term term, FrameStore store) {
     if (gm_get_canonical_key(key) == GM_KEY_CTRL_C) return KEY_ABORT;
 
     // Temporary emergency nuclear button
-    if (gm_get_canonical_key(key) == 'a') {
+    if (gm_get_canonical_key(key) == '0') {
         printf("FUCK\n");
         exit(EXIT_SUCCESS);
     }
