@@ -102,6 +102,34 @@ Tokens get_lines(char* line, size_t len) {
     return tokenize_char_delim(line, len, "\n");
 }
 
+Tokens break_lines(Tokens lines, int max_len) {
+    int line_count = lines->len;
+    for (int i = 0; i < lines->len; i++) line_count += (strlen(lines->data[i]) / max_len);
+
+    char** ndata = (char**)malloc(line_count * sizeof(char*));
+    int nind = 0;
+
+    for (int i = 0; i < lines->len; i++) {
+        int line_len = strlen(lines->data[i]);
+
+        if (line_len <= max_len) {
+            ndata[nind++] = strdup(lines->data[i]);
+        } else {
+            for (int j = 0; j <= line_len / max_len; j++) {
+                ndata[nind++] = strndup(lines->data[i] + (max_len * j), max_len);
+            }
+        }
+    }
+
+    destroy_tokens(lines);
+
+    Tokens nlines = (Tokens)malloc(sizeof(TOKENS));
+    nlines->data = ndata;
+    nlines->len = line_count;
+
+    return nlines;
+}
+
 int is_digit(char c) {
     return (c >= '0' && c <= '9');
 }

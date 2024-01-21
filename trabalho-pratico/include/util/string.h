@@ -17,6 +17,9 @@
 
 #include "parser/parser.h"
 
+// FUCK YOU, NCURSES.
+#undef lines
+
 #define TIME_T_SYSTEM 1696118400
 
 #define IS_NULL(ARG)         ((ARG) == NULL)
@@ -55,6 +58,14 @@ char* isnprintf(const char *format, ...);
  * @return A Tokens struct containing the lines within the string.
 */
 Tokens get_lines(char* line, size_t len);
+
+/**
+ * @brief Splits lines into segments of at most @p max_len characters.
+ * 
+ * @param lines The set of lines to be broken.
+ * @param max_len The maximum length for each line.
+ */
+Tokens break_lines(Tokens lines, int max_len);
 
 /**
  * @brief Verify if a certain char its a digit.
