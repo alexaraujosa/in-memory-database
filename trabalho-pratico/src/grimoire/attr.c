@@ -7,8 +7,8 @@
 #include "util/error.h"
 #include "util/string.h"
 
-#define ANSI_TRUECOLOR_FG(r, g, b) isnprintf("38;2;%d;%d;%d;", r, g, b)
-#define ANSI_TRUECOLOR_FG_CHAINABLE(r, g, b) isnprintf("\x1B[38;2;%d;%d;%d;m", r, g, b)
+#define ANSI_TRUECOLOR_FG(r, g, b) isnprintf("\x1B[38;2;%d;%d;%d;m", r, g, b)
+#define ANSI_TRUECOLOR_FG_CHAINABLE(r, g, b) isnprintf("38;2;%d;%d;%d;", r, g, b)
 
 #define ANSI_TRUECOLOR_BG(r, g, b) isnprintf("\x1B[48;2;%d;%d;%d;m", r, g, b)
 #define ANSI_TRUECOLOR_BG_CHAINABLE(r, g, b) isnprintf("48;2;%d;%d;%d;", r, g, b)
@@ -41,6 +41,8 @@ void gm_attron(GM_Term term, int attr) {
     if (attr & GM_BOLD) term->attr |= GM_BOLD;
     if (attr & GM_ITALIC) term->attr |= GM_ITALIC;
     if (attr & GM_UNDERLINE) term->attr |= GM_UNDERLINE;
+    if (attr & GM_BLINK) term->attr |= GM_BLINK;
+    if (attr & GM_PRINT_OVERFLOW_BREAK) term->attr |= GM_PRINT_OVERFLOW_BREAK;
     #undef SCOPE
 }
 
@@ -60,20 +62,24 @@ void gm_attroff(GM_Term term, int attr) {
     if (attr & GM_BOLD) term->attr ^= GM_BOLD;
     if (attr & GM_ITALIC) term->attr ^= GM_ITALIC;
     if (attr & GM_UNDERLINE) term->attr ^= GM_UNDERLINE;
+    if (attr & GM_BLINK) term->attr ^= GM_BLINK;
+    if (attr & GM_PRINT_OVERFLOW_BREAK) term->attr ^= GM_PRINT_OVERFLOW_BREAK;
     #undef SCOPE
 }
 // ======= END ATTRON/OFF =======
 
+// ======= ACCESSORS =======
+int gm_has_attribute(GM_Term term, int attr) {
+    uint8_t color = attr >> _GM_COLOR_OFFSET;
+    if (color > 0) {
+        return color == term->attr >> _GM_COLOR_OFFSET;
+    }
+
+    return !!(term->attr & attr);
+}
+// ======= END ACCESSORS =======
+
 // ======= BOX DRAWING CHARS =======
-// void gm_set_box_top_left_corner(GM_Term term, GM_Char ch)     { term->box_chars.tlc = ch; }
-// void gm_set_box_top_right_corner(GM_Term term, GM_Char ch)    { term->box_chars.trc = ch; }
-// void gm_set_box_bottom_left_corner(GM_Term term, GM_Char ch)  { term->box_chars.blc = ch; }
-// void gm_set_box_bottom_right_corner(GM_Term term, GM_Char ch) { term->box_chars.brc = ch; }
-// void gm_set_box_left_intersection(GM_Term term, GM_Char ch)   { term->box_chars.il = ch; }
-// void gm_set_box_right_intersection(GM_Term term, GM_Char ch)  { term->box_chars.ir = ch; }
-// void gm_set_box_top_intersection(GM_Term term, GM_Char ch)    { term->box_chars.it = ch; }
-// void gm_set_box_bottom_intersection(GM_Term term, GM_Char ch) { term->box_chars.ib = ch; }
-// void gm_set_box_center_intersection(GM_Term term, GM_Char ch) { term->box_chars.ic = ch; }
 void gm_set_box_top_left_corner(GM_Term term, char ch[MAX_UTF8_SEQ])     { memcpy(term->box_chars.tlc, ch, MAX_UTF8_SEQ); }
 void gm_set_box_top_right_corner(GM_Term term, char ch[MAX_UTF8_SEQ])    { memcpy(term->box_chars.trc, ch, MAX_UTF8_SEQ); }
 void gm_set_box_bottom_left_corner(GM_Term term, char ch[MAX_UTF8_SEQ])  { memcpy(term->box_chars.blc, ch, MAX_UTF8_SEQ); }
@@ -180,8 +186,8 @@ char* gm_attr_int_resolve(GM_Term term, GM_AttrInt attr) {
         color_str = isnprintf("39;%s", bg_str);
         free(bg_str);
     } else if (bg->mod == GM_CMOD_RESET_BG) {
-        char* fg_str = ANSI_TRUECOLOR_FG_CHAINABLE(bg->red, bg->green, bg->blue);
-        color_str = isnprintf("%s49", fg_str);
+        char* fg_str = ANSI_TRUECOLOR_FG_CHAINABLE(fg->red, fg->green, fg->blue);
+        color_str = isnprintf("%s49;", fg_str);
         free(fg_str);
     } else {
         color_str = ANSI_TRUECOLOR_FULL_CHAINABLE(fg->red, fg->green, fg->blue, bg->red, bg->green, bg->blue);
