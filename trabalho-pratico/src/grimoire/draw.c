@@ -1,6 +1,7 @@
 #include "grimoire/draw.h"
 #include "grimoire/attr.h"
 #include "grimoire/grimoire_priv.h"
+#include "grimoire/terminal.h"
 
 #include "common.h"
 #include "util/error.h"
@@ -72,7 +73,7 @@ void gm_printf(GM_Term term, int row, int col, const char *format, ...) {
     va_end(args);
 
     // Row and col can no longer be calculated preemptively, due to multiline support.
-    if (length < 0) return;
+    if (length <= 0) return;
     // if (row > term->size.rows) {
     //     return;
     // }
@@ -97,15 +98,42 @@ void gm_printf(GM_Term term, int row, int col, const char *format, ...) {
     Tokens lines = get_lines(result, length);
 
     int max_col = 0;
-    for (int i = 0; i < lines->len; i++) {
-        int len = strlen(lines->data[i]);
-        if (max_col < len) max_col = len; 
-    }
+    
+    // Break lines too big for current terminal.
+    if (gm_has_attribute(term, GM_PRINT_OVERFLOW_BREAK)) {
+        GM_TERM_SIZE size = gm_term_get_size(term);
+        lines = break_lines(lines, size.cols - col);
 
-    rt_assert(
-        _gm_is_area_inbounds(term, row, col, row + lines->len - 1, col + max_col),
-        trace_msg(SCOPE, "Area is out of bounds.")
-    );
+        int len = strlen(lines->data[0]);
+
+        rt_assert(
+            _gm_is_area_inbounds(term, row, col, row + lines->len - 1, col + len),
+            trace_msg(SCOPE, "Area is out of bounds.")
+        );
+
+        max_col = len;
+
+        for (int i = 1; i < lines->len; i++) {
+            int len = strlen(lines->data[i]);
+            if (max_col < len) max_col = len; 
+
+            rt_assert(
+                _gm_is_area_inbounds(term, row, col, row + lines->len - 1, len),
+                trace_msg(SCOPE, "Area is out of bounds.")
+            );
+        }
+    } else {
+        // int max_col = 0;
+        for (int i = 0; i < lines->len; i++) {
+            int len = strlen(lines->data[i]);
+            if (max_col < len) max_col = len; 
+        }
+
+        rt_assert(
+            _gm_is_area_inbounds(term, row, col, row + lines->len - 1, col + max_col),
+            trace_msg(SCOPE, "Area is out of bounds.")
+        );
+    }
     
     GM_Attr attr = gm_attr_make(
         term, 
