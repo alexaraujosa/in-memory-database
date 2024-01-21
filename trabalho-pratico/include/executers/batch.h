@@ -10,48 +10,48 @@
 #include "catalog/passengersCatalog.h"
 #include "catalog/catalogManager.h"
 
-/**
- * @brief Default pre processor for parsing a file.
- * 
- * @param stream File to be stored.
- * @param store Store that connects the outside of the function with the inside.
- * @param args Variadic arguments.
- * 
- * @return void.
-*/
-void default_preprocessor(FILE* stream, ParserStore store, va_list args);
+// /**
+//  * @brief Default pre processor for parsing a file.
+//  * 
+//  * @param stream File to be stored.
+//  * @param store Store that connects the outside of the function with the inside.
+//  * @param args Variadic arguments.
+//  * 
+//  * @return void.
+// */
+// void default_preprocessor(FILE* stream, ParserStore store, va_list args);
 
-/**
- * @brief Default pre processor for the reservation catalog.
- * 
- * @param stream File to be stored.
- * @param store Store that connects the outside of the function with the inside.
- * @param args Variadic arguments.
- * 
- * @return void.
-*/
-void preprocessor_reservation(FILE* stream, ParserStore store, va_list args);
+// /**
+//  * @brief Default pre processor for the reservation catalog.
+//  * 
+//  * @param stream File to be stored.
+//  * @param store Store that connects the outside of the function with the inside.
+//  * @param args Variadic arguments.
+//  * 
+//  * @return void.
+// */
+// void preprocessor_reservation(FILE* stream, ParserStore store, va_list args);
 
-/**
- * @brief Default pre processor for the passenger catalog.
- * 
- * @param stream File to be stored.
- * @param store Store that connects the outside of the function with the inside.
- * @param args Variadic arguments.
- * 
- * @return void.
-*/
-void preprocessor_passenger(FILE* stream, ParserStore store, va_list args);
+// /**
+//  * @brief Default pre processor for the passenger catalog.
+//  * 
+//  * @param stream File to be stored.
+//  * @param store Store that connects the outside of the function with the inside.
+//  * @param args Variadic arguments.
+//  * 
+//  * @return void.
+// */
+// void preprocessor_passenger(FILE* stream, ParserStore store, va_list args);
 
-/**
- * @brief Default csv destructor for the reservation catalog.
- * 
- * @param stream File to be closed.
- * @param store Store that contains things to be destructed.
- * 
- * @return void.
-*/
-void default_csv_destructor_reservation(FILE* stream, ParserStore store);
+// /**
+//  * @brief Default csv destructor for the reservation catalog.
+//  * 
+//  * @param stream File to be closed.
+//  * @param store Store that contains things to be destructed.
+//  * 
+//  * @return void.
+// */
+// void default_csv_destructor_reservation(FILE* stream, ParserStore store);
 
 /**
  * @brief Program execution in batch mode.
