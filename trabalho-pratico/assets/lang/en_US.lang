@@ -10,3 +10,6 @@ screen.settings.language=Language
 screen.main_menu=MAIN MENU
 screen.main_menu.execute_query=Execute queries
 screen.dataset_question.question=Dataset location:
+screen.dataset_question.error.path_enoent=ERROR: Path does not exist or could not be accessed.
+screen.dataset_question.error.path_not_a_dir=ERROR: Path is not a directory.
+screen.dataset_question.error.path_not_dataset=ERROR: Path is not a valid dataset directory (missing files).\n  - Ensure the files '%s', '%s', '%s' and '%s' are present.

@@ -27,6 +27,9 @@
 
 // ------- Dataset Question -------
 #define LOCALE_SCREEN_DATASET_QUESTION_QUESTION "screen.dataset_question.question"
+#define LOCALE_SCREEN_DATASET_QUESTION_ERROR_PATH_ENOENT "screen.dataset_question.error.path_enoent"
+#define LOCALE_SCREEN_DATASET_QUESTION_ERROR_PATH_NOT_A_DIR "screen.dataset_question.error.path_not_a_dir"
+#define LOCALE_SCREEN_DATASET_QUESTION_ERROR_PATH_NOT_A_DATASET "screen.dataset_question.error.path_not_dataset"
 
 
 #endif

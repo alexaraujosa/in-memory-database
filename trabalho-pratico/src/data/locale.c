@@ -335,7 +335,8 @@ DataLocales load_locales() {
         char* file = g_array_index(files, char*, i);
 
         Tokens fname = tokenize_char_delim(file, strlen(file), ".");
-        if (fname->len == 1) continue;
+        // if (fname->len == 1) continue;
+        if (fname->len == 1) goto cleanup_file;
 
         if (STRING_EQUAL(fname->data[fname->len - 1], "lang")) {
             DataLocale locale = _load_locale(file);
@@ -343,8 +344,9 @@ DataLocales load_locales() {
             locales->len++;
         }
 
-        destroy_tokens(fname);
-        free(file);
+        cleanup_file:
+            destroy_tokens(fname);
+            free(file);
     }
 
     // I swear to god, one day I will commit a hate crime against the mfs over at GLib.
@@ -439,6 +441,8 @@ char* get_localized_string_formatted(DataLocale locale, char* key, ...) {
 
     vsnprintf(result, length + 1, format, args);
     va_end(args);
+
+    free(format);
 
     return result;
 }
