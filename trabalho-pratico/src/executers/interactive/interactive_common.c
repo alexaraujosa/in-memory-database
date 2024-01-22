@@ -16,3 +16,32 @@ void destroy_draw_text(DrawText dt) {
     free(dt->text);
     free(dt);
 }
+
+
+typedef struct defer_control {
+    int has_work;
+    DeferNotify notify_func;
+} DEFER_CONTROL, *DeferControl;
+
+DeferControl make_defer_control() {
+    DeferControl df = (DeferControl)malloc(sizeof(DEFER_CONTROL));
+    df->has_work = FALSE;
+    df->notify_func = NULL;
+
+    return df;
+}
+
+void defer_load(DeferControl defer_control, DeferNotify notify_func) {
+    if (defer_control->has_work) return;
+
+    defer_control->notify_func = notify_func;
+    defer_control->has_work = TRUE;
+}
+
+void defer_try(DeferControl defer_control, GM_Term term, FrameStore store) {
+    if (!defer_control->has_work) return;
+
+    defer_control->notify_func(term, store);
+    defer_control->notify_func = NULL;
+    defer_control->has_work = FALSE;
+}

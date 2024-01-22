@@ -48,7 +48,14 @@ void interactive(DataLocales locales) {
     // ------- Initialize Frame Store -------
     FRAME_STORE store = {
         .awaiting_keypress = 0,
-        .is_XTerm = 0
+        .is_XTerm = 0,
+        .locales = NULL,
+        .current_locale = NULL,
+        .screen_caches = NULL,
+        .settings = NULL,
+        .current_screen = 0,
+        .datasets = NULL,
+        .defer_control = NULL
     };
 
     if (gm_term_is_xterm(term)) store.is_XTerm = IS_XTERM;
@@ -68,9 +75,17 @@ void interactive(DataLocales locales) {
     store.current_locale = get_locale(locales, cur_loc_id);
     free(cur_loc_id);
 
+    // ------- Initialize screen cache storage -------
     store.screen_caches = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, NULL);
 
+    // ------- Set default menu -------
     store.current_screen = SCREEN_MAIN_MENU;
+
+    // ------- Initialize datasets -------
+    store.datasets = make_dataset_data(NULL);
+
+    // ------- Initialize Task Defer Control -------
+    store.defer_control = make_defer_control();
 
     // ======= Frame Loop =======
     int stop = 0;
@@ -159,6 +174,9 @@ Keypress_Code handle_keypresses(GM_Term term, FrameStore store) {
 }
 
 int build_frame(GM_Term term, FrameStore store) {
+    // Handle deferred work before starting new frame.
+    defer_try(store->defer_control, term, store);
+
     Keypress_Code keypress = 0;
     if (gm_kbhit(term)) keypress = handle_keypresses(term, store);
 

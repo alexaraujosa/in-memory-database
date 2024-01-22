@@ -6,12 +6,18 @@
 #include "data/locale_keys.h"
 #include "data/settings.h"
 #include "cache/cache.h"
+#include "executers/datasets.h"
+
+// // When using KEY_SPECIAL on screen keypress handlers, if information needs to be passed to the manager,
+// // set this key. It should not be defined for anything else and be considered a reserved key.
+// #define CACHE_KEY_TRANSPORT_BUS "__transport_bus__"
 
 typedef enum screen_id {
     SCREEN_XTERM_WARN,
     SCREEN_SETTINGS,
     SCREEN_MAIN_MENU,
-    SCREEN_DATASET_QUESTION
+    SCREEN_DATASET_QUESTION,
+    SCREEN_LOADING
 } ScreenId;
 
 enum color_ids {
@@ -42,6 +48,8 @@ typedef enum xterm_state {
     NOT_XTERM_CONFIRMED
 } XTerm_State;
 
+typedef struct defer_control *DeferControl;
+
 typedef struct frame_store {
     int awaiting_keypress;
     XTerm_State is_XTerm; // 0 - Uninitialized | 1 - Is XTerm | 2 - Not XTerm & Not confirmed | 3- Not XTerm & confirmed
@@ -50,8 +58,15 @@ typedef struct frame_store {
     GHashTable* screen_caches;
     DataSettings settings;
     ScreenId current_screen;
-
+    DatasetData datasets;
+    DeferControl defer_control;
 } FRAME_STORE, *FrameStore;
+
+// Separated from the DeferControl due to it's dependency on FrameStore.
+/**
+ * @brief A DeferNotify function executes deferred work when called.
+ */
+typedef void(*DeferNotify)(GM_Term, FrameStore);
 
 typedef struct draw_text {
     char* text;
@@ -64,5 +79,29 @@ typedef struct draw_text {
 
 DrawText make_draw_text(char* text, int len, int x, int y, int rows, int cols);
 void destroy_draw_text(DrawText dt);
+
+/**
+ * @brief Initializes the Defer Control.
+ * 
+ * @param term The current Terminal.
+ * @param store The current FrameStore.
+ */
+DeferControl make_defer_control();
+
+/**
+ * @brief Defers a task to be executed at a later point.
+ * 
+ * @param term The current Terminal.
+ * @param store The current FrameStore.
+ */
+void defer_load(DeferControl defer_control, DeferNotify notify_func);
+
+/**
+ * @brief Attempts to run the defered task, if it exists.
+ * 
+ * @param term The current Terminal.
+ * @param store The current FrameStore.
+ */
+void defer_try(DeferControl defer_control, GM_Term term, FrameStore store);
 
 #endif
