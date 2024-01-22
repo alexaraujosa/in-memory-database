@@ -76,10 +76,6 @@ int catalog_get_item_count(Catalog *catalog) {
     return catalog->itemCount;
 }
 
-GArray* catalog_get_array_copy(Catalog* catalog) {
-    return g_array_copy(catalog->array);
-}
-
 void catalog_print_hash_table(Catalog *catalog, void (*printFunction)(gpointer, gpointer)) {
     GHashTableIter iter;
     gpointer key, value;

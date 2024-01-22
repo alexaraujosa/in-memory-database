@@ -92,11 +92,6 @@ void batch(const char* arg1, const char* arg2) {
         );
 
 
-    //TODO: COLOCAR O MAKE_TEST E COLOCAR A FUNCAO flights2_compare NO LUGAR CORRETO, SEM SER NO TOPO DA BATCH
-    GArray* flights2_array = catalog_get_array_copy(flight_catalog);
-    g_array_sort(flights2_array, (GCompareFunc)&flights2_compare);
-
-
 #ifdef MAKE_TEST
     end_time = clock();
     elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
@@ -195,7 +190,7 @@ void batch(const char* arg1, const char* arg2) {
 #endif
 
     TEST_EXPR(start_time = clock();)
-    Stats_info stats_info = create_stats_info(flight_catalog, pointer_to_generic_catalog);
+    Stats_info stats_info = create_stats_info(user_catalog, flight_catalog, pointer_to_generic_catalog);
 
 #ifdef MAKE_TEST
     end_time = clock();
@@ -212,7 +207,6 @@ void batch(const char* arg1, const char* arg2) {
     catalogues[2] = (Catalog*)passengers_catalog;
     catalogues[3] = (Catalog*)reservation_catalog;
     catalogues[4] = (Stats_info)stats_info;
-    catalogues[5] = (GArray*)flights2_array;
 
     TEST_EXPR(printf("\n----===[  QUERY EXECUTION METRICS  ]===----\n\n");)
     TEST_EXPR(fprintf(test_report, "\n----===[  QUERY EXECUTION METRICS  ]===----\n\n");)
@@ -242,7 +236,7 @@ void batch(const char* arg1, const char* arg2) {
     catalog_destroy(passengers_catalog);
     catalog_destroy(reservation_catalog);
     stats_destroy(stats_info);
-    g_array_free(flights2_array, TRUE);
+
 
     return;
 }

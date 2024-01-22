@@ -37,18 +37,6 @@ gint passengersCatalog_full_compare_func(gconstpointer passenger_A, gconstpointe
  */
 gint passengersCatalog_flightID_compare_func(gconstpointer passenger_A, gconstpointer passenger_flightID);
 
-/**
- * @brief Compare function for searching passengers in the catalog based on user ID.
- *
- * This function compares a passenger with a user ID. It is intended for use with Glib's searching
- * functions.
- *
- * @param passenger_A Pointer to the passenger.
- * @param passenger_userID Pointer to the user ID.
- * @return An integer less than, equal to, or greater than zero if the first argument is considered
- * to be respectively less than, equal to, or greater than the second.
- */
-gint passengersCatalog_userID_compare_func(gconstpointer passenger_A, gconstpointer passenger_userID);
 
 /**
  * @brief Write passenger information to the catalog.

@@ -71,6 +71,58 @@ void _create_info_tables(Stats_info stats, Catalog *flights_catalog) {
     stats->aeroports = aeroports;
 }
 
+bool _is_in_array(GArray *arr, int num){
+    bool found = false;
+    for(int i = 0; i < (int)arr->len; i++){
+        if(num == g_array_index(arr, int, i)) return true;
+    }
+    return found;
+}
+
+gint _sort_q10(gconstpointer a, gconstpointer b) {
+    Date_value value1 = *(Date_value *)a;
+    Date_value value2 = *(Date_value *)b;
+
+    if (get_date_value(value1) > get_date_value(value2)) return 1;
+    if (get_date_value(value1) < get_date_value(value2)) return -1;
+    return 0;
+} 
+
+void _create_query10_unique_passengers(GArray* generic_catalog, Catalog* users_catalog){
+    g_array_sort(generic_catalog, (GCompareFunc)_sort_q10);
+    for(int i = 0; i < catalog_get_item_count(users_catalog); i++){
+        GArray *years_checked = g_array_new(FALSE, FALSE, sizeof(int));
+        GArray *years_month_checked = g_array_new(FALSE, FALSE, sizeof(int));
+        GArray *years_month_day_checked = g_array_new(FALSE, FALSE, sizeof(int));
+        User user = catalog_search_in_array(users_catalog, i);
+        GArray *user_flights = get_user_flights(user); 
+        for(int j = 0; j < (int)user_flights->len; j++){
+            Flight flight = g_array_index(user_flights, Flight, j);
+            int current_year = get_year(get_flight_schedule_departure_date(flight));
+            int current_year_month = get_month(get_flight_schedule_departure_date(flight));
+            int current_year_month_day = get_day(get_flight_schedule_departure_date(flight));
+
+            if(!_is_in_array(years_checked, current_year)){
+                increment_unique_passenger_by_year(current_year, generic_catalog);
+                g_array_append_val(years_checked, current_year);
+            }
+            int value_to_append = offset_year_month(current_year, current_year_month);
+            if(!_is_in_array(years_month_checked, value_to_append)){
+                increment_unique_passenger_by_month(current_year, current_year_month, generic_catalog);
+                g_array_append_val(years_month_checked, value_to_append);
+            }
+            value_to_append = offset_year_month_day(current_year, current_year_month, current_year_month_day);
+            if(!_is_in_array(years_month_day_checked, value_to_append)){
+                increment_unique_passenger_by_day(current_year, current_year_month, current_year_month_day, generic_catalog);
+                g_array_append_val(years_month_day_checked, value_to_append);
+            }
+        }
+        g_array_free(years_checked, TRUE);
+        g_array_free(years_month_checked, TRUE);
+        g_array_free(years_month_day_checked, TRUE);
+    }
+}
+
 int calculate_reservation_total_price(Reservation reservation) {
     double n_nights = (get_reservation_end_date(reservation) - get_reservation_begin_date(reservation)) / 86400.0;
 
@@ -173,10 +225,11 @@ void calculate_aeroport_n_passengers(GHashTable *origin_passengers, Catalog *fli
     }
 }
 
-Stats_info create_stats_info(Catalog *flights_catalog, GArray* generic_catalog) {
+Stats_info create_stats_info(Catalog* users_catalog, Catalog *flights_catalog, GArray* generic_catalog) {
     Stats_info stats = (Stats_info)malloc(sizeof(STATS_INFO));
     _create_info_tables(stats, flights_catalog);
     stats->origin_delay = _create_origin_delay_struct(flights_catalog, stats->origins);
+    _create_query10_unique_passengers(generic_catalog, users_catalog);
     stats->query10 = generic_catalog;
     return stats;
 }

@@ -21,6 +21,10 @@ int get_date_value(Date_value info) {
     return info->date_value;
 }
 
+GArray *get_lower_array(Date_value info) { 
+    return info->lower_array;
+}
+
 int get_conteudo_users(Date_value info) {
     return info->info.users;
 }
@@ -39,10 +43,6 @@ int get_conteudo_unique_passengers(Date_value info) {
 
 int get_conteudo_reservations(Date_value info) {
     return info->info.reservations;
-}
-
-void increment_conteudo_flights(Conteudo cont, int num) {
-    cont->flights += num;
 }
 
 GArray *generate_genCat() {
@@ -262,28 +262,74 @@ void increment_reservation_conteudo(int year, int month, int day, GArray *arr_pt
     }
 }
 
-
-
-void increment_passenger_conteudo(int year, int month, int day, int n_passengers, GArray *arr_ptr) {
+void increment_passangers_conteudo(int year, int month, int day, GArray *arr_ptr) {
     Date_value value_year = NULL;
     Date_value value_month = NULL;
     Date_value value_day = NULL;
     for (int i = 0; i < (int)arr_ptr->len; i++) {
         value_year = g_array_index(arr_ptr, Date_value, i);
         if (value_year->date_value == year) {
-            value_year->info.unique_passengers = n_passengers;
-            // g_hash_table_add(value_year->unique_passengers, passenger_user_id);
+            value_year->info.passengers++;
             for (int j = 0; j < (int)value_year->lower_array->len; j++) {
                 value_month = g_array_index(value_year->lower_array, Date_value, j);
                 if (value_month->date_value == month) {
-                    value_month->info.unique_passengers = 0;
-                    // g_hash_table_add(value_month->unique_passengers, passenger_user_id);
+                    value_month->info.passengers++;
                     for (int k = 0; k < (int)value_month->lower_array->len; k++) {
                         value_day = g_array_index(value_month->lower_array, Date_value, k);
                         if (value_day->date_value == day) {
-                            value_day->info.unique_passengers = 0;
-                            // g_hash_table_add(value_day->unique_passengers, passenger_user_id);
-                            break;
+                            value_day->info.passengers++;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void increment_unique_passenger_by_year(int year, GArray *arr_ptr) {
+    Date_value value_year = NULL;
+    for (int i = 0; i < (int)arr_ptr->len; i++) {
+        value_year = g_array_index(arr_ptr, Date_value, i);
+        if (value_year->date_value == year) {
+            value_year->info.unique_passengers++;
+            break;
+        }
+    }
+}
+
+void increment_unique_passenger_by_month(int year, int month, GArray *arr_ptr) {
+    Date_value value_year = NULL;
+    Date_value value_month = NULL;
+    for (int i = 0; i < (int)arr_ptr->len; i++) {
+        value_year = g_array_index(arr_ptr, Date_value, i);
+        if (value_year->date_value == year) {
+            for (int j = 0; j < (int)value_year->lower_array->len; j++) {
+                value_month = g_array_index(value_year->lower_array, Date_value, j);
+                if (value_month->date_value == month) {
+                    value_month->info.unique_passengers++;
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void increment_unique_passenger_by_day(int year, int month, int day, GArray *arr_ptr) {
+    Date_value value_year = NULL;
+    Date_value value_month = NULL;
+    Date_value value_day = NULL;
+    for (int i = 0; i < (int)arr_ptr->len; i++) {
+        value_year = g_array_index(arr_ptr, Date_value, i);
+        if (value_year->date_value == year) {
+            for (int j = 0; j < (int)value_year->lower_array->len; j++) {
+                value_month = g_array_index(value_year->lower_array, Date_value, j);
+                if (value_month->date_value == month) {
+                    for (int k = 0; k < (int)value_month->lower_array->len; k++) {
+                        value_day = g_array_index(value_month->lower_array, Date_value, k);
+                        if (value_day->date_value == day) {
+                            value_day->info.unique_passengers++;
+                            return;
                         }
                     }
                 }

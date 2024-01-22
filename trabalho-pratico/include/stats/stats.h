@@ -70,11 +70,12 @@ void calculate_aeroport_n_passengers(GHashTable *origin_passengers, Catalog *fli
  * @brief Create a statistics information structure.
  *
  * Detailed description of the function.
+ * @param users_catalog Catalog of flights.
  * @param flights_catalog Catalog of flights.
  * @param generic_catalog Pointer to the generic_Catalog
  * @return A pointer to the created Stats_info structure.
  */
-Stats_info create_stats_info(Catalog *flights_catalog, GArray* generic_catalog);
+Stats_info create_stats_info(Catalog* users_catalog, Catalog *flights_catalog, GArray* generic_catalog);
 
 /**
  * @brief Destroy a Stats_info structure and free associated memory.

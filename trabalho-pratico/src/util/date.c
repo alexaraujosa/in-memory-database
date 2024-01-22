@@ -115,8 +115,7 @@ int offset_year_month(int year, int month) {
     return res;
 }
 
-int offset_year_month_day(int year, int month, int day) {
-        
+int offset_year_month_day(int year, int month, int day) { 
     struct tm temp;
     temp.tm_sec = 0;
     temp.tm_min = 0;

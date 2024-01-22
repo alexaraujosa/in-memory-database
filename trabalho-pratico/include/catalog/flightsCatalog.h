@@ -25,32 +25,6 @@
 gint flightsCatalog_full_compare_func(gconstpointer flight_A, gconstpointer flight_B);
 
 /**
- * @brief Compare function for sorting flights in the catalog based on destination (flight and flight).
- *
- * This function compares two flights based on their destination. It is intended for use with Glib's
- * sorting functions.
- *
- * @param flight_A Pointer to the first flight.
- * @param flight_B Pointer to the second flight.
- * @return An integer less than, equal to, or greater than zero if the first argument is considered
- * to be respectively less than, equal to, or greater than the second.
- */
-gint flightsCatalog_destination_compare_func(gconstpointer flight_A, gconstpointer flight_B);
-
-/**
- * @brief Compare function for searching flights in the catalog based on destination (flight and string).
- *
- * This function compares a flight with a destination name. It is intended for use with Glib's
- * searching functions.
- *
- * @param flight_A Pointer to the flight.
- * @param flight_destination Pointer to the destination name.
- * @return An integer less than, equal to, or greater than zero if the first argument is considered
- * to be respectively less than, equal to, or greater than the second.
- */
-gint flightsCatalog_destination_compare_funcB(gconstpointer flight_A, gconstpointer flight_destination);
-
-/**
  * @brief Compare function for searching flights in the catalog based on origin (alternative).
  *
  * This function compares a flight with an origin name. It is intended for use with Glib's searching
