@@ -14,6 +14,18 @@ gint flights2_compare(gconstpointer flight_A, gconstpointer flight_B) {
     return 0;
 }
 
+void csv_destructor(FILE* stream, ParserStore store) {
+    IGNORE_ARG(stream);
+
+    FILE* discarder = g_array_index(store, FILE*, 0);
+    if (discarder != NULL) CLOSE_FILE(discarder);
+
+    void** file_header = g_array_index(store, void**, 1);
+    free(file_header);
+
+    g_array_free(store, TRUE);
+}
+
 void batch(const char* arg1, const char* arg2) {
 #ifdef MAKE_TEST
     char* output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
@@ -38,7 +50,7 @@ void batch(const char* arg1, const char* arg2) {
         &parse_user,
         &usersCatalog_write_to_catalog,
         &discard_user,
-        &csv_destructor_passenger_reservation,
+        &csv_destructor,
         user_catalog,
         pointer_to_generic_catalog
         );
@@ -74,7 +86,7 @@ void batch(const char* arg1, const char* arg2) {
         &parse_flight,
         &flightsCatalog_write_to_catalog,
         &discard_flight,
-        &csv_destructor_passenger_reservation,
+        &csv_destructor,
         flight_catalog,
         pointer_to_generic_catalog
         );
@@ -117,7 +129,7 @@ void batch(const char* arg1, const char* arg2) {
         &parse_passenger,
         &passengersCatalog_write_to_catalog,
         &discard_passenger,
-        &csv_destructor_passenger_reservation,
+        &csv_destructor,
         user_catalog,
         flight_catalog,
         passengers_catalog,
@@ -156,7 +168,7 @@ void batch(const char* arg1, const char* arg2) {
         &parse_reservation,
         &reservationsCatalog_write_to_catalog,
         &discard_reservation,
-        &csv_destructor_passenger_reservation,
+        &csv_destructor,
         user_catalog,
         reservation_catalog,
         pointer_to_generic_catalog

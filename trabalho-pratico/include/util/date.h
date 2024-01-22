@@ -141,7 +141,7 @@ char* date_int_notime_to_string(int time);
  * 
  * @param date Date with time in integer (Without system offset).
  * 
- * @return Date witho time in string.
+ * @return Date with time in string.
 */
 char* date_int_withtime_to_string(int time);
 

@@ -22,26 +22,25 @@
 #define IS_NULL(ARG)         (ARG == NULL)
 #define IS_STRING_NULL(ARG)  (IS_NULL(ARG) || *ARG == '\0')
 
+/**
+ * @brief Format the parameters to a string.
+ * 
+ * @param format String format.
+ * @param ... Values to use.
+ * 
+ * @return Pointer to the formated string.
+*/
 char* isnprintf(const char *format, ...);
+
+/**
+ * @brief Duplicates a string. (Dynamic Memory Usage)
+ * 
+ * @param dest Destiny string.
+ * @param src  String to duplicate.
+ * 
+ * @return Pointer to the duplicated string.
+*/
 char* strdup_to(char* dest, char* src);
-
-/**
- * @brief Verify if a certain char its a digit.
- * 
- * @param c Digit.
- * 
- * @return 1 if its a digit, otherwise 0.
-*/
-int is_digit(char c);
-
-/**
- * @brief Verify if a certain char its a positive digit.
- * 
- * @param c Digit.
- * 
- * @return 1 if its a positive digit, otherwise 0.
-*/
-int is_digit_positive(char c);
 
 /**
  * @brief Verify if a string contains a non negative number.

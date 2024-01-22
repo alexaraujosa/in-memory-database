@@ -96,27 +96,6 @@ time_t time_to_epoch(const struct tm *ltm) {
     return (tdays * 86400) + (utc_hrs * 3600) + (ltm->tm_min * 60) + ltm->tm_sec;
 }
 
-// int year_string_to_int(char* parameter) {
-//     struct tm temp;
-//     temp.tm_sec = 0;
-//     temp.tm_min = 0;
-//     temp.tm_hour = 0;
-//     temp.tm_wday = 0;
-//     temp.tm_yday = 0;
-//     temp.tm_isdst = 0;
-
-//     if(strptime(parameter, "%Y", &temp) == NULL) {
-//         printf("ERROR! Failed to create a date.\n");
-//         exit(EXIT_FAILURE);
-//     }
-
-//     time_t date = mktime(&temp);
-//     time_t system = DATE_OFFSET ;
-//     int res = date + system;
-
-//     return res;
-// }
-
 int date_string_notime_to_int(char* parameter) {
     struct tm temp;
     temp.tm_sec = 0;
