@@ -1,11 +1,14 @@
 /**
  * QUERY MANAGER
- * 
+ *
  * This module manages and executes queries according to a source (line or file).
  */
 
 #include "queries/queries.h"
+#include "tests/test.h"
 #include "util/string.h"
+
+#define NUM_QUERIES 10
 
 Tokens tokenize_query(char* line, ssize_t len) {
     char* ptr = strdup(line);
@@ -48,18 +51,18 @@ void query_preprocessor(FILE* stream, ParserStore store, va_list args) {
     gpointer null_element = NULL;
 
     // ------- OUTPUT DIRECTORY -------
-    g_array_append_vals(store, &null_element, 1); // Directory for outputs
+    g_array_append_vals(store, &null_element, 1);  // Directory for outputs
 
     char* output_dir = va_arg(args, char*);
-    
+
     // Using more verbose code
     char** s_output_dir = (char**)&g_array_index(store, void*, 0);
     *s_output_dir = resolve_to_cwd(output_dir);
     // Because the alternative is this abomination:
     // *((char**)(&(((void**) (void *) (store)->data) [(0)]))) = resolve_to_cwd(output_dir);
-    
+
     // ------- QUERY NUMBER -------
-    g_array_append_vals(store, &null_element, 1); // Current query number
+    g_array_append_vals(store, &null_element, 1);  // Current query number
 
     int* query_num = (int*)malloc(sizeof(int));
     *query_num = 1;
@@ -69,12 +72,19 @@ void query_preprocessor(FILE* stream, ParserStore store, va_list args) {
 
     // ------- CATALOGUES -------
     g_array_append_vals(store, &null_element, 1);
-    Catalog** catalogues = va_arg(args, Catalog**);
+    void** catalogues = va_arg(args, void**);
 
-    Catalog*** s_catalogues = (Catalog***)&g_array_index(store, void*, 2);
+    void*** s_catalogues = (void***)&g_array_index(store, void*, 2);
     *s_catalogues = catalogues;
 
     *s_catalogues = catalogues;
+
+// ------- TIMERS -------
+#ifdef MAKE_TEST
+    double* timers = (double*)malloc(sizeof(double) * NUM_QUERIES);
+    memset(timers, 0, sizeof(double) * NUM_QUERIES);
+    g_array_append_vals(store, &timers, 1);
+#endif
 }
 
 int query_verifier(Tokens tokens, ParserStore store) {
@@ -94,7 +104,7 @@ void* query_parser(Tokens tokens) {
     Query query = (Query)malloc(sizeof(QUERY));
     memset(query, 0, sizeof(QUERY));
 
-    char id[QUERIES_CHAR_LEN] = { 0 };
+    char id[QUERIES_CHAR_LEN] = {0};
     char flag = 0;
 
     int j = 0;
@@ -108,7 +118,7 @@ void* query_parser(Tokens tokens) {
 
     id[j] = '\0';
 
-    char* args[QUERIES_MAX_ARGS] = { 0 };
+    char* args[QUERIES_MAX_ARGS] = {0};
 
     j = 0;
     for (int i = 1; i < tokens->len; i++, j++) {
@@ -118,7 +128,7 @@ void* query_parser(Tokens tokens) {
             int tempsize = strlen(temp);
             int start = i, end = i;
 
-            while(temp[tempsize - 1] != '\"') {
+            while (temp[tempsize - 1] != '\"') {
                 totalLen += tempsize + 1;
                 end++;
 
@@ -144,7 +154,7 @@ void* query_parser(Tokens tokens) {
             if (tokens->data[i][0] != '\0') query->argc++;
         }
     }
-    
+
     strcpy(query->id, id);
     query->flag = flag;
     memcpy(query->argv, args, QUERIES_MAX_ARGS * sizeof(char*));
@@ -158,8 +168,9 @@ void query_writer(void* raw_data, ParserStore store) {
     // ------- Fetch store arguments -------
     char** s_output_dir = (char**)&g_array_index(store, void*, 0);
     int* s_query_num = g_array_index(store, void*, 1);
-    Catalog** catalogues = ((Catalog**)g_array_index(store, void*, 2));
-    
+    void** catalogues = ((void**)g_array_index(store, void*, 2));
+    TEST_EXPR(double* timers = (double*)g_array_index(store, double*, 3);)
+
     // ------- Process required variables -------
     char* output_file = isnprintf("command%d_output.txt", *s_query_num);
     char* path = join_paths(2, *s_output_dir, output_file);
@@ -168,7 +179,11 @@ void query_writer(void* raw_data, ParserStore store) {
     FILE* retFile = OPEN_FILE(path, "w");
 
     // void* ret = query_execute(data, catalogues, retFile);
+    TEST_EXPR(clock_t start_time = clock();)
     query_execute(data, catalogues, retFile);
+    TEST_EXPR(clock_t end_time = clock();)
+    TEST_EXPR(double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;)
+    TEST_EXPR(timers[atoi(data->id) - 1] += elapsed_time;)
 
     CLOSE_FILE(retFile);
 
@@ -200,6 +215,25 @@ void query_discarder(void* raw_data, ParserStore store) {
 void query_destructor(FILE* stream, ParserStore store) {
     IGNORE_ARG(stream);
 
+// ------- Fetch store timers for display -------
+#ifdef MAKE_TEST
+    char* output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
+    FILE* test_report = OPEN_FILE(output_path, "a");
+    double* timers = g_array_index(store, double*, 3);
+    double total_time = 0;
+    for (int i = 0; i < NUM_QUERIES; i++) {
+        test_trace(" - Execution time for query %2d: %.4f seconds.\n", i + 1, timers[i]);
+        fprintf(test_report, " - Execution time for query %2d: %.4f seconds.\n", i + 1, timers[i]);
+        total_time += timers[i];
+    }
+    test_trace("\n----===[  GENERAL PROGRAM METRICS  ]===----\n\n");
+    fprintf(test_report, "\n----===[  GENERAL PROGRAM METRICS  ]===----\n\n");
+    test_trace(" -> Execution time for solving all queries: %.4f seconds.\n", total_time);
+    fprintf(test_report, " -> Execution time for solving all queries: %.4f seconds.\n", total_time);
+    CLOSE_FILE(test_report);
+#endif
+
+    // ------- Free Memory -------
     for (guint i = 0; i < store->len; ++i) {
         void* element = g_array_index(store, void*, i);
         free(element);
@@ -210,7 +244,7 @@ void query_destructor(FILE* stream, ParserStore store) {
 // #pragma GCC pop_options
 // #pragma endregion
 
-void query_execute(Query query, Catalog** catalogues, FILE* output_file) {
+void query_execute(Query query, void** catalogues, FILE* output_file) {
     switch (atoi(query->id)) {
         case 1:  query1 (query->flag, query->argc, query->argv, catalogues, output_file); break;
         case 2:  query2 (query->flag, query->argc, query->argv, catalogues, output_file); break;
@@ -225,19 +259,18 @@ void query_execute(Query query, Catalog** catalogues, FILE* output_file) {
     }
 };
 
-void query_run_bulk(char* input_file, char* output_dir, Catalog** catalogues) {
+void query_run_bulk(char* input_file, char* output_dir, void** catalogues) {
     parse_file(
-        input_file, 
-        &tokenize_query, 
-        &query_preprocessor, 
-        &query_verifier, 
-        &query_parser, 
-        &query_writer, 
+        input_file,
+        &tokenize_query,
+        &query_preprocessor,
+        &query_verifier,
+        &query_parser,
+        &query_writer,
         &query_discarder,
         &query_destructor,
         output_dir,
-        catalogues
-    );
+        catalogues);
     return;
 };
 

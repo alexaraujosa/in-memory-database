@@ -1,9 +1,5 @@
 #include "catalog/catalogManager.h"
 
-#include <glib.h>
-
-#include "common.h"
-
 typedef struct catalog {
     GHashTable *hashTable;
     GArray *array;
@@ -78,6 +74,10 @@ void *catalog_search_in_array(Catalog *catalog, guint index) {
 
 int catalog_get_item_count(Catalog *catalog) {
     return catalog->itemCount;
+}
+
+GArray* catalog_get_array_copy(Catalog* catalog) {
+    return g_array_copy(catalog->array);
 }
 
 void catalog_print_hash_table(Catalog *catalog, void (*printFunction)(gpointer, gpointer)) {

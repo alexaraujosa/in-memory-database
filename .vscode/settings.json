@@ -41,7 +41,32 @@
         "ioctl.h": "c",
         "grimoire_priv.h": "c",
         "grimoire_public.h": "c",
-        "draw.h": "c"
+        "draw.h": "c",
+        "color.h": "c",
+        "attr.h": "c",
+        "stdint.h": "c",
+        "termios.h": "c",
+        "io.h": "c",
+        "term.h": "c",
+        "ncurses.h": "c",
+        "cache.h": "c",
+        "wchar.h": "c",
+        "limits": "c",
+        "interactive.h": "c",
+        "interactive_common.h": "c",
+        "data.h": "c",
+        "xterm_warn.h": "c",
+        "settings.h": "c",
+        "type_traits": "c",
+        "main_menu.h": "c",
+        "select.h": "c",
+        "textarea.h": "c",
+        "dataset_question.h": "c",
+        "loading.h": "c",
+        "screens.h": "c",
+        "passengerscatalog.h": "c",
+        "datasets.h": "c",
+        "query_selection.h": "c"
     },
     "cmake.configureOnOpen": false,
     "todo-tree.highlights.useColourScheme": true,
@@ -55,7 +80,8 @@
         "[ ]",
         "[x]",
         "WARN",
-        "SEE"
+        "SEE",
+        "NOTE"
     ],
     "todo-tree.highlights.backgroundColourScheme": [
         "red",
@@ -66,7 +92,8 @@
         "indigo",
         "violet",
         "orange",
-        "cyan"
+        "cyan",
+        "white"
     ],
     "todo-tree.highlights.foregroundColourScheme": [
         "white",
@@ -75,6 +102,7 @@
         "white",
         "white",
         "white",
+        "black",
         "black",
         "black",
         "black"

@@ -119,9 +119,9 @@ int verify_reservation_tokens(Tokens tokens, ParserStore store) {
     // Whitespace verifier
     if(have_whitespace(parameter, 10) == 0)  return 0;
 
-    // User verifier
-    Catalog* user_catalog = g_array_index(store, Catalog*, 2);
-    if(catalog_search_in_str_hashtable(user_catalog, parameter[1]) == NULL)  return 0;
+    // // User verifier
+    // Catalog* user_catalog = g_array_index(store, Catalog*, 2);
+    // if(catalog_search_in_str_hashtable(user_catalog, parameter[1]) == NULL)  return 0;
 
     // Hotel_stars verifier
     if(is_integer_between_one_and_five(parameter[4]) == 0)  return 0;
@@ -143,6 +143,11 @@ int verify_reservation_tokens(Tokens tokens, ParserStore store) {
 
     // Date verifier (Semantic)
     if(strcmp(parameter[7], parameter[8]) >= 0)  return 0;
+
+    // User verifier
+    Catalog* user_catalog = g_array_index(store, Catalog*, 2);
+    User user = catalog_search_in_str_hashtable(user_catalog, parameter[1]);
+    if(user == NULL)  return 0;
 
     return 1;
 }
@@ -184,14 +189,30 @@ void* parse_reservation(Tokens tokens) {
     short int hotel_id = atoi(parameter[2]+HOTEL_ID_OFFSET);
     unsigned int hotel_stars = atoi(parameter[4]);
     unsigned int city_tax = atoi(parameter[5]);
-    int begin_date = date_string_to_int(parameter[7]);
-    int end_date = date_string_to_int(parameter[8]);
+    int begin_date = date_string_notime_to_int(parameter[7]);
+    int end_date = date_string_notime_to_int(parameter[8]);
     unsigned int price_per_night = atoi(parameter[9]);
     bool includes_breakfast = get_boolean(parameter[10]);
     int rating = atoi(parameter[12]);
     Reservation reservation = make_reservation(id, parameter[1], hotel_id, parameter[3], hotel_stars, city_tax, begin_date, end_date, price_per_night, includes_breakfast, rating);
 
     return reservation;
+}
+
+void preprocessor_reservation(FILE* stream, ParserStore store, va_list args) {
+    gpointer null_element = NULL;
+    g_array_append_vals(store, &null_element, 1);   // Discard file
+    default_csv_preprocessor(stream, store, args);  // File header
+    // cvs_preprocessor_helper(stream, store);
+
+    Catalog* catalogo = va_arg(args, Catalog*);
+    g_array_append_vals(store, &catalogo, 1);
+
+    Catalog* catalogo2 = va_arg(args, Catalog*);
+    g_array_append_vals(store, &catalogo2, 1);
+
+    GArray* generic_catalog = va_arg(args, GArray*);
+    g_array_append_vals(store, &generic_catalog, 1);
 }
 
 void discard_reservation(void* raw_data, ParserStore store) {
@@ -241,4 +262,16 @@ void print_reservation(void* pt) {
         reservation->hotel_name, reservation->hotel_stars, reservation->city_tax,
         reservation->begin_date, reservation->end_date, reservation->price_per_night,
         breakfast_status, reservation->rating);
+}
+
+void csv_destructor_passenger_reservation(FILE* stream, ParserStore store) {
+    IGNORE_ARG(stream);
+
+    FILE* discarder = g_array_index(store, FILE*, 0);
+    if (discarder != NULL) CLOSE_FILE(discarder);
+
+    void** file_header = g_array_index(store, void**, 1);
+    free(file_header);
+
+    g_array_free(store, TRUE);
 }

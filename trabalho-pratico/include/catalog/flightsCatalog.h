@@ -1,47 +1,86 @@
-#ifndef FLIGHTS_CATALOG
-#define FLIGHTS_CATALOG
-
-#include "collections/flight.h"
-#include "common.h"
-
 /**
  * @file flights_catalog.h
  * @brief Header file for Flights Catalog.
  */
 
+#ifndef FLIGHTS_CATALOG_H
+#define FLIGHTS_CATALOG_H
+
+#include "catalog/catalogManager.h"
+#include "catalog/genericCatalog.h"
+#include "collections/flight.h"
+#include "common.h"
+
 /**
- * @brief Comparison function for the Flights Catalog.
+ * @brief Compare function for sorting flights in the catalog based on multiple criteria.
  *
- * @param a The first item to compare.
- * @param b The second item to compare.
- * @return An integer less than, equal to, or greater than zero if a is found, respectively, to be less than, equal to, or greater than b.
+ * This function compares two flights based on their origin, schedule departure and arrival dates,
+ * and flight ID. It is intended for use with Glib's sorting functions.
+ *
+ * @param flight_A Pointer to the first flight.
+ * @param flight_B Pointer to the second flight.
+ * @return An integer less than, equal to, or greater than zero if the first argument is considered
+ * to be respectively less than, equal to, or greater than the second.
  */
-gint flightsCatalog_full_compare_func(gconstpointer a, gconstpointer b);
-
-gint flight_origin_compare_func(gconstpointer a, gconstpointer b);
+gint flightsCatalog_full_compare_func(gconstpointer flight_A, gconstpointer flight_B);
 
 /**
- * @brief Prints the Flights Catalog array.
+ * @brief Compare function for sorting flights in the catalog based on destination (flight and flight).
  *
- * @param data The data to be printed.
- * @param flight_data The flight data.
+ * This function compares two flights based on their destination. It is intended for use with Glib's
+ * sorting functions.
+ *
+ * @param flight_A Pointer to the first flight.
+ * @param flight_B Pointer to the second flight.
+ * @return An integer less than, equal to, or greater than zero if the first argument is considered
+ * to be respectively less than, equal to, or greater than the second.
  */
-void flightsCatalog_print_array(gpointer data, gpointer flight_data);
+gint flightsCatalog_destination_compare_func(gconstpointer flight_A, gconstpointer flight_B);
 
 /**
- * @brief Writes a flight to the Flights Catalog.
+ * @brief Compare function for searching flights in the catalog based on destination (flight and string).
  *
- * @param flight The flight to be added.
- * @param store The parser store.
+ * This function compares a flight with a destination name. It is intended for use with Glib's
+ * searching functions.
+ *
+ * @param flight_A Pointer to the flight.
+ * @param flight_destination Pointer to the destination name.
+ * @return An integer less than, equal to, or greater than zero if the first argument is considered
+ * to be respectively less than, equal to, or greater than the second.
+ */
+gint flightsCatalog_destination_compare_funcB(gconstpointer flight_A, gconstpointer flight_destination);
+
+/**
+ * @brief Compare function for searching flights in the catalog based on origin (alternative).
+ *
+ * This function compares a flight with an origin name. It is intended for use with Glib's searching
+ * functions.
+ *
+ * @param flight_A Pointer to the flight.
+ * @param flight_origin Pointer to the origin name.
+ * @return An integer less than, equal to, or greater than zero if the first argument is considered
+ * to be respectively less than, equal to, or greater than the second.
+ */
+gint flightsCatalog_origin_compare_func(gconstpointer flight_A, gconstpointer flight_origin);
+
+/**
+ * @brief Write flight information to the catalog.
+ *
+ * This function adds a flight to the catalog using its ID as the key.
+ *
+ * @param _flight Pointer to the flight.
+ * @param store ParserStore containing the flight catalog.
  */
 void flightsCatalog_write_to_catalog(void* _flight, ParserStore store);
 
 /**
- * @brief Prints key-value pairs of the Flights Catalog.
+ * @brief Print flights in key-value format.
  *
- * @param key The key to be printed.
- * @param value The value to be printed.
+ * This function prints flight information in key-value format, with the flight ID as the key.
+ *
+ * @param key Pointer to the flight ID.
+ * @param value Pointer to the flight.
  */
-void flightsCatalog_print_flights_key_value(void *key, void *value);
+void flightsCatalog_print_flights_key_value(void* key, void* value);
 
-#endif /* FLIGHTS_CATALOG */
+#endif  // FLIGHTS_CATALOG_H

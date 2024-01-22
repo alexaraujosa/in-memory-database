@@ -3,6 +3,7 @@
 
 #include "debug.h"
 #include "user.h"
+#include "flight.h"
 #include "parser/parser.h"
 #include "time.h"
 
@@ -17,22 +18,22 @@ typedef struct passenger PASSENGER, *Passenger;
 */
 int verify_passenger_tokens(Tokens tokens, ParserStore store);
 
-/**
- * @brief Creates a passenger using dynamic memory.
- * 
- * @param flight_id Flight id.
- * @param user_id User id.
- * 
- * @return Pointer to the Passengconst er struct.
-*/
-Passenger make_passenger(
-    int flight_id,
-    UserId(user_id)
-);
+// /**
+//  * @brief Creates a passenger using dynamic memory.
+//  * 
+//  * @param flight_id Flight id.
+//  * @param user_id User id.
+//  * 
+//  * @return Pointer to the Passengconst er struct.
+// */
+// Passenger make_passenger(
+//     int flight_id,
+//     UserId(user_id)
+// );
 
 int get_passenger_flightID(const Passenger passenger);
 void set_passenger_flightID(Passenger passenger, int flight_id);
-char *get_passenger_userdID(const Passenger passenger);
+char *get_passenger_userID(const Passenger passenger);
 void set_passenger_userID(Passenger passenger, const char *user_id);
 
 /**
@@ -43,6 +44,17 @@ void set_passenger_userID(Passenger passenger, const char *user_id);
  * @return Pointer to the Passenger struct.
 */
 void* parse_passenger(Tokens tokens);
+
+/**
+ * @brief Default pre processor for the passenger catalog.
+ * 
+ * @param stream File to be stored.
+ * @param store Store that connects the outside of the function with the inside.
+ * @param args Variadic arguments.
+ * 
+ * @return void.
+*/
+void preprocessor_passenger(FILE* stream, ParserStore store, va_list args);
 
 /**
  * @brief Creates the passengers_errors file and writes the lines with invalid data.

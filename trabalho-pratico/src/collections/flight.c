@@ -9,6 +9,7 @@ typedef struct flights {
     int schedule_departure_date; // Offset from Base Date
     int schedule_arrival_date; // Offset from Base Date
     int real_departure_date; // Offset from Base Date
+    short int passengers;
 } FLIGHT, *Flight;
 
 int get_flight_id(const Flight flight){
@@ -83,6 +84,18 @@ void set_flight_real_departure_date(Flight flight, int real_departure_date){
     flight->real_departure_date = real_departure_date;
 }
 
+int get_flight_passengers(const Flight flight) {
+    int passengers = flight->passengers;
+    return passengers;
+}
+
+void set_flight_passengers(Flight flight, int passengers) {
+    flight->passengers = passengers;
+}
+
+void increment_flight_passengers(Flight flight) {
+    flight->passengers++;
+}
 
 int verify_flight_tokens(Tokens tokens, ParserStore store) {
     IGNORE_ARG(store);
@@ -111,7 +124,7 @@ int verify_flight_tokens(Tokens tokens, ParserStore store) {
             return 0;
     }
     // Date verifier (Semantic)
-    if(strcmp(parameter[6], parameter[8]) > 0)  return 0;
+    if(strcmp(parameter[6], parameter[7]) > 0)  return 0;
     if(strcmp(parameter[8], parameter[9]) >= 0)  return 0;
 
     return 1;
@@ -138,6 +151,7 @@ Flight make_flight(
     flight->schedule_departure_date = schedule_departure_date;
     flight->schedule_arrival_date = schedule_arrival_date;
     flight->real_departure_date = real_departure_date;
+    flight->passengers = 0;
 
     return flight;
 }
@@ -146,11 +160,24 @@ void* parse_flight(Tokens tokens) {
     char** parameter = tokens->data;
 
     int id = atoi(parameter[0]);
-    int schedule_departure_date = date_with_time_string_to_int(parameter[6]);
-    int schedule_arrival_date = date_with_time_string_to_int(parameter[7]);
-    int real_departure_date = date_with_time_string_to_int(parameter[8]);
+    int schedule_departure_date = date_string_withtime_to_int(parameter[6]);
+    int schedule_arrival_date = date_string_withtime_to_int(parameter[7]);
+    int real_departure_date = date_string_withtime_to_int(parameter[8]);
     Flight flight = make_flight(id, parameter[1], parameter[2], parameter[4], parameter[5], schedule_departure_date, schedule_arrival_date, real_departure_date);
     return flight;
+}
+
+void preprocessor_flight(FILE* stream, ParserStore store, va_list args) {
+    gpointer null_element = NULL;
+    g_array_append_vals(store, &null_element, 1);   // Discard file
+    default_csv_preprocessor(stream, store, args);  // File header
+    // cvs_preprocessor_helper(stream, store);
+
+    Catalog* catalogo = va_arg(args, Catalog*);
+    g_array_append_vals(store, &catalogo, 1);
+
+    GArray* generic_catalog = va_arg(args, GArray*);
+    g_array_append_vals(store, &generic_catalog, 1);
 }
 
 void discard_flight(void* raw_data, ParserStore store) {
@@ -178,8 +205,6 @@ void discard_flight(void* raw_data, ParserStore store) {
 
 void print_flight(void* pt) {
     FLIGHT* flight = (FLIGHT*)pt;
-    int parameter = flight->schedule_departure_date;
-    parameter = parameter + TIME_T_SYSTEM;
 
     printf(
         "%.10d;"
@@ -188,13 +213,15 @@ void print_flight(void* pt) {
         "%s;"
         "%s;"
         "%s;"
-        "%s\n",
+        "%s;"
+        "%d\n",
         flight->id, 
-        date_int_to_string(flight->schedule_departure_date + TIME_T_SYSTEM), 
-        date_int_to_string(flight->schedule_arrival_date + TIME_T_SYSTEM), 
-        date_int_to_string(flight->real_departure_date + TIME_T_SYSTEM),
+        date_int_withtime_to_string(flight->schedule_departure_date), 
+        date_int_withtime_to_string(flight->schedule_arrival_date), 
+        date_int_withtime_to_string(flight->real_departure_date),
         flight->destination, 
         flight->airline, 
-        flight->plane_model
+        flight->plane_model,
+        flight->passengers
     );
 }

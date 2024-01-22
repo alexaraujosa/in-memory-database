@@ -9,15 +9,12 @@
 #include "util/collection.h"
 #include "util/error.h"
 #include "util/string.h"
+#include "util/date.h"
 #include "parser/parser.h"
-#include "util/helpers.h"
 
-#define MAX_USER_ID_LEN 60
+#define MAX_USER_ID_LEN 33
 
-// Lenght of the largest portuguese proper noun:
-// "Manuel Maria Filipe Carlos Amélio Luís Miguel Rafael Gabriel Gonzaga Xavier "
-// "Francisco de Assis Eugénio de Bragança Orleães Sabóia e Saxe-Coburgo-Gotha"
-#define MAX_NAME_LEN 156
+#define MAX_NAME_LEN 33
 
 #define MAX_USER_PASSPORT_LEN 8
 
@@ -36,30 +33,30 @@ typedef struct user USER, *User;
 */
 int verify_user_tokens(Tokens tokens, ParserStore store);
 
-/**
- * @brief Creates an user using dynamic memory.
- * 
- * @param id User id.
- * @param name User name.
- * @param sex User sex.
- * @param passport User passport.
- * @param country_code User country code
- * @param account_creation Offset from system start date, relative to the user account creation.
- * @param account_status User account status.
- * @param birth_date Offset from system start date, relative to the user birth date.
- * 
- * @return Pointer to the User struct.
-*/
-User make_user(
-    char* id,
-    char* name,
-    bool sex,
-    char* passport,
-    CountryCode(country_code),
-    int account_creation,
-    bool account_status,
-    int birth_date
-    );
+// /**
+//  * @brief Creates an user using dynamic memory.
+//  * 
+//  * @param id User id.
+//  * @param name User name.
+//  * @param sex User sex.
+//  * @param passport User passport.
+//  * @param country_code User country code
+//  * @param account_creation Offset from system start date, relative to the user account creation.
+//  * @param account_status User account status.
+//  * @param birth_date Offset from system start date, relative to the user birth date.
+//  * 
+//  * @return Pointer to the User struct.
+// */
+// User make_user(
+//     char* id,
+//     char* name,
+//     bool sex,
+//     char* passport,
+//     CountryCode(country_code),
+//     int account_creation,
+//     bool account_status,
+//     int birth_date
+//     );
 
 char *get_user_id(const User user);
 void set_user_id(User user, const char *id);
@@ -75,8 +72,19 @@ int get_user_account_creation(const User user);
 void set_user_account_creation(User user, int account_creation);
 bool get_user_account_status(const User user);
 void set_user_account_status(User user, bool account_status);
-int get_user_age(const User user);
-void set_user_age(User user, int age);
+uint8_t get_user_age(const User user);
+void set_user_age(User user, uint8_t age);
+int get_user_information(const User user);
+void set_user_information(User user, int information);
+void add_user_information(User user, int information);
+double get_user_total_spent(const User user);
+int get_user_reservations_counter(const User user);
+GArray* get_user_reservations(const User user);
+GArray* get_user_flights(const User user);
+int get_user_reservations_len(const User user);
+int get_user_flights_len(const User user);
+void* get_user_flights_data(const User user, int index);
+void* get_user_reservations_data(const User user, int index);
 
 /**
  * @brief Creates an user, transforming data.
@@ -86,6 +94,17 @@ void set_user_age(User user, int age);
  * @return Pointer to the User struct.
 */
 void* parse_user(Tokens tokens);
+
+/**
+ * @brief User pre processor for parsing a file.
+ * 
+ * @param stream File to be stored.
+ * @param store Store that connects the outside of the function with the inside.
+ * @param args Variadic arguments.
+ * 
+ * @return void.
+*/
+void preprocessor_user(FILE* stream, ParserStore store, va_list args);
 
 /**
  * @brief Creates the users_errors file and writes the lines with invalid data.

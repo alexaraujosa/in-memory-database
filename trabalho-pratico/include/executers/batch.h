@@ -5,6 +5,7 @@
 #include "stats/stats.h"
 #include <locale.h>
 #include "catalog/usersCatalog.h"
+#include "catalog/genericCatalog.h"
 #include "catalog/reservationsCatalog.h"
 #include "catalog/flightsCatalog.h"
 #include "catalog/passengersCatalog.h"

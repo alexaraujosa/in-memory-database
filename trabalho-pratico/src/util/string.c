@@ -291,58 +291,6 @@ bool get_account_status(char* parameter) {
     return FALSE;
 }
 
-int date_string_to_int(char* parameter) {
-    struct tm temp;
-    temp.tm_sec = 0;
-    temp.tm_min = 0;
-    temp.tm_hour = 0;
-    temp.tm_wday = 0;
-    temp.tm_yday = 0;
-    temp.tm_isdst = 0;
-
-    if(strptime(parameter, "%Y/%m/%d", &temp) == NULL) {
-        printf("ERROR! Failed to create a date.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    time_t date = mktime(&temp);
-    time_t system = TIME_T_SYSTEM;
-    int res = difftime(date, system);
-
-    return res;
-}
-
-int date_with_time_string_to_int(char* parameter) {
-    struct tm temp;
-    temp.tm_sec = 0;
-    temp.tm_min = 0;
-    temp.tm_hour = 0;
-    temp.tm_wday = 0;
-    temp.tm_yday = 0;
-    temp.tm_isdst = 0;
-
-    if(strptime(parameter, "%Y/%m/%d %T", &temp) == NULL) {
-        printf("ERROR! Failed to create a date with time.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    time_t date = mktime(&temp);
-    time_t system = TIME_T_SYSTEM;
-    int res = difftime(date, system);
-
-    return res;
-}
-
-char* date_int_to_string(int time) {
-    time_t converted = (time_t)time;
-    struct tm* temp = gmtime(&converted);
-
-    char* buf = (char*)malloc(20 * sizeof(char));
-    strftime(buf, 20, "%Y/%m/%d %T", temp);
-
-    return buf;
-}
-
 bool get_boolean(char* parameter) {
 
     if(parameter[0] == '\0' || parameter[0] == 'f' || parameter[0] == 'F' || parameter[0] == '0')  return FALSE;

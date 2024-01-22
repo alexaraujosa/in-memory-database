@@ -1,12 +1,13 @@
-#ifndef CATALOG_MANAGER_H
-#define CATALOG_MANAGER_H
-
-#include "glib.h"
-
 /**
  * @file catalog_manager.h
  * @brief Header file for Catalog Manager.
  */
+
+#ifndef CATALOG_MANAGER_H
+#define CATALOG_MANAGER_H
+
+#include "glib.h"
+#include "common.h"
 
 /**
  * @struct catalog
@@ -96,6 +97,8 @@ void *catalog_search_in_array(Catalog *catalog, guint index);
  * @return The number of items in the Catalog.
  */
 int catalog_get_item_count(Catalog *catalog);
+
+GArray* catalog_get_array_copy(Catalog* catalog);
 
 /**
  * @brief Prints the key-value pair of the GHashTable within the Catalog.

@@ -1,7 +1,7 @@
 programa-principal
 programa-testes
 *.csv
-Resultados/*
+trabalho-pratico/Resultados/*
 
 # Prerequisites
 *.d

@@ -81,7 +81,7 @@ Catalog* dataset_data_get_reservations_catalog(DatasetData dd);
  * 
  * @param dd The Dataset data.
  */
-Catalog** dataset_data_get_catalog_array(DatasetData dd);
+void** dataset_data_get_catalog_array(DatasetData dd);
 
 /**
  * @brief Destroys a given Dataset Data.

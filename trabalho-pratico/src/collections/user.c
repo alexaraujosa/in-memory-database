@@ -9,6 +9,9 @@ typedef struct user {
     CountryCode(country_code);
     int account_creation;  // Offset from Base Date
     bool account_status;
+    unsigned int information;   // 100000 offset for number of reservations |||| 1000 offset for total spent
+    GArray* reservations;
+    GArray* flights;
 
     // Statistics
     uint8_t age;
@@ -61,8 +64,8 @@ void set_user_country_code(User user, const char* country_code){
 }
 
 int get_user_account_creation(const User user){
-    int account_status = user->account_status;
-    return account_status;
+    int account_creation = user->account_creation;
+    return account_creation;
 }
 
 void set_user_account_creation(User user, int account_creation){
@@ -78,13 +81,65 @@ void set_user_account_status(User user, bool account_status){
     user->account_status = account_status;
 }
 
-int get_user_age(const User user){
-    int age = user->age;
+uint8_t get_user_age(const User user){
+    uint8_t age = user->age;
     return age;
 }
 
-void set_user_age(User user, int age){
+void set_user_age(User user, uint8_t age){
     user->age = age;
+}
+
+int get_user_information(const User user) {
+    return user->information;
+}
+
+void set_user_information(User user, int information) {
+    user->information = information;
+}
+
+void add_user_information(User user, int information) {
+    user->information += information;
+}
+
+double get_user_total_spent(const User user) {
+    return (double)(user->information%100000000)/1000;    // TODO: FALTA OS SHIFTS
+}
+
+int get_user_reservations_counter(const User user) {
+    return (user->information/100000000);
+}
+
+GArray* get_user_reservations(const User user) {
+    return user->reservations;
+}
+
+GArray* get_user_flights(const User user) {
+    return user->flights;
+}
+
+int get_user_reservations_len(const User user) {
+    GArray* reservations = user->reservations;
+
+    return reservations->len;
+}
+
+int get_user_flights_len(const User user) {
+    GArray* flights = user->flights;
+
+    return flights->len;
+}
+
+void* get_user_flights_data(const User user, int index) {
+    GArray* flights = user->flights;
+
+    return g_array_index(flights, void*, index);
+}
+
+void* get_user_reservations_data(const User user, int index) {
+    GArray* reservations = user->reservations;
+
+    return g_array_index(reservations, void*, index);
 }
 
 int verify_user_tokens(Tokens tokens, ParserStore store) {
@@ -135,6 +190,9 @@ User make_user(
     user->account_creation = account_creation;
     user->account_status = account_status;
     user->age = get_age(birth_date);
+    user->information = 0;
+    user->reservations = g_array_new(FALSE, FALSE, sizeof(void*));
+    user->flights = g_array_new(FALSE, FALSE, sizeof(void*));
 
     return user;
 }
@@ -143,11 +201,24 @@ void* parse_user(Tokens tokens) {
     char** parameter = tokens->data;
     bool sex = get_sex(parameter[5]);
     bool account_status = get_account_status(parameter[11]);
-    int account_creation = date_string_to_int(parameter[9]);
-    int birth_date = date_string_to_int(parameter[4]);
+    int account_creation = date_string_notime_to_int(parameter[9]);
+    int birth_date = date_string_notime_to_int(parameter[4]);
     
     User user = make_user(parameter[0], parameter[1], sex, parameter[6], parameter[7], account_creation, account_status, birth_date);
     return user;
+}
+
+void preprocessor_user(FILE* stream, ParserStore store, va_list args) {
+    gpointer null_element = NULL;
+    g_array_append_vals(store, &null_element, 1);   // Discard file
+    default_csv_preprocessor(stream, store, args);  // File header
+    // cvs_preprocessor_helper(stream, store);
+
+    Catalog* catalogo = va_arg(args, Catalog*);
+    g_array_append_vals(store, &catalogo, 1);
+
+    GArray* generic_catalog = va_arg(args, GArray*);
+    g_array_append_vals(store, &generic_catalog, 1);
 }
 
 void discard_user(void* raw_data, ParserStore store) {
@@ -184,9 +255,10 @@ void print_user(void* pt) {
         "{Id:%s; "
         "Nome:%s; "
         "Sex:%c; "
-        "CountryCode:%s; "
+        "CountryCode:%.2s; "
         "Account_Creation:%d; "
         "Account_status:%s; "
-        "Idade:%d}\n",
-        user->id, user->name, sex, user->country_code, user->account_creation, status, user->age);
+        "Idade:%d; "
+        "Information:%d}\n",
+        user->id, user->name, sex, user->country_code, user->account_creation, status, user->age, user->information);
 }
