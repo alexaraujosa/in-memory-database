@@ -118,6 +118,8 @@ void draw_dataset_question(GM_Term term, FrameStore store, Cache cache) {
 
 // Defer dataset loading to next frame, after loading screen is displayed.
 void _load_datasets_defer(GM_Term term, FrameStore store) {
+    IGNORE_ARG(term);
+
     dataset_data_load(store->datasets);
     store->current_screen = SCREEN_MAIN_MENU;
 }
@@ -202,7 +204,7 @@ cleanup:
     if (files != NULL) {
         // Why does it need to be done this way? Because GLib refuses to use logic
         // and I can't be fucked to track down the source code and examine why.
-        for (int i = 0; i < files->len; i++) free(g_array_index(files, char*, i));
+        for (unsigned int i = 0; i < files->len; i++) free(g_array_index(files, char*, i));
         g_array_unref(files);
     }
     free(input);

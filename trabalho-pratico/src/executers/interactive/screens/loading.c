@@ -36,11 +36,7 @@ void destroy_cache_loading(Cache cache, int force) {
 void draw_loading(GM_Term term, FrameStore store, Cache cache) {
     IGNORE_ARG(store);
 
-    // GM_TERM_SIZE size = gm_term_get_size(term);
-
     gm_attroff(term, GM_RESET);
-
-    // gm_box(term, 0, 0, size.rows - 1, size.cols - 2);
 
     DrawText dl = get_cache_elem(cache, LOCALE_SCREEN_LOADING_TITLE);
 

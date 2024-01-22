@@ -5,7 +5,7 @@
 
 #define OPTION_INDEX_KEY "_option_index"
 
-static enum main_menu_options {
+enum main_menu_options {
     MAIN_MENU_EXEC_QUERIES,
     MAIN_MENU_SETTINGS,
     MAIN_MENU_EXIT,
@@ -87,7 +87,7 @@ void draw_main_menu(GM_Term term, FrameStore store, Cache cache) {
     IGNORE_ARG(store);
     IGNORE_ARG(cache);
     
-    GM_TERM_SIZE size = gm_term_get_size(term);
+    // GM_TERM_SIZE size = gm_term_get_size(term);
 
     int* option_index = get_cache_elem(cache, OPTION_INDEX_KEY);
 
