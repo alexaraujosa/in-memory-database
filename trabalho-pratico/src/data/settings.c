@@ -10,11 +10,13 @@
 
 #define DS_KEY_MAX_LEN 20
 #define DS_INT_VALUE_MAX_LEN 12
+#define DS_KEY_META_VERSION "version"
 #define DS_KEY_GENERAL_LOCALE "locale"
 
 #define DS_WRITE_CATEGORY(cat) fprintf(file, "[%s]\n", cat)
 #define DS_WRITE_STR_PROP(key, value) fprintf(file, "%s=%s\n", key, value)
 #define DS_WRITE_INT_PROP(key, value) fprintf(file, "%s=%d\n", key, value)
+#define DS_WRITE_LONG_PROP(key, value) fprintf(file, "%s=%ld\n", key, value)
 #define DS_WRITE_NEWLINE() fprintf(file, "\n");
 
 char* ds_get_locale(DataSettings ds) {
@@ -53,8 +55,9 @@ void save_data_settings(DataSettings settings) {
     FILE* file = OPEN_FILE(settings_path, "w");
 
     DS_WRITE_CATEGORY(DS_CATEGORY_META);
-    DS_WRITE_INT_PROP("version", DATA_SETTINGS_VERSION);
-    DS_WRITE_INT_PROP("last_write", curtime);
+    DS_WRITE_INT_PROP(DS_KEY_META_VERSION, DATA_SETTINGS_VERSION);
+    // DS_WRITE_INT_PROP("last_write", curtime);
+    DS_WRITE_LONG_PROP("last_write", curtime);
     DS_WRITE_NEWLINE();
 
     DS_WRITE_CATEGORY(DS_CATEGORY_GENERAL);
@@ -79,17 +82,22 @@ char* _ds_read_category(char* line, ssize_t len) {
     #undef SCOPE
 }
 
-int _ds_read_int_prop(char* line, ssize_t len) {
+int _ds_read_int_prop(char* line, ssize_t len, char** key) {
     #define SCOPE "_ds_read_int_prop"
     rt_assert((len > 0), trace_msg(SCOPE, "Error trying to read integer property: EOF"));
 
-    char key[DS_KEY_MAX_LEN] = { 0 };
+    // char key[DS_KEY_MAX_LEN] = { 0 };
+    char* _key = (char*)malloc(DS_KEY_MAX_LEN);
+    memset(_key, 0, DS_KEY_MAX_LEN);
+
     int kind = 0;
 
     while (kind != DS_KEY_MAX_LEN && kind != len && line != NULL && *line != '=') {
-        key[kind++] = *line;
+        _key[kind++] = *line;
         line++;
     }
+
+    *key = _key;
 
     rt_assert(
         (kind != DS_KEY_MAX_LEN && kind != len && line != NULL), 
@@ -114,6 +122,53 @@ int _ds_read_int_prop(char* line, ssize_t len) {
     );
 
     int value = string_to_based_int(_value, 10);
+
+    return value;
+
+    #undef SCOPE
+}
+
+// Code repetition because I can't be fucked to create a macro for this. DRY be blasted.
+long _ds_read_long_prop(char* line, ssize_t len, char** key) {
+    #define SCOPE "_ds_read_long_prop"
+    rt_assert((len > 0), trace_msg(SCOPE, "Error trying to read long integer property: EOF"));
+
+    // char key[DS_KEY_MAX_LEN] = { 0 };
+    char* _key = (char*)malloc(DS_KEY_MAX_LEN);
+    memset(_key, 0, DS_KEY_MAX_LEN);
+
+    int kind = 0;
+
+    while (kind != DS_KEY_MAX_LEN && kind != len && line != NULL && *line != '=') {
+        _key[kind++] = *line;
+        line++;
+    }
+
+    *key = _key;
+
+    rt_assert(
+        (kind != DS_KEY_MAX_LEN && kind != len && line != NULL), 
+        trace_msg(SCOPE, "Error trying to read long integer property: Reached EOF before value.")
+    );
+
+    line++;
+
+    char _value[DS_INT_VALUE_MAX_LEN] = { 0 };
+    int vind = kind;
+    int _vind = 0;
+
+    while (vind != DS_KEY_MAX_LEN && vind != len && line != NULL && *line != '\n') {
+        _value[_vind++] = *line;
+        vind++;
+        line++;
+    }
+
+    rt_assert(
+        (vind != len && line != NULL), 
+        trace_msg(SCOPE, "Error trying to read long integer property: Reached EOF before valid value.")
+    );
+
+    long value = string_to_based_long(_value, 10);
 
     return value;
 
@@ -180,7 +235,14 @@ DataSettings read_data_settings() {
             );
             free(category);
         } else if (step == 1) {
-            int version = _ds_read_int_prop(line, read);
+            char* key;
+            int version = _ds_read_int_prop(line, read, &key);
+
+            rt_assert(
+                STRING_EQUAL(key, DS_KEY_META_VERSION),
+                trace_msg(SCOPE, "Expected first meta property to be '"DS_KEY_META_VERSION"'.")
+            );
+
             if (version > DATA_SETTINGS_VERSION) {
                 // Trace?
             } else if (version < DATA_SETTINGS_VERSION) {
