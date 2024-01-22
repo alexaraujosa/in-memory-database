@@ -358,16 +358,30 @@ char* to_upper_string(char* parameter) {
 }
 
 int string_to_based_int(char* input, int base) {
-    if (input[0] == '\0' || isspace(input[0])) return -0x7fffffff;
+    if (input[0] == '\0' || isspace(input[0])) return INT_MAX;
     errno = 0;
 
     char *end;
     long l = strtol(input, &end, base);
 
     /* Both checks are needed because INT_MAX == LONG_MAX is possible. */
-    if (l > INT_MAX || (errno == ERANGE && l == LONG_MAX)) return -0x7fffffff;
-    if (l < INT_MIN || (errno == ERANGE && l == LONG_MIN)) return -0x7fffffff;
-    if (*end != '\0') return -0x7fffffff;
+    if (l > INT_MAX || (errno == ERANGE && l == LONG_MAX)) return INT_MAX;
+    if (l < INT_MIN || (errno == ERANGE && l == LONG_MIN)) return INT_MAX;
+    if (*end != '\0') return INT_MAX;
+    
+    return l;
+}
+
+long string_to_based_long(char* input, int base) {
+    if (input[0] == '\0' || isspace(input[0])) return LONG_MAX;
+    errno = 0;
+
+    char *end;
+    long l = strtol(input, &end, base);
+
+    if ((errno == ERANGE && l == LONG_MAX)) return LONG_MAX;
+    if ((errno == ERANGE && l == LONG_MIN)) return LONG_MAX;
+    if (*end != '\0') return LONG_MAX;
     
     return l;
 }

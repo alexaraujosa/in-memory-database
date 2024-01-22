@@ -244,6 +244,25 @@ char* to_upper_string(char* parameter);
  */
 int string_to_based_int(char* input, int base);
 
+/**
+ * @brief Converts a string to long int.
+ *
+ * @param input The input string to be converted.
+ *
+ *     The following are inconvertible:
+ *
+ *     - empty string
+ *     - leading whitespace
+ *     - any trailing characters that are not part of the number
+ *
+ *     Cannot be NULL.
+ *
+ * @param base The base to interpret the string in. Same range as strtol (2 to 36).
+ *
+ * @return The long corresponding to the given string.
+ */
+long string_to_based_long(char* input, int base);
+
 typedef struct max_cols_and_rows {
     int cols;
     int rows;
