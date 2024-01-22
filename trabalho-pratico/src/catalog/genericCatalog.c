@@ -21,8 +21,24 @@ int get_date_value(Date_value info) {
     return info->date_value;
 }
 
+int get_conteudo_users(Date_value info) {
+    return info->info.users;
+}
+
+int get_conteudo_flights(Date_value info) {
+    return info->info.flights;
+}
+
+int get_conteudo_passengers(Date_value info) {
+    return info->info.passengers;
+}
+
 int get_conteudo_unique_passengers(Date_value info) {
     return info->info.unique_passengers;
+}
+
+int get_conteudo_reservations(Date_value info) {
+    return info->info.reservations;
 }
 
 void increment_conteudo_flights(Conteudo cont, int num) {

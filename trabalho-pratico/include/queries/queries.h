@@ -119,8 +119,10 @@ typedef struct query9_info {
 } Q_INFO9, *Q_info9;
 
 typedef struct query10_info {
+    int type;
     int users;
     int flights;
+    int passengers;
     int unique_passengers;
     int reservations;
     int date;

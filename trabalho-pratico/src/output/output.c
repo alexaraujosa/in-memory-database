@@ -1,16 +1,6 @@
 #include "output/output.h"
 
-// Necessidade de VA
-/*char *arg_to_line(){
-
-}
-
-char print_f_format(){
-
-}
-*/
-
-// TODO: Retirar o dia e a hora das datas
+/*interna*/
 char* build_query_buffer(int query, void* query_info, char* output_buffer) {
     switch (query) {
         case 1: {
@@ -203,17 +193,50 @@ char* build_query_buffer(int query, void* query_info, char* output_buffer) {
             break;
         }
         case 10: {
-            // Q_info10 q_info = (Q_info10)query_info;
-            snprintf(
-                output_buffer,
-                MAX_BUFFER_SIZE,
-                "10");
+            Q_info10 q_info = (Q_info10)query_info;
+            if (q_info->type == 0) {
+                snprintf(
+                    output_buffer,
+                    MAX_BUFFER_SIZE,
+                    "year: %d;users: %d;flights: %d;passengers: %d;unique_passengers: %d;reservations: %d",
+                    q_info->date,
+                    q_info->users,
+                    q_info->flights,
+                    q_info->passengers,
+                    q_info->unique_passengers,
+                    q_info->reservations
+                );
+            } else if (q_info->type == 1) {
+                snprintf(
+                    output_buffer,
+                    MAX_BUFFER_SIZE,
+                    "month: %d;users: %d;flights: %d;passengers: %d;unique_passengers: %d;reservations: %d",
+                    q_info->date,
+                    q_info->users,
+                    q_info->flights,
+                    q_info->passengers,
+                    q_info->unique_passengers,
+                    q_info->reservations
+                );
+            } else if (q_info->type == 2) {
+                snprintf(
+                    output_buffer,
+                    MAX_BUFFER_SIZE,
+                    "day: %d;users: %d;flights: %d;passengers: %d;unique_passengers: %d;reservations: %d",
+                    q_info->date,
+                    q_info->users,
+                    q_info->flights,
+                    q_info->passengers,
+                    q_info->unique_passengers,
+                    q_info->reservations);
+            }
             break;
         }
     }
     return output_buffer;
 }
 
+/*interna*/
 char* _extractValueInPlace(char* keyValuePair) {
     char* colonPosition = strchr(keyValuePair, ':');
 
@@ -224,6 +247,7 @@ char* _extractValueInPlace(char* keyValuePair) {
     }
 }
 
+/*interna*/
 void output_to_file(char flag, char* line, FILE* output_file, int n_element) {
     Tokens tokens = tokenize_csv(line, strlen(line));
     char** parameter = tokens->data;
