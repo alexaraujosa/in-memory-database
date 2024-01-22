@@ -63,18 +63,6 @@ $(OBJ)/$(TEST_EXEC_PATH)/%.o: $(SRC)/%.c
 	mkdir -p $(OBJ)
 	$(CC) $(C_FLAGS) -I$(INCLUDE) -L$(LIB) -DMAKE_TEST -c $< -o $@ $(LIBRARIES)
 
-# ============== PROGRAMA TESTES ==============
-$(TEST_EXEC_PATH): $(TEST_OBJ_DIRS) $(TEST_OBJ_FILES)
-	mkdir -p $(BIN)
-	$(CC) $(C_FLAGS) -I$(INCLUDE) -L$(LIB) -DMAKE_TEST $(filter-out $(TEST_OBJ_DIRS), $^) -o $(TEST_EXEC_PATH) $(LIBRARIES)
-
-$(TEST_OBJ_DIRS): $(SRC_DIRS)
-	mkdir -p $@
-
-$(OBJ)/$(TEST_EXEC_PATH)/%.o: $(SRC)/%.c
-	mkdir -p $(OBJ)
-	$(CC) $(C_FLAGS) -I$(INCLUDE) -L$(LIB) -DMAKE_TEST -c $< -o $@ $(LIBRARIES)
-
 run: $(EXEC_PATH)
 	./$(EXEC_PATH)
 
