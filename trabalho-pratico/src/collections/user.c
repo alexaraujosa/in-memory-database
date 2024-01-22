@@ -103,11 +103,7 @@ void add_user_information(User user, int information) {
 }
 
 double get_user_total_spent(const User user) {
-    return (double)(user->information%100000000)/1000;    // TODO: FALTA OS SHIFTS
-}
-
-int get_user_reservations_counter(const User user) {
-    return (user->information/100000000);
+    return (double)(user->information)/1000;
 }
 
 GArray* get_user_reservations(const User user) {
