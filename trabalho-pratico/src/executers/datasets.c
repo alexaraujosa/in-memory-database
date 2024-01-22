@@ -20,7 +20,7 @@ typedef struct dataset_data {
 } DATASET_DATA, *DatasetData;
 
 // Forward declarations, for ease of reading.
-Catalog** make_catalogues(char** dataset_dir);
+Catalog** make_catalogues(char* dataset_dir);
 
 // ============== DATASET STORE ==============
 DatasetData make_dataset_data(char* input) {
@@ -89,13 +89,15 @@ Catalog** dataset_data_get_catalog_array(DatasetData dd) {
 }
 
 void destroy_dataset_data(DatasetData dd) {
-    free(dd->dataset_dir);
+    if (dd->dataset_dir != NULL) free(dd->dataset_dir);
 
-    catalog_destroy(dd->users);
-    catalog_destroy(dd->flights);
-    catalog_destroy(dd->passengers);
-    catalog_destroy(dd->reservations);
-    free(dd->_catalog_arr);
+    if (dd->datasets_loaded) {
+        catalog_destroy(dd->users);
+        catalog_destroy(dd->flights);
+        catalog_destroy(dd->passengers);
+        catalog_destroy(dd->reservations);
+        free(dd->_catalog_arr);
+    }
 
     free(dd);
 }
@@ -149,7 +151,7 @@ void csv_destructor_extended(FILE* stream, ParserStore store) {
     g_array_free(store, TRUE);
 }
 
-Catalog** make_catalogues(char** dataset_dir) {
+Catalog** make_catalogues(char* dataset_dir) {
     // ------- User Catalogue -------
     Catalog* user_catalog = catalog_init(g_str_hash, g_str_equal, free);
     char* userdata_path = join_paths(2, dataset_dir, "users.csv");

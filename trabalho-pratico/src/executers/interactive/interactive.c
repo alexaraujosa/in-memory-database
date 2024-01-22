@@ -123,6 +123,7 @@ void interactive(DataLocales locales) {
     // ======= Destroy FrameStore =======
     destroy_screens(term, &store);
     destroy_data_settings(store.settings);
+    destroy_dataset_data(store.datasets);
 
     // ======= Destroy Terminal =======
     disable_bracketed_paste();
