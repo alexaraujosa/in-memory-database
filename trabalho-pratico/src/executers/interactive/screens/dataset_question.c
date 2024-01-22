@@ -116,6 +116,13 @@ void draw_dataset_question(GM_Term term, FrameStore store, Cache cache) {
     }
 }
 
+// Defer dataset loading to next frame, after loading screen is displayed.
+void _load_datasets_defer(GM_Term term, FrameStore store) {
+    dataset_data_load(store->datasets);
+    store->current_screen = SCREEN_MAIN_MENU;
+}
+
+// Callback for TextArea input enter
 static Keypress_Code _cb(
     GM_Term term, 
     FrameStore store, 
@@ -172,8 +179,14 @@ static Keypress_Code _cb(
             if (STRING_EQUAL(PASSENGERS_FILE, fname))   validDatasets++;
         }
 
-        if (validDatasets == 4) store->current_screen = SCREEN_MAIN_MENU;
-        else {
+        if (validDatasets == 4) {
+            dataset_data_set_dir(store->datasets, input);
+            store->current_screen = SCREEN_LOADING;
+            
+            defer_load(store->defer_control, (DeferNotify)_load_datasets_defer);
+            ret = KEY_SKIP;
+            goto cleanup;
+        } else {
             char* error_path_not_a_dataset = get_cache_elem(cache, ERROR_PATH_NOT_A_DATASET);
             *error_msg = error_path_not_a_dataset;
             *has_error = TRUE;
