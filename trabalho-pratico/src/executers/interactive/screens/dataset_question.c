@@ -197,6 +197,13 @@ static Keypress_Code _cb(
             ret = KEY_SKIP;
             goto cleanup;
         }
+    } else {
+        char* error_path_not_a_dataset = get_cache_elem(cache, ERROR_PATH_NOT_A_DATASET);
+        *error_msg = error_path_not_a_dataset;
+        *has_error = TRUE;
+
+        ret = KEY_SKIP;
+        goto cleanup;
     }
 
 // Forgive me, Lord, for I don't give a fuck.
