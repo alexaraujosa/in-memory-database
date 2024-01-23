@@ -124,6 +124,7 @@ void interactive(DataLocales locales) {
     destroy_screens(term, &store);
     destroy_data_settings(store.settings);
     destroy_dataset_data(store.datasets);
+    destroy_defer_control(store.defer_control);
 
     // ======= Destroy Terminal =======
     disable_bracketed_paste();

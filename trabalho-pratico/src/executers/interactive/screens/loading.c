@@ -1,6 +1,8 @@
 #include "executers/interactive/interactive_common.h"
 #include "executers/interactive/screens/loading.h"
 
+#undef lines
+
 Cache make_cache_loading(GM_Term term, FrameStore store) {
     Cache cache = make_cache(NULL);
     GM_TERM_SIZE size = gm_term_get_size(term);
@@ -17,11 +19,11 @@ Cache make_cache_loading(GM_Term term, FrameStore store) {
 
     int x = (size.cols - max_col) / 2;
     int y = (size.rows - lines->len - 1) / 2;
-
-    destroy_tokens(lines);
     
     DrawText dt = make_draw_text(text, len, x, y, lines->len, max_col);
     add_cache_elem(cache, LOCALE_SCREEN_LOADING_TITLE, dt);
+
+    destroy_tokens(lines);
 
     return cache;
 }

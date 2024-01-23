@@ -89,8 +89,16 @@ void destroy_draw_text(DrawText dt);
 DeferControl make_defer_control();
 
 /**
+ * @brief Destroys the Defer Control.
+ * 
+ * @param defer_control The Defer Control sequence.
+ */
+void destroy_defer_control(DeferControl df);
+
+/**
  * @brief Defers a task to be executed at a later point.
  * 
+ * @param defer_control The Defer Control sequence.
  * @param term The current Terminal.
  * @param store The current FrameStore.
  */
@@ -99,6 +107,7 @@ void defer_load(DeferControl defer_control, DeferNotify notify_func);
 /**
  * @brief Attempts to run the defered task, if it exists.
  * 
+ * @param defer_control The Defer Control sequence.
  * @param term The current Terminal.
  * @param store The current FrameStore.
  */

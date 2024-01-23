@@ -390,7 +390,7 @@ char* join_strings_with_delim_list(char* delim, int len, char** args) {
         if (i < len - 1) memcpy(fullStr + offset - 1, delim, delim_len);
     }
 
-    if (fullStr[totalLen - 1] != '\0') fullStr[totalLen - 1] = '\0';
+    fullStr[totalLen - 1] = '\0';
 
     return fullStr;
 }

@@ -31,6 +31,10 @@ DeferControl make_defer_control() {
     return df;
 }
 
+void destroy_defer_control(DeferControl df) {
+    free(df);
+}
+
 void defer_load(DeferControl defer_control, DeferNotify notify_func) {
     if (defer_control->has_work) return;
 

@@ -23,6 +23,8 @@ char* join_paths(int len, ...) {
     if (totalLenBits >= PTRDIFF_MAX) return NULL;
 
     char* fullPath = (char*)malloc(totalLenBits);
+    memset(fullPath, 0, totalLenBits);
+
     int offset = 0;
     for (int i = 0; i < len; i++) {
         int partLen = strlen(parts[i]);
@@ -99,7 +101,7 @@ GString* get_cwd() {
     static GString* BIN_PATH;
 
     if (BIN_PATH == NULL || BIN_PATH->len == 0) {
-        char BIN_PATH_TMP[PATH_MAX];
+        char BIN_PATH_TMP[PATH_MAX] = { 0 };
 
         if (!readlink("/proc/self/exe", BIN_PATH_TMP, PATH_MAX)) {
             printf("Unable to read current executable path.\n");
@@ -159,7 +161,7 @@ int skip_n_lines(FILE* file, int lines) {
 }
 
 PathExistsStat _path_exists(char* path, struct stat* info_out) {
-    struct stat info;
+    struct stat info = { 0 };
 
     if(lstat(path, (&info)) != 0) {
         if(errno == ENOENT) {

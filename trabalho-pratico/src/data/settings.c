@@ -248,6 +248,8 @@ DataSettings read_data_settings() {
             } else if (version < DATA_SETTINGS_VERSION) {
 
             }
+
+            free(key);
         } else if (step == 2) {
             // Ignore last_read
         } else if (step == 3) {
