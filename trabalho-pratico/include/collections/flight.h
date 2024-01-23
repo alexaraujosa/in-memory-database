@@ -25,31 +25,6 @@ typedef struct flights FLIGHT, *Flight;
 */
 int verify_flight_tokens(Tokens tokens, ParserStore store);
 
-// /**
-//  * @brief Creates a flight using dynamic memory.
-//  * 
-//  * @param id Flight id.
-//  * @param airline Flight airline.
-//  * @param plane_model Flight plane model.
-//  * @param origin Flight origin.
-//  * @param destination Flight destination.
-//  * @param schedule_departure_date Offset from system start date, relative to the flight schedule departure date.
-//  * @param schedule_arrival_data Offset from system start date, relative to the flight schedule arrival date.
-//  * @param real_departure_date Offset from system start date, relative to the flight real departure date.
-//  * 
-//  * @return Pointer to the Flight struct.
-// */
-// Flight makeFlight(
-//     int id,
-//     char* airline,
-//     char* plane_model,
-//     char* origin,
-//     char* destination,
-//     int schedule_departure_date,
-//     int schedule_arrival_date,
-//     int real_departure_date
-// );
-
 int get_flight_id(const Flight flight);
 void set_flight_id(Flight flight, int id);
 char *get_flight_airline(const Flight flight);

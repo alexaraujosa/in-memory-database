@@ -39,9 +39,6 @@ static inline char char_toupper(char ch) {
     else return ch;
 }
 
-
-char* isnprintf(const char *format, ...);
-
 // /**
 //  * @brief Converts a char string to a widechar string.
 //  * 
@@ -67,22 +64,24 @@ Tokens get_lines(char* line, size_t len);
 Tokens break_lines(Tokens lines, int max_len);
 
 /**
- * @brief Verify if a certain char its a digit.
+ * @brief Format the parameters to a string.
  * 
- * @param c Digit.
+ * @param format String format.
+ * @param ... Values to use.
  * 
- * @return 1 if its a digit, otherwise 0.
+ * @return Pointer to the formated string.
 */
-int is_digit(char c);
+char* isnprintf(const char *format, ...);
 
 /**
- * @brief Verify if a certain char its a positive digit.
+ * @brief Duplicates a string. (Dynamic Memory Usage)
  * 
- * @param c Digit.
+ * @param dest Destiny string.
+ * @param src  String to duplicate.
  * 
- * @return 1 if its a positive digit, otherwise 0.
+ * @return Pointer to the duplicated string.
 */
-int is_digit_positive(char c);
+char* strdup_to(char* dest, char* src);
 
 /**
  * @brief Verify if a string contains a non negative number.

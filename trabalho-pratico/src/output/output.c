@@ -236,7 +236,6 @@ char* build_query_buffer(int query, void* query_info, char* output_buffer) {
     return output_buffer;
 }
 
-/*interna*/
 char* _extractValueInPlace(char* keyValuePair) {
     char* colonPosition = strchr(keyValuePair, ':');
 

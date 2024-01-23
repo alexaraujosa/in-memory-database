@@ -33,31 +33,6 @@ typedef struct user USER, *User;
 */
 int verify_user_tokens(Tokens tokens, ParserStore store);
 
-// /**
-//  * @brief Creates an user using dynamic memory.
-//  * 
-//  * @param id User id.
-//  * @param name User name.
-//  * @param sex User sex.
-//  * @param passport User passport.
-//  * @param country_code User country code
-//  * @param account_creation Offset from system start date, relative to the user account creation.
-//  * @param account_status User account status.
-//  * @param birth_date Offset from system start date, relative to the user birth date.
-//  * 
-//  * @return Pointer to the User struct.
-// */
-// User make_user(
-//     char* id,
-//     char* name,
-//     bool sex,
-//     char* passport,
-//     CountryCode(country_code),
-//     int account_creation,
-//     bool account_status,
-//     int birth_date
-//     );
-
 char *get_user_id(const User user);
 void set_user_id(User user, const char *id);
 char *get_user_name(const User user);
@@ -78,7 +53,6 @@ int get_user_information(const User user);
 void set_user_information(User user, int information);
 void add_user_information(User user, int information);
 double get_user_total_spent(const User user);
-int get_user_reservations_counter(const User user);
 GArray* get_user_reservations(const User user);
 GArray* get_user_flights(const User user);
 int get_user_reservations_len(const User user);

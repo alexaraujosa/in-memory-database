@@ -110,6 +110,28 @@ int get_second(int date);
 int get_age(int date);
 
 /**
+ * @brief Offset a given year and month.
+ * 
+ * @param year Year of the date.
+ * @param month Month of the date.
+ * 
+ * @return Offset date.
+*/
+int offset_year_month(int year, int month);
+
+
+/**
+ * @brief Offset a given year, month and day.
+ * 
+ * @param year Year of the date.
+ * @param month Month of the date.
+ * @param day Day of the date.
+ * 
+ * @return Offset date.
+*/
+int offset_year_month_day(int year, int month, int day);
+
+/**
  * @brief Converts the date without time string to an integer with system offset.
  * 
  * @param date Date without time in string.
@@ -141,7 +163,7 @@ char* date_int_notime_to_string(int time);
  * 
  * @param date Date with time in integer (Without system offset).
  * 
- * @return Date witho time in string.
+ * @return Date with time in string.
 */
 char* date_int_withtime_to_string(int time);
 

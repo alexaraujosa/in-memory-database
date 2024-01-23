@@ -35,34 +35,6 @@ gint flightsCatalog_full_compare_func(gconstpointer flight_A, gconstpointer flig
     return 0;
 }
 
-gint flightsCatalog_destination_compare_func(gconstpointer flight_A, gconstpointer flight_B) {
-    const Flight flight1 = *(const Flight*)flight_A;
-    const Flight flight2 = *(const Flight*)flight_B;
-
-    char* destination1 = get_flight_destination(flight1);
-    char* destination2 = get_flight_destination(flight2);
-
-    int destination_comparison = strcasecmp(destination1, destination2);
-
-    free(destination1);
-    free(destination2);
-
-    return destination_comparison;
-}
-
-gint flightsCatalog_destination_compare_funcB(gconstpointer flight_A, gconstpointer flight_destination) {
-    const Flight* flight1 = (const Flight*)flight_A;
-    char* flight_destination2 = (char*)flight_destination;
-
-    char* flight_destination1 = get_flight_destination(*flight1);
-
-    int destination_comparison = strcasecmp(flight_destination1, flight_destination2);
-
-    free(flight_destination1);
-
-    return destination_comparison;
-}
-
 gint flightsCatalog_origin_compare_func(gconstpointer flight_A, gconstpointer flight_origin) {
     const Flight* flight1 = (const Flight*)flight_A;
     char* flight_origin2 = (char*)flight_origin;

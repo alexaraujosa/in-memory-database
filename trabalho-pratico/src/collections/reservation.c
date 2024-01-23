@@ -46,7 +46,7 @@ char *get_reservation_hotel_name(const Reservation resarvation){
 }
 
 void set_reservation_hotel_name(Reservation reservation, const char *hotel_name){
-   strncpy(reservation->hotel_name, hotel_name, sizeof(reservation->hotel_name) - 1);
+    strncpy(reservation->hotel_name, hotel_name, sizeof(reservation->hotel_name) - 1);
     reservation->hotel_name[sizeof(reservation->hotel_name) - 1] = '\0';;
 }
 
@@ -262,16 +262,4 @@ void print_reservation(void* pt) {
         reservation->hotel_name, reservation->hotel_stars, reservation->city_tax,
         reservation->begin_date, reservation->end_date, reservation->price_per_night,
         breakfast_status, reservation->rating);
-}
-
-void csv_destructor_passenger_reservation(FILE* stream, ParserStore store) {
-    IGNORE_ARG(stream);
-
-    FILE* discarder = g_array_index(store, FILE*, 0);
-    if (discarder != NULL) CLOSE_FILE(discarder);
-
-    void** file_header = g_array_index(store, void**, 1);
-    free(file_header);
-
-    g_array_free(store, TRUE);
 }

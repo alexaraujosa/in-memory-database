@@ -10,6 +10,13 @@ typedef struct date_value DATE_VALUE, *Date_value;
 
 int get_date_value(Date_value info);
 int get_conteudo_unique_passengers(Date_value info);
+int get_date_value(Date_value info);
+int get_conteudo_users(Date_value info);
+int get_conteudo_flights(Date_value info);
+int get_conteudo_passengers(Date_value info);
+int get_conteudo_unique_passengers(Date_value info);
+int get_conteudo_reservations(Date_value info);
+GArray *get_lower_array(Date_value info);
 
 GArray *generate_genCat();
 
@@ -25,18 +32,19 @@ Conteudo conteudo_by_month(int year, int month, GArray *arr_ptr);
 
 Conteudo conteudo_by_day(int year, int month, int day, GArray *arr_ptr);
 
-void add_to_hashtable(int year, int month, int day, char *userID, GArray *arr_ptr);
-
 void print_year_info(GArray *arr_ptr);
-
-void increment_conteudo_flights(Conteudo cont, int num);
 
 void increment_user_conteudo(int year, int month, int day, GArray *arr_ptr);
 void increment_flight_conteudo(int year, int month, int day, GArray *arr_ptr);
 void increment_reservation_conteudo(int year, int month, int day, GArray *arr_ptr);
-void increment_passenger_conteudo(int year, int month, int day, int n_passengers, GArray *arr_ptr);
-int unique_passengers_by_year(int year, GArray *arr_ptr);
-int unique_passengers_by_month(int year, int month, GArray *arr_ptr);
-int unique_passengers_by_day(int year, int month, int day, GArray *arr_ptr);
+void increment_passangers_conteudo(int year, int month, int day, GArray *arr_ptr);
+
+void increment_unique_passenger_by_year(int year, GArray *arr_ptr);
+void increment_unique_passenger_by_month(int year, int month, GArray *arr_ptr);
+void increment_unique_passenger_by_day(int year, int month, int day, GArray *arr_ptr);
+
 int get_flights_by_year(int year, GArray* arr);
+
+void genCat_destroy(GArray *arr_ptr);
+
 #endif

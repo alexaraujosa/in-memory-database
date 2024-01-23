@@ -18,19 +18,6 @@ typedef struct passenger PASSENGER, *Passenger;
 */
 int verify_passenger_tokens(Tokens tokens, ParserStore store);
 
-// /**
-//  * @brief Creates a passenger using dynamic memory.
-//  * 
-//  * @param flight_id Flight id.
-//  * @param user_id User id.
-//  * 
-//  * @return Pointer to the Passengconst er struct.
-// */
-// Passenger make_passenger(
-//     int flight_id,
-//     UserId(user_id)
-// );
-
 int get_passenger_flightID(const Passenger passenger);
 void set_passenger_flightID(Passenger passenger, int flight_id);
 char *get_passenger_userID(const Passenger passenger);
@@ -66,6 +53,13 @@ void preprocessor_passenger(FILE* stream, ParserStore store, va_list args);
 */
 void discard_passenger(void* raw_data, ParserStore store);
 
+/**
+ * @brief Prints a passenger (Mainly usage for debug).
+ * 
+ * @param passenger Pointer to the passenger struct.
+ * 
+ * @return void.
+*/
 void print_passenger(void* pt);
 
 #endif

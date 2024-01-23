@@ -34,17 +34,6 @@ gint passengersCatalog_flightID_compare_func(gconstpointer passenger_A, gconstpo
     return 0;
 }
 
-gint passengersCatalog_userID_compare_func(gconstpointer passenger_A, gconstpointer passenger_userID) {
-    const Passenger* passenger = (const Passenger*)passenger_A;
-    char* userID2 = (char*)passenger_userID;
-
-    char* userID1 = get_passenger_userID(*passenger);
-    int result = strcmp(userID1, userID2);
-
-    free(userID1);
-    return result;
-}
-
 void passengersCatalog_write_to_catalog(void* _passenger, ParserStore store) {
     Passenger passenger = (Passenger)_passenger;
 
@@ -60,14 +49,13 @@ void passengersCatalog_write_to_catalog(void* _passenger, ParserStore store) {
     Flight flight = catalog_search_in_int_hashtable(flight_catalog, flight_id);
     g_array_append_val(user_flights, flight);
 
-    //TODO em principio é para apagar
-/*     GArray* generic_catalog = g_array_index(store, GArray*, 5);
+    GArray* generic_catalog = g_array_index(store, GArray*, 5);
     int passenger_year = get_year(get_flight_schedule_departure_date(flight));
     int passenger_month = get_month(get_flight_schedule_departure_date(flight));
     int passenger_day = get_day(get_flight_schedule_departure_date(flight));
 
     genCat_add(passenger_year, generic_catalog);
-    increment_passenger_conteudo(passenger_year, passenger_month, passenger_day, user_id, generic_catalog); */
+    increment_passangers_conteudo(passenger_year, passenger_month, passenger_day, generic_catalog); 
     free(user_id);
     catalog_add_int_to_catalog(passenger_catalog, NULL, passenger);
 }
