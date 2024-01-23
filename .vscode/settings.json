@@ -29,7 +29,14 @@
         "catalogmanager.h": "c",
         "locale.h": "c",
         "user.h": "c",
-        "batch.h": "c"
+        "batch.h": "c",
+        "io.h": "c",
+        "misc.h": "c",
+        "queries_common.h": "c",
+        "reservationscatalog.h": "c",
+        "output.h": "c",
+        "query1.h": "c",
+        "flightscatalog.h": "c"
     },
     "cmake.configureOnOpen": false,
     "todo-tree.highlights.useColourScheme": true,

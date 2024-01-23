@@ -5,7 +5,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/main",
+            "program": "${fileDirname}/a.out",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
@@ -50,8 +50,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/trabalho-pratico/${input:binFile}",
-            "args": ["/home/paulo/Desktop/Projects/grupo-19/datasets/data_large/data", "/home/paulo/Desktop/Projects/grupo-19/datasets/data_large/myinput.txt"],
-            //"args": ["${input:arg1}", "${input:arg2}"],
+            "args": ["${input:arg1}", "${input:arg2}"],
             "cwd": "${workspaceFolder}/trabalho-pratico",
             "environment": [],
             "externalConsole": false,
@@ -67,6 +66,81 @@
             "miDebuggerPath": "/usr/bin/gdb",
             "stopAtEntry": false,
             "serverLaunchTimeout": 5000
+        },
+        {
+            "name": "Debug Solution (Tests)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/trabalho-pratico/${input:testBinFile}",
+            "args": ["${input:arg1}", "${input:arg2}", "${input:arg3}"],
+            "cwd": "${workspaceFolder}/trabalho-pratico",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+              {
+                "description": "Enable pretty-printing for gdb",
+                "text": "-enable-pretty-printing",
+                "ignoreFailures": true
+              }
+            ],
+            "preLaunchTask": "make-prepare-debug",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "stopAtEntry": false,
+            "serverLaunchTimeout": 5000
+        },
+        {
+            "name": "Debug Solution (Interactive Mode)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/trabalho-pratico/${input:binFile}",
+            "args": [],
+            "cwd": "${workspaceFolder}/trabalho-pratico",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "text": "source ${input:gdbinit}"
+                }
+            ],
+            "preLaunchTask": "make-prepare-debug",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "stopAtEntry": false,
+            "serverLaunchTimeout": 5000
+        },
+        {
+            "name": "[VAL] Debug Solution (Interactive Mode)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/trabalho-pratico/${input:binFile}",
+            "args": [],
+            "cwd": "${workspaceFolder}/trabalho-pratico",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "text": "source ${input:gdbinit}"
+                },
+                {
+                    "text": "target remote | /usr/bin/vgdb --pid=${input:gdbpid}"
+                }
+            ],
+            "preLaunchTask": "make-prepare-debug",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "stopAtEntry": false,
+            "serverLaunchTimeout": 5000
         }
     ],
     "inputs": [
@@ -76,6 +150,16 @@
             "command": "shellCommand.execute",
             "args": {
                 "command": "make locate",
+                "cwd": "${workspaceFolder}/trabalho-pratico",
+                "useFirstResult": true
+            }
+        },
+        {
+            "id": "testBinFile",
+            "type": "command",
+            "command": "shellCommand.execute",
+            "args": {
+                "command": "make locate_test",
                 "cwd": "${workspaceFolder}/trabalho-pratico",
                 "useFirstResult": true
             }
@@ -99,6 +183,31 @@
                 "cwd": "${workspaceFolder}/trabalho-pratico",
                 "useFirstResult": true
             }
+        },
+        {
+            "id": "arg3",
+            "type": "command",
+            "command": "shellCommand.execute",
+            "args": {
+                "command": "sed '3q;d' vscode_args.txt",
+                "cwd": "${workspaceFolder}/trabalho-pratico",
+                "useFirstResult": true
+            }
+        },
+        {
+            "id": "gdbinit",
+            "type": "command",
+            "command": "shellCommand.execute",
+            "args": {
+                "command": "sed '4q;d' vscode_args.txt",
+                "cwd": "${workspaceFolder}/trabalho-pratico",
+                "useFirstResult": true
+            }
+        },
+        {
+            "id": "gdbpid",
+            "description": "Remote GDBServer target PID:",
+            "type": "promptString"
         }
     ]
 }
