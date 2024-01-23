@@ -5,10 +5,15 @@
  */
 
 #include "queries/queries.h"
-#include "tests/test.h"
+#include "queries/output.h"
 #include "util/string.h"
+#include "tests/test.h"
 
 #define NUM_QUERIES 10
+
+#ifdef MAKE_TEST
+#define TIMERS_STORE_INDEX 4
+#endif
 
 Tokens tokenize_query(char* line, ssize_t len) {
     char* ptr = strdup(line);
@@ -77,7 +82,9 @@ void query_preprocessor(FILE* stream, ParserStore store, va_list args) {
     void*** s_catalogues = (void***)&g_array_index(store, void*, 2);
     *s_catalogues = catalogues;
 
-    *s_catalogues = catalogues;
+    // ------- WRITER -------
+    QueryWriter qw = va_arg(args, QueryWriter);
+    g_array_append_vals(store, &qw, 1);
 
 // ------- TIMERS -------
 #ifdef MAKE_TEST
@@ -169,7 +176,9 @@ void query_writer(void* raw_data, ParserStore store) {
     char** s_output_dir = (char**)&g_array_index(store, void*, 0);
     int* s_query_num = g_array_index(store, void*, 1);
     void** catalogues = ((void**)g_array_index(store, void*, 2));
-    TEST_EXPR(double* timers = (double*)g_array_index(store, double*, 3);)
+    QueryWriter writer = g_array_index(store, QueryWriter, 3);
+
+    TEST_EXPR(double* timers = (double*)g_array_index(store, double*, TIMERS_STORE_INDEX);)
 
     // ------- Process required variables -------
     char* output_file = isnprintf("command%d_output.txt", *s_query_num);
@@ -178,31 +187,24 @@ void query_writer(void* raw_data, ParserStore store) {
     // ------- Execute query -------
     FILE* retFile = OPEN_FILE(path, "w");
 
-    // void* ret = query_execute(data, catalogues, retFile);
     TEST_EXPR(clock_t start_time = clock();)
-    query_execute(data, catalogues, retFile);
+    query_execute(data, catalogues, retFile, writer);
     TEST_EXPR(clock_t end_time = clock();)
     TEST_EXPR(double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;)
     TEST_EXPR(timers[atoi(data->id) - 1] += elapsed_time;)
 
     CLOSE_FILE(retFile);
-
-    // // ------- Write output -------
-    // FILE* retFile = OPEN_FILE(path, "w");
-    // fputs(ret, retFile);
-    // CLOSE_FILE(retFile);
-
     // ------- Free memory -------
     free(output_file);
     free(path);
 
-    // Destroy query
+    // ------- Destroy query -------
     for (int i = 0; i < data->argc; i++) free(data->argv[i]);
     free(data);
 
     // ------- Write flags -------
-
     *s_query_num = *s_query_num + 1;
+
     return;
 }
 
@@ -219,43 +221,51 @@ void query_destructor(FILE* stream, ParserStore store) {
 #ifdef MAKE_TEST
     char* output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
     FILE* test_report = OPEN_FILE(output_path, "a");
-    double* timers = g_array_index(store, double*, 3);
+
+    double* timers = g_array_index(store, double*, TIMERS_STORE_INDEX);
     double total_time = 0;
+
     for (int i = 0; i < NUM_QUERIES; i++) {
         test_trace(" - Execution time for query %2d: %.4f seconds.\n", i + 1, timers[i]);
         fprintf(test_report, " - Execution time for query %2d: %.4f seconds.\n", i + 1, timers[i]);
         total_time += timers[i];
     }
+
     test_trace("\n----===[  GENERAL PROGRAM METRICS  ]===----\n\n");
     fprintf(test_report, "\n----===[  GENERAL PROGRAM METRICS  ]===----\n\n");
+
     test_trace(" -> Execution time for solving all queries: %.4f seconds.\n", total_time);
     fprintf(test_report, " -> Execution time for solving all queries: %.4f seconds.\n", total_time);
+
     CLOSE_FILE(test_report);
 #endif
 
     // ------- Free Memory -------
-    for (guint i = 0; i < store->len; ++i) {
-        void* element = g_array_index(store, void*, i);
-        free(element);
-    }
+    // for (guint i = 0; i < store->len; ++i) {
+    //     void* element = g_array_index(store, void*, i);
+    //     free(element);
+    // }
+
+    free(g_array_index(store, void*, 0)); // Directory for outputs
+    free(g_array_index(store, void*, 1)); // Current query number
 
     g_array_free(store, TRUE);
 }
 // #pragma GCC pop_options
 // #pragma endregion
 
-void query_execute(Query query, void** catalogues, FILE* output_file) {
+void query_execute(Query query, void** catalogues, FILE* output_file, QueryWriter writer) {
     switch (atoi(query->id)) {
-        case 1:  query1 (query->flag, query->argc, query->argv, catalogues, output_file); break;
-        case 2:  query2 (query->flag, query->argc, query->argv, catalogues, output_file); break;
-        case 3:  query3 (query->flag, query->argc, query->argv, catalogues, output_file); break;
-        case 4:  query4 (query->flag, query->argc, query->argv, catalogues, output_file); break;
-        case 5:  query5 (query->flag, query->argc, query->argv, catalogues, output_file); break;
-        case 6:  query6 (query->flag, query->argc, query->argv, catalogues, output_file); break;
-        case 7:  query7 (query->flag, query->argc, query->argv, catalogues, output_file); break;
-        case 8:  query8 (query->flag, query->argc, query->argv, catalogues, output_file); break;
-        case 9:  query9 (query->flag, query->argc, query->argv, catalogues, output_file); break;
-        case 10: query10(query->flag, query->argc, query->argv, catalogues, output_file); break;
+        case 1:  { query1 (query->flag, query->argc, query->argv, catalogues, output_file, writer); break; }
+        case 2:  { query2 (query->flag, query->argc, query->argv, catalogues, output_file, writer); break; }
+        case 3:  { query3 (query->flag, query->argc, query->argv, catalogues, output_file, writer); break; }
+        case 4:  { query4 (query->flag, query->argc, query->argv, catalogues, output_file, writer); break; }
+        case 5:  { query5 (query->flag, query->argc, query->argv, catalogues, output_file, writer); break; }
+        case 6:  { query6 (query->flag, query->argc, query->argv, catalogues, output_file, writer); break; }
+        case 7:  { query7 (query->flag, query->argc, query->argv, catalogues, output_file, writer); break; }
+        case 8:  { query8 (query->flag, query->argc, query->argv, catalogues, output_file, writer); break; }
+        case 9:  { query9 (query->flag, query->argc, query->argv, catalogues, output_file, writer); break; }
+        case 10: { query10(query->flag, query->argc, query->argv, catalogues, output_file, writer); break; }
     }
 };
 
@@ -270,7 +280,9 @@ void query_run_bulk(char* input_file, char* output_dir, void** catalogues) {
         &query_discarder,
         &query_destructor,
         output_dir,
-        catalogues);
+        catalogues,
+        output_query_to_file
+    );
     return;
 };
 
