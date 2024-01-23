@@ -231,6 +231,8 @@ void batch(const char* arg1, const char* arg2) {
         g_array_free(get_user_flights(user), TRUE);
     }
 
+    genCat_destroy(pointer_to_generic_catalog);
+
     catalog_destroy(user_catalog);
     catalog_destroy(flight_catalog);
     catalog_destroy(passengers_catalog);

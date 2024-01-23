@@ -44,4 +44,7 @@ void increment_unique_passenger_by_month(int year, int month, GArray *arr_ptr);
 void increment_unique_passenger_by_day(int year, int month, int day, GArray *arr_ptr);
 
 int get_flights_by_year(int year, GArray* arr);
+
+void genCat_destroy(GArray *arr_ptr);
+
 #endif

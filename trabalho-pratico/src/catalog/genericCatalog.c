@@ -338,6 +338,27 @@ void increment_unique_passenger_by_day(int year, int month, int day, GArray *arr
     }
 }
 
+void genCat_destroy(GArray *arr_ptr){
+    Date_value value_year = NULL;
+    Date_value value_month = NULL;
+    Date_value value_day = NULL;
+    for (int i = 0; i < (int)arr_ptr->len; i++) {
+        value_year = g_array_index(arr_ptr, Date_value, i);
+        for (int j = 0; j < (int)value_year->lower_array->len; j++) {
+            value_month = g_array_index(value_year->lower_array, Date_value, j);
+                for (int k = 0; k < (int)value_month->lower_array->len; k++){
+                    value_day = g_array_index(value_month->lower_array, Date_value, k);
+                    free(value_day);
+                }
+            g_array_free(value_month->lower_array, TRUE);
+            free(value_month);
+        }
+        g_array_free(value_year->lower_array, TRUE);
+        free(value_year);
+    }
+    g_array_free(arr_ptr, TRUE);
+}
+
 // Function to print the CONTEUDO structure
 void printConteudo(Conteudo c) {
     printf("CONTEUDO:\n");
