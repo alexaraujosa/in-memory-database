@@ -10,7 +10,7 @@ typedef struct dataset_data *DatasetData;
  * 
  * @param dd The Dataset data.
  */
-DatasetData make_dataset_data();
+DatasetData make_dataset_data(const char* input);
 
 /**
  * @brief Sets the directory of the datasets to be used.

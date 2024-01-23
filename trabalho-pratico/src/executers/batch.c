@@ -3,12 +3,11 @@
 #include "tests/test.h"
 
 #ifdef MAKE_TEST
-// Define these global variables to share data between the DatasetData builder 
-// and the batch without modifying the signatures.
-double batch_test_parsing_time = 0;
-double batch_test_sorting_time = 0;
-char* batch_test_output_path = NULL;
-FILE* batch_test_test_report = NULL;
+// Refer to main.c
+extern double batch_test_parsing_time;
+extern double batch_test_sorting_time;
+extern char* batch_test_output_path;
+extern FILE* batch_test_test_report;
 #endif
 
 void batch(const char* arg1, const char* arg2) {
@@ -22,31 +21,31 @@ void batch(const char* arg1, const char* arg2) {
 
     TEST_EXPR(printf("\n----===[  QUERY EXECUTION METRICS  ]===----\n\n");)
     TEST_EXPR(fprintf(batch_test_test_report, "\n----===[  QUERY EXECUTION METRICS  ]===----\n\n");)
-    TEST_EXPR(CLOSE_FILE(batch_test_test_report);)
+    // TEST_EXPR(CLOSE_FILE(batch_test_test_report);)
 
     // Execute the queries
     query_run_bulk((char*)arg2, "Resultados", catalogues);
 
-    TEST_EXPR(batch_test_test_report = OPEN_FILE(batch_test_output_path, "a");)
-    TEST_EXPR(
-        printf(" -> Execution time for parsing all collections datasets: %.4f seconds.\n", batch_test_parsing_time);
-    )
-    TEST_EXPR(
-        fprintf(
-            batch_test_test_report, 
-            " -> Execution time for parsing all collections datasets: %.4f seconds.\n", 
-            batch_test_parsing_time
-        );
-    )
-    TEST_EXPR(printf(" -> Execution time for sorting all collections datasets: %.4f seconds.\n", batch_test_sorting_time);)
-    TEST_EXPR(
-        fprintf(
-            batch_test_test_report, 
-            " -> Execution time for sorting all collections datasets: %.4f seconds.\n", 
-            batch_test_sorting_time
-        );
-    )
-    TEST_EXPR(CLOSE_FILE(batch_test_test_report);)
+#ifdef MAKE_TEST
+    // char* output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
+    // FILE* test_report = OPEN_FILE(batch_test_output_path, "a");
+    
+    printf(" -> Execution time for parsing all collections datasets: %.4f seconds.\n", batch_test_parsing_time);
+    fprintf(
+        batch_test_test_report, 
+        " -> Execution time for parsing all collections datasets: %.4f seconds.\n", 
+        batch_test_parsing_time
+    );
+    printf(" -> Execution time for sorting all collections datasets: %.4f seconds.\n", batch_test_sorting_time);
+    fprintf(
+        batch_test_test_report, 
+        " -> Execution time for sorting all collections datasets: %.4f seconds.\n", 
+        batch_test_sorting_time
+    );
+
+    // CLOSE_FILE(batch_test_test_report);
+    // free(output_path);
+#endif
 
     destroy_dataset_data(dd);
 }

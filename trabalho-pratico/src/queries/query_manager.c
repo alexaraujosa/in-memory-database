@@ -10,6 +10,11 @@
 
 #define NUM_QUERIES 10
 
+#ifdef MAKE_TEST
+// Refer to main.c
+extern FILE* batch_test_test_report;
+#endif
+
 Tokens tokenize_query(char* line, ssize_t len) {
     char* ptr = strdup(line);
     char* ptr_root = ptr;
@@ -217,27 +222,35 @@ void query_destructor(FILE* stream, ParserStore store) {
 
 // ------- Fetch store timers for display -------
 #ifdef MAKE_TEST
-    char* output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
-    FILE* test_report = OPEN_FILE(output_path, "a");
+    // char* output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
+    // FILE* test_report = OPEN_FILE(output_path, "a");
+
     double* timers = g_array_index(store, double*, 3);
     double total_time = 0;
+
     for (int i = 0; i < NUM_QUERIES; i++) {
         test_trace(" - Execution time for query %2d: %.4f seconds.\n", i + 1, timers[i]);
-        fprintf(test_report, " - Execution time for query %2d: %.4f seconds.\n", i + 1, timers[i]);
+        fprintf(batch_test_test_report, " - Execution time for query %2d: %.4f seconds.\n", i + 1, timers[i]);
         total_time += timers[i];
     }
     test_trace("\n----===[  GENERAL PROGRAM METRICS  ]===----\n\n");
-    fprintf(test_report, "\n----===[  GENERAL PROGRAM METRICS  ]===----\n\n");
+    fprintf(batch_test_test_report, "\n----===[  GENERAL PROGRAM METRICS  ]===----\n\n");
+
     test_trace(" -> Execution time for solving all queries: %.4f seconds.\n", total_time);
-    fprintf(test_report, " -> Execution time for solving all queries: %.4f seconds.\n", total_time);
-    CLOSE_FILE(test_report);
+    fprintf(batch_test_test_report, " -> Execution time for solving all queries: %.4f seconds.\n", total_time);
+
+    // CLOSE_FILE(batch_test_test_report);
 #endif
 
     // ------- Free Memory -------
-    for (guint i = 0; i < store->len; ++i) {
-        void* element = g_array_index(store, void*, i);
-        free(element);
-    }
+    // for (guint i = 0; i < store->len; ++i) {
+    //     void* element = g_array_index(store, void*, i);
+    //     free(element);
+    // }
+    free(g_array_index(store, void*, 0)); // Directory for outputs
+    free(g_array_index(store, void*, 1)); // Current query number
+    // Do not free the memory for the catalogues.
+    // The code explodes if such is done with the new implementation.
 
     g_array_free(store, TRUE);
 }

@@ -9,7 +9,7 @@
 #include "tests/test.h"
 
 #ifdef MAKE_TEST
-// Refer to batch.c
+// Refer to main.c
 extern double batch_test_parsing_time;
 extern double batch_test_sorting_time;
 extern char* batch_test_output_path;
@@ -35,7 +35,7 @@ typedef struct dataset_data {
 void** make_catalogues(char* dataset_dir);
 
 // ============== DATASET STORE ==============
-DatasetData make_dataset_data(char* input) {
+DatasetData make_dataset_data(const char* input) {
     DatasetData dd = (DatasetData)malloc(sizeof(DATASET_DATA));
     dd->datasets_loaded = FALSE;
     dd->users = NULL;
@@ -118,6 +118,13 @@ void destroy_dataset_data(DatasetData dd) {
     if (dd->dataset_dir != NULL) free(dd->dataset_dir);
 
     if (dd->datasets_loaded) {
+        for (int i = 0; i < catalog_get_item_count(dd->users); i++) {
+            User user = (User)catalog_search_in_array(dd->users, i);
+            g_array_free(get_user_reservations(user), TRUE);
+            g_array_free(get_user_flights(user), TRUE);
+        }
+
+
         catalog_destroy(dd->users);
         catalog_destroy(dd->flights);
         catalog_destroy(dd->passengers);
@@ -193,8 +200,8 @@ void csv_destructor_extended(FILE* stream, ParserStore store) {
 
 void** make_catalogues(char* dataset_dir) {
 #ifdef MAKE_TEST
-    batch_test_output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
-    FILE* batch_test_test_report = OPEN_FILE(batch_test_output_path, "w");
+    // batch_test_output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
+    // batch_test_test_report = OPEN_FILE(batch_test_output_path, "w");
 
     // double sorting_time = 0;
     // double parsing_time = 0;
