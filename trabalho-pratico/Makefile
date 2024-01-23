@@ -74,6 +74,10 @@ run-debug: debug
 locate:
 	@echo ./$(EXEC_PATH)
 
+.PHONY: locate_test
+locate_test:
+	@echo ./$(TEST_EXEC_PATH)
+
 clean:
 	-rm $(EXEC_PATH)
 	-rm $(TEST_EXEC_PATH)
