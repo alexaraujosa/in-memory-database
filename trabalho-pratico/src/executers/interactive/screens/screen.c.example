@@ -3,6 +3,8 @@
 Cache make_cache_example(GM_Term term, FrameStore store) {
     IGNORE_ARG(term);
     IGNORE_ARG(store);
+
+    return NULL;
 }
 
 void destroy_cache_example(Cache cache, int force) {
@@ -19,5 +21,8 @@ void draw_example(GM_Term term, FrameStore store, Cache cache) {
 Keypress_Code keypress_example(GM_Term term, FrameStore store, Cache cache, GM_Key key) {
     IGNORE_ARG(term);
     IGNORE_ARG(store);
+    IGNORE_ARG(cache);
     IGNORE_ARG(key);
+
+    return KEY_SKIP;
 }
