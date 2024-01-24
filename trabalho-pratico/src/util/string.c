@@ -102,7 +102,7 @@ Tokens get_lines(char* line, size_t len) {
     return tokenize_char_delim(line, len, "\n");
 }
 
-Tokens break_lines(Tokens lines, int max_len) {
+Tokens break_lines(Tokens lines, int max_len, char* padding) {
     int line_count = lines->len;
     for (int i = 0; i < lines->len; i++) line_count += (strlen(lines->data[i]) / max_len);
 
@@ -116,12 +116,26 @@ Tokens break_lines(Tokens lines, int max_len) {
             ndata[nind++] = strdup(lines->data[i]);
         } else {
             for (int j = 0; j <= line_len / max_len; j++) {
-                ndata[nind++] = strndup(lines->data[i] + (max_len * j), max_len);
+                // ndata[nind++] = strndup(lines->data[i] + (max_len * j), max_len);
+                char* temp = strndup(lines->data[i] + (max_len * j), max_len);
+                if (j > 0 && padding != NULL) {
+                    int temp_len = strlen(padding) + strlen(temp);
+                    char* _temp = (char*)malloc(temp_len * sizeof(char));
+                    memset(_temp, 0, temp_len);
+
+                    strcpy(_temp, padding);
+                    strcat(_temp, temp);
+                    free(temp);
+
+                    temp = _temp;
+                }
+
+                ndata[nind++] = temp;
             }
         }
     }
 
-    destroy_tokens(lines);
+    // destroy_tokens(lines);
 
     Tokens nlines = (Tokens)malloc(sizeof(TOKENS));
     nlines->data = ndata;

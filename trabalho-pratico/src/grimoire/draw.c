@@ -102,7 +102,9 @@ void gm_printf(GM_Term term, int row, int col, const char *format, ...) {
     // Break lines too big for current terminal.
     if (gm_has_attribute(term, GM_PRINT_OVERFLOW_BREAK)) {
         GM_TERM_SIZE size = gm_term_get_size(term);
-        lines = break_lines(lines, size.cols - col);
+        Tokens _lines = break_lines(lines, size.cols - col, NULL);
+        destroy_tokens(lines);
+        lines = _lines;
 
         int len = strlen(lines->data[0]);
 

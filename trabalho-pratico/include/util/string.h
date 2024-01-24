@@ -25,6 +25,7 @@
 #define IS_STRING_NULL(ARG)  (IS_NULL((ARG)) || *(ARG) == '\0')
 
 #define STRING_EQUAL(a, b) (strcmp((a), (b)) == 0)
+#define STRING_BEGIN_EQUAL(a, b, n) (strncmp((a), (b), (n)) == 0)
 
 #define CHAR_IS_LOWER(ch) ((ch) >= 97 && (ch) <= 122)
 #define CHAR_IS_UPPER(ch) ((ch) >= 65 && (ch) <= 90)
@@ -61,7 +62,7 @@ Tokens get_lines(char* line, size_t len);
  * @param lines The set of lines to be broken.
  * @param max_len The maximum length for each line.
  */
-Tokens break_lines(Tokens lines, int max_len);
+Tokens break_lines(Tokens lines, int max_len, char* padding);
 
 /**
  * @brief Format the parameters to a string.
