@@ -8,6 +8,8 @@
 #define MAX_PAGE_KEY "max_page"
 #define PSTR_LEN_KEY "pstr_len"
 #define QUERY_PAGES_KEY "query_pages"
+#define ON_HELP_KEY "on_help"
+#define HELP_FILL_KEY "help_fill"
 
 #define PAGE_BREAK_HEADER ">>> "
 #define PAGE_BREAK_HEADER_LEN 4
@@ -52,15 +54,62 @@
 // Forward declarations
 static void calculate_pages(Cache cache, int cur_page, int max_page);
 static void prepare_pages(GM_Term term, Cache cache, GArray* query_pages_source);
+static void draw_help(GM_Term term, FrameStore store, Cache cache);
 
 #pragma GCC push_options
 #pragma GCC optimize ("O0")
 
 Cache make_cache_query_output(GM_Term term, FrameStore store) {
-    IGNORE_ARG(term);
-    IGNORE_ARG(store);
+    GM_TERM_SIZE size = gm_term_get_size(term);
 
     Cache cache = make_cache(NULL);
+
+    // ----- Help Tooltip -----
+    // Top corner tooltip
+    char* help_tooltip_text = get_localized_string(store->current_locale, LOCALE_SCREEN_HELP_TOOLTIP);
+    int help_tooltip_len = strlen(help_tooltip_text);
+    MAX_COLS_AND_ROWS ht_mcar = get_max_rows_and_cols(help_tooltip_text, help_tooltip_len);
+    DrawText help_tooltip_dt = make_draw_text(
+        help_tooltip_text, 
+        help_tooltip_len, 
+        size.cols - help_tooltip_len - 1, 
+        0,
+        ht_mcar.rows,
+        ht_mcar.cols
+    );
+    add_cache_elem(cache, LOCALE_SCREEN_HELP_TOOLTIP, help_tooltip_dt);
+    
+    // Textbox
+    char* help_text = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_OUTPUT_HELP);
+    int help_len = strlen(help_text);
+    MAX_COLS_AND_ROWS h_mcar = get_max_rows_and_cols(help_text, help_len);
+    DrawText help_dt = make_draw_text(
+        help_text, 
+        help_len, 
+        (size.cols / 2) - (h_mcar.cols / 2), 
+        (size.rows / 2) - (h_mcar.rows / 2), 
+        h_mcar.rows,
+        h_mcar.cols
+    );
+    add_cache_elem(cache, LOCALE_SCREEN_QUERY_OUTPUT_HELP, help_dt);
+
+    // Empty space fill
+    char* help_fill = (char*)malloc((h_mcar.rows * h_mcar.cols + h_mcar.rows) * sizeof(char));
+    memset(help_fill, 0, (h_mcar.rows * h_mcar.cols + h_mcar.rows));
+
+    int hf_ind = 0;
+    for (int i = 0; i < h_mcar.rows; i++) {
+        for (int j = 0; j < h_mcar.cols; j++) {
+            help_fill[hf_ind++] = ' ';
+        }
+        help_fill[hf_ind++] = '\n';
+    }
+    help_fill[hf_ind - 1] = '\0';
+    add_cache_elem(cache, HELP_FILL_KEY, help_fill);
+
+    int* on_help = (int*)malloc(sizeof(int));
+    *on_help = FALSE;
+    add_cache_elem(cache, ON_HELP_KEY, on_help);
 
     // ----- Current page -----
     int* cur_page = (int*)malloc(sizeof(int));
@@ -90,9 +139,7 @@ Cache make_cache_query_output(GM_Term term, FrameStore store) {
     *query_pages = NULL;
     add_cache_elem(cache, QUERY_PAGES_KEY, query_pages);
 
-    // TODO: DEV ONLY
-    // GArray* query_pages_source = query_run_single("1 JéssiTavares910", 0, store->datasets);
-    GArray* query_pages_source = query_run_single(store->current_query, 0, store->datasets);
+    GArray* query_pages_source = query_run_single(store->current_query, strlen(store->current_query), store->datasets);
 
     prepare_pages(term, cache, query_pages_source);
     calculate_pages(cache, 0, query_pages_source->len - 1);
@@ -105,6 +152,19 @@ Cache make_cache_query_output(GM_Term term, FrameStore store) {
 
 void destroy_cache_query_output(Cache cache, int force) {
     IGNORE_ARG(force);
+
+    // ----- Help Tooltip -----
+    DrawText help_tooltip_dt = get_cache_elem(cache, LOCALE_SCREEN_HELP_TOOLTIP);
+    destroy_draw_text(help_tooltip_dt);
+
+    DrawText help_dt = get_cache_elem(cache, LOCALE_SCREEN_QUERY_OUTPUT_HELP);
+    destroy_draw_text(help_dt);
+
+    int* on_help = get_cache_elem(cache, ON_HELP_KEY);
+    free(on_help);
+
+    char* help_fill = get_cache_elem(cache, HELP_FILL_KEY);
+    free(help_fill);
     
     // ----- Current page -----
     int* cur_page = get_cache_elem(cache, CUR_PAGE_KEY);
@@ -146,6 +206,9 @@ void draw_query_output(GM_Term term, FrameStore store, Cache cache) {
 
     GM_TERM_SIZE size = gm_term_get_size(term);
 
+    DrawText help_tooltip_dt = get_cache_elem(cache, LOCALE_SCREEN_HELP_TOOLTIP);
+    int* on_help = get_cache_elem(cache, ON_HELP_KEY);
+
     int* cur_page = get_cache_elem(cache, CUR_PAGE_KEY);
     char** cur_page_pstr = get_cache_elem(cache, CUR_PAGE_PSTR_KEY);
 
@@ -157,8 +220,11 @@ void draw_query_output(GM_Term term, FrameStore store, Cache cache) {
 
     gm_attroff(term, GM_RESET);
 
-    // Draw surrounding box
+    // ======= Draw surrounding box =======
     gm_box(term, 0, 0, size.rows - 1, size.cols - 1);
+
+    // ======= Draw Help Tooltip =======
+    gm_printf(term, help_tooltip_dt->y, help_tooltip_dt->x, help_tooltip_dt->text);
 
     // ======= Draw Query Data =======
     gm_attron(term, GM_PRINT_OVERFLOW_BREAK);
@@ -210,6 +276,9 @@ void draw_query_output(GM_Term term, FrameStore store, Cache cache) {
 
     #undef SECOND_GROUP_COL
     #undef MAX_COL
+
+    // ======= Draw Help Tooltip =======
+    if (*on_help) draw_help(term, store, cache);
 }
 
 Keypress_Code keypress_query_output(GM_Term term, FrameStore store, Cache cache, GM_Key key) {
@@ -218,18 +287,33 @@ Keypress_Code keypress_query_output(GM_Term term, FrameStore store, Cache cache,
     IGNORE_ARG(cache);
     IGNORE_ARG(key);
 
+    int* on_help = get_cache_elem(cache, ON_HELP_KEY);
     int* cur_page = get_cache_elem(cache, CUR_PAGE_KEY);
     int* max_page = get_cache_elem(cache, MAX_PAGE_KEY);
 
     GM_Key ckey = gm_get_canonical_key(key);
     switch (ckey) {
         case GM_KEY_ESCAPE: {
-            // TODO: Point to query insertion system.
-            store->current_screen = SCREEN_MAIN_MENU;
+            if (*on_help) {
+                *on_help = FALSE;
+            } else {
+                // TODO: Point to query insertion system.
+                store->current_screen = SCREEN_MAIN_MENU;
+            }
+            
             return KEY_RECIEVED;
             break;
         }
+        case GM_KEY_F1: {
+            *on_help = !(*on_help);
+            break;
+        }
         case GM_KEY_ARROW_LEFT: {
+            if (*on_help) {
+                return KEY_SKIP;
+                break;
+            }
+
             if (GM_HAS_SHIFT(key)) { // Start Button
                 *cur_page = 0;
             } else if (GM_HAS_CTRL(key)) { // Back Batch Button
@@ -246,6 +330,11 @@ Keypress_Code keypress_query_output(GM_Term term, FrameStore store, Cache cache,
             break;
         }
         case GM_KEY_ARROW_RIGHT: {
+            if (*on_help) {
+                return KEY_SKIP;
+                break;
+            }
+
             if (GM_HAS_SHIFT(key)) { // End Button
                 *cur_page = (*max_page) - 1;
             } else if (GM_HAS_CTRL(key)) { // Forward Batch Button
@@ -314,6 +403,23 @@ static void prepare_pages(GM_Term term, Cache cache, GArray* query_pages_source)
     }
 
     *max_page = query_pages_source->len;
+}
+
+static void draw_help(GM_Term term, FrameStore store, Cache cache) {
+    DrawText help_dt = get_cache_elem(cache, LOCALE_SCREEN_QUERY_OUTPUT_HELP);
+    char* help_fill = get_cache_elem(cache, HELP_FILL_KEY);
+
+    gm_printf(term, help_dt->y - 1, help_dt->x - 1, help_fill);
+
+    gm_box(
+        term, 
+        help_dt->y - 1, 
+        help_dt->x - 1, 
+        help_dt->y + help_dt->rows, 
+        help_dt->x + help_dt->cols + 1
+    );
+
+    gm_printf(term, help_dt->y, help_dt->x, help_dt->text);
 }
 
 #pragma GCC pop_options
