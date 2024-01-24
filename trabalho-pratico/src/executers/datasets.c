@@ -24,7 +24,7 @@ typedef struct dataset_data {
     Catalog* passengers;
     Catalog* flights;
     Stats_info stats_info;
-    GArray* flights2_array;
+    GArray* _pointer_to_generic_catalog;
 
     // TODO: Kept for backwards compatibility with the current query implementation. 
     // Should be removed aftwerwards.
@@ -43,7 +43,7 @@ DatasetData make_dataset_data(const char* input) {
     dd->passengers = NULL;
     dd->flights = NULL;
     dd->stats_info = NULL;
-    dd->flights2_array = NULL;
+    dd->_pointer_to_generic_catalog = NULL;
 
     if (input != NULL) dd->dataset_dir = strdup(input);
     else dd->dataset_dir = NULL;
@@ -64,7 +64,7 @@ int dataset_data_load(DatasetData dd) {
     dd->passengers     = (Catalog*)(dd->_catalog_arr[2]);
     dd->reservations   = (Catalog*)(dd->_catalog_arr[3]);
     dd->stats_info     = (Stats_info)(dd->_catalog_arr[4]);
-    dd->flights2_array = (GArray*)(dd->_catalog_arr[5]);
+    dd->_pointer_to_generic_catalog = (GArray*)(dd->_catalog_arr[5]);
 
     dd->datasets_loaded = TRUE;
 
@@ -104,10 +104,10 @@ Stats_info dataset_data_get_stats_info(DatasetData dd) {
     return dd->stats_info;
 }
 
-GArray* dataset_data_get_flights2_array(DatasetData dd) {
-    if (!dd->datasets_loaded) return NULL;
-    return dd->flights2_array;
-}
+// GArray* dataset_data_get_flights2_array(DatasetData dd) {
+//     if (!dd->datasets_loaded) return NULL;
+//     return dd->flights2_array;
+// }
 
 void** dataset_data_get_catalog_array(DatasetData dd) {
     if (!dd->datasets_loaded) return NULL;
@@ -124,13 +124,14 @@ void destroy_dataset_data(DatasetData dd) {
             g_array_free(get_user_flights(user), TRUE);
         }
 
+        genCat_destroy(dd->_pointer_to_generic_catalog);
 
         catalog_destroy(dd->users);
         catalog_destroy(dd->flights);
         catalog_destroy(dd->passengers);
         catalog_destroy(dd->reservations);
         stats_destroy(dd->stats_info);
-        g_array_free(dd->flights2_array, TRUE);
+        // g_array_free(dd->flights2_array, TRUE);
 
         free(dd->_catalog_arr);
     }
@@ -150,41 +151,41 @@ gint flights2_compare(gconstpointer flight_A, gconstpointer flight_B) {
     return 0;
 }
 
-void _default_catalog_preprocessor(FILE* stream, ParserStore store, va_list args) {
-    gpointer null_element = NULL;
-    g_array_append_vals(store, &null_element, 1);  // Discard file
-    default_csv_preprocessor(stream, store, args); // File header
+// void _default_catalog_preprocessor(FILE* stream, ParserStore store, va_list args) {
+//     gpointer null_element = NULL;
+//     g_array_append_vals(store, &null_element, 1);  // Discard file
+//     default_csv_preprocessor(stream, store, args); // File header
 
-    Catalog* catalogo = va_arg(args, Catalog*);
-    g_array_append_vals(store, &catalogo, 1);
-}
+//     Catalog* catalogo = va_arg(args, Catalog*);
+//     g_array_append_vals(store, &catalogo, 1);
+// }
 
-void _reservation_preprocessor(FILE* stream, ParserStore store, va_list args) {
-    gpointer null_element = NULL;
-    g_array_append_vals(store, &null_element, 1);  // Discard file
-    default_csv_preprocessor(stream, store, args); // File header
+// void _reservation_preprocessor(FILE* stream, ParserStore store, va_list args) {
+//     gpointer null_element = NULL;
+//     g_array_append_vals(store, &null_element, 1);  // Discard file
+//     default_csv_preprocessor(stream, store, args); // File header
 
-    Catalog* catalogo = va_arg(args, Catalog*);
-    g_array_append_vals(store, &catalogo, 1);
+//     Catalog* catalogo = va_arg(args, Catalog*);
+//     g_array_append_vals(store, &catalogo, 1);
 
-    Catalog* catalogo2 = va_arg(args, Catalog*);
-    g_array_append_vals(store, &catalogo2, 1);
-}
+//     Catalog* catalogo2 = va_arg(args, Catalog*);
+//     g_array_append_vals(store, &catalogo2, 1);
+// }
 
-void _passenger_preprocessor(FILE* stream, ParserStore store, va_list args) {
-    gpointer null_element = NULL;
-    g_array_append_vals(store, &null_element, 1);  // Discard file
-    default_csv_preprocessor(stream, store, args); // File header
+// void _passenger_preprocessor(FILE* stream, ParserStore store, va_list args) {
+//     gpointer null_element = NULL;
+//     g_array_append_vals(store, &null_element, 1);  // Discard file
+//     default_csv_preprocessor(stream, store, args); // File header
 
-    Catalog* catalogo = va_arg(args, Catalog*);
-    g_array_append_vals(store, &catalogo, 1);
+//     Catalog* catalogo = va_arg(args, Catalog*);
+//     g_array_append_vals(store, &catalogo, 1);
 
-    Catalog* catalogo2 = va_arg(args, Catalog*);
-    g_array_append_vals(store, &catalogo2, 1);
+//     Catalog* catalogo2 = va_arg(args, Catalog*);
+//     g_array_append_vals(store, &catalogo2, 1);
 
-    Catalog* catalogo3 = va_arg(args, Catalog*);
-    g_array_append_vals(store, &catalogo3, 1);
-}
+//     Catalog* catalogo3 = va_arg(args, Catalog*);
+//     g_array_append_vals(store, &catalogo3, 1);
+// }
 
 void csv_destructor_extended(FILE* stream, ParserStore store) {
     IGNORE_ARG(stream);
@@ -267,11 +268,6 @@ void** make_catalogues(char* dataset_dir) {
         flight_catalog,
         pointer_to_generic_catalog
     );
-
-
-    //TODO: COLOCAR O MAKE_TEST E COLOCAR A FUNCAO flights2_compare NO LUGAR CORRETO, SEM SER NO TOPO DA BATCH
-    GArray* flights2_array = catalog_get_array_copy(flight_catalog);
-    g_array_sort(flights2_array, (GCompareFunc)&flights2_compare);
 
 #ifdef MAKE_TEST
     end_time = clock();
@@ -373,7 +369,7 @@ void** make_catalogues(char* dataset_dir) {
 #endif
 
     TEST_EXPR(start_time = clock();)
-    Stats_info stats_info = create_stats_info(flight_catalog, pointer_to_generic_catalog);
+    Stats_info stats_info = create_stats_info(user_catalog, flight_catalog, pointer_to_generic_catalog);
 
 #ifdef MAKE_TEST
     end_time = clock();
@@ -389,7 +385,7 @@ void** make_catalogues(char* dataset_dir) {
     catalogues[2] = passengers_catalog;
     catalogues[3] = reservation_catalog;
     catalogues[4] = (Stats_info)stats_info;
-    catalogues[5] = (GArray*)flights2_array;
+    catalogues[5] = (GArray*)pointer_to_generic_catalog;
 
     return catalogues;
 }

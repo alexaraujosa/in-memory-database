@@ -33,6 +33,9 @@ TEST_OBJ_FILES := $(patsubst $(SRC)/%.c,$(OBJ)/$(TEST_EXEC_PATH)/%.o,$(SRC_FILES
 
 all: $(EXEC_PATH) $(TEST_EXEC_PATH)
 
+debug_main: C_FLAGS = $(_C_FLAGS) $(C_DEBUG_FLAGS) $(GLIB_FLAGS)
+debug_main: $(EXEC_PATH)
+
 debug: C_FLAGS = $(_C_FLAGS) $(C_DEBUG_FLAGS) $(GLIB_FLAGS)
 debug: $(EXEC_PATH) $(TEST_EXEC_PATH)
 

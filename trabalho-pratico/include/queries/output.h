@@ -12,8 +12,6 @@
 #include "queries/queries.h"
 #include "common.h"
 
-#define MAX_BUFFER_SIZE 1024
-
 /**
  * @brief Generates and outputs query information to a file.
  *
@@ -24,6 +22,7 @@
  * @param output_file The file to write the output to.
  * @param n_element The element index.
  */
-void output_query_info(int query, char flag, void* query_info, FILE* output_file, int n_element);
+void output_query_to_file(int query, char flag, void* query_info, FILE* output_file, int n_element);
+// void output_query_info(int query, char flag, void* query_info, FILE* output_file, int n_element);
 
 #endif /* OUTPUT_H */
