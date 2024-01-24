@@ -2,7 +2,8 @@
 #loc=en_US
 #locname=English (US)
 nil=<untranslated>
-exit=Sair
+exit=Exit
+screen.help_tooltip=F1) Help
 screen.xterm.not_supported=          The current terminal is not supported.         \nThere is no guarantee this program will work as expected.\n                Press any key to continue. 
 screen.settings=SETTINGS
 screen.settings.propercase=Settings
@@ -14,3 +15,4 @@ screen.dataset_question.error.path_enoent=ERROR: Path does not exist or could no
 screen.dataset_question.error.path_not_a_dir=ERROR: Path is not a directory.
 screen.dataset_question.error.path_not_dataset=ERROR: Path is not a valid dataset directory (missing files).\n  - Ensure the files '%s', '%s', '%s' and '%s' are present.
 screen.loading=Loading...
+screen.query_output.help=Controls:\n\nJump to start   - SHIFT + Arrow Left\nGo back 5 units - CTRL + Arrow Left\nGo back 1 unit  - Arrow Left\n\nJump to end        - SHIFT + Arrow Right\nGo forward 5 units - CTRL + Arrow Right\nGo forward 1 unit  - Arrow Right\n\nSelect new query - ESCAPE\n\nPress F1 to close this tooltip.

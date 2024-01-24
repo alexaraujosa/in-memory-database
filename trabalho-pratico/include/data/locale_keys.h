@@ -12,6 +12,7 @@
 
 // ------- Miscellaneous ------
 #define LOCALE_EXIT "exit"
+#define LOCALE_SCREEN_HELP_TOOLTIP "screen.help_tooltip"
 
 // ------- Xterm Warn -------
 #define LOCALE_SCREEN_XTERM_NOT_SUPPORTED "screen.xterm.not_supported"
@@ -34,5 +35,7 @@
 // ------- Loading -------
 #define LOCALE_SCREEN_LOADING_TITLE "screen.loading"
 
+// ------- Query Output -------
+#define LOCALE_SCREEN_QUERY_OUTPUT_HELP "screen.query_output.help"
 
 #endif
