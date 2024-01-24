@@ -26,35 +26,7 @@ extern FILE* batch_test_test_report;
  * The parameters are described on @ref Tokenizer.
  */
 Tokens tokenize_query(char* line, ssize_t len) {
-    char* ptr = strdup(line);
-    char* ptr_root = ptr;
-
-    if (ptr == NULL) exit(EXIT_FAILURE);
-
-    if (ptr[len - 1] == '\n') {
-        ptr[len - 1] = '\0';
-    }
-
-    int seps = 1;
-    for (int i = 0; line[i]; i++) seps += (line[i] == ' ');
-
-    char** arr = (char**)malloc(seps * sizeof(char*));
-    memset(arr, 0, seps * sizeof(char*));
-
-    char* token;
-    int i = 0;
-    while ((token = strsep(&ptr, " ")) != NULL) {
-        char* tokenData = strdup(token);
-
-        arr[i++] = tokenData;
-    }
-
-    Tokens ret = (Tokens)malloc(sizeof(TOKENS));
-    ret->data = arr;
-    ret->len = seps;
-
-    free(ptr_root);
-    return ret;
+    return tokenize_char_delim(line, len, " ");
 }
 
 // #pragma region Parser helpers
