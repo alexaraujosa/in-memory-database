@@ -43,7 +43,22 @@
             "type": "shell",
             "command": "make",
             "args": [
-                "debug"
+                "debug_main"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/trabalho-pratico"
+            }
+        },
+        {
+            "label": "make-debug-test",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "debug_test"
             ],
             "group": {
                 "kind": "build",
@@ -56,7 +71,12 @@
         {
             "label": "make-prepare-debug",
             "dependsOn": [
-                // "make-clean",
+                "make-debug"
+            ]
+        },
+        {
+            "label": "make-prepare-debug-test",
+            "dependsOn": [
                 "make-debug"
             ]
         }

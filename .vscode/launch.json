@@ -84,7 +84,7 @@
                 "ignoreFailures": true
               }
             ],
-            "preLaunchTask": "make-prepare-debug",
+            "preLaunchTask": "make-prepare-debug-test",
             "miDebuggerPath": "/usr/bin/gdb",
             "stopAtEntry": false,
             "serverLaunchTimeout": 5000

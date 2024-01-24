@@ -67,7 +67,8 @@
         "passengerscatalog.h": "c",
         "datasets.h": "c",
         "query_selection.h": "c",
-        "query_output.h": "c"
+        "query_output.h": "c",
+        "compare": "c"
     },
     "cmake.configureOnOpen": false,
     "todo-tree.highlights.useColourScheme": true,
