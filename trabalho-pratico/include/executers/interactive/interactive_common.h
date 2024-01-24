@@ -17,7 +17,8 @@ typedef enum screen_id {
     SCREEN_SETTINGS,
     SCREEN_MAIN_MENU,
     SCREEN_DATASET_QUESTION,
-    SCREEN_LOADING
+    SCREEN_LOADING,
+    SCREEN_QUERY_OUTPUT
 } ScreenId;
 
 enum color_ids {
@@ -25,13 +26,15 @@ enum color_ids {
     COLOR_DEFAULT_FG = 1,
     COLOR_WHITE = 2,
     COLOR_BLACK,
-    COLOR_RED
+    COLOR_RED,
+    COLOR_GREY1
 };
 
 enum color_pair_ids {
     COLORPAIR_DEFAULT = 0,
     COLORPAIR_SELECTED = 1,
-    COLORPAIR_ERROR
+    COLORPAIR_ERROR,
+    COLORPAIR_DISABLED
 };
 
 typedef enum keypress_code {
@@ -60,6 +63,7 @@ typedef struct frame_store {
     ScreenId current_screen;
     DatasetData datasets;
     DeferControl defer_control;
+    char* current_query;
 } FRAME_STORE, *FrameStore;
 
 // Separated from the DeferControl due to it's dependency on FrameStore.

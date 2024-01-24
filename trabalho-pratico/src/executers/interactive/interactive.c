@@ -8,7 +8,7 @@
 // #include "executers/interactive/screens/xterm_warn.h"
 
 #pragma GCC push_options
-#pragma GCC optimize ("O0")
+#pragma GCC optimize ("O2")
 
 int make_frame(GM_Term term, FrameStore store);
 int build_frame(GM_Term term, FrameStore store);
@@ -37,9 +37,11 @@ void interactive(DataLocales locales) {
     gm_init_color(term, COLOR_WHITE, 255, 255, 255);
     gm_init_color(term, COLOR_BLACK, 0, 0, 0);
     gm_init_color(term, COLOR_RED, 255, 0, 0);
+    gm_init_color(term, COLOR_GREY1, 97, 97, 97);
 
     gm_init_color_pair(term, COLORPAIR_SELECTED, COLOR_WHITE, COLOR_BLACK);
     gm_init_color_pair(term, COLORPAIR_ERROR, COLOR_RED, COLOR_DEFAULT_BG);
+    gm_init_color_pair(term, COLORPAIR_DISABLED, COLOR_GREY1, COLOR_DEFAULT_BG);
 
     // ------- Initialize Screen -------
     gm_hide_cursor(term, TRUE);
@@ -55,7 +57,8 @@ void interactive(DataLocales locales) {
         .settings = NULL,
         .current_screen = 0,
         .datasets = NULL,
-        .defer_control = NULL
+        .defer_control = NULL,
+        .current_query = NULL
     };
 
     if (gm_term_is_xterm(term)) store.is_XTerm = IS_XTERM;
@@ -125,6 +128,7 @@ void interactive(DataLocales locales) {
     destroy_data_settings(store.settings);
     destroy_dataset_data(store.datasets);
     destroy_defer_control(store.defer_control);
+    if (store.current_query != NULL) free(store.current_query);
 
     // ======= Destroy Terminal =======
     disable_bracketed_paste();
