@@ -27,7 +27,7 @@ Tokens tokenize_char_delim(char* line, ssize_t len, char delim[1]) {
     }
 
     int seps = 1;
-    for (int i = 0; line[i]; i++) seps += (line[i] == delim[0]);
+    for (int i = 0; ptr[i]; i++) seps += (line[i] == delim[0]);
 
     char** arr = (char**)malloc(seps * sizeof(char*));
     memset(arr, 0, seps * sizeof(char*));
