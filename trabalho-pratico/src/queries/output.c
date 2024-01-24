@@ -49,7 +49,7 @@ char* format_query_output(char flag, char* line, int n_element) {
         memset(output, 0, total_len);
 
         if (n_element > 1) strcpy(output, "\n");
-        ind += sprintf(output, "--- %d ---\n", n_element);
+        ind += sprintf(output + ind, "--- %d ---\n", n_element);
 
         while (i < tokens->len) {
             ind += sprintf(output + ind, "%s\n", parameter[i]);
