@@ -15,6 +15,7 @@
 #define TP_QUERY_H
 
 #include "queries/queries_common.h"
+#include "executers/datasets.h"
 #include "parser/parser.h"
 #include "stats/stats.h"
 #include "util/io.h"
@@ -34,7 +35,7 @@
 #include "queries/query9.h"
 #include "queries/query10.h"
 
-typedef struct {
+typedef struct query {
     char id[QUERIES_CHAR_LEN];
     char flag;
     int argc;
@@ -43,6 +44,6 @@ typedef struct {
 
 void query_execute(Query query, void** catalogues, FILE* output_file, QueryWriter writer);
 void query_run_bulk(char* input_file, char* output_filer, void** catalogues);
-void query_run_single(char* query, ssize_t len);
+GArray* query_run_single(char* query, ssize_t len, DatasetData dd);
 
 #endif

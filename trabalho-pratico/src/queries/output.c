@@ -49,7 +49,7 @@ char* format_query_output(char flag, char* line, int n_element) {
         memset(output, 0, total_len);
 
         if (n_element > 1) strcpy(output, "\n");
-        ind += sprintf(output, "--- %d ---\n", n_element);
+        ind += sprintf(output + ind, "--- %d ---\n", n_element);
 
         while (i < tokens->len) {
             ind += sprintf(output + ind, "%s\n", parameter[i]);
@@ -84,4 +84,12 @@ void output_query_to_file(int query, char flag, void* query_info, FILE* output_f
 
     free(output);
     free(output_buffer);
+}
+
+char* output_query_to_str(int query, char flag, void* query_info, FILE* output_file, int n_element) {
+    char* output_buffer = build_query_buffer(query, query_info);
+    char* output = format_query_output(flag, output_buffer, n_element);
+
+    free(output_buffer);
+    return output;
 }
