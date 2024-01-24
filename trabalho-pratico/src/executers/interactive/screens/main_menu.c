@@ -14,8 +14,8 @@ enum main_menu_options {
     MAX_OPTION_INDEX
 };
 
-#pragma GCC push_options
-#pragma GCC optimize ("O0")
+// #pragma GCC push_options
+// #pragma GCC optimize ("O0")
 static DrawText make_dt_from_str(char* text, GM_TERM_SIZE size, int offsetX, int offsetY) {
     IGNORE_ARG(size);
 
@@ -156,4 +156,4 @@ Keypress_Code keypress_main_menu(GM_Term term, FrameStore store, Cache cache, GM
 
     return KEY_RECIEVED;
 }
-#pragma GCC pop_options
+// #pragma GCC pop_options
