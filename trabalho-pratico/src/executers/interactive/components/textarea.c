@@ -413,10 +413,17 @@ Keypress_Code keypress_textarea(
         default: {
             if (*box_input_size == text_area->max_text_len - 1) return KEY_SKIP;
 
-            if (GM_KEY_IS_ALPHANUMERIC(key) || ispunct(ckey)) {
-                add_char_to_str_at(box_input, *box_input_ind, ckey);
-                (*box_input_ind)++;
-                (*box_input_size)++;
+            if (GM_KEY_IS_ALPHANUMERIC(key) || ispunct(ckey) || GM_KEY_IS_UTF8(key)) {
+                if (GM_KEY_IS_UTF8(key)) {
+                    char* utf8_key = gm_get_utf8_key(key);
+                    add_str_to_str_at(box_input, *box_input_ind, utf8_key, GM_UTF8_KEY_LEN);
+                    *box_input_ind += GM_UTF8_KEY_LEN;
+                    *box_input_size += GM_UTF8_KEY_LEN;
+                } else {
+                    add_char_to_str_at(box_input, *box_input_ind, ckey);
+                    (*box_input_ind)++;
+                    (*box_input_size)++;
+                }
 
                 if (*box_input_ind <= box_input_clamped_dt->len - (TAIL_OFFSET + 1)) {  
                     strncpy(
