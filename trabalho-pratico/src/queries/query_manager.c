@@ -89,6 +89,32 @@ void query_preprocessor(FILE* stream, ParserStore store, va_list args) {
 #endif
 }
 
+int query_verify_raw(Query query, DatasetData dd, char** error) {
+    void** catalogues = dataset_data_get_catalog_array(dd);
+
+    // switch(query->id[0]) {
+    //     case '1':  { return ((QueryVerifier)query1_verify)(query, catalogues, error); break; }
+    //     case '2':  { return ((QueryVerifier)query2_verify)(query, catalogues, error); break; }
+    //     case '3':  { return ((QueryVerifier)query3_verify)(query, catalogues, error); break; }
+    //     case '4':  { return ((QueryVerifier)query4_verify)(query, catalogues, error); break; }
+    //     case '5':  { return ((QueryVerifier)query5_verify)(query, catalogues, error); break; }
+    //     case '6':  { return ((QueryVerifier)query6_verify)(query, catalogues, error); break; }
+    //     case '7':  { return ((QueryVerifier)query7_verify)(query, catalogues, error); break; }
+    //     case '8':  { return ((QueryVerifier)query8_verify)(query, catalogues, error); break; }
+    //     case '9':  { return ((QueryVerifier)query9_verify)(query, catalogues, error); break; }
+    //     case '10': { return ((QueryVerifier)query10_verify)(query, catalogues, error); break; }
+    // 
+    if (STRING_EQUAL(query->id, "1"))  { return ((QueryVerifier)query1_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "2"))  { return ((QueryVerifier)query2_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "3"))  { return ((QueryVerifier)query3_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "4"))  { return ((QueryVerifier)query4_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "5"))  { return ((QueryVerifier)query5_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "6"))  { return ((QueryVerifier)query6_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "7"))  { return ((QueryVerifier)query7_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "8"))  { return ((QueryVerifier)query8_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "9"))  { return ((QueryVerifier)query9_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "10")) { return ((QueryVerifier)query10_verify)(query, catalogues, error); }
+}
 
 /**
  * @internal
@@ -97,7 +123,7 @@ void query_preprocessor(FILE* stream, ParserStore store, va_list args) {
  * 
  * The parameters are described on @ref VerifyFunction.
  */
-int query_verifier(Tokens tokens, ParserStore store) {
+int query_verifier_tokens(Tokens tokens, ParserStore store) {
     // As per the project document, the queries are guaranteed to be valid.
     // So, only a syntatic sanity check will be performed.
 
@@ -349,7 +375,7 @@ void query_run_bulk(char* input_file, char* output_dir, void** catalogues) {
         input_file,
         &tokenize_query,
         &query_preprocessor,
-        &query_verifier,
+        &query_verifier_tokens,
         &query_parser,
         &query_writer,
         &query_discarder,
@@ -403,7 +429,7 @@ GArray* query_run_single(char* query, ssize_t len, DatasetData dd) {
 
     ParserStore store = __make_query_single_store(dd);
 
-    parse(query, len, &tokenize_query, &query_verifier, &query_parser, &query_writer_single, &query_discarder, store);
+    parse(query, len, &tokenize_query, &query_verifier_tokens, &query_parser, &query_writer_single, &query_discarder, store);
 
     GArray* arr = g_array_index(store, GArray*, 2);
     g_array_free(store, TRUE);

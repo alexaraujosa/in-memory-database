@@ -12,6 +12,8 @@ typedef struct query4_info {
     double price;
 } Q_INFO4, *Q_info4;
 
+int query4_verify(Query query, void* catalogues, char** error);
+
 void query4(char flag, int argc, char** argv, void** catalogues, FILE* output_file, QueryWriter writer);
 
 char* query4_write(void* query_info);

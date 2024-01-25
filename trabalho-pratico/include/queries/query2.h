@@ -10,6 +10,8 @@ typedef struct query2_info {
     int date;
 } Q_INFO2, *Q_info2;
 
+int query2_verify(Query query, void* catalogues, char** error);
+
 void query2(char flag, int argc, char** argv, void** catalogues, FILE* output_file, QueryWriter writer);
 
 char* query2_write(void* query_info);

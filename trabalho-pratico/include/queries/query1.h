@@ -44,6 +44,8 @@ typedef struct query1_info {
     Query1_reservation reservation_info;
 } Q_INFO1, *Q_info1;
 
+int query1_verify(Query query, void* catalogues, char** error);
+
 void query1(char flag, int argc, char** argv, void** catalogues, FILE* output_file, QueryWriter writer);
 
 char* query1_write(void* query_info);

@@ -8,6 +8,8 @@ typedef struct query9_info {
     char* user_name;
 } Q_INFO9, *Q_info9;
 
+int query9_verify(Query query, void* catalogues, char** error);
+
 void query9(char flag, int argc, char** argv, void** catalogues, FILE* output_file, QueryWriter writer);
 
 char* query9_write(void* query_info);

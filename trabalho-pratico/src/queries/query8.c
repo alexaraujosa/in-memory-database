@@ -1,5 +1,23 @@
 #include "queries/query8.h"
 
+#define ERROR(code) {\
+    *error = strdup(code);\
+    return 1;\
+}
+
+int query8_verify(Query query, void* catalogues, char** error) {
+    if (query->argc != 3) ERROR(LOCALE_QUERIES_ARGC3);
+
+    if (!STRING_BEGIN_EQUAL(query->argv[0], "HTL", 3)) ERROR(LOCALE_QUERIES_QUERY3_INVALID_ID);
+
+    // Not enough time to rewrite this and use get_localized_string_formatted.
+    if (!is_date(query->argv[1])) ERROR(LOCALE_QUERIES_QUERY5_INVALID_BEGIN_DATE);
+    if (!is_date(query->argv[2])) ERROR(LOCALE_QUERIES_QUERY5_INVALID_END_DATE);
+
+    *error = NULL;
+    return 0;
+}
+
 void query8(char flag, int argc, char** argv, void** catalogues, FILE* output_file, QueryWriter writer) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);

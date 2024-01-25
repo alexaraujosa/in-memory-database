@@ -1,5 +1,20 @@
 #include "queries/query6.h"
 
+#define ERROR(code) {\
+    *error = strdup(code);\
+    return 1;\
+}
+
+int query6_verify(Query query, void* catalogues, char** error) {
+    if (query->argc != 2) ERROR(LOCALE_QUERIES_ARGC2);
+
+    if (!is_integer_positive(query->argv[0])) ERROR(LOCALE_QUERIES_QUERY6_YEAR_NAN);
+    if (!is_integer_positive(query->argv[1])) ERROR(LOCALE_QUERIES_QUERY6_N_NAN);
+
+    *error = NULL;
+    return 0;
+}
+
 /*
 6 <year> <N>
 nome;passageiros

@@ -1,5 +1,23 @@
 #include "queries/query2.h"
 
+#define ERROR(code) {\
+    *error = strdup(code);\
+    return 1;\
+}
+
+int query2_verify(Query query, void* catalogues, char** error) {
+    // if (query->argc != 1) ERROR(LOCALE_QUERIES_ARGC1);
+    if (query->argc > 2) ERROR(LOCALE_QUERIES_TOO_MANY_ARGUMENTS);
+
+    if (
+        !STRING_EQUAL(query->argv[1], "flights") 
+        && !STRING_EQUAL(query->argv[1], "reservations")
+    ) ERROR(LOCALE_QUERIES_QUERY2_SECOND)
+
+    *error = NULL;
+    return 0;
+}
+
 gint sort_Q2(gconstpointer a, gconstpointer b){
     Q_info2 value1 = (Q_info2)a;
     Q_info2 value2 = (Q_info2)b;
