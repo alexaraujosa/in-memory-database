@@ -5,6 +5,7 @@
 #include "util/math.h"
 
 #define LANGUAGE_NAME_KEY "language_name"
+#define ARA_VALUE_KEY "ara_value"
 #define SELECTION_KEY "_selections"
 #define PAGE_SELECTION_KEY "_page"
 #define SETTINGS_KEY "_data_settings"
@@ -70,24 +71,41 @@ Cache make_cache_settings(GM_Term term, FrameStore store) {
         language_name_dt->y = TOP_OFFSET + 2;
         add_cache_elem(cache, LANGUAGE_NAME_KEY, language_name_dt);
 
-        // FUCKERY KEY
-        char* fuckery = strdup("12345:");
-        DrawText fuckery_dt = make_dt_from_str(fuckery, size, 0, 0);
-        fuckery_dt->x = RIGHT_OFFSET; 
-        fuckery_dt->y = TOP_OFFSET + 3;
-        add_cache_elem(cache, "fuckery", fuckery_dt);
+        // // FUCKERY KEY
+        // char* fuckery = strdup("12345:");
+        // DrawText fuckery_dt = make_dt_from_str(fuckery, size, 0, 0);
+        // fuckery_dt->x = RIGHT_OFFSET; 
+        // fuckery_dt->y = TOP_OFFSET + 3;
+        // add_cache_elem(cache, "fuckery", fuckery_dt);
+
+        // // FUCKERY VALUE
+        // char* fuckery2 = strdup("67890");
+        // DrawText fuckery2_dt = make_dt_from_str(fuckery2, size, 0, 0);
+        // fuckery2_dt->x = RIGHT_OFFSET + 1 + fuckery_dt->cols; 
+        // fuckery2_dt->y = TOP_OFFSET + 3;
+        // add_cache_elem(cache, "fuckery2", fuckery2_dt);
+
+        char* auto_reset_arguments = get_localized_string(store->current_locale, LOCALE_SCREEN_SETTINGS_ARA);
+        DrawText ara_dt = make_dt_from_str(auto_reset_arguments, size, 0, 0);
+        ara_dt->x = RIGHT_OFFSET; 
+        ara_dt->y = TOP_OFFSET + 3;
+        add_cache_elem(cache, LOCALE_SCREEN_SETTINGS_ARA, ara_dt);
 
         // FUCKERY VALUE
-        char* fuckery2 = strdup("67890");
-        DrawText fuckery2_dt = make_dt_from_str(fuckery2, size, 0, 0);
-        fuckery2_dt->x = RIGHT_OFFSET + 1 + fuckery_dt->cols; 
-        fuckery2_dt->y = TOP_OFFSET + 3;
-        add_cache_elem(cache, "fuckery2", fuckery2_dt);
-
+        
+        int ara = ds_get_ara(store->settings);
+        char* ara_value = get_localized_string(
+            store->current_locale, 
+            ara ? LOCALE_ACTIVE_UPPERCASE : LOCALE_INACTIVE_UPPERCASE
+        );
+        DrawText arav_dt = make_dt_from_str(ara_value, size, 0, 0);
+        arav_dt->x = RIGHT_OFFSET + 1 + arav_dt->cols; 
+        arav_dt->y = TOP_OFFSET + 3;
+        add_cache_elem(cache, ARA_VALUE_KEY, arav_dt);
 
         // Align Values
-        DrawText keys[] = { language_dt, fuckery_dt };
-        DrawText values[] = { language_name_dt, fuckery2_dt };
+        DrawText keys[] = { language_dt, ara_dt };
+        DrawText values[] = { language_name_dt, arav_dt };
         int pairs = 2;
 
         int max_x = 0;
@@ -193,11 +211,11 @@ void destroy_cache_settings(Cache cache, int force) {
         for (int i = 0; i < MAX_OPTION_INDEX; i++) destroy_draw_text(selections[i]);
         free(selections);
 
-        DrawText fuckery = get_cache_elem(cache, "fuckery");
-        destroy_draw_text(fuckery);
+        DrawText ara_dt = get_cache_elem(cache, LOCALE_SCREEN_SETTINGS_ARA);
+        destroy_draw_text(ara_dt);
 
-        DrawText fuckery2 = get_cache_elem(cache, "fuckery2");
-        destroy_draw_text(fuckery2);
+        DrawText arav_dt = get_cache_elem(cache, ARA_VALUE_KEY);
+        destroy_draw_text(arav_dt);
     }
     
     // ------- Language Selection Screen -------
@@ -264,6 +282,20 @@ Keypress_Code keypress_settings(GM_Term term, FrameStore store, Cache cache, GM_
                 switch (*option_index) {
                     case 0: {
                         *page_selection = SETTINGS_PAGE_LOC_SEL;
+                        break;
+                    }
+                    case 1: {
+                        DrawText arav_dt = get_cache_elem(cache, ARA_VALUE_KEY);
+                        ds_set_ara(store->settings, !ds_get_ara(store->settings));
+
+                        save_data_settings(store->settings);
+
+                        free(arav_dt->text);
+                        arav_dt->text = get_localized_string(
+                            store->current_locale, 
+                            ds_get_ara(store->settings) ? LOCALE_ACTIVE_UPPERCASE : LOCALE_INACTIVE_UPPERCASE
+                        );
+                        arav_dt->cols = strlen(arav_dt->text);
                         break;
                     }
                 }
@@ -333,12 +365,12 @@ void _draw_main_box(GM_Term term, FrameStore store, Cache cache) {
     DrawText title_dt = get_cache_elem(cache, LOCALE_SCREEN_SETTINGS_TITLE);
     DrawText language_dt = get_cache_elem(cache, LOCALE_SCREEN_SETTINGS_LANGUAGE);
     DrawText language_name_dt = get_cache_elem(cache, LANGUAGE_NAME_KEY);
-    DrawText fuckery = get_cache_elem(cache, "fuckery");
-    DrawText fuckery2 = get_cache_elem(cache, "fuckery2");
+    DrawText ara_dt = get_cache_elem(cache, LOCALE_SCREEN_SETTINGS_ARA);
+    DrawText arav_dt = get_cache_elem(cache, ARA_VALUE_KEY);
 
     DrawText* selections = get_cache_elem(cache, SELECTION_KEY);
 
-    DrawText dts[] = { title_dt, language_dt, language_name_dt, fuckery, fuckery2 };
+    DrawText dts[] = { title_dt, language_dt, language_name_dt, ara_dt, arav_dt };
     int dts_len = 5;
 
     // ------- Calculate box width -------

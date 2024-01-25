@@ -14,6 +14,7 @@
 
 typedef struct data_settings {
     char* locale;
+    int ara; // Automatically Reset Arguments
 } DATA_SETTINGS, *DataSettings;
 
 // ======= DESTRUCTOR =======
@@ -22,6 +23,9 @@ void destroy_data_settings(DataSettings ds);
 // ======= ACCESSORS =======
 char* ds_get_locale(DataSettings ds);
 void ds_set_locale(DataSettings ds, char* locale);
+
+int ds_get_ara(DataSettings ds);
+void ds_set_ara(DataSettings ds, int ara);
 
 // ======= OPERATORS =======
 void save_data_settings(DataSettings settings);

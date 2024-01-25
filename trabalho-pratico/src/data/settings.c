@@ -2,7 +2,7 @@
 #include "data/data.h"
 #include <time.h>
 
-#define DATA_SETTINGS_VERSION 1
+#define DATA_SETTINGS_VERSION 2
 
 #define DS_CATEGORY_MAX_LEN 20
 #define DS_CATEGORY_META "meta"
@@ -12,6 +12,7 @@
 #define DS_INT_VALUE_MAX_LEN 12
 #define DS_KEY_META_VERSION "version"
 #define DS_KEY_GENERAL_LOCALE "locale"
+#define DS_KEY_GENERAL_ARA "ara"
 
 #define DS_WRITE_CATEGORY(cat) fprintf(file, "[%s]\n", cat)
 #define DS_WRITE_STR_PROP(key, value) fprintf(file, "%s=%s\n", key, value)
@@ -28,9 +29,18 @@ void ds_set_locale(DataSettings ds, char* locale) {
     ds->locale = strdup(locale);
 }
 
-DataSettings make_data_settings(char* locale) {
+int ds_get_ara(DataSettings ds) {
+    return ds->ara;
+}
+
+void ds_set_ara(DataSettings ds, int ara) {
+    ds->ara = ara;
+}
+
+DataSettings make_data_settings(char* locale, int ara) {
     DataSettings ds = (DataSettings)malloc(sizeof(DATA_SETTINGS));
     ds->locale = strdup(locale);
+    ds->ara = ara;
 
     return ds;
 }
@@ -41,7 +51,7 @@ void destroy_data_settings(DataSettings ds) {
 }
 
 DataSettings default_settings() {
-    DataSettings ds = make_data_settings("en_US");
+    DataSettings ds = make_data_settings("en_US", 0);
 
     return ds;
 }
@@ -62,6 +72,7 @@ void save_data_settings(DataSettings settings) {
 
     DS_WRITE_CATEGORY(DS_CATEGORY_GENERAL);
     DS_WRITE_STR_PROP(DS_KEY_GENERAL_LOCALE, settings->locale);
+    DS_WRITE_INT_PROP(DS_KEY_GENERAL_ARA, settings->ara);
 
     CLOSE_FILE(file);
 
@@ -244,9 +255,15 @@ DataSettings read_data_settings() {
             );
 
             if (version > DATA_SETTINGS_VERSION) {
-                // Trace?
+                rt_assert(
+                    0,
+                    trace_msg(SCOPE, "Settings file has an older version. Please delete the settings file.")
+                );
             } else if (version < DATA_SETTINGS_VERSION) {
-
+                rt_assert(
+                    0,
+                    trace_msg(SCOPE, "Settings file has a newer version. Please delete the settings file.")
+                );
             }
 
             free(key);
@@ -262,7 +279,7 @@ DataSettings read_data_settings() {
             );
             free(category);
         } else if (step == 5) {
-            volatile struct _ds_str_prop prop = _ds_read_str_prop(line, read);
+            struct _ds_str_prop prop = _ds_read_str_prop(line, read);
             rt_assert(
                 STRING_EQUAL(prop.key, DS_KEY_GENERAL_LOCALE),
                 trace_msg(SCOPE, "Expected property #1 of "DS_CATEGORY_GENERAL" to be '"DS_KEY_GENERAL_LOCALE"'.")
@@ -273,6 +290,18 @@ DataSettings read_data_settings() {
 
             free(prop.key);
             free(prop.value);
+        } else if (step == 6) {
+            char* key;
+            int ara = _ds_read_int_prop(line, read, &key);
+
+            rt_assert(
+                STRING_EQUAL(key, DS_KEY_GENERAL_ARA),
+                trace_msg(SCOPE, "Expected property #1 of "DS_CATEGORY_GENERAL" to be '"DS_KEY_GENERAL_ARA"'.")
+            );
+
+            ds_set_ara(ds, ara);
+
+            free(key);
         } else {
             break;
         }
