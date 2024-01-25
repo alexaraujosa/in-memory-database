@@ -120,7 +120,7 @@ Tokens break_lines(Tokens lines, int max_len, char* padding) {
                 char* temp = strndup(lines->data[i] + (max_len * j), max_len);
                 if (j > 0 && padding != NULL) {
                     int temp_len = strlen(padding) + strlen(temp);
-                    char* _temp = (char*)malloc(temp_len * sizeof(char));
+                    char* _temp = (char*)malloc((temp_len + 1) * sizeof(char));
                     memset(_temp, 0, temp_len);
 
                     strcpy(_temp, padding);
