@@ -116,11 +116,11 @@ void gm_printf(GM_Term term, int row, int col, const char *format, ...) {
         max_col = len;
 
         for (int i = 1; i < lines->len; i++) {
-            int len = strlen(lines->data[i]);
-            if (max_col < len) max_col = len; 
+            int _len = strlen(lines->data[i]);
+            if (max_col < _len) max_col = _len; 
 
             rt_assert(
-                _gm_is_area_inbounds(term, row, col, row + lines->len - 1, len),
+                _gm_is_area_inbounds(term, row, 0, row + lines->len - 1, col + _len),
                 trace_msg(SCOPE, "Area is out of bounds.")
             );
         }
