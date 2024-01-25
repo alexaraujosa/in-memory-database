@@ -122,8 +122,9 @@ void _load_datasets_defer(GM_Term term, FrameStore store) {
 
     dataset_data_load(store->datasets);
 
-    store->current_query = strdup("4F HTL1001");
-    store->current_screen = SCREEN_QUERY_OUTPUT;
+    // store->current_query = strdup("4F HTL1001");
+    // store->current_screen = SCREEN_QUERY_OUTPUT;
+    store->current_screen = SCREEN_QUERY_SELECTION;
 }
 
 // Callback for TextArea input enter

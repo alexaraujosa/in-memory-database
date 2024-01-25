@@ -56,8 +56,8 @@ static void calculate_pages(Cache cache, int cur_page, int max_page);
 static void prepare_pages(GM_Term term, Cache cache, GArray* query_pages_source);
 static void draw_help(GM_Term term, FrameStore store, Cache cache);
 
-#pragma GCC push_options
-#pragma GCC optimize ("O0")
+// #pragma GCC push_options
+// #pragma GCC optimize ("O0")
 
 Cache make_cache_query_output(GM_Term term, FrameStore store) {
     GM_TERM_SIZE size = gm_term_get_size(term);
@@ -139,7 +139,9 @@ Cache make_cache_query_output(GM_Term term, FrameStore store) {
     *query_pages = NULL;
     add_cache_elem(cache, QUERY_PAGES_KEY, query_pages);
 
-    GArray* query_pages_source = query_run_single(store->current_query, strlen(store->current_query), store->datasets);
+    // GArray* query_pages_source = query_run_single(store->current_query, strlen(store->current_query), store->datasets);
+    GArray* query_pages_source = query_run_single_raw(store->current_query, store->datasets);
+    store->current_query = NULL;
 
     prepare_pages(term, cache, query_pages_source);
     calculate_pages(cache, 0, query_pages_source->len - 1);
@@ -297,8 +299,9 @@ Keypress_Code keypress_query_output(GM_Term term, FrameStore store, Cache cache,
             if (*on_help) {
                 *on_help = FALSE;
             } else {
-                // TODO: Point to query insertion system.
-                store->current_screen = SCREEN_MAIN_MENU;
+                // // TODO: Point to query insertion system.
+                // store->current_screen = SCREEN_MAIN_MENU;
+                store->current_screen = SCREEN_QUERY_SELECTION;
             }
             
             return KEY_RECIEVED;
@@ -422,4 +425,4 @@ static void draw_help(GM_Term term, FrameStore store, Cache cache) {
     gm_printf(term, help_dt->y, help_dt->x, help_dt->text);
 }
 
-#pragma GCC pop_options
+// #pragma GCC pop_options

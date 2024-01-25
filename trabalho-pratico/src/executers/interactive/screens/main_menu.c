@@ -140,7 +140,11 @@ Keypress_Code keypress_main_menu(GM_Term term, FrameStore store, Cache cache, GM
     } else if (ckey == GM_KEY_ENTER) {
         switch (*option_index) {
             case MAIN_MENU_EXEC_QUERIES: {
-                store->current_screen = SCREEN_DATASET_QUESTION;
+                if (dataset_data_is_loaded(store->datasets)) {
+                    store->current_screen = SCREEN_QUERY_SELECTION;
+                } else {
+                    store->current_screen = SCREEN_DATASET_QUESTION;
+                }
                 break;
             }
             case MAIN_MENU_SETTINGS: {
