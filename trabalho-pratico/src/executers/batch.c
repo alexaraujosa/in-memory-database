@@ -237,6 +237,8 @@ void batch(const char* arg1, const char* arg2) {
     catalog_destroy(flight_catalog);
     catalog_destroy(passengers_catalog);
     catalog_destroy(reservation_catalog);
+
+    free(catalogues);
     stats_destroy(stats_info);
 
 
