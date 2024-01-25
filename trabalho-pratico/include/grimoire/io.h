@@ -10,18 +10,30 @@
 
 #include "grimoire/grimoire_public.h"
 
-typedef uint16_t GM_Key;
+typedef uint32_t GM_Key;
+typedef uint16_t GM_UTF8_Key;
 
 // MAX KEY INT: 2047
-#define GM_MOD_CLEAR  0x07FF // 0b00011111111111
-#define GM_MOD_SHIFT  0x0800 // 0b00100000000000
-#define GM_MOD_CTRL   0x1000 // 0b01000000000000
-#define GM_MOD_ALT    0x2000 // 0b10000000000000
+// #define GM_MOD_CLEAR  0x07FF // 0b00011111111111
+// #define GM_MOD_SHIFT  0x0800 // 0b00100000000000
+// #define GM_MOD_CTRL   0x1000 // 0b01000000000000
+// #define GM_MOD_ALT    0x2000 // 0b10000000000000
+//                              // 1011010111000011
 
-#define GM_HAS_SHIFT(key) (!!((key) & GM_MOD_SHIFT))
-#define GM_HAS_CTRL(key)  (!!((key) & GM_MOD_CTRL))
-#define GM_HAS_ALT(key)   (!!((key) & GM_MOD_ALT))
-#define GM_CANON_KEY(key) ((key) & GM_MOD_CLEAR) /** @brief Gets the true key, stripped of modifiers. */
+#define GM_MOD_CLEAR  0b00000000000000001111111111111111
+#define GM_MOD_SHIFT  0b00000000000000010000000000000000
+#define GM_MOD_CTRL   0b00000000000000100000000000000000
+#define GM_MOD_ALT    0b00000000000001000000000000000000
+#define GM_MOD_UTF8   0b00000000000010000000000000000000
+                   //                   1011111111000011
+
+#define GM_HAS_SHIFT(key)   (!!((key) & GM_MOD_SHIFT))
+#define GM_HAS_CTRL(key)    (!!((key) & GM_MOD_CTRL))
+#define GM_HAS_ALT(key)     (!!((key) & GM_MOD_ALT))
+#define GM_KEY_IS_UTF8(key) (!!((key) & GM_MOD_UTF8))
+#define GM_CANON_KEY(key)   ((key) & GM_MOD_CLEAR) /** @brief Gets the true key, stripped of modifiers. */
+
+#define GM_UTF8_KEY_LEN 2
 
 // TODO: Add HOME, etc.
 #define GM_KEY_NUL 0
@@ -30,7 +42,6 @@ typedef uint16_t GM_Key;
 #define GM_KEY_SPACE ' ' // 32
 #define GM_KEY_BACKSPACE 127
 #define GM_KEY_DELETE 177
-
 
 #define GM_KEY_ENTER (0xFF + 1)
 #define GM_KEY_PASTE_START (0xFF + 2)
@@ -53,7 +64,6 @@ typedef uint16_t GM_Key;
 #define GM_KEY_ARROW_DOWN  (0xFF + 24)
 #define GM_KEY_ARROW_RIGHT (0xFF + 25)
 #define GM_KEY_ARROW_LEFT  (0xFF + 26)
-
 
 #define GM_KEY_CTRL_A 1
 #define GM_KEY_CTRL_B 2
@@ -120,6 +130,12 @@ GM_Key gm_get_key(GM_Term term);
  * @brief Returns the true key from @ref gm_get_key. Modifiers are attempted to be resolved, otherwise they are stripped.
  */
 GM_Key gm_get_canonical_key(GM_Key key);
+
+/**
+ * @brief Returns the true UTF8 sequence from a key retrieved fro @ref gm_get_key. If the key is not an UTF8 sequence,
+ * NULL is returned.
+ */
+char* gm_get_utf8_key(GM_Key key);
 
 /**
  * @brief Reads pasted text from the stdin. Caller must determine if a paste sequence has started.
