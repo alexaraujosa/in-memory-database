@@ -15,13 +15,11 @@
 #define TP_QUERY_H
 
 #include "queries/queries_common.h"
+#include "executers/datasets.h"
 #include "parser/parser.h"
 #include "stats/stats.h"
 #include "util/io.h"
 #include "util/misc.h"
-
-#define QUERIES_CHAR_LEN 3  // Including null-terminator
-#define QUERIES_MAX_ARGS 3
 
 #include "queries/query1.h"
 #include "queries/query2.h"
@@ -34,15 +32,32 @@
 #include "queries/query9.h"
 #include "queries/query10.h"
 
-typedef struct {
-    char id[QUERIES_CHAR_LEN];
-    char flag;
-    int argc;
-    char* argv[QUERIES_MAX_ARGS];
-} QUERY, *Query;
+void destroy_query(Query query);
+
+/**
+ * @brief Verifies if a query is valid.
+ * 
+ * @param[in] query The query to verify.
+ * @param[in] dd The current Dataset Data.
+ * @param[out] error The error with the query, if any, NULL otherwise.
+ * 
+ * @return zero if the query is valid, non-zero otherwise.
+ */
+int query_verify_raw(Query query, DatasetData dd, char** error);
 
 void query_execute(Query query, void** catalogues, FILE* output_file, QueryWriter writer);
+
 void query_run_bulk(char* input_file, char* output_filer, void** catalogues);
-void query_run_single(char* query, ssize_t len);
+GArray* query_run_single(char* query, ssize_t len, DatasetData dd);
+
+/**
+ * @brief Executes a query directly without parsing.
+ * 
+ * @param query The query to be executed.
+ * @param dd The current Dataset Data.
+ * 
+ * @note A call to @ref query_verify_raw is required to avoid possible crashes.
+ */
+GArray* query_run_single_raw(Query query, DatasetData dd);
 
 #endif

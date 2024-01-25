@@ -11,16 +11,58 @@
 #include <stdarg.h>
 #include <ctype.h>
 #include <stdbool.h>
+// #include <wchar.h>
+#include <time.h>
+#include <math.h>
+
+#include "parser/parser.h"
+
+// FUCK YOU, NCURSES.
+#undef lines
 
 
-#include "time.h"
+#define IS_NULL(ARG)         ((ARG) == NULL)
+#define IS_STRING_NULL(ARG)  (IS_NULL((ARG)) || *(ARG) == '\0')
 
-#define xstr(s) str(s)
-#define str(s) #s
+#define STRING_EQUAL(a, b) (strcmp((a), (b)) == 0)
+#define STRING_BEGIN_EQUAL(a, b, n) (strncmp((a), (b), (n)) == 0)
 
+#define CHAR_IS_LOWER(ch) ((ch) >= 97 && (ch) <= 122)
+#define CHAR_IS_UPPER(ch) ((ch) >= 65 && (ch) <= 90)
 
-#define IS_NULL(ARG)         (ARG == NULL)
-#define IS_STRING_NULL(ARG)  (IS_NULL(ARG) || *ARG == '\0')
+static inline char char_tolower(char ch) {
+    if (CHAR_IS_UPPER(ch)) return ch + ('a' - 'A');
+    else return ch;
+}
+
+static inline char char_toupper(char ch) {
+    if (CHAR_IS_LOWER(ch)) return ch + ('A' - 'a');
+    else return ch;
+}
+
+// /**
+//  * @brief Converts a char string to a widechar string.
+//  * 
+//  * @param str The char array to be converted.
+//  */
+// wchar_t* char_str_to_wchar(char** str);
+
+/**
+ * @brief Splits a string into it's composing lines.
+ * 
+ * @param line The string.
+ * @param len The length of the string.
+ * @return A Tokens struct containing the lines within the string.
+*/
+Tokens get_lines(char* line, size_t len);
+
+/**
+ * @brief Splits lines into segments of at most @p max_len characters.
+ * 
+ * @param lines The set of lines to be broken.
+ * @param max_len The maximum length for each line.
+ */
+Tokens break_lines(Tokens lines, int max_len, char* padding);
 
 /**
  * @brief Format the parameters to a string.
@@ -162,4 +204,76 @@ bool get_boolean(char* parameter);
 */
 char* to_upper_string(char* parameter);
 
+/**
+ * @brief Converts a string to int.
+ *
+ * @param input The input string to be converted.
+ *
+ *     The following are inconvertible:
+ *
+ *     - empty string
+ *     - leading whitespace
+ *     - any trailing characters that are not part of the number
+ *
+ *     Cannot be NULL.
+ *
+ * @param base The base to interpret the string in. Same range as strtol (2 to 36).
+ *
+ * @return The int corresponding to the given string.
+ */
+int string_to_based_int(char* input, int base);
+
+/**
+ * @brief Converts a string to long int.
+ *
+ * @param input The input string to be converted.
+ *
+ *     The following are inconvertible:
+ *
+ *     - empty string
+ *     - leading whitespace
+ *     - any trailing characters that are not part of the number
+ *
+ *     Cannot be NULL.
+ *
+ * @param base The base to interpret the string in. Same range as strtol (2 to 36).
+ *
+ * @return The long corresponding to the given string.
+ */
+long string_to_based_long(char* input, int base);
+
+typedef struct max_cols_and_rows {
+    int cols;
+    int rows;
+} MAX_COLS_AND_ROWS;
+MAX_COLS_AND_ROWS get_max_rows_and_cols(char* line, ssize_t len);
+
+char* join_strings_with_delim(char* delim, int len, ...);
+
+char* join_strings_with_delim_list(char* delim, int len, char** args);
+
+/**
+ * @brief Adds a character to a string at a given index.
+ * 
+ * @note The source string must have enough space for the insertion. It is the responsibility of the caller to ensure
+ * this condition is met.
+ * 
+ * @param source The source string.
+ * @param index The source string index at which to perform the insertion.
+ * @param insert The character to be inserted.
+ */
+void add_char_to_str_at(char* source, int index, char insert);
+
+/**
+ * @brief Adds a substring to a string at a given index.
+ * 
+ * @note The source string must have enough space for the insertion. It is the responsibility of the caller to ensure
+ * this condition is met.
+ * 
+ * @param source The source string.
+ * @param index The source string index at which to perform the insertion.
+ * @param insert The substring to be inserted.
+ * @param insert_len The length of the @p insert.
+ */
+void add_str_to_str_at(char* source, int index, char* insert, int insert_len);
 #endif

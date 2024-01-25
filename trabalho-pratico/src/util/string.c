@@ -1,4 +1,5 @@
 #include "util/string.h"
+#include "stdint.h"
 
 char* isnprintf(const char *format, ...) {
     va_list args;
@@ -25,21 +26,122 @@ char* isnprintf(const char *format, ...) {
     return result;
 }
 
-char* strdup_to(char* dest, char* src) {
-    char* str;
-    char* p;
-    int len = 0;
+// wchar_t* char_str_to_wchar(char** str) {
+//     #define SCOPE "char_str_to_wchar"
+//     size_t size = mbstowcs(NULL, str, 0);
+//     if (size == -1) {
+//         perror(trace_msg(SCOPE, "Could not determine size of wchar string."));
+//         exit(EXIT_FAILURE);
+//     }
 
-    while (src[len]) len++;
-    str = malloc(len + 1);
-    p = str;
+//     wchar_t* wstr = (wchar_t*)malloc((size + 1) * sizeof(wchar_t));
+//     if (wstr == NULL) {
+//         perror(trace_msg(SCOPE, "Could not allocate wchar string."));
+//         exit(EXIT_FAILURE);
+//     }
 
-    while (*src) *p++ = *src++;
-    *p = '\0';
+//     if (mbstowcs(wstr, str, size + 1) == (size_t)-1) {
+//         perror(trace_msg(SCOPE, "Could not convert char string to wchar string."));
+//         free(wstr);
+//         exit(EXIT_FAILURE);
+//     }
 
-    *dest = *str;
+//     wstr[size] = L'\0';
 
-    return str;
+//     return wstr;
+//     #undef SCOPE
+// }
+
+// TODO: Uniformize tokenizers into one single function?
+// Tokens get_lines(char* line, size_t len) {
+//     char* ptr = strdup(line);
+//     char* ptr_root = ptr;
+
+//     if (ptr == NULL) exit(EXIT_FAILURE);
+
+//     if (ptr[len - 1] == '\n') {
+//         ptr[len - 1] = '\0';
+//     }
+
+//     int seps = 1;
+//     for (int i = 0; line[i]; i++) seps += (line[i] == '\n');
+
+//     // Early return, avoid unnecessary work.
+//     if (seps == 1) {
+//         char** arr = (char**)malloc(1 * sizeof(char*));
+//         arr[0] = strdup(line);
+
+//         free(ptr_root);
+
+//         Tokens ret = (Tokens)malloc(sizeof(TOKENS));
+//         ret->data = arr;
+//         ret->len = 1;
+
+//         return ret;
+//     }
+
+//     char** arr = (char**)malloc(seps * sizeof(char*));
+//     memset(arr, 0, seps * sizeof(char*));
+
+//     char* token;
+//     int i = 0;
+//     while ((token = strsep(&ptr, "\n")) != NULL) {
+//         char* tokenData = strdup(token);
+
+//         arr[i++] = tokenData;
+//     }
+
+//     Tokens ret = (Tokens)malloc(sizeof(TOKENS));
+//     ret->data = arr;
+//     ret->len = seps;
+
+//     free(ptr_root);
+//     return ret;
+// }
+Tokens get_lines(char* line, size_t len) {
+    return tokenize_char_delim(line, len, "\n");
+}
+
+Tokens break_lines(Tokens lines, int max_len, char* padding) {
+    int line_count = lines->len;
+    for (int i = 0; i < lines->len; i++) line_count += (strlen(lines->data[i]) / max_len);
+
+    char** ndata = (char**)malloc(line_count * sizeof(char*));
+    int nind = 0;
+
+    for (int i = 0; i < lines->len; i++) {
+        int line_len = strlen(lines->data[i]);
+
+        if (line_len <= max_len) {
+            ndata[nind++] = strdup(lines->data[i]);
+        } else {
+            for (int j = 0; j <= line_len / max_len; j++) {
+                // ndata[nind++] = strndup(lines->data[i] + (max_len * j), max_len);
+                char* temp = strndup(lines->data[i] + (max_len * j), max_len);
+                if (j > 0 && padding != NULL) {
+                    int temp_len = strlen(padding) + strlen(temp);
+                    char* _temp = (char*)malloc((temp_len + 1) * sizeof(char));
+                    memset(_temp, 0, temp_len);
+
+                    strcpy(_temp, padding);
+                    strcat(_temp, temp);
+                    free(temp);
+
+                    temp = _temp;
+                }
+
+                ndata[nind++] = temp;
+            }
+        }
+    }
+
+    // destroy_tokens(lines);
+
+    Tokens nlines = (Tokens)malloc(sizeof(TOKENS));
+    nlines->data = ndata;
+    nlines->len = line_count;
+
+    return nlines;
 }
 
 int is_digit(char c) {
@@ -215,4 +317,136 @@ char* to_upper_string(char* parameter) {
         parameter[i] = toupper(parameter[i]);
 
     return parameter;
+}
+
+int string_to_based_int(char* input, int base) {
+    if (input[0] == '\0' || isspace(input[0])) return INT_MAX;
+    errno = 0;
+
+    char *end;
+    long l = strtol(input, &end, base);
+
+    /* Both checks are needed because INT_MAX == LONG_MAX is possible. */
+    if (l > INT_MAX || (errno == ERANGE && l == LONG_MAX)) return INT_MAX;
+    if (l < INT_MIN || (errno == ERANGE && l == LONG_MIN)) return INT_MAX;
+    if (*end != '\0') return INT_MAX;
+    
+    return l;
+}
+
+long string_to_based_long(char* input, int base) {
+    if (input[0] == '\0' || isspace(input[0])) return LONG_MAX;
+    errno = 0;
+
+    char *end;
+    long l = strtol(input, &end, base);
+
+    if ((errno == ERANGE && l == LONG_MAX)) return LONG_MAX;
+    if ((errno == ERANGE && l == LONG_MIN)) return LONG_MAX;
+    if (*end != '\0') return LONG_MAX;
+    
+    return l;
+}
+
+MAX_COLS_AND_ROWS get_max_rows_and_cols(char* line, ssize_t len) {
+    Tokens lines = get_lines(line, len);
+
+    int max_col = 0;
+    for (int i = 0; i < lines->len; i++) {
+        int len = strlen(lines->data[i]);
+        if (max_col < len) max_col = len; 
+    }
+
+    MAX_COLS_AND_ROWS mcar = (MAX_COLS_AND_ROWS){
+        .cols = max_col,
+        .rows = lines->len
+    };
+
+    destroy_tokens(lines);
+
+    return mcar;
+}
+
+char* join_strings_with_delim(char* delim, int len, ...) {
+    va_list _args;
+    va_start(_args, len);
+
+    char** args = (char**)malloc(len * sizeof(char*));
+    for (int i = 0; i < len; i++) args[i] = va_arg(_args, char*);
+
+    va_end(_args);
+
+    return join_strings_with_delim_list(delim, len, args);
+}
+
+char* join_strings_with_delim_list(char* delim, int len, char** args) {
+    int delim_len = strlen(delim);
+
+    char* parts[len];
+    int totalLen = len * delim_len;
+    for (int i = 0; i < len; i++) {
+        char* part = args[i];
+        parts[i] = part;
+        totalLen += strlen(part);
+    }
+
+    // Some fuckery to shut GCC (https://gcc.gnu.org/bugzilla//show_bug.cgi?id=85783)
+    size_t totalLenBits = totalLen * sizeof(char); 
+    if (totalLenBits >= PTRDIFF_MAX) return NULL;
+
+    char* fullStr = (char*)malloc(totalLenBits);
+    int offset = 0;
+    for (int i = 0; i < len; i++) {
+        int partLen = strlen(parts[i]);
+
+        memcpy(fullStr + offset, parts[i], partLen);
+        offset += partLen + 1;
+        if (i < len - 1) memcpy(fullStr + offset - 1, delim, delim_len);
+    }
+
+    fullStr[totalLen - 1] = '\0';
+
+    return fullStr;
+}
+
+void add_char_to_str_at(char* source, int index, char insert) {
+    #define SCOPE "add_str_to_str_at"
+    int source_len = strlen(source);
+
+    rt_assert(
+        (index >= 0 && index <= source_len),
+        trace_msg(SCOPE, "Index OOB.")
+    );
+
+    // Shift characters to make space for the new character
+    for (int i = source_len; i > index; i--) {
+        source[i] = source[i - 1];
+    }
+
+    // Insert the new character
+    source[index] = insert;
+    #undef SCOPE
+}
+
+
+void add_str_to_str_at(char* source, int index, char* insert, int insert_len) {
+    #define SCOPE "add_str_to_str_at"
+    int source_len = strlen(source);
+
+    rt_assert(
+        // (index < 0 || index > source_len),
+        (index >= 0 && index <= source_len),
+        trace_msg(SCOPE, "Index OOB.")
+    );
+
+    // Shift characters right to fit the insertion substring
+    for (int i = source_len; i >= index; i--) {
+        source[i + insert_len] = source[i];
+    }
+
+    // Insert substring
+    for (int i = 0; i < insert_len; i++) {
+        source[index + i] = insert[i];
+    }
+    #undef SCOPE
 }

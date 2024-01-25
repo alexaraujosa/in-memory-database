@@ -8,6 +8,8 @@ typedef struct query7_info {
     int median;
 } Q_INFO7, *Q_info7;
 
+int query7_verify(Query query, void* catalogues, char** error);
+
 void query7(char flag, int argc, char** argv, void** catalogues, FILE* output_file, QueryWriter writer);
 
 char* query7_write(void* query_info);

@@ -7,6 +7,8 @@ typedef struct query8_info {
     int revenue;
 } Q_INFO8, *Q_info8;
 
+int query8_verify(Query query, void* catalogues, char** error);
+
 void query8(char flag, int argc, char** argv, void** catalogues, FILE* output_file, QueryWriter writer);
 
 char* query8_write(void* query_info);

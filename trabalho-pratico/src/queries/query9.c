@@ -1,5 +1,19 @@
 #include "queries/query9.h"
 
+#define ERROR(code) {\
+    *error = strdup(code);\
+    return 1;\
+}
+
+int query9_verify(Query query, void* catalogues, char** error) {
+    if (query->argc != 1) ERROR(LOCALE_QUERIES_ARGC1);
+
+    if (IS_STRING_NULL(query->argv[0])) ERROR(LOCALE_QUERIES_QUERY9_PREFIX);
+
+    *error = NULL;
+    return 0;
+}
+
 void query9(char flag, int argc, char** argv, void** catalogues, FILE* output_file, QueryWriter writer) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);

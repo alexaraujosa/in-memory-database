@@ -1,5 +1,19 @@
 #include "queries/query3.h"
 
+#define ERROR(code) {\
+    *error = strdup(code);\
+    return 1;\
+}
+
+int query3_verify(Query query, void* catalogues, char** error) {
+    if (query->argc != 1) ERROR(LOCALE_QUERIES_ARGC1);
+
+    if (!STRING_BEGIN_EQUAL(query->argv[0], "HTL", 3)) ERROR(LOCALE_QUERIES_QUERY3_INVALID_ID);
+
+    *error = NULL;
+    return 0;
+}
+
 void query3(char flag, int argc, char** argv, void** catalogues, FILE* output_file, QueryWriter writer) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);

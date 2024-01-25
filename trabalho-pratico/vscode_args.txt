@@ -1,4 +1,4 @@
 ../datasets/dataset/data
 ../datasets/dataset/input.txt
-./Resultados
+../datasets/dataset/outputs
 ../scripts/debug_vscode.gdb

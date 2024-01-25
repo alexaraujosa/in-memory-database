@@ -15,7 +15,7 @@
 #define CSV_DELIMITER_S MAKE_CHAR_ARRAY(CSV_DELIMITER) // This one makes sense.
 // Post-mortem: Turns out, IT'S BECAUSE IT FUCKING WRECKS HAVOC ON THIS SHIT.
 
-Tokens tokenize_csv(char* line, ssize_t len) {
+Tokens tokenize_char_delim(char* line, ssize_t len, char delim[1]) {
     // char* ptr = line;
     char* ptr = strdup(line);
     char* ptr_root = ptr;
@@ -27,14 +27,14 @@ Tokens tokenize_csv(char* line, ssize_t len) {
     }
 
     int seps = 1;
-    for (int i = 0; line[i]; i++) seps += (line[i] == CSV_DELIMITER);
+    for (int i = 0; ptr[i]; i++) seps += (line[i] == delim[0]);
 
     char** arr = (char**)malloc(seps * sizeof(char*));
     memset(arr, 0, seps * sizeof(char*));
 
     char* token;
     int i = 0;
-    while ((token = strsep(&ptr, CSV_DELIMITER_S)) != NULL) {
+    while ((token = strsep(&ptr, delim)) != NULL) {
         char* tokenData = strdup(token);
 
         arr[i++] = tokenData;
@@ -47,6 +47,43 @@ Tokens tokenize_csv(char* line, ssize_t len) {
     free(ptr_root);
     return ret;
 }
+
+// Tokens tokenize_csv(char* line, ssize_t len) {
+//     // char* ptr = line;
+//     char* ptr = strdup(line);
+//     char* ptr_root = ptr;
+
+//     if (ptr == NULL) exit(EXIT_FAILURE);
+
+//     if (ptr[len - 1] == '\n') {
+//         ptr[len - 1] = '\0';
+//     }
+
+//     int seps = 1;
+//     for (int i = 0; line[i]; i++) seps += (line[i] == CSV_DELIMITER);
+
+//     char** arr = (char**)malloc(seps * sizeof(char*));
+//     memset(arr, 0, seps * sizeof(char*));
+
+//     char* token;
+//     int i = 0;
+//     while ((token = strsep(&ptr, CSV_DELIMITER_S)) != NULL) {
+//         char* tokenData = strdup(token);
+
+//         arr[i++] = tokenData;
+//     }
+
+//     Tokens ret = (Tokens)malloc(sizeof(TOKENS));
+//     ret->data = arr;
+//     ret->len = seps;
+
+//     free(ptr_root);
+//     return ret;
+// }
+Tokens tokenize_csv(char* line, ssize_t len) {
+    return tokenize_char_delim(line, len, CSV_DELIMITER_S);
+}
+
 
 Tokens duplicate_tokens(Tokens orig) {
     Tokens dup = (Tokens)malloc(sizeof(TOKENS));

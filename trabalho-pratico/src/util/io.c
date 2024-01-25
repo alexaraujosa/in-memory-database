@@ -23,6 +23,8 @@ char* join_paths(int len, ...) {
     if (totalLenBits >= PTRDIFF_MAX) return NULL;
 
     char* fullPath = (char*)malloc(totalLenBits);
+    memset(fullPath, 0, totalLenBits);
+
     int offset = 0;
     for (int i = 0; i < len; i++) {
         int partLen = strlen(parts[i]);
@@ -53,7 +55,8 @@ GArray* get_files(char* path) {
         if(strcmp(dp->d_name, ".") == 0 || strcmp(dp->d_name, "..") == 0) continue;
         if (dp->d_type != DT_REG) continue;
 
-        char* full_path = join_paths(2, get_cwd()->str, dp->d_name);
+        // char* full_path = join_paths(2, get_cwd()->str, dp->d_name);
+        char* full_path = join_paths(2, path, dp->d_name);
         g_array_append_vals(paths, &full_path, 1);
     }
     closedir(dirptr);
@@ -98,7 +101,7 @@ GString* get_cwd() {
     static GString* BIN_PATH;
 
     if (BIN_PATH == NULL || BIN_PATH->len == 0) {
-        char BIN_PATH_TMP[PATH_MAX];
+        char BIN_PATH_TMP[PATH_MAX] = { 0 };
 
         if (!readlink("/proc/self/exe", BIN_PATH_TMP, PATH_MAX)) {
             printf("Unable to read current executable path.\n");
@@ -155,4 +158,39 @@ int skip_n_lines(FILE* file, int lines) {
     }
 
     return 0;
+}
+
+PathExistsStat _path_exists(char* path, struct stat* info_out) {
+    struct stat info = { 0 };
+
+    if(lstat(path, (&info)) != 0) {
+        if(errno == ENOENT) {
+            return PATH_DOES_NOT_EXIST;
+        } else if(errno == EACCES) {
+            // we don't have permission to know if the path/file exists.
+            return PATH_PROTECTED;
+        } else {
+            // Error
+            return PATH_ERROR;
+        }
+    }
+
+    *info_out = info;
+
+    return PATH_EXISTS;
+}
+
+PathExistsStat path_exists(char* path) {
+    struct stat info;
+    return _path_exists(path, &info);
+}
+
+PathType path_type(char* path) {
+    struct stat info;
+    if (_path_exists(path, &info) != PATH_EXISTS) return PATH_TYPE_UNKNOWN;
+
+    if (S_ISDIR(info.st_mode)) return PATH_TYPE_DIR;
+    else if (S_ISREG(info.st_mode)) return PATH_TYPE_FILE;
+
+    return PATH_TYPE_UNKNOWN;
 }

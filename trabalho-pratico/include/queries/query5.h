@@ -11,6 +11,8 @@ typedef struct query5_info {
     char* plane_model;
 } Q_INFO5, *Q_info5;
 
+int query5_verify(Query query, void* catalogues, char** error);
+
 void query5(char flag, int argc, char** argv, void** catalogues, FILE* output_file, QueryWriter writer);
 
 char* query5_write(void* query_info);

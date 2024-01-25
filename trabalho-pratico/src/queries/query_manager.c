@@ -12,44 +12,39 @@
 #define NUM_QUERIES 10
 
 #ifdef MAKE_TEST
+// Refer to main.c
+extern FILE* batch_test_test_report;
+
 #define TIMERS_STORE_INDEX 4
 #endif
 
+void destroy_query(Query query) {
+    for (int i = 0; i < query->argc; i++) free(query->argv[i]);
+    free(query);
+}
+
+/**
+ * @internal
+ * 
+ * @brief Tokenize strategy for the queries.
+ * 
+ * The parameters are described on @ref Tokenizer.
+ */
 Tokens tokenize_query(char* line, ssize_t len) {
-    char* ptr = strdup(line);
-    char* ptr_root = ptr;
-
-    if (ptr == NULL) exit(EXIT_FAILURE);
-
-    if (ptr[len - 1] == '\n') {
-        ptr[len - 1] = '\0';
-    }
-
-    int seps = 1;
-    for (int i = 0; line[i]; i++) seps += (line[i] == ' ');
-
-    char** arr = (char**)malloc(seps * sizeof(char*));
-    memset(arr, 0, seps * sizeof(char*));
-
-    char* token;
-    int i = 0;
-    while ((token = strsep(&ptr, " ")) != NULL) {
-        char* tokenData = strdup(token);
-
-        arr[i++] = tokenData;
-    }
-
-    Tokens ret = (Tokens)malloc(sizeof(TOKENS));
-    ret->data = arr;
-    ret->len = seps;
-
-    free(ptr_root);
-    return ret;
+    return tokenize_char_delim(line, len, " ");
 }
 
 // #pragma region Parser helpers
 // #pragma GCC push_options
 // #pragma GCC optimize ("O0")
+
+/**
+ * @internal
+ * 
+ * @brief Preprocessor strategy for the queries.
+ * 
+ * The parameters are described on @ref PreprocessFunction.
+ */
 void query_preprocessor(FILE* stream, ParserStore store, va_list args) {
     IGNORE_ARG(stream);
 
@@ -94,9 +89,46 @@ void query_preprocessor(FILE* stream, ParserStore store, va_list args) {
 #endif
 }
 
-int query_verifier(Tokens tokens, ParserStore store) {
+int query_verify_raw(Query query, DatasetData dd, char** error) {
+    void** catalogues = dataset_data_get_catalog_array(dd);
+
+    // switch(query->id[0]) {
+    //     case '1':  { return ((QueryVerifier)query1_verify)(query, catalogues, error); break; }
+    //     case '2':  { return ((QueryVerifier)query2_verify)(query, catalogues, error); break; }
+    //     case '3':  { return ((QueryVerifier)query3_verify)(query, catalogues, error); break; }
+    //     case '4':  { return ((QueryVerifier)query4_verify)(query, catalogues, error); break; }
+    //     case '5':  { return ((QueryVerifier)query5_verify)(query, catalogues, error); break; }
+    //     case '6':  { return ((QueryVerifier)query6_verify)(query, catalogues, error); break; }
+    //     case '7':  { return ((QueryVerifier)query7_verify)(query, catalogues, error); break; }
+    //     case '8':  { return ((QueryVerifier)query8_verify)(query, catalogues, error); break; }
+    //     case '9':  { return ((QueryVerifier)query9_verify)(query, catalogues, error); break; }
+    //     case '10': { return ((QueryVerifier)query10_verify)(query, catalogues, error); break; }
+    // 
+    if (STRING_EQUAL(query->id, "1"))  { return ((QueryVerifier)query1_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "2"))  { return ((QueryVerifier)query2_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "3"))  { return ((QueryVerifier)query3_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "4"))  { return ((QueryVerifier)query4_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "5"))  { return ((QueryVerifier)query5_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "6"))  { return ((QueryVerifier)query6_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "7"))  { return ((QueryVerifier)query7_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "8"))  { return ((QueryVerifier)query8_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "9"))  { return ((QueryVerifier)query9_verify)(query, catalogues, error); }
+    if (STRING_EQUAL(query->id, "10")) { return ((QueryVerifier)query10_verify)(query, catalogues, error); }
+}
+
+/**
+ * @internal
+ * 
+ * @brief Verify strategy for the queries.
+ * 
+ * The parameters are described on @ref VerifyFunction.
+ */
+int query_verifier_tokens(Tokens tokens, ParserStore store) {
     // As per the project document, the queries are guaranteed to be valid.
     // So, only a syntatic sanity check will be performed.
+
+    // TODO: Actually check if the queries are correct, because we know that the 
+    // user will always try to fuck our shit up.
 
     IGNORE_ARG(store);
 
@@ -107,6 +139,14 @@ int query_verifier(Tokens tokens, ParserStore store) {
     return 1;
 }
 
+
+/**
+ * @internal
+ * 
+ * @brief Parser strategy for the queries.
+ * 
+ * The parameters are described on @ref ParseFunction.
+ */
 void* query_parser(Tokens tokens) {
     Query query = (Query)malloc(sizeof(QUERY));
     memset(query, 0, sizeof(QUERY));
@@ -169,6 +209,13 @@ void* query_parser(Tokens tokens) {
     return query;
 }
 
+/**
+ * @internal
+ * 
+ * @brief Writer strategy for the bulk mode query execution.
+ * 
+ * The parameters are described on @ref WriteFunction.
+ */
 void query_writer(void* raw_data, ParserStore store) {
     Query data = (Query)raw_data;
 
@@ -199,8 +246,9 @@ void query_writer(void* raw_data, ParserStore store) {
     free(path);
 
     // ------- Destroy query -------
-    for (int i = 0; i < data->argc; i++) free(data->argv[i]);
-    free(data);
+    // for (int i = 0; i < data->argc; i++) free(data->argv[i]);
+    // free(data);
+    destroy_query(data);
 
     // ------- Write flags -------
     *s_query_num = *s_query_num + 1;
@@ -208,36 +256,78 @@ void query_writer(void* raw_data, ParserStore store) {
     return;
 }
 
+/**
+ * @internal
+ * 
+ * @brief Writer strategy for the single mode query execution.
+ * 
+ * The parameters are described on @ref WriteFunction.
+ */
+void query_writer_single(void* raw_data, ParserStore store) {
+    Query data = (Query)raw_data;
+
+    void** catalogues = g_array_index(store, void**, 0);
+    QueryWriter writer = g_array_index(store, QueryWriter, 1);
+    GArray* arr = g_array_index(store, GArray*, 2);
+
+    query_execute(data, catalogues, (FILE*)arr, writer);
+
+    // for (int i = 0; i < data->argc; i++) free(data->argv[i]);
+    // free(data);
+    destroy_query(data);
+}
+void output_query_to_array(int query, char flag, void* query_info, FILE* output_file, int n_element) {
+    // I won't even begin to beg for forgiveness, for the sins I'm about to commit will make the demons shiver.
+    GArray* arr = (GArray*)output_file;
+
+    char* output = output_query_to_str(query, flag, query_info, NULL, n_element);
+    g_array_append_val(arr, output);
+}
+
+/**
+ * @internal
+ * 
+ * @brief Discarder strategy for the queries. Currently unused.
+ * 
+ * The parameters are described on @ref WriteFunction.
+ */
 void query_discarder(void* raw_data, ParserStore store) {
     // Queries are always correct. No discarding needed.
     IGNORE_ARG(raw_data);
     IGNORE_ARG(store);
 }
 
+/**
+ * @internal
+ * 
+ * @brief Destructor strategy for the queries.
+ * 
+ * The parameters are described on @ref DestructFunction.
+ */
 void query_destructor(FILE* stream, ParserStore store) {
     IGNORE_ARG(stream);
 
 // ------- Fetch store timers for display -------
 #ifdef MAKE_TEST
-    char* output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
-    FILE* test_report = OPEN_FILE(output_path, "a");
+    // char* output_path = join_paths(2, get_cwd()->str, "Resultados/test_report.txt");
+    // FILE* test_report = OPEN_FILE(output_path, "a");
 
     double* timers = g_array_index(store, double*, TIMERS_STORE_INDEX);
     double total_time = 0;
 
     for (int i = 0; i < NUM_QUERIES; i++) {
         test_trace(" - Execution time for query %2d: %.4f seconds.\n", i + 1, timers[i]);
-        fprintf(test_report, " - Execution time for query %2d: %.4f seconds.\n", i + 1, timers[i]);
+        fprintf(batch_test_test_report, " - Execution time for query %2d: %.4f seconds.\n", i + 1, timers[i]);
         total_time += timers[i];
     }
 
     test_trace("\n----===[  GENERAL PROGRAM METRICS  ]===----\n\n");
-    fprintf(test_report, "\n----===[  GENERAL PROGRAM METRICS  ]===----\n\n");
+    fprintf(batch_test_test_report, "\n----===[  GENERAL PROGRAM METRICS  ]===----\n\n");
 
     test_trace(" -> Execution time for solving all queries: %.4f seconds.\n", total_time);
-    fprintf(test_report, " -> Execution time for solving all queries: %.4f seconds.\n", total_time);
+    fprintf(batch_test_test_report, " -> Execution time for solving all queries: %.4f seconds.\n", total_time);
 
-    CLOSE_FILE(test_report);
+    // CLOSE_FILE(batch_test_test_report);
 #endif
 
     // ------- Free Memory -------
@@ -245,15 +335,26 @@ void query_destructor(FILE* stream, ParserStore store) {
     //     void* element = g_array_index(store, void*, i);
     //     free(element);
     // }
-
     free(g_array_index(store, void*, 0)); // Directory for outputs
     free(g_array_index(store, void*, 1)); // Current query number
+    // Do not free the memory for the catalogues.
+    // The code explodes if such is done with the new implementation.
 
     g_array_free(store, TRUE);
 }
 // #pragma GCC pop_options
 // #pragma endregion
 
+/**
+ * @internal
+ * 
+ * @brief Executes queries.
+ * 
+ * @param query The information about the query to execute.
+ * @param catalogues The catalogues to be used for the query.
+ * @param output_file THe output file for the queries.
+ * @param writer The writer strategy to use.
+ */
 void query_execute(Query query, void** catalogues, FILE* output_file, QueryWriter writer) {
     switch (atoi(query->id)) {
         case 1:  { query1 (query->flag, query->argc, query->argv, catalogues, output_file, writer); break; }
@@ -274,7 +375,7 @@ void query_run_bulk(char* input_file, char* output_dir, void** catalogues) {
         input_file,
         &tokenize_query,
         &query_preprocessor,
-        &query_verifier,
+        &query_verifier_tokens,
         &query_parser,
         &query_writer,
         &query_discarder,
@@ -286,7 +387,63 @@ void query_run_bulk(char* input_file, char* output_dir, void** catalogues) {
     return;
 };
 
-void query_run_single(char* query, ssize_t len) {
-    parse(query, len, &tokenize_query, &query_verifier, &query_parser, &query_writer, &query_discarder, makeStore());
-    return;
+/**
+ * @internal
+ * 
+ * @brief Creates the @ref ParserStore required by the single-execution query parsers.
+ * 
+ * @param dd The data of the currently loaded datasets,
+ */
+ParserStore __make_query_single_store(DatasetData dd) {
+    // ======= CREATE STORE =======
+    ParserStore store = makeStore();
+
+    // ------- CATALOGUES -------
+    void** catalogues = dataset_data_get_catalog_array(dd);
+    g_array_append_vals(store, &catalogues, 1);
+
+    // ------- WRITER -------
+    QueryWriter qw = output_query_to_array;
+    g_array_append_vals(store, &qw, 1);
+
+    GArray* arr = g_array_new(FALSE, FALSE, sizeof(char*));
+    g_array_append_vals(store, &arr, 1);
+
+    return store;
+}
+
+GArray* query_run_single(char* query, ssize_t len, DatasetData dd) {
+    // // ======= CREATE STORE =======
+    // ParserStore store = makeStore();
+
+    // // ------- CATALOGUES -------
+    // void** catalogues = dataset_data_get_catalog_array(dd);
+    // g_array_append_vals(store, &catalogues, 1);
+
+    // // ------- WRITER -------
+    // QueryWriter qw = output_query_to_array;
+    // g_array_append_vals(store, &qw, 1);
+
+    // GArray* arr = g_array_new(FALSE, FALSE, sizeof(char*));
+    // g_array_append_vals(store, &arr, 1);
+
+    ParserStore store = __make_query_single_store(dd);
+
+    parse(query, len, &tokenize_query, &query_verifier_tokens, &query_parser, &query_writer_single, &query_discarder, store);
+
+    GArray* arr = g_array_index(store, GArray*, 2);
+    g_array_free(store, TRUE);
+
+    return arr;
 };
+
+GArray* query_run_single_raw(Query query, DatasetData dd) {
+    ParserStore store = __make_query_single_store(dd);
+
+    query_writer_single((void*)query, store);
+
+    GArray* arr = g_array_index(store, GArray*, 2);
+    g_array_free(store, TRUE);
+
+    return arr;
+}

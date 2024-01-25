@@ -1,5 +1,32 @@
 #include "queries/query10.h"
 
+#define ERROR(code) {\
+    *error = strdup(code);\
+    return 1;\
+}
+
+int query10_verify(Query query, void* catalogues, char** error) {
+    switch (query->argc) {
+        case 1: {
+            // if (!STRING_EQUAL(query->argv[0], "year")) ERROR(LOCALE_QUERIES_QUERY10_YEAR);
+            if (!is_integer_positive(query->argv[0])) ERROR(LOCALE_QUERIES_QUERY10_YEAR);
+            break;
+        }
+        case 2: {
+            // if (!STRING_EQUAL(query->argv[1], "month")) ERROR(LOCALE_QUERIES_QUERY10_YEAR);
+            if (!is_integer_positive(query->argv[1])) ERROR(LOCALE_QUERIES_QUERY10_YEAR);
+            break;
+        }
+        case 3: {
+            ERROR(LOCALE_QUERIES_TOO_MANY_ARGUMENTS);
+            break;
+        }
+    }
+
+    *error = NULL;
+    return 0;
+}
+
 bool all_zero_Q10(Date_value info){
     bool empty = true;
     if(get_conteudo_flights(info) != 0) return !empty; 

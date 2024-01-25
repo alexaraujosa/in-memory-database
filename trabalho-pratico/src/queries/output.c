@@ -85,3 +85,11 @@ void output_query_to_file(int query, char flag, void* query_info, FILE* output_f
     free(output);
     free(output_buffer);
 }
+
+char* output_query_to_str(int query, char flag, void* query_info, FILE* output_file, int n_element) {
+    char* output_buffer = build_query_buffer(query, query_info);
+    char* output = format_query_output(flag, output_buffer, n_element);
+
+    free(output_buffer);
+    return output;
+}

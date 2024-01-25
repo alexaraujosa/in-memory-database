@@ -1,5 +1,17 @@
 #include "queries/query1.h"
 
+#define ERROR(code) {\
+    *error = strdup(code);\
+    return 1;\
+}
+
+int query1_verify(Query query, void* catalogues, char** error) {
+    if (query->argc != 1) ERROR(LOCALE_QUERIES_ARGC1);
+
+    *error = NULL;
+    return 0;
+}
+
 void query1(char flag, int argc, char** argv, void** catalogues, FILE* output_file, QueryWriter writer) {
     IGNORE_ARG(flag);
     IGNORE_ARG(argc);
