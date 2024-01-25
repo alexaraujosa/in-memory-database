@@ -7,6 +7,7 @@
 #include "data/settings.h"
 #include "cache/cache.h"
 #include "executers/datasets.h"
+#include "queries/queries.h"
 
 // // When using KEY_SPECIAL on screen keypress handlers, if information needs to be passed to the manager,
 // // set this key. It should not be defined for anything else and be considered a reserved key.
@@ -18,7 +19,8 @@ typedef enum screen_id {
     SCREEN_MAIN_MENU,
     SCREEN_DATASET_QUESTION,
     SCREEN_LOADING,
-    SCREEN_QUERY_OUTPUT
+    SCREEN_QUERY_OUTPUT,
+    SCREEN_QUERY_SELECTION
 } ScreenId;
 
 enum color_ids {
@@ -63,7 +65,8 @@ typedef struct frame_store {
     ScreenId current_screen;
     DatasetData datasets;
     DeferControl defer_control;
-    char* current_query;
+    // char* current_query;
+    Query current_query;
 } FRAME_STORE, *FrameStore;
 
 // Separated from the DeferControl due to it's dependency on FrameStore.

@@ -128,7 +128,8 @@ void interactive(DataLocales locales) {
     destroy_data_settings(store.settings);
     destroy_dataset_data(store.datasets);
     destroy_defer_control(store.defer_control);
-    if (store.current_query != NULL) free(store.current_query);
+    // if (store.current_query != NULL) free(store.current_query);
+    if (store.current_query != NULL) destroy_query(store.current_query);
 
     // ======= Destroy Terminal =======
     disable_bracketed_paste();
