@@ -1,6 +1,7 @@
 // TODO: This shit
 
 #include "executers/interactive/screens/query_selection.h"
+#include "executers/interactive/screens/query_output.h"
 #include "executers/interactive/components/textarea.h"
 #include "queries/queries.h"
 
@@ -8,7 +9,8 @@
 #define QUERY_LIST_START_COL 3
 #define QUERY_LIST_START_ROW 2
 
-#define QUERY_ARGS_NUM 3
+#define QUERY_ARGS_NUM 4
+#define QUERY_TA_NUM 3
 #define QUERY_ARGS_SIZE_COLS 40
 #define QUERY_ARGS_TEXT_MAX 300
 #define QUERY_ARGS_START_COL 2
@@ -21,12 +23,16 @@
 #define HELP_PROMPTS_KEY "help_prompts"
 #define HELP_PROMPT_FILLS_KEY "help_prompts_fills"
 #define CUR_QUERY_KEY "_cur_query"
+#define CUR_FLAG_KEY "_cur_flag"
 #define STRINGS_KEY "_strings"
 #define ON_QUERY_ARGS_KEY "on_query_args"
 #define QUERY_ARG1_TEXT_AREA "_arg1_text_area"
 #define QUERY_ARG2_TEXT_AREA "_arg2_text_area"
 #define QUERY_ARG3_TEXT_AREA "_arg3_text_area"
 #define CUR_QUERY_TEXT_AREA "_cur_query_text_area"
+#define HAS_ERROR_KEY "_has_error"
+#define ERROR_MSG_KEY "_error_msg"
+#define ERROR_MSGS_KEY "_error_msgs"
 
 #define STRINGS_QUERY_SELECT_TITLE 0
 #define STRINGS_QUERY_1 1
@@ -42,7 +48,10 @@
 #define STRINGS_ARGS_1 11
 #define STRINGS_ARGS_2 12
 #define STRINGS_ARGS_3 13
-#define _STRINGS_LEN 14
+#define STRINGS_ACTIVE 14
+#define STRINGS_INACTIVE 15
+#define STRINGS_PRETTY_PRINT 16
+#define _STRINGS_LEN 16
 
 // Forward declarations
 static void draw_help(GM_Term term, FrameStore store, Cache cache);
@@ -119,22 +128,43 @@ Cache make_cache_query_selection(GM_Term term, FrameStore store) {
     *cur_query = 0;
     add_cache_elem(cache, CUR_QUERY_KEY, cur_query);
 
+    char* cur_flag = (char*)malloc(sizeof(char));
+    *cur_flag = 0;
+    add_cache_elem(cache, CUR_FLAG_KEY, cur_flag);
+
     // ----- String storage -----
     char** strings = (char**)malloc(_STRINGS_LEN * sizeof(char*));
-    strings[STRINGS_QUERY_SELECT_TITLE] = strdup("Select query:");
-    strings[STRINGS_QUERY_1]  = strdup("1  - List summary.");
-    strings[STRINGS_QUERY_2]  = strdup("2  - List user reservations/flights.");
-    strings[STRINGS_QUERY_3]  = strdup("3  - List hotel rating.");
-    strings[STRINGS_QUERY_4]  = strdup("4  - List hotel reservations.");
-    strings[STRINGS_QUERY_5]  = strdup("5  - List flights from origin between dates A and B.");
-    strings[STRINGS_QUERY_6]  = strdup("6  - List top N airports with most passengers.");
-    strings[STRINGS_QUERY_7]  = strdup("7  - List top N airports with greatest delays.");
-    strings[STRINGS_QUERY_8]  = strdup("8  - List hotel revenue between dates A and B.");
-    strings[STRINGS_QUERY_9]  = strdup("9  - List users with name starting with prefix.");
-    strings[STRINGS_QUERY_10] = strdup("10 - List general metrics.");
-    strings[STRINGS_ARGS_1] = strdup("Argument 1:");
-    strings[STRINGS_ARGS_2] = strdup("Argument 2:");
-    strings[STRINGS_ARGS_3] = strdup("Argument 3:");
+    // strings[STRINGS_QUERY_SELECT_TITLE] = strdup("Select query:");
+    // strings[STRINGS_QUERY_1]  = strdup("1  - List summary.");
+    // strings[STRINGS_QUERY_2]  = strdup("2  - List user reservations/flights.");
+    // strings[STRINGS_QUERY_3]  = strdup("3  - List hotel rating.");
+    // strings[STRINGS_QUERY_4]  = strdup("4  - List hotel reservations.");
+    // strings[STRINGS_QUERY_5]  = strdup("5  - List flights from origin between dates A and B.");
+    // strings[STRINGS_QUERY_6]  = strdup("6  - List top N airports with most passengers.");
+    // strings[STRINGS_QUERY_7]  = strdup("7  - List top N airports with greatest delays.");
+    // strings[STRINGS_QUERY_8]  = strdup("8  - List hotel revenue between dates A and B.");
+    // strings[STRINGS_QUERY_9]  = strdup("9  - List users with name starting with prefix.");
+    // strings[STRINGS_QUERY_10] = strdup("10 - List general metrics.");
+    // strings[STRINGS_ARGS_1] = strdup("Argument 1:");
+    // strings[STRINGS_ARGS_2] = strdup("Argument 2:");
+    // strings[STRINGS_ARGS_3] = strdup("Argument 3:");
+    strings[STRINGS_QUERY_SELECT_TITLE] = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_SELECTION_TITLE);
+    strings[STRINGS_QUERY_1]  = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_SELECTION_QUERY1);
+    strings[STRINGS_QUERY_2]  = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_SELECTION_QUERY2);
+    strings[STRINGS_QUERY_3]  = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_SELECTION_QUERY3);
+    strings[STRINGS_QUERY_4]  = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_SELECTION_QUERY4);
+    strings[STRINGS_QUERY_5]  = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_SELECTION_QUERY5);
+    strings[STRINGS_QUERY_6]  = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_SELECTION_QUERY6);
+    strings[STRINGS_QUERY_7]  = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_SELECTION_QUERY7);
+    strings[STRINGS_QUERY_8]  = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_SELECTION_QUERY8);
+    strings[STRINGS_QUERY_9]  = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_SELECTION_QUERY9);
+    strings[STRINGS_QUERY_10] = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_SELECTION_QUERY10);
+    strings[STRINGS_ARGS_1]   = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_SELECTION_ARG1);
+    strings[STRINGS_ARGS_2]   = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_SELECTION_ARG2);
+    strings[STRINGS_ARGS_3]   = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_SELECTION_ARG3);
+    strings[STRINGS_ACTIVE]   = get_localized_string(store->current_locale, LOCALE_ACTIVE_UPPERCASE);
+    strings[STRINGS_INACTIVE] = get_localized_string(store->current_locale, LOCALE_INACTIVE_UPPERCASE);
+    strings[STRINGS_PRETTY_PRINT] = get_localized_string(store->current_locale, LOCALE_SCREEN_QUERY_SELECTION_PRETTY_FORMAT);
     add_cache_elem(cache, STRINGS_KEY, strings);
 
     // ======= ARGUMENT TEXTAREAS ======
@@ -192,6 +222,18 @@ Cache make_cache_query_selection(GM_Term term, FrameStore store) {
     *on_args = FALSE;
     add_cache_elem(cache, ON_QUERY_ARGS_KEY, on_args);
 
+    // ======= ERROR DISPLAY =======
+    int* has_error = (int*)malloc(sizeof(int));
+    *has_error = FALSE;
+    add_cache_elem(cache, HAS_ERROR_KEY, has_error);
+
+    char** error_msg = (char**)malloc(sizeof(char*));
+    *error_msg = NULL;
+    add_cache_elem(cache, ERROR_MSG_KEY, error_msg);
+
+    Cache error_msg_cache = make_cache(free);
+    add_cache_elem(cache, ERROR_MSGS_KEY, error_msg_cache);
+
     return cache;
 }
 
@@ -217,6 +259,9 @@ void destroy_cache_query_selection(Cache cache, int force) {
     int* cur_query = get_cache_elem(cache, CUR_QUERY_KEY);
     free(cur_query);
 
+    char* cur_flag = get_cache_elem(cache, CUR_FLAG_KEY);
+    free(cur_flag);
+
     // ----- String storage -----
     char** strings = get_cache_elem(cache, STRINGS_KEY);
     for (int i = 0; i < _STRINGS_LEN; i++) free(strings[i]);
@@ -237,6 +282,16 @@ void destroy_cache_query_selection(Cache cache, int force) {
 
     int* on_args = get_cache_elem(cache, ON_QUERY_ARGS_KEY);
     free(on_args);
+
+    // ======= ERROR DISPLAY =======
+    int* has_error = get_cache_elem(cache, HAS_ERROR_KEY);
+    free(has_error);
+
+    char** error_msg = get_cache_elem(cache, ERROR_MSG_KEY);
+    free(error_msg);
+
+    Cache error_msg_cache = get_cache_elem(cache, ERROR_MSGS_KEY);
+    destroy_cache(error_msg_cache, TRUE);
 }
 
 void draw_query_selection(GM_Term term, FrameStore store, Cache cache) {
@@ -284,20 +339,28 @@ static Keypress_Code _cb(
     TextAreaKeypressCallbackUserData user_data
 ) {
     IGNORE_ARG(term);
+    IGNORE_ARG(text_area);
     IGNORE_ARG(key);
 
     Cache cache = (Cache)user_data;
 
     int* cur_query = get_cache_elem(cache, CUR_QUERY_KEY);
+    char* cur_flag = get_cache_elem(cache, CUR_FLAG_KEY);
+
+    int* cur_ta = get_cache_elem(cache, CUR_QUERY_TEXT_AREA);
     TextArea ta_arg1 = get_textarea(cache, 0);
     TextArea ta_arg2 = get_textarea(cache, 1);
     TextArea ta_arg3 = get_textarea(cache, 2);
+
+    char** error_msg = get_cache_elem(cache, ERROR_MSG_KEY);
+    int* has_error = get_cache_elem(cache, HAS_ERROR_KEY);
+    Cache error_msg_cache = get_cache_elem(cache, ERROR_MSGS_KEY);
 
     Query query = (Query)malloc(sizeof(QUERY));
     memset(query, 0, sizeof(QUERY));
 
     snprintf(query->id, sizeof(query->id), "%d", (*cur_query) + 1);
-    query->flag = 0;
+    query->flag = *cur_flag;
 
     char* arg1 = get_textarea_input(ta_arg1);
     if (!IS_STRING_NULL(arg1)) {
@@ -307,28 +370,120 @@ static Keypress_Code _cb(
 
     char* arg2 = get_textarea_input(ta_arg2);
     if (!IS_STRING_NULL(arg2)) {
+        if (query->argc < 1) {
+            char* err = NULL;
+            if (has_cache_elem(error_msg_cache, LOCALE_QUERIES_ARG2_SKIP)) {
+                err = get_cache_elem(error_msg_cache, LOCALE_QUERIES_ARG2_SKIP);
+            } else {
+                char* nerr = get_localized_string(store->current_locale, LOCALE_QUERIES_ARG2_SKIP);
+                set_cache_elem(error_msg_cache, LOCALE_QUERIES_ARG2_SKIP, nerr);
+                err = nerr;
+            }
+
+            *error_msg = err;
+            *has_error = TRUE;
+
+            free(arg1);
+            free(arg2);
+            query->argc = 0;
+            destroy_query(query);
+
+            return KEY_SKIP;
+        }
+            
         query->argv[1] = arg2;
         query->argc++;
     } else {
-        free(arg2);
+        // free(arg2);
     }
 
     char* arg3 = get_textarea_input(ta_arg3);
     if (!IS_STRING_NULL(arg3)) {
+        if (query->argc < 2) {
+            char* err = NULL;
+            if (has_cache_elem(error_msg_cache, LOCALE_QUERIES_ARG3_SKIP)) {
+                err = get_cache_elem(error_msg_cache, LOCALE_QUERIES_ARG3_SKIP);
+            } else {
+                char* nerr = get_localized_string(store->current_locale, LOCALE_QUERIES_ARG3_SKIP);
+                set_cache_elem(error_msg_cache, LOCALE_QUERIES_ARG3_SKIP, nerr);
+                err = nerr;
+            }
+
+            *error_msg = err;
+            *has_error = TRUE;
+          
+            free(arg1);
+            free(arg2);
+            free(arg3);
+            query->argc = 0;
+            destroy_query(query);
+            
+            return KEY_SKIP;
+        }
+
         query->argv[2] = arg3;
         query->argc++;
     } else {
+        // free(arg3);
+    }
+
+    char* error;
+    if (query_verify_raw(query, store->datasets, &error)) {
+        // if (*error_msg != NULL) free(*error_msg);
+
+        char* err = NULL;
+        if (has_cache_elem(error_msg_cache, error)) {
+            err = get_cache_elem(error_msg_cache, error);
+        } else {
+            char* nerr = get_localized_string(store->current_locale, error);
+            set_cache_elem(error_msg_cache, error, nerr);
+            err = nerr;
+        }
+
+        *error_msg = err;
+        *has_error = TRUE;
+
+        free(error);
+
+        free(arg1);
+        free(arg2);
         free(arg3);
+        query->argc = 0;
+        destroy_query(query);
+
+        return KEY_SKIP;
+    }
+
+    *error_msg = NULL;
+    *has_error = FALSE;
+
+    *cur_ta = 0;
+
+    if (ds_get_ara(store->settings) == 1) {
+        set_textarea_input(ta_arg1, "");
+        set_textarea_input(ta_arg2, "");
+        set_textarea_input(ta_arg3, "");
+        *cur_flag = 0;
+    }
+
+    for (int i = query->argc + 1; i <= 3; i++) {
+        switch (i) {
+            case 1: { free(arg1); break; }
+            case 2: { free(arg2); break; }
+            case 3: { free(arg3); break; }
+        }
     }
 
     store->current_query = query;
 
-    set_textarea_input(ta_arg1, "");
-    set_textarea_input(ta_arg2, "");
-    set_textarea_input(ta_arg3, "");
-
-
     store->current_screen = SCREEN_QUERY_OUTPUT;
+    // invalidate_screen_cache(term, store, SCREEN_QUERY_OUTPUT);
+    if (store->query_pages == NULL) make_query_page_cache(store);
+    else reset_query_page_cache(store);
+
+    load_query_page_cache(store);
+
+    return KEY_RECIEVED;
 }
 
 Keypress_Code keypress_query_selection(GM_Term term, FrameStore store, Cache cache, GM_Key key) {
@@ -337,6 +492,7 @@ Keypress_Code keypress_query_selection(GM_Term term, FrameStore store, Cache cac
 
     int* on_help = get_cache_elem(cache, ON_HELP_KEY);
     int* cur_query = get_cache_elem(cache, CUR_QUERY_KEY);
+    char* cur_flag = get_cache_elem(cache, CUR_FLAG_KEY);
     int* on_args = get_cache_elem(cache, ON_QUERY_ARGS_KEY);
     int* cur_ta = get_cache_elem(cache, CUR_QUERY_TEXT_AREA);
 
@@ -378,7 +534,7 @@ Keypress_Code keypress_query_selection(GM_Term term, FrameStore store, Cache cac
             if (*on_args) {
                 if (*cur_ta == 0) return KEY_SKIP;
                 
-                set_textarea_active(get_textarea(cache, *cur_ta), FALSE);
+                if (*cur_ta < QUERY_ARGS_NUM - 1) set_textarea_active(get_textarea(cache, *cur_ta), FALSE);
                 (*cur_ta)--;
                 set_textarea_active(get_textarea(cache, *cur_ta), TRUE);
             } else {
@@ -401,7 +557,7 @@ Keypress_Code keypress_query_selection(GM_Term term, FrameStore store, Cache cac
 
                 set_textarea_active(get_textarea(cache, *cur_ta), FALSE);
                 (*cur_ta)++;
-                set_textarea_active(get_textarea(cache, *cur_ta), TRUE);
+                if (*cur_ta < QUERY_ARGS_NUM - 1) set_textarea_active(get_textarea(cache, *cur_ta), TRUE);
             } else {
                 if (*cur_query >= QUERY_NUM - 1) {
                     *cur_query = QUERY_NUM - 1;
@@ -418,10 +574,27 @@ Keypress_Code keypress_query_selection(GM_Term term, FrameStore store, Cache cac
             if (*on_help) return KEY_SKIP;
 
             if (*on_args) {
-                TextArea ta = get_textarea(cache, *cur_ta);
-                return keypress_textarea(term, store, ta, key, _cb, cache);
+                if (*cur_ta == 3) {
+                    if (*cur_flag == 'F') *cur_flag = 0;
+                    else *cur_flag = 'F';
+
+                    return KEY_RECIEVED;
+                } else {
+                    TextArea ta = get_textarea(cache, *cur_ta);
+                    return keypress_textarea(term, store, ta, key, _cb, cache);
+                }
             } else {
                 *on_args = TRUE;
+                if (ds_get_ara(store->settings) == 1) {
+                    TextArea ta_arg1 = get_textarea(cache, 0);
+                    TextArea ta_arg2 = get_textarea(cache, 1);
+                    TextArea ta_arg3 = get_textarea(cache, 2);
+
+                    set_textarea_input(ta_arg1, "");
+                    set_textarea_input(ta_arg2, "");
+                    set_textarea_input(ta_arg3, "");
+                    *cur_flag = 0;
+                }
             }
 
             return KEY_RECIEVED;
@@ -433,24 +606,6 @@ Keypress_Code keypress_query_selection(GM_Term term, FrameStore store, Cache cac
             if (*on_args) {
                 TextArea ta = get_textarea(cache, *cur_ta);
                 return keypress_textarea(term, store, ta, key, _cb, cache);
-                
-                // switch (*cur_ta) {
-                //     case 0: {
-                //         TextArea ta_arg1 = get_cache_elem(cache, QUERY_ARG1_TEXT_AREA);
-                //         keypress_textarea(term, store, ta_arg1, key, _cb, cache);
-                //         break;
-                //     }
-                //     case 1: {
-                //         TextArea ta_arg2 = get_cache_elem(cache, QUERY_ARG2_TEXT_AREA);
-                //         keypress_textarea(term, store, ta_arg2, key, _cb, cache);
-                //         break;
-                //     }
-                //     case 2: {
-                //         TextArea ta_arg3 = get_cache_elem(cache, QUERY_ARG3_TEXT_AREA);
-                //         keypress_textarea(term, store, ta_arg3, key, _cb, cache);
-                //         break;
-                //     }
-                // }
             } else {
                 return KEY_SKIP;
             }
@@ -481,15 +636,22 @@ static TextArea get_textarea(Cache cache, int ind) {
             break;
         }
     }
+
+    return NULL;
 }
 
 static void draw_query_arg(GM_Term term, FrameStore store, Cache cache) {
     int* cur_query = get_cache_elem(cache, CUR_QUERY_KEY);
+    char* cur_flag = get_cache_elem(cache, CUR_FLAG_KEY);
     char** strings = get_cache_elem(cache, STRINGS_KEY);
 
+    int* cur_ta = get_cache_elem(cache, CUR_QUERY_TEXT_AREA);
     TextArea ta_arg1 = get_cache_elem(cache, QUERY_ARG1_TEXT_AREA);
     TextArea ta_arg2 = get_cache_elem(cache, QUERY_ARG2_TEXT_AREA);
     TextArea ta_arg3 = get_cache_elem(cache, QUERY_ARG3_TEXT_AREA);
+
+    char** error_msg = get_cache_elem(cache, ERROR_MSG_KEY);
+    int* has_error = get_cache_elem(cache, HAS_ERROR_KEY);
 
     gm_printf(term, 0, 0, strings[STRINGS_QUERY_1 + (*cur_query)]);
 
@@ -499,6 +661,33 @@ static void draw_query_arg(GM_Term term, FrameStore store, Cache cache) {
     draw_textarea(term, store, ta_arg2);
 
     draw_textarea(term, store, ta_arg3);
+
+    gm_printf(
+        term, 
+        QUERY_ARG3_START_ROW + get_textarea_size_rows(ta_arg3) + 1, 
+        QUERY_ARGS_START_COL,
+        strings[STRINGS_PRETTY_PRINT]
+    );
+
+    if (*cur_ta == 3) gm_attron(term, GM_COLOR_PAIR(COLORPAIR_SELECTED));
+    gm_printf(
+        term, 
+        QUERY_ARG3_START_ROW + get_textarea_size_rows(ta_arg3) + 1, 
+        QUERY_ARGS_START_COL + strlen(strings[STRINGS_PRETTY_PRINT]) + 1,
+        (*cur_flag == 'F') ? strings[STRINGS_ACTIVE] : strings[STRINGS_INACTIVE]
+    );
+    if (*cur_ta == 3) gm_attroff(term, GM_COLOR_PAIR(COLORPAIR_SELECTED));
+        
+    if (*has_error) {
+        gm_attron(term, GM_COLOR_PAIR(COLORPAIR_ERROR) | GM_PRINT_OVERFLOW_BREAK);
+        gm_printf(
+            term, 
+            QUERY_ARG3_START_ROW + get_textarea_size_rows(ta_arg3) + 3, 
+            QUERY_ARGS_START_COL, 
+            *error_msg
+        );
+        gm_attroff(term, GM_COLOR_PAIR(COLORPAIR_ERROR) | GM_PRINT_OVERFLOW_BREAK);
+    }
 }
 
 static void draw_help(GM_Term term, FrameStore store, Cache cache) {

@@ -82,6 +82,20 @@ Keypress_Code keypress_screen(ScreenId id, GM_Term term, FrameStore store, GM_Ke
     }
 }
 
+void invalidate_screen_cache(GM_Term term, FrameStore store, ScreenId id) {
+    Cache cache = _ensure_screen_cache(id, term, store);
+
+    switch (id) {
+        case SCREEN_XTERM_WARN:         { destroy_cache_xterm_warn(cache, FALSE); break; }
+        case SCREEN_SETTINGS:           { destroy_cache_settings(cache, FALSE); break; }
+        case SCREEN_MAIN_MENU:          { destroy_cache_main_menu(cache, FALSE); break; }
+        case SCREEN_DATASET_QUESTION:   { destroy_cache_dataset_question(cache, FALSE); break; }
+        case SCREEN_LOADING:            { destroy_cache_loading(cache, FALSE); break; }
+        case SCREEN_QUERY_OUTPUT:       { destroy_cache_query_output(cache, FALSE); break; }
+        case SCREEN_QUERY_SELECTION:    { destroy_cache_query_selection(cache, FALSE); break; }
+    }
+}
+
 void _destroy_screen_caches_ghf(gpointer key, gpointer value, gpointer user_data) {
     IGNORE_ARG(key);
     IGNORE_ARG(user_data);
