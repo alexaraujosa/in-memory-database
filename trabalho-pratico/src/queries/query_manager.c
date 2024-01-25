@@ -18,6 +18,11 @@ extern FILE* batch_test_test_report;
 #define TIMERS_STORE_INDEX 4
 #endif
 
+void destroy_query(Query query) {
+    for (int i = 0; i < query->argc; i++) free(query->argv[i]);
+    free(query);
+}
+
 /**
  * @internal
  * 
@@ -215,8 +220,9 @@ void query_writer(void* raw_data, ParserStore store) {
     free(path);
 
     // ------- Destroy query -------
-    for (int i = 0; i < data->argc; i++) free(data->argv[i]);
-    free(data);
+    // for (int i = 0; i < data->argc; i++) free(data->argv[i]);
+    // free(data);
+    destroy_query(data);
 
     // ------- Write flags -------
     *s_query_num = *s_query_num + 1;
@@ -240,8 +246,9 @@ void query_writer_single(void* raw_data, ParserStore store) {
 
     query_execute(data, catalogues, (FILE*)arr, writer);
 
-    for (int i = 0; i < data->argc; i++) free(data->argv[i]);
-    free(data);
+    // for (int i = 0; i < data->argc; i++) free(data->argv[i]);
+    // free(data);
+    destroy_query(data);
 }
 void output_query_to_array(int query, char flag, void* query_info, FILE* output_file, int n_element) {
     // I won't even begin to beg for forgiveness, for the sins I'm about to commit will make the demons shiver.
@@ -354,7 +361,14 @@ void query_run_bulk(char* input_file, char* output_dir, void** catalogues) {
     return;
 };
 
-GArray* query_run_single(char* query, ssize_t len, DatasetData dd) {
+/**
+ * @internal
+ * 
+ * @brief Creates the @ref ParserStore required by the single-execution query parsers.
+ * 
+ * @param dd The data of the currently loaded datasets,
+ */
+ParserStore __make_query_single_store(DatasetData dd) {
     // ======= CREATE STORE =======
     ParserStore store = makeStore();
 
@@ -369,9 +383,41 @@ GArray* query_run_single(char* query, ssize_t len, DatasetData dd) {
     GArray* arr = g_array_new(FALSE, FALSE, sizeof(char*));
     g_array_append_vals(store, &arr, 1);
 
+    return store;
+}
+
+GArray* query_run_single(char* query, ssize_t len, DatasetData dd) {
+    // // ======= CREATE STORE =======
+    // ParserStore store = makeStore();
+
+    // // ------- CATALOGUES -------
+    // void** catalogues = dataset_data_get_catalog_array(dd);
+    // g_array_append_vals(store, &catalogues, 1);
+
+    // // ------- WRITER -------
+    // QueryWriter qw = output_query_to_array;
+    // g_array_append_vals(store, &qw, 1);
+
+    // GArray* arr = g_array_new(FALSE, FALSE, sizeof(char*));
+    // g_array_append_vals(store, &arr, 1);
+
+    ParserStore store = __make_query_single_store(dd);
+
     parse(query, len, &tokenize_query, &query_verifier, &query_parser, &query_writer_single, &query_discarder, store);
 
+    GArray* arr = g_array_index(store, GArray*, 2);
     g_array_free(store, TRUE);
 
     return arr;
 };
+
+GArray* query_run_single_raw(Query query, DatasetData dd) {
+    ParserStore store = __make_query_single_store(dd);
+
+    query_writer_single((void*)query, store);
+
+    GArray* arr = g_array_index(store, GArray*, 2);
+    g_array_free(store, TRUE);
+
+    return arr;
+}

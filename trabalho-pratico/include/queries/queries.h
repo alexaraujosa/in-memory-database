@@ -42,8 +42,10 @@ typedef struct query {
     char* argv[QUERIES_MAX_ARGS];
 } QUERY, *Query;
 
+void destroy_query(Query query);
 void query_execute(Query query, void** catalogues, FILE* output_file, QueryWriter writer);
 void query_run_bulk(char* input_file, char* output_filer, void** catalogues);
 GArray* query_run_single(char* query, ssize_t len, DatasetData dd);
+GArray* query_run_single_raw(Query query, DatasetData dd);
 
 #endif
