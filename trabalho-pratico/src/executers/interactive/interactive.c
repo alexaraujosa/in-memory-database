@@ -1,5 +1,6 @@
 #include "executers/interactive/interactive.h"
 #include "executers/interactive/screens/screens.h"
+#include "executers/interactive/screens/query_output.h"
 
 #include <time.h>
 #include <stdlib.h>
@@ -58,7 +59,9 @@ void interactive(DataLocales locales) {
         .current_screen = 0,
         .datasets = NULL,
         .defer_control = NULL,
-        .current_query = NULL
+        .current_query = NULL,
+        .query_pages = NULL,
+        .load_query = FALSE
     };
 
     if (gm_term_is_xterm(term)) store.is_XTerm = IS_XTERM;
@@ -130,6 +133,7 @@ void interactive(DataLocales locales) {
     destroy_defer_control(store.defer_control);
     // if (store.current_query != NULL) free(store.current_query);
     if (store.current_query != NULL) destroy_query(store.current_query);
+    if (store.query_pages != NULL) destroy_query_page_cache(&store, TRUE);
 
     // ======= Destroy Terminal =======
     disable_bracketed_paste();
@@ -161,12 +165,6 @@ Keypress_Code handle_keypresses(GM_Term term, FrameStore store) {
     GM_Key key = gm_get_key(term);
 
     if (gm_get_canonical_key(key) == GM_KEY_CTRL_C) return KEY_ABORT;
-
-    // Temporary emergency nuclear button
-    if (gm_get_canonical_key(key) == '0') {
-        printf("FUCK\n");
-        exit(EXIT_SUCCESS);
-    }
 
     if (store->is_XTerm == NOT_XTERM_UNCONFIRMED) {
         store->is_XTerm = NOT_XTERM_CONFIRMED;

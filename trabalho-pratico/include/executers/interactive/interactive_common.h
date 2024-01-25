@@ -67,6 +67,8 @@ typedef struct frame_store {
     DeferControl defer_control;
     // char* current_query;
     Query current_query;
+    GArray** query_pages;
+    int load_query;
 } FRAME_STORE, *FrameStore;
 
 // Separated from the DeferControl due to it's dependency on FrameStore.
@@ -119,5 +121,14 @@ void defer_load(DeferControl defer_control, DeferNotify notify_func);
  * @param store The current FrameStore.
  */
 void defer_try(DeferControl defer_control, GM_Term term, FrameStore store);
+
+/**
+ * @brief Invalidates the cache of a given screen.
+ * 
+ * @param term The current Terminal.
+ * @param store The current FrameStore.
+ * @param id The ID of the Screen to invalidate.
+ */
+void invalidate_screen_cache(GM_Term term, FrameStore store, ScreenId id);
 
 #endif

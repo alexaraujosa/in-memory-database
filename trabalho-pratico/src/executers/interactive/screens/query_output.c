@@ -53,7 +53,7 @@
 
 // Forward declarations
 static void calculate_pages(Cache cache, int cur_page, int max_page);
-static void prepare_pages(GM_Term term, Cache cache, GArray* query_pages_source);
+static void prepare_pages(GM_Term term, FrameStore store, Cache cache, GArray* query_pages_source);
 static void draw_help(GM_Term term, FrameStore store, Cache cache);
 
 // #pragma GCC push_options
@@ -135,21 +135,57 @@ Cache make_cache_query_output(GM_Term term, FrameStore store) {
     add_cache_elem(cache, PSTR_LEN_KEY, pstr_len);
 
     // ----- Query pages -----
-    GArray** query_pages = (GArray**)malloc(sizeof(GArray*));
-    *query_pages = NULL;
-    add_cache_elem(cache, QUERY_PAGES_KEY, query_pages);
+    // GArray** query_pages = (GArray**)malloc(sizeof(GArray*));
+    // *query_pages = NULL;
+    // add_cache_elem(cache, QUERY_PAGES_KEY, query_pages);
 
-    // GArray* query_pages_source = query_run_single(store->current_query, strlen(store->current_query), store->datasets);
-    GArray* query_pages_source = query_run_single_raw(store->current_query, store->datasets);
-    store->current_query = NULL;
+    // // GArray* query_pages_source = query_run_single(store->current_query, strlen(store->current_query), store->datasets);
+    // GArray* query_pages_source = query_run_single_raw(store->current_query, store->datasets);
+    // store->current_query = NULL;
 
-    prepare_pages(term, cache, query_pages_source);
-    calculate_pages(cache, 0, query_pages_source->len - 1);
+    // prepare_pages(term, store, cache, query_pages_source);
+    // calculate_pages(cache, 0, query_pages_source->len - 1);
 
-    for (guint i = 0; i < query_pages_source->len; i++) free(g_array_index(query_pages_source, void*, i));
-    g_array_free(query_pages_source, TRUE);
+    // for (guint i = 0; i < query_pages_source->len; i++) free(g_array_index(query_pages_source, void*, i));
+    // g_array_free(query_pages_source, TRUE);
 
     return cache;
+}
+
+void make_query_page_cache(FrameStore store) {
+    GArray** query_pages = (GArray**)malloc(sizeof(GArray*));
+    *query_pages = NULL;
+    store->query_pages = query_pages;
+
+    store->load_query = TRUE;
+}
+
+void reset_query_page_cache(FrameStore store) {
+    destroy_query_page_cache(store, FALSE);
+    (*store->query_pages) = NULL;
+
+    store->load_query = TRUE;
+}
+
+void load_query_page_cache(FrameStore store) {
+    store->load_query = TRUE;
+}
+
+void destroy_query_page_cache(FrameStore store, int force) {
+    GArray** query_pages = store->query_pages;
+
+    if (*query_pages != NULL) {
+        for (guint i = 0; i < (*query_pages)->len; i++) {
+            Tokens tokens = g_array_index((*query_pages), Tokens, i);
+            destroy_tokens(tokens);
+        }
+
+        g_array_free(*query_pages, TRUE);
+    }
+    
+    if (force) free(query_pages);
+
+    store->load_query = FALSE;
 }
 
 void destroy_cache_query_output(Cache cache, int force) {
@@ -188,17 +224,17 @@ void destroy_cache_query_output(Cache cache, int force) {
     int* pstr_len = get_cache_elem(cache, PSTR_LEN_KEY);
     free(pstr_len);
 
-    // ----- Query pages -----
-    GArray** query_pages = get_cache_elem(cache, QUERY_PAGES_KEY);
-    if (*query_pages != NULL) {
-        for (guint i = 0; i < (*query_pages)->len; i++) {
-            Tokens tokens = g_array_index((*query_pages), Tokens, i);
-            destroy_tokens(tokens);
-        }
+    // // ----- Query pages -----
+    // GArray** query_pages = get_cache_elem(cache, QUERY_PAGES_KEY);
+    // if (*query_pages != NULL) {
+    //     for (guint i = 0; i < (*query_pages)->len; i++) {
+    //         Tokens tokens = g_array_index((*query_pages), Tokens, i);
+    //         destroy_tokens(tokens);
+    //     }
 
-        g_array_free(*query_pages, TRUE);
-    }
-    free(query_pages);
+    //     g_array_free(*query_pages, TRUE);
+    // }
+    // free(query_pages);
 }
 
 void draw_query_output(GM_Term term, FrameStore store, Cache cache) {
@@ -218,7 +254,23 @@ void draw_query_output(GM_Term term, FrameStore store, Cache cache) {
     char** max_page_pstr = get_cache_elem(cache, MAX_PAGE_PSTR_KEY);
 
     int* pstr_len = get_cache_elem(cache, PSTR_LEN_KEY);
-    GArray** query_pages = get_cache_elem(cache, QUERY_PAGES_KEY);
+    GArray** query_pages = store->query_pages;
+
+    if (store->load_query) {
+        GArray* query_pages_source = query_run_single_raw(store->current_query, store->datasets);
+        store->current_query = NULL;
+
+        *cur_page = 0;
+        *max_page = 0;
+
+        prepare_pages(term, store, cache, query_pages_source);
+        calculate_pages(cache, 0, query_pages_source->len - 1);
+
+        for (guint i = 0; i < query_pages_source->len; i++) free(g_array_index(query_pages_source, void*, i));
+        g_array_free(query_pages_source, TRUE);
+
+        store->load_query = FALSE;
+    }
 
     gm_attroff(term, GM_RESET);
 
@@ -389,26 +441,37 @@ static void calculate_pages(Cache cache, int cur_page, int max_page) {
     free(max_page_str);
 }
 
-static void prepare_pages(GM_Term term, Cache cache, GArray* query_pages_source) {
+static void prepare_pages(GM_Term term, FrameStore store, Cache cache, GArray* query_pages_source) {
     GM_TERM_SIZE size = gm_term_get_size(term);
 
     int* max_page = get_cache_elem(cache, MAX_PAGE_KEY);
-    GArray** query_pages_cache = get_cache_elem(cache, QUERY_PAGES_KEY);
+    // GArray** query_pages_cache = get_cache_elem(cache, QUERY_PAGES_KEY);
+    GArray** query_pages_cache = store->query_pages;
     *query_pages_cache = g_array_new(FALSE, FALSE, sizeof(Tokens));
 
-    for (guint i = 0; i < query_pages_source->len; i++) {
-        char* page = g_array_index(query_pages_source, char*, i);
-        Tokens lines = get_lines(page, strlen(page));
-        Tokens nlines = break_lines(lines, size.cols - 2, PAGE_BREAK_HEADER);
+    if (query_pages_source->len == 0) {
+        char* err = get_localized_string(store->current_locale, LOCALE_QUERIES_ERROR_EOM);
+        Tokens lines = get_lines(err, strlen(err));
 
-        g_array_append_val((*query_pages_cache), nlines);
-        destroy_tokens(lines);
+        g_array_append_val((*query_pages_cache), lines);
+        free(err);
+    } else {
+        for (guint i = 0; i < query_pages_source->len; i++) {
+            char* page = g_array_index(query_pages_source, char*, i);
+            Tokens lines = get_lines(page, strlen(page));
+            Tokens nlines = break_lines(lines, size.cols - 2, PAGE_BREAK_HEADER);
+
+            g_array_append_val((*query_pages_cache), nlines);
+            destroy_tokens(lines);
+        }
     }
 
-    *max_page = query_pages_source->len;
+    *max_page = imax(1, query_pages_source->len);
 }
 
 static void draw_help(GM_Term term, FrameStore store, Cache cache) {
+    IGNORE_ARG(store);
+
     DrawText help_dt = get_cache_elem(cache, LOCALE_SCREEN_QUERY_OUTPUT_HELP);
     char* help_fill = get_cache_elem(cache, HELP_FILL_KEY);
 

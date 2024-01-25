@@ -3,6 +3,14 @@
 
 #include "executers/interactive/interactive_common.h"
 
+void make_query_page_cache(FrameStore store);
+
+void reset_query_page_cache(FrameStore store);
+
+void load_query_page_cache(FrameStore store);
+
+void destroy_query_page_cache(FrameStore store, int force);
+
 /**
  * @brief Creates a cache for the Query Output screen.
  * 
@@ -34,5 +42,6 @@ void draw_query_output(GM_Term term, FrameStore store, Cache cache);
  * @param key The keypress recieved.
  */
 Keypress_Code keypress_query_output(GM_Term term, FrameStore store, Cache cache, GM_Key key);
+
 
 #endif
