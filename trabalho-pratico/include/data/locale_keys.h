@@ -38,4 +38,18 @@
 // ------- Query Output -------
 #define LOCALE_SCREEN_QUERY_OUTPUT_HELP "screen.query_output.help"
 
+// ------- Query Selection -------
+#define LOCALE_SCREEN_QUERY_SELECTION_HELP "screen.query_selection.help"
+#define _LOCALE_SCREEN_QUERY_SELECTION_HELP_QUERY   "screen.query_selection.help.query" // Iterative completion
+#define LOCALE_SCREEN_QUERY_SELECTION_HELP_QUERY_1  "screen.query_selection.help.query1"
+#define LOCALE_SCREEN_QUERY_SELECTION_HELP_QUERY_2  "screen.query_selection.help.query2"
+#define LOCALE_SCREEN_QUERY_SELECTION_HELP_QUERY_3  "screen.query_selection.help.query3"
+#define LOCALE_SCREEN_QUERY_SELECTION_HELP_QUERY_4  "screen.query_selection.help.query4"
+#define LOCALE_SCREEN_QUERY_SELECTION_HELP_QUERY_5  "screen.query_selection.help.query5"
+#define LOCALE_SCREEN_QUERY_SELECTION_HELP_QUERY_6  "screen.query_selection.help.query6"
+#define LOCALE_SCREEN_QUERY_SELECTION_HELP_QUERY_7  "screen.query_selection.help.query7"
+#define LOCALE_SCREEN_QUERY_SELECTION_HELP_QUERY_8  "screen.query_selection.help.query8"
+#define LOCALE_SCREEN_QUERY_SELECTION_HELP_QUERY_9  "screen.query_selection.help.query9"
+#define LOCALE_SCREEN_QUERY_SELECTION_HELP_QUERY_10 "screen.query_selection.help.query10"
+
 #endif
