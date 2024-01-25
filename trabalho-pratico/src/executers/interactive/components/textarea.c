@@ -133,6 +133,24 @@ char* get_textarea_input(TextArea text_area) {
     return strdup(box_input);
 }
 
+void set_textarea_input(TextArea text_area, char* input) {
+    int* box_input_ind = get_cache_elem(text_area->cache, BOX_INPUT_IND_KEY);
+    int* box_input_lower_bound = get_cache_elem(text_area->cache, BOX_INPUT_LOWER_BOUND_KEY);
+    int* box_input_size = get_cache_elem(text_area->cache, BOX_INPUT_SIZE_KEY);
+    char* box_input = get_cache_elem(text_area->cache, BOX_INPUT_KEY);
+    DrawText box_input_clamped_dt = get_cache_elem(text_area->cache, BOX_INSIDE_KEY);
+
+    // Replace input contents
+    memset(box_input, 0, *box_input_size);
+    strncpy(box_input, input, *box_input_size);
+    memset(box_input_clamped_dt->text, 0, box_input_clamped_dt->len);
+
+    // Set index back to 0
+    *box_input_ind = 0;
+    *box_input_lower_bound = 0;
+    *box_input_size = 0;
+}
+
 int get_textarea_x(TextArea text_area) {
     return text_area->x;
 }
@@ -221,7 +239,8 @@ void draw_textarea(GM_Term term, FrameStore store, TextArea text_area) {
     gm_attron(term, GM_COLOR_PAIR(colorpair));
 
     // Draw Box
-    gm_box(term, header_text_dt->y + 1, text_area->x, header_text_dt->y + 3, size.cols - text_area->x);
+    // gm_box(term, header_text_dt->y + 1, text_area->x, header_text_dt->y + 3, size.cols - text_area->x);
+    gm_box(term, header_text_dt->y + 1, text_area->x, header_text_dt->y + 3, text_area->x + text_area->size_cols);
 
     // Draw box background
     gm_printf(term, box_fill_dt->y, box_fill_dt->x, box_fill_dt->text);
@@ -236,13 +255,14 @@ void draw_textarea(GM_Term term, FrameStore store, TextArea text_area) {
         gm_printf(term, box_input_clamped_dt->y, box_input_clamped_dt->x + box_input_clamped_dt->len - 3, " > ");
 
     // Draw cursor
-    if (text_area->size_cols) gm_printf(term, box_input_clamped_dt->y + 1, text_area->x + cursor_pos, "^");
+    // if (text_area->size_cols) gm_printf(term, box_input_clamped_dt->y + 1, text_area->x + cursor_pos, "^");
+    if (text_area->active) gm_printf(term, box_input_clamped_dt->y + 1, text_area->x + cursor_pos, "^");
 
     gm_attroff(term, GM_COLOR_PAIR(colorpair));
 }
 
 // ============== KEYPRESS HANDLER ==============
-// TODO: Input so slow my wheelchaired grandma runs faster.
+// WARN: Input so slow my wheelchaired grandma runs faster.
 Keypress_Code keypress_textarea(
     GM_Term term, 
     FrameStore store, 

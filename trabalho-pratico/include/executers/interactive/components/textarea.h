@@ -44,6 +44,14 @@ TextArea make_textarea(
 char* get_textarea_input(TextArea text_area);
 
 /**
+ * @brief Sets the contents of a TextArea instance to @p input.
+ * 
+ * @param text_area The TextArea instance.
+ * @param input The new contents of the TextArea.
+ */
+void set_textarea_input(TextArea text_area, char* input);
+
+/**
  * @brief Returns top left X coordinate of a TextArea instance.
  * 
  * @param text_area The TextArea instance.
