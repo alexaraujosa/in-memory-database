@@ -32,8 +32,8 @@ The primary goal of this project is to consolidate knowledge of **C programming*
 - **Real-Time Analytics**: Introduce live tracking and statistics updates.
 
 ## 👨‍💻 Contributors
-- **Paulo Alexandre Rodrigues Ferreira**
 - **Alex Araújo Sá** - [Alex Sá](https://github.com/alexaraujosa)
+- **Paulo Alexandre Rodrigues Ferreira** - [Paulo](https://github.com/pauloarf)
 - **Rafael Santos Fernandes** - [DarkenLM](https://github.com/DarkenLM)
 
 ## 🛠️ Technologies Used
